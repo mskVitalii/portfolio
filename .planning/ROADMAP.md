@@ -6,7 +6,7 @@ Five phases deliver a production-ready personal portfolio that converts qualifie
 
 ## Phases
 
-- [ ] **Phase 1: Foundation** - Next.js + Tailwind v4 + next-intl + MDX pipeline + ViewMode store
+- [ ] **Phase 1: Foundation** - Next.js + Tailwind v4 + next-intl + MDX pipeline + ViewMode store (4 plans)
 - [ ] **Phase 2: Home & Contact** - Hero, Impact Dashboard, About, CV link, Contact, FAQ
 - [ ] **Phase 3: Projects & Depth Content** - Project case studies (2-3), tri-mode views, ADR, Failure Stories, Architecture Gallery
 - [ ] **Phase 4: Skills & Presence** - Interactive Skills Explorer, Open Source, Recommendations, Public Roadmap
@@ -25,7 +25,12 @@ Five phases deliver a production-ready personal portfolio that converts qualifie
   3. Dark/light mode toggle works; system preference is respected on first load; preference persists across page reloads
   4. Selecting HR, Business, or Tech mode persists in localStorage and survives a full page reload on any route
   5. MDX file renders with syntax-highlighted code blocks at /en/[any-mdx-route] at build time (no client-only rendering)
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [ ] 01-01-PLAN.md — Bootstrap Next.js 16 + Tailwind v4 + shadcn/ui + next-intl localized routing skeleton (/en//de//ru/)
+- [ ] 01-02-PLAN.md — Dark/light theme toggle + HR/Business/Tech ViewMode Zustand store, both in the global Header
+- [ ] 01-03-PLAN.md — MDX content pipeline + build-time syntax-highlighted skeleton page with English fallback
+- [ ] 01-04-PLAN.md — Static-render verification + Vercel deploy + end-to-end Walking Skeleton verification
 **UI hint**: yes
 
 ### Phase 2: Home & Contact
@@ -87,7 +92,7 @@ Five phases deliver a production-ready personal portfolio that converts qualifie
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/4 | Not started | - |
 | 2. Home & Contact | 0/TBD | Not started | - |
 | 3. Projects & Depth Content | 0/TBD | Not started | - |
 | 4. Skills & Presence | 0/TBD | Not started | - |
