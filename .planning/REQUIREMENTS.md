@@ -123,56 +123,54 @@
 
 ## Traceability
 
-*(To be filled during roadmap creation — each requirement maps to exactly one phase)*
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | — | Pending |
-| FOUND-02 | — | Pending |
-| FOUND-03 | — | Pending |
-| FOUND-04 | — | Pending |
-| FOUND-05 | — | Pending |
-| FOUND-06 | — | Pending |
-| FOUND-07 | — | Pending |
-| FOUND-08 | — | Pending |
-| HOME-01 | — | Pending |
-| HOME-02 | — | Pending |
-| HOME-03 | — | Pending |
-| HOME-04 | — | Pending |
-| HOME-05 | — | Pending |
-| HOME-06 | — | Pending |
-| PROJ-01 | — | Pending |
-| PROJ-02 | — | Pending |
-| PROJ-03 | — | Pending |
-| PROJ-04 | — | Pending |
-| PROJ-05 | — | Pending |
-| PROJ-06 | — | Pending |
-| PROJ-07 | — | Pending |
-| DEPTH-01 | — | Pending |
-| DEPTH-02 | — | Pending |
-| DEPTH-03 | — | Pending |
-| DEPTH-04 | — | Pending |
-| SKILL-01 | — | Pending |
-| SKILL-02 | — | Pending |
-| SKILL-03 | — | Pending |
-| OS-01 | — | Pending |
-| OS-02 | — | Pending |
-| OS-03 | — | Pending |
-| LEAD-01 | — | Pending |
-| LEAD-02 | — | Pending |
-| LEAD-03 | — | Pending |
-| SEO-01 | — | Pending |
-| SEO-02 | — | Pending |
-| SEO-03 | — | Pending |
-| SEO-04 | — | Pending |
-| SEO-05 | — | Pending |
-| SEO-06 | — | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| FOUND-06 | Phase 1 | Pending |
+| FOUND-07 | Phase 1 | Pending |
+| FOUND-08 | Phase 1 | Pending |
+| HOME-01 | Phase 2 | Pending |
+| HOME-02 | Phase 2 | Pending |
+| HOME-03 | Phase 2 | Pending |
+| HOME-04 | Phase 2 | Pending |
+| HOME-05 | Phase 2 | Pending |
+| HOME-06 | Phase 2 | Pending |
+| PROJ-01 | Phase 3 | Pending |
+| PROJ-02 | Phase 3 | Pending |
+| PROJ-03 | Phase 3 | Pending |
+| PROJ-04 | Phase 3 | Pending |
+| PROJ-05 | Phase 3 | Pending |
+| PROJ-06 | Phase 3 | Pending |
+| PROJ-07 | Phase 3 | Pending |
+| DEPTH-01 | Phase 3 | Pending |
+| DEPTH-02 | Phase 3 | Pending |
+| DEPTH-03 | Phase 3 | Pending |
+| DEPTH-04 | Phase 3 | Pending |
+| SKILL-01 | Phase 4 | Pending |
+| SKILL-02 | Phase 4 | Pending |
+| SKILL-03 | Phase 4 | Pending |
+| OS-01 | Phase 4 | Pending |
+| OS-02 | Phase 4 | Pending |
+| OS-03 | Phase 4 | Pending |
+| LEAD-01 | Phase 2 | Pending |
+| LEAD-02 | Phase 2 | Pending |
+| LEAD-03 | Phase 2 | Pending |
+| SEO-01 | Phase 5 | Pending |
+| SEO-02 | Phase 5 | Pending |
+| SEO-03 | Phase 5 | Pending |
+| SEO-04 | Phase 5 | Pending |
+| SEO-05 | Phase 5 | Pending |
+| SEO-06 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 39 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 39 ⚠️
+- v1 requirements: 40 total (note: traceability table contains 40 entries; original header said 39 — count confirmed from individual requirement lines)
+- Mapped to phases: 40/40
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-06-09*
-*Last updated: 2026-06-09 after initialization*
+*Last updated: 2026-06-09 after roadmap creation*
