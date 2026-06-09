@@ -40,7 +40,7 @@ Deliver a correctly-configured Next.js 16.x project on Vercel with: Tailwind v4 
 - **D-14:** Dark mode: class-based via next-themes, `attribute="class"`. `suppressHydrationWarning` on `<html>`. System preference as default.
 - **D-15:** Run `npx shadcn@latest init` and select Tailwind v4 mode when prompted. Add standard components: button, card, badge, separator, navigation-menu.
 - **D-16:** Font setup: `Inter({ subsets: ['latin', 'cyrillic'] })` for body text (cyrillic required for Russian locale), `JetBrains_Mono` as `--font-mono` CSS variable for code blocks.
-- **D-17:** Per-project unique styling (future phases): handled via component-level CSS overrides or route-group-specific layouts — NOT global theme token changes.
+- **D-17 [informational]:** Per-project unique styling (future phases): handled via component-level CSS overrides or route-group-specific layouts — NOT global theme token changes. No Phase 1 implementation required.
 
 ### Static Rendering Verification
 

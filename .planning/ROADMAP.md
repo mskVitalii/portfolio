@@ -27,10 +27,10 @@ Five phases deliver a production-ready personal portfolio that converts qualifie
   5. MDX file renders with syntax-highlighted code blocks at /en/[any-mdx-route] at build time (no client-only rendering)
 **Plans**: 4 plans
 Plans:
-- [ ] 01-01-PLAN.md — Bootstrap Next.js 16 + Tailwind v4 + shadcn/ui + next-intl localized routing skeleton (/en//de//ru/)
-- [ ] 01-02-PLAN.md — Dark/light theme toggle + HR/Business/Tech ViewMode Zustand store, both in the global Header
-- [ ] 01-03-PLAN.md — MDX content pipeline + build-time syntax-highlighted skeleton page with English fallback
-- [ ] 01-04-PLAN.md — Static-render verification + Vercel deploy + end-to-end Walking Skeleton verification
+- [ ] 01-01-PLAN.md — Bootstrap Next.js 16 + Tailwind v4 + shadcn/ui + next-intl localized routing skeleton (/en//de//ru/) [Wave 1 — start here]
+- [ ] 01-02-PLAN.md — Dark/light theme toggle + HR/Business/Tech ViewMode Zustand store, both in the global Header [Wave 2 — parallel with 01-03]
+- [ ] 01-03-PLAN.md — MDX content pipeline + build-time syntax-highlighted skeleton page with English fallback [Wave 2 — parallel with 01-02]
+- [ ] 01-04-PLAN.md — Static-render verification + Vercel deploy + end-to-end Walking Skeleton verification [Wave 3 — blocking human checkpoint]
 **UI hint**: yes
 
 ### Phase 2: Home & Contact
