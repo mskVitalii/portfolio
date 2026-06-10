@@ -1,0 +1,63 @@
+---
+title: "Parking Guidance System"
+company: "Infineon Technologies AG"
+period: "2024 – present"
+status: "active"
+category: "work"
+tagline: "Saves €480K/year vs. market alternatives"
+stack: ["Python", "C#", "C", "React", "TypeScript", "Computer Vision", "Docker", "WebSockets"]
+impact:
+  - label: "Annual savings"
+    value: "€480K"
+  - label: "Users"
+    value: "8,000"
+  - label: "Monthly active"
+    value: "3,000"
+---
+
+## Context
+
+Infineon's Dresden campus has hundreds of parking spaces spread across several lots. Before this project, the company was evaluating commercial parking guidance vendors — the best offer was **€480,000/year** in licensing and maintenance fees.
+
+The alternative: build it in-house.
+
+## What was built
+
+A full parking guidance system, from hardware to dashboard:
+
+- **Embedded firmware** in C running on IP cameras — performs ANPR (Automatic Number Plate Recognition) and occupancy counting without sending video streams over the network.
+- **Python microservices** aggregate zone occupancy, handle authentication, and serve the REST/WebSocket API.
+- **C# device management layer** handles camera provisioning, firmware updates, and health monitoring.
+- **React + TypeScript dashboard** gives security staff and drivers a real-time map of available spaces.
+
+## Architecture
+
+```
+┌──────────────────┐     MQTT      ┌────────────────────┐
+│  IP Camera (C)   │ ────────────► │  Python Backend    │
+│  ANPR + Count    │               │  (Event Processor) │
+└──────────────────┘               └────────┬───────────┘
+                                            │ WebSocket
+                                   ┌────────▼───────────┐
+                                   │  React Dashboard   │
+                                   │  (Real-time map)   │
+                                   └────────────────────┘
+```
+
+Cameras run the detection locally (edge computing) — only occupancy events are sent over the network, not video. This keeps bandwidth low and avoids GDPR issues with centralized video storage.
+
+## Challenges
+
+**The embedded + web bridge.** Writing C for resource-constrained cameras and then wiring it to a React SPA required designing a clean protocol boundary. MQTT was chosen over HTTP polling to keep latency under 500ms.
+
+**Graceful degradation.** If a camera goes offline, the system doesn't show stale data — it marks the zone as "unknown" and the dashboard reflects uncertainty rather than lying.
+
+**Multi-tenant configuration.** Different parking lots have different layouts. A configuration-as-data approach means adding a new lot is a JSON file, not a code change.
+
+## Outcome
+
+The system went live on campus. **€480,000/year saved** vs. the vendor quote. The barrier control subsystem added independently serves **8,000 registered users** with **3,000 monthly active**.
+
+## What I'd do differently
+
+The MQTT topic structure grew organically and became inconsistent across camera types. I'd define the topic schema upfront as a formal contract and version it from day one.

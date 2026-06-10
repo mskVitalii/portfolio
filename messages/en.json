@@ -1,0 +1,45 @@
+{
+  "Common": {
+    "siteName": "Vitalii Popov"
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "HomePage": {
+    "title": "Full-stack engineer focused on building systems that create measurable business value.",
+    "subtitle": "Go · TypeScript · Distributed Systems · AI"
+  },
+  "ViewMode": {
+    "label": "Audience mode",
+    "hr": "HR",
+    "business": "Business",
+    "tech": "Tech"
+  },
+  "Theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "About": {
+    "title": "About me",
+    "downloadCv": "Download CV"
+  },
+  "Contact": {
+    "title": "Get in touch",
+    "subtitle": "Open to new opportunities, technical collaboration, and interesting conversations.",
+    "findMe": "Find me at",
+    "sendMessage": "Send a message",
+    "faq": "Frequently asked questions"
+  },
+  "Projects": {
+    "title": "Projects",
+    "subtitle": "Case studies from real engineering work. Switch the audience mode to see each project from a different perspective.",
+    "allProjects": "All projects",
+    "comingSoon": "Detailed write-up coming soon",
+    "comingSoonSub": "The overview is above; the full case study is being written."
+  }
+}

@@ -1,0 +1,219 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "Vitalii Popov" [ref=e5] [cursor=pointer]:
+          - /url: /en
+        - navigation [ref=e6]:
+          - link "Home" [ref=e7] [cursor=pointer]:
+            - /url: /en
+          - link "About" [ref=e8] [cursor=pointer]:
+            - /url: /en/about
+          - link "Projects" [ref=e9] [cursor=pointer]:
+            - /url: /en/projects
+          - link "Skills" [ref=e10] [cursor=pointer]:
+            - /url: /en/skills
+          - link "Contact" [ref=e11] [cursor=pointer]:
+            - /url: /en/contact
+      - generic [ref=e12]:
+        - link "CV" [ref=e13] [cursor=pointer]:
+          - /url: /cv/vitalii-popov-cv.pdf
+          - img
+          - text: CV
+        - group "Audience mode" [ref=e14]:
+          - button "HR" [ref=e15]
+          - button "Business" [ref=e16]
+          - button "Tech" [ref=e17]
+        - button "Toggle theme" [disabled]:
+          - img
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - img [ref=e22]
+        - heading "Engineering Decisions" [level=1] [ref=e26]
+      - paragraph [ref=e27]: A public ADR (Architecture Decision Record) database. Every significant technical decision I've made — context, options, reasoning, tradeoffs, and outcome.
+    - generic [ref=e28]:
+      - article [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - text: ADR-001
+            - heading "Go for warehouse search service, not Java" [level=2] [ref=e32]
+          - generic [ref=e33]: Accepted
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - text: Context
+            - paragraph [ref=e36]: OZON needed a high-concurrency search microservice for 200M warehouse items. Java/Spring was the team default.
+          - generic [ref=e37]:
+            - text: Options considered
+            - generic [ref=e38]:
+              - generic [ref=e39]: ✓ Go
+              - generic [ref=e40]: Java/Spring Boot
+              - generic [ref=e41]: Python/FastAPI
+          - generic [ref=e42]:
+            - text: Reasoning
+            - paragraph [ref=e43]: Go's goroutine model handles 10K concurrent connections with ~50MB RAM vs. Java's thread-per-request model needing ~2GB. Single binary deployment eliminates JVM overhead. The team already knew Go.
+          - generic [ref=e44]:
+            - text: Tradeoffs
+            - paragraph [ref=e45]: Fewer libraries than Java ecosystem. String manipulation is more verbose. No generics at the time (pre-Go 1.18).
+          - generic [ref=e46]:
+            - text: Outcome
+            - paragraph [ref=e47]: Service runs on a single 2-core instance serving 500 RPS at P95 < 80ms. Java equivalent would have needed 4x the hardware.
+        - generic [ref=e48]:
+          - generic [ref=e49]: Go
+          - generic [ref=e50]: Performance
+          - generic [ref=e51]: Architecture
+      - article [ref=e52]:
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - text: ADR-002
+            - heading "ElasticSearch over PostgreSQL full-text for search" [level=2] [ref=e55]
+          - generic [ref=e56]: Accepted
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - text: Context
+            - paragraph [ref=e59]: PostgreSQL FTS was hitting 8-10s at 200M documents. A search engine was clearly needed.
+          - generic [ref=e60]:
+            - text: Options considered
+            - generic [ref=e61]:
+              - generic [ref=e62]: ✓ ElasticSearch
+              - generic [ref=e63]: PostgreSQL full-text
+              - generic [ref=e64]: Typesense
+              - generic [ref=e65]: Meilisearch
+          - generic [ref=e66]:
+            - text: Reasoning
+            - paragraph [ref=e67]: ES supports custom analyzers for Russian transliteration (a hard requirement). Fuzzy matching and phonetic analysis work out of the box. Horizontal sharding is transparent. Team had prior experience.
+          - generic [ref=e68]:
+            - text: Tradeoffs
+            - paragraph [ref=e69]: Operational complexity vs. Postgres (separate cluster, JVM memory). Eventual consistency between Postgres (source of truth) and ES (search replica). Complex upgrade path.
+          - generic [ref=e70]:
+            - text: Outcome
+            - paragraph [ref=e71]: Search latency dropped from 8-10s to <500ms P99. Custom analyzer solved transliteration with ~2% false positive rate.
+        - generic [ref=e72]:
+          - generic [ref=e73]: ElasticSearch
+          - generic [ref=e74]: Search
+          - generic [ref=e75]: Database
+      - article [ref=e76]:
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - text: ADR-003
+            - heading "Kafka for search index updates, not polling" [level=2] [ref=e79]
+          - generic [ref=e80]: Accepted
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - text: Context
+            - paragraph [ref=e83]: "ES index needs to stay current with the product catalog. Options: poll DB, use CDC, or event stream."
+          - generic [ref=e84]:
+            - text: Options considered
+            - generic [ref=e85]:
+              - generic [ref=e86]: DB polling
+              - generic [ref=e87]: PostgreSQL CDC (Debezium)
+              - generic [ref=e88]: ✓ Kafka events from catalog service
+          - generic [ref=e89]:
+            - text: Reasoning
+            - paragraph [ref=e90]: Catalog service already published events to Kafka. Consuming them is simpler than setting up Debezium CDC. Kafka's consumer group semantics allow replay on failure. Sub-2s lag is acceptable.
+          - generic [ref=e91]:
+            - text: Tradeoffs
+            - paragraph [ref=e92]: Depends on catalog service publishing correct events (coupling). Requires handling out-of-order events. CDC would be more robust for high-volume bulk updates.
+          - generic [ref=e93]:
+            - text: Outcome
+            - paragraph [ref=e94]: Works well for normal traffic. Exposed a gap during bulk catalog updates where event ordering caused temporary stale data.
+        - generic [ref=e95]:
+          - generic [ref=e96]: Kafka
+          - generic [ref=e97]: Architecture
+          - generic [ref=e98]: ElasticSearch
+      - article [ref=e99]:
+        - generic [ref=e100]:
+          - generic [ref=e101]:
+            - text: ADR-004
+            - heading "MQTT over HTTP for camera-to-backend communication" [level=2] [ref=e102]
+          - generic [ref=e103]: Accepted
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - text: Context
+            - paragraph [ref=e106]: Parking cameras need to push occupancy events to the backend. Cameras are on a campus LAN.
+          - generic [ref=e107]:
+            - text: Options considered
+            - generic [ref=e108]:
+              - generic [ref=e109]: HTTP polling
+              - generic [ref=e110]: HTTP webhooks from cameras
+              - generic [ref=e111]: MQTT pub/sub
+              - generic [ref=e112]: WebSockets
+          - generic [ref=e113]:
+            - text: Reasoning
+            - paragraph [ref=e114]: Cameras are resource-constrained (embedded C, limited RAM). MQTT is designed for IoT — small payload overhead, persistent connections, QoS levels for at-least-once delivery. Single broker handles hundreds of cameras.
+          - generic [ref=e115]:
+            - text: Tradeoffs
+            - paragraph [ref=e116]: Adds MQTT broker as infrastructure dependency. Topic schema needs discipline or becomes chaotic. Harder to debug than REST.
+          - generic [ref=e117]:
+            - text: Outcome
+            - paragraph [ref=e118]: Event latency <200ms from camera to dashboard. Broker handles 200 cameras with <5% CPU on a modest VM.
+        - generic [ref=e119]:
+          - generic [ref=e120]: MQTT
+          - generic [ref=e121]: IoT
+          - generic [ref=e122]: Architecture
+          - generic [ref=e123]: Embedded
+  - contentinfo [ref=e124]:
+    - generic [ref=e125]:
+      - generic [ref=e126]:
+        - generic [ref=e127]:
+          - paragraph [ref=e128]: Vitalii Popov
+          - paragraph [ref=e129]:
+            - text: Full-Stack Engineer · Berlin
+            - text: Distributed Systems · AI
+          - generic [ref=e130]:
+            - link "LinkedIn" [ref=e131] [cursor=pointer]:
+              - /url: https://linkedin.com/in/mskvitalii
+              - img [ref=e132]
+            - link "GitHub" [ref=e134] [cursor=pointer]:
+              - /url: https://github.com/mskvitalii
+              - img [ref=e135]
+            - link "msk.vitaly@gmail.com" [ref=e137] [cursor=pointer]:
+              - /url: mailto:msk.vitaly@gmail.com
+        - generic [ref=e138]:
+          - paragraph [ref=e139]: Navigation
+          - list [ref=e140]:
+            - listitem [ref=e141]:
+              - link "About" [ref=e142] [cursor=pointer]:
+                - /url: /en/about
+            - listitem [ref=e143]:
+              - link "Projects" [ref=e144] [cursor=pointer]:
+                - /url: /en/projects
+            - listitem [ref=e145]:
+              - link "Skills" [ref=e146] [cursor=pointer]:
+                - /url: /en/skills
+        - generic [ref=e147]:
+          - paragraph [ref=e148]
+          - list [ref=e149]:
+            - listitem [ref=e150]:
+              - link "Blog" [ref=e151] [cursor=pointer]:
+                - /url: /en/blog
+            - listitem [ref=e152]:
+              - link "Roadmap" [ref=e153] [cursor=pointer]:
+                - /url: /en/roadmap
+            - listitem [ref=e154]:
+              - link "Contact" [ref=e155] [cursor=pointer]:
+                - /url: /en/contact
+        - generic [ref=e156]:
+          - paragraph [ref=e157]: More
+          - list [ref=e158]:
+            - listitem [ref=e159]:
+              - link "Failure Stories" [ref=e160] [cursor=pointer]:
+                - /url: /en/failures
+            - listitem [ref=e161]:
+              - link "ADR Database" [ref=e162] [cursor=pointer]:
+                - /url: /en/decisions
+            - listitem [ref=e163]:
+              - link "Open Source" [ref=e164] [cursor=pointer]:
+                - /url: /en/open-source
+            - listitem [ref=e165]:
+              - link "Recommendations" [ref=e166] [cursor=pointer]:
+                - /url: /en/recommendations
+      - generic [ref=e167]:
+        - paragraph [ref=e168]: © 2026 Vitalii Popov. Built with Next.js, Tailwind, shadcn/ui.
+        - generic [ref=e169]:
+          - link "Sitemap" [ref=e170] [cursor=pointer]:
+            - /url: /sitemap.xml
+          - link "Download CV" [ref=e171] [cursor=pointer]:
+            - /url: /cv/vitalii-popov-cv.pdf
+  - button "Open Next.js Dev Tools" [ref=e177] [cursor=pointer]:
+    - img [ref=e178]

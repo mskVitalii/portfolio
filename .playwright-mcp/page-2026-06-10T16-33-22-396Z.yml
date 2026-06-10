@@ -1,0 +1,176 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "Vitalii Popov" [ref=e5] [cursor=pointer]:
+          - /url: /en
+        - navigation [ref=e6]:
+          - link "Home" [ref=e7] [cursor=pointer]:
+            - /url: /en
+          - link "About" [ref=e8] [cursor=pointer]:
+            - /url: /en/about
+          - link "Projects" [ref=e9] [cursor=pointer]:
+            - /url: /en/projects
+          - link "Skills" [ref=e10] [cursor=pointer]:
+            - /url: /en/skills
+          - link "Contact" [ref=e11] [cursor=pointer]:
+            - /url: /en/contact
+      - generic [ref=e12]:
+        - link "CV" [ref=e13] [cursor=pointer]:
+          - /url: /cv/vitalii-popov-cv.pdf
+          - img
+          - text: CV
+        - group "Audience mode" [ref=e14]:
+          - button "HR" [ref=e15]
+          - button "Business" [ref=e16]
+          - button "Tech" [ref=e17]
+        - button "Toggle theme" [disabled]:
+          - img
+  - main [ref=e19]:
+    - link "All projects" [ref=e20] [cursor=pointer]:
+      - /url: /en/projects
+      - img
+      - text: All projects
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]: Active
+        - generic [ref=e24]: work
+      - heading "Parking Guidance System" [level=1] [ref=e25]
+      - paragraph [ref=e26]: Saves €480K/year vs. market alternatives
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - img [ref=e29]
+          - text: Infineon Technologies AG
+        - generic [ref=e33]:
+          - img [ref=e34]
+          - text: 2024 – present
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]: €480K
+        - generic [ref=e39]: Annual savings
+      - generic [ref=e40]:
+        - generic [ref=e41]: 8,000
+        - generic [ref=e42]: Users
+      - generic [ref=e43]:
+        - generic [ref=e44]: 3,000
+        - generic [ref=e45]: Monthly active
+    - generic [ref=e46]:
+      - generic [ref=e47]: Python
+      - generic [ref=e48]: C#
+      - generic [ref=e49]: C
+      - generic [ref=e50]: React
+      - generic [ref=e51]: TypeScript
+      - generic [ref=e52]: Computer Vision
+      - generic [ref=e53]: Docker
+      - generic [ref=e54]: WebSockets
+    - article [ref=e55]:
+      - heading "Context" [level=2] [ref=e56]
+      - paragraph [ref=e57]:
+        - text: Infineon's Dresden campus has hundreds of parking spaces spread across several lots. Before this project, the company was evaluating commercial parking guidance vendors — the best offer was
+        - strong [ref=e58]: €480,000/year
+        - text: in licensing and maintenance fees.
+      - paragraph [ref=e59]: "The alternative: build it in-house."
+      - heading "What was built" [level=2] [ref=e60]
+      - paragraph [ref=e61]: "A full parking guidance system, from hardware to dashboard:"
+      - list [ref=e62]:
+        - listitem [ref=e63]:
+          - strong [ref=e64]: Embedded firmware
+          - text: in C running on IP cameras — performs ANPR (Automatic Number Plate Recognition) and occupancy counting without sending video streams over the network.
+        - listitem [ref=e65]:
+          - strong [ref=e66]: Python microservices
+          - text: aggregate zone occupancy, handle authentication, and serve the REST/WebSocket API.
+        - listitem [ref=e67]:
+          - strong [ref=e68]: C# device management layer
+          - text: handles camera provisioning, firmware updates, and health monitoring.
+        - listitem [ref=e69]:
+          - strong [ref=e70]: React + TypeScript dashboard
+          - text: gives security staff and drivers a real-time map of available spaces.
+      - heading "Architecture" [level=2] [ref=e71]
+      - code [ref=e73]: ┌──────────────────┐ MQTT ┌────────────────────┐ │ IP Camera (C) │ ────────────► │ Python Backend │ │ ANPR + Count │ │ (Event Processor) │ └──────────────────┘ └────────┬───────────┘ │ WebSocket ┌────────▼───────────┐ │ React Dashboard │ │ (Real-time map) │ └────────────────────┘
+      - paragraph [ref=e74]: Cameras run the detection locally (edge computing) — only occupancy events are sent over the network, not video. This keeps bandwidth low and avoids GDPR issues with centralized video storage.
+      - heading "Challenges" [level=2] [ref=e75]
+      - paragraph [ref=e76]:
+        - strong [ref=e77]: The embedded + web bridge.
+        - text: Writing C for resource-constrained cameras and then wiring it to a React SPA required designing a clean protocol boundary. MQTT was chosen over HTTP polling to keep latency under 500ms.
+      - paragraph [ref=e78]:
+        - strong [ref=e79]: Graceful degradation.
+        - text: If a camera goes offline, the system doesn't show stale data — it marks the zone as "unknown" and the dashboard reflects uncertainty rather than lying.
+      - paragraph [ref=e80]:
+        - strong [ref=e81]: Multi-tenant configuration.
+        - text: Different parking lots have different layouts. A configuration-as-data approach means adding a new lot is a JSON file, not a code change.
+      - heading "Outcome" [level=2] [ref=e82]
+      - paragraph [ref=e83]:
+        - text: The system went live on campus.
+        - strong [ref=e84]: €480,000/year saved
+        - text: vs. the vendor quote. The barrier control subsystem added independently serves
+        - strong [ref=e85]: 8,000 registered users
+        - text: with
+        - strong [ref=e86]: 3,000 monthly active
+        - text: .
+      - heading "What I'd do differently" [level=2] [ref=e87]
+      - paragraph [ref=e88]: The MQTT topic structure grew organically and became inconsistent across camera types. I'd define the topic schema upfront as a formal contract and version it from day one.
+  - contentinfo [ref=e89]:
+    - generic [ref=e90]:
+      - generic [ref=e91]:
+        - generic [ref=e92]:
+          - paragraph [ref=e93]: Vitalii Popov
+          - paragraph [ref=e94]:
+            - text: Full-Stack Engineer · Berlin
+            - text: Distributed Systems · AI
+          - generic [ref=e95]:
+            - link "LinkedIn" [ref=e96] [cursor=pointer]:
+              - /url: https://linkedin.com/in/mskvitalii
+              - img [ref=e97]
+            - link "GitHub" [ref=e99] [cursor=pointer]:
+              - /url: https://github.com/mskvitalii
+              - img [ref=e100]
+            - link "msk.vitaly@gmail.com" [ref=e102] [cursor=pointer]:
+              - /url: mailto:msk.vitaly@gmail.com
+        - generic [ref=e103]:
+          - paragraph [ref=e104]: Navigation
+          - list [ref=e105]:
+            - listitem [ref=e106]:
+              - link "About" [ref=e107] [cursor=pointer]:
+                - /url: /en/about
+            - listitem [ref=e108]:
+              - link "Projects" [ref=e109] [cursor=pointer]:
+                - /url: /en/projects
+            - listitem [ref=e110]:
+              - link "Skills" [ref=e111] [cursor=pointer]:
+                - /url: /en/skills
+        - generic [ref=e112]:
+          - paragraph [ref=e113]
+          - list [ref=e114]:
+            - listitem [ref=e115]:
+              - link "Blog" [ref=e116] [cursor=pointer]:
+                - /url: /en/blog
+            - listitem [ref=e117]:
+              - link "Roadmap" [ref=e118] [cursor=pointer]:
+                - /url: /en/roadmap
+            - listitem [ref=e119]:
+              - link "Contact" [ref=e120] [cursor=pointer]:
+                - /url: /en/contact
+        - generic [ref=e121]:
+          - paragraph [ref=e122]: More
+          - list [ref=e123]:
+            - listitem [ref=e124]:
+              - link "Failure Stories" [ref=e125] [cursor=pointer]:
+                - /url: /en/failures
+            - listitem [ref=e126]:
+              - link "ADR Database" [ref=e127] [cursor=pointer]:
+                - /url: /en/decisions
+            - listitem [ref=e128]:
+              - link "Open Source" [ref=e129] [cursor=pointer]:
+                - /url: /en/open-source
+            - listitem [ref=e130]:
+              - link "Recommendations" [ref=e131] [cursor=pointer]:
+                - /url: /en/recommendations
+      - generic [ref=e132]:
+        - paragraph [ref=e133]: © 2026 Vitalii Popov. Built with Next.js, Tailwind, shadcn/ui.
+        - generic [ref=e134]:
+          - link "Sitemap" [ref=e135] [cursor=pointer]:
+            - /url: /sitemap.xml
+          - link "Download CV" [ref=e136] [cursor=pointer]:
+            - /url: /cv/vitalii-popov-cv.pdf
+  - button "Open Next.js Dev Tools" [ref=e142] [cursor=pointer]:
+    - img [ref=e143]

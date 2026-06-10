@@ -1,0 +1,43 @@
+---
+title: "A/B Testing & UI Platform"
+company: "onlineTours"
+period: "2023 – 2024"
+status: "archived"
+statusNote: "Contract ended; moved to Infineon full-time."
+category: "work"
+tagline: "11.63% uplift in key business metrics via experimentation"
+stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook"]
+impact:
+  - label: "Metric uplift"
+    value: "11.63%"
+---
+
+## Context
+
+onlineTours is a travel aggregator. Their growth team had hypotheses about SEO landing pages and booking flow UX changes but no reliable way to test them. The existing frontend was a mix of legacy React and Rails-rendered HTML, with no component library and no A/B testing infrastructure.
+
+## What was built
+
+Two parallel workstreams:
+
+**1. Component library**
+A React + TypeScript component library with Tailwind styling and Storybook documentation. Components were designed to be A/B-test-aware from day one — each accepts a `variant` prop that switches between control and test variants.
+
+**2. A/B testing infrastructure**
+Server-side experiment flag assignment in Ruby on Rails. Users are assigned to variants deterministically by a hashed user ID — the same user always sees the same variant. Assignment is stored in Redis for fast reads on every page load.
+
+## Experiments that shipped
+
+The most impactful experiment was a redesign of the **tour listing page** — specifically the price display and sorting defaults. The test variant showed prices inclusive of all fees upfront (vs. the baseline "from X€" pattern). The uplift was **11.63%** on the primary booking conversion metric over a 4-week window.
+
+## Technical notes
+
+**Why Jotai for local state?** The component library needed lightweight local state that didn't bleed into the global Redux store. Jotai's atom model is scoped per component tree, making it easy to isolate experiment state.
+
+**Why server-side assignment?** Client-side A/B assignment causes flicker — users see the control version for a frame before the test variant loads. Server-side assignment means the correct variant is in the initial HTML.
+
+**Storybook as contract.** Every component had a story per variant, making design review fast and reducing QA cycles for new experiments.
+
+## What I'd do differently
+
+The experiment configuration was stored in the Rails codebase — changing an experiment required a deploy. I'd move experiment config to a feature flag service (LaunchDarkly or a simple Redis-backed JSON) so the product team can start and stop tests without involving engineering.

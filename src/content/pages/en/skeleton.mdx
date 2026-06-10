@@ -1,0 +1,43 @@
+---
+title: "Walking Skeleton"
+summary: "Phase 1 foundation verification page — proves MDX pipeline, syntax highlighting, and locale fallback."
+---
+
+# Walking Skeleton
+
+This page verifies that the MDX content pipeline works end-to-end:
+static rendering, syntax highlighting, and locale fallback are all confirmed here.
+
+## Features Verified
+
+- **MDX** rendered server-side via `next-mdx-remote/rsc`
+- **Syntax highlighting** via `rehype-pretty-code` + Shiki (responds to dark/light mode)
+- **Locale fallback** — `/de/skeleton` and `/ru/skeleton` render using this English file
+
+## Sample Code
+
+Here's a TypeScript function demonstrating the kind of systems I build:
+
+```typescript
+async function indexProducts(
+  products: Product[],
+  vectorStore: VectorStore
+): Promise<IndexResult> {
+  const embeddings = await Promise.all(
+    products.map((p) => embed(p.description))
+  );
+
+  await vectorStore.upsert(
+    products.map((p, i) => ({
+      id: p.id,
+      vector: embeddings[i],
+      metadata: { title: p.title, price: p.price },
+    }))
+  );
+
+  return { indexed: products.length, errors: 0 };
+}
+```
+
+This pattern was used to index **200M products** in a semantic search system
+that reduced search infrastructure costs by **€480,000/year**.

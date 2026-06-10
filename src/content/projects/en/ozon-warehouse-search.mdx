@@ -1,0 +1,65 @@
+---
+title: "Warehouse Search Engine"
+company: "OZON Tech"
+period: "2021 – 2023"
+status: "archived"
+statusNote: "Project continues at OZON; left when relocating to Germany for Master's."
+category: "work"
+tagline: "200M warehouse items searchable in under 5 seconds"
+stack: ["Go", "ElasticSearch", "Kafka", "Redis", "PostgreSQL", "C#", "Docker", "Kubernetes", "Prometheus", "Grafana"]
+impact:
+  - label: "Items indexed"
+    value: "200M"
+  - label: "Search latency"
+    value: "<5 sec"
+  - label: "Cost savings"
+    value: "€86K"
+---
+
+## Context
+
+OZON is one of Russia's largest e-commerce platforms — think Amazon scale for Eastern Europe. The warehouse operations team manages inventory across multiple fulfilment centres. When a picker needs to locate an item across 200M SKUs, every second of search latency has a direct operational cost.
+
+The existing search was a SQL LIKE query on a PostgreSQL table. At 200M rows, it was unusable.
+
+## What was built
+
+A Go microservice providing full-text and fuzzy search over the warehouse catalogue:
+
+- **ElasticSearch** as the search backend with custom analyzers for Russian transliteration and partial SKU matching.
+- **Kafka consumer** ingesting product catalog updates in real time — search index stays current without polling.
+- **Redis** for hot-path caching of the top 10,000 most-searched SKUs, dropping P95 latency from ~800ms to ~40ms for common queries.
+- **REST API** consumed by the warehouse management web app.
+
+A parallel project added a **C# barcode scanner integration** — USB scanners on warehouse terminals now feed directly into the order management system via WebSockets, eliminating manual data entry. This saved €86K/year in labour.
+
+## Architecture
+
+```
+Product Catalog  ──Kafka──►  Go Search Service  ──REST──►  WMS Frontend
+   (updates)                  │                              (React)
+                              ├──► ElasticSearch
+                              └──► Redis (cache)
+
+Barcode Scanners ──USB──► C# Agent ──WebSocket──► PostgreSQL ──► Orders
+```
+
+## Technical decisions
+
+**Why Go?** High concurrency, low memory footprint, single binary deployment. The search service handles bursts of concurrent warehouse terminals without needing a large instance.
+
+**Why ElasticSearch over Postgres full-text?** ES gives fuzzy matching, phonetic analysis for Russian transliteration, and horizontal sharding for the 200M document corpus. Postgres FTS was hitting 8–10s at that scale.
+
+**Why Kafka instead of DB polling?** Decouples catalog updates from index refreshes. Warehouse searches never hit stale data for more than ~2 seconds after a product change.
+
+## Challenges
+
+The hardest part was the **Russian transliteration problem**: warehouse staff type SKU names both in Cyrillic and in Latin (e.g. "БОЛТ М8" and "bolt m8"). Building a custom ElasticSearch analyzer that handled both directions without returning too many false positives required a lot of iteration on test queries.
+
+## Observability
+
+Prometheus metrics scraped by Grafana. Key dashboards: query latency P50/P95/P99, cache hit rate, Kafka consumer lag, index size over time.
+
+## What I'd do differently
+
+The cache invalidation logic was tied to Kafka events, which meant a cache miss storm after a batch product update. I'd add a short TTL as a safety net even when explicit invalidation is in place.

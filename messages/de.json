@@ -1,0 +1,45 @@
+{
+  "Common": {
+    "siteName": "Vitalii Popov"
+  },
+  "Nav": {
+    "home": "Startseite",
+    "about": "Über mich",
+    "projects": "Projekte",
+    "skills": "Fähigkeiten",
+    "contact": "Kontakt"
+  },
+  "HomePage": {
+    "title": "Full-Stack-Entwickler mit Fokus auf Systeme, die messbaren Geschäftswert schaffen.",
+    "subtitle": "Go · TypeScript · Verteilte Systeme · KI"
+  },
+  "ViewMode": {
+    "label": "Zielgruppe",
+    "hr": "HR",
+    "business": "Business",
+    "tech": "Tech"
+  },
+  "Theme": {
+    "toggle": "Design wechseln",
+    "light": "Hell",
+    "dark": "Dunkel"
+  },
+  "About": {
+    "title": "Über mich",
+    "downloadCv": "Lebenslauf herunterladen"
+  },
+  "Contact": {
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Offen für neue Möglichkeiten, technische Zusammenarbeit und interessante Gespräche.",
+    "findMe": "Hier bin ich zu finden",
+    "sendMessage": "Nachricht senden",
+    "faq": "Häufig gestellte Fragen"
+  },
+  "Projects": {
+    "title": "Projekte",
+    "subtitle": "Fallstudien aus echten Engineering-Projekten. Zielgruppen-Modus wechseln für andere Perspektive.",
+    "allProjects": "Alle Projekte",
+    "comingSoon": "Ausführliche Beschreibung folgt",
+    "comingSoonSub": "Die vollständige Fallstudie wird gerade geschrieben."
+  }
+}

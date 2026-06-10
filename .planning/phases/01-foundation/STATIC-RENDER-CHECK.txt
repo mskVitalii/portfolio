@@ -1,0 +1,29 @@
+Phase 1 Static Render Verification
+===================================
+Date: 2026-06-10
+Next.js: 16.2.9 (Turbopack)
+
+Build Output (Route Table):
+┌ ○ /_not-found
+├ ● /[locale]
+│ ├ /en
+│ ├ /de
+│ └ /ru
+└ ● /[locale]/skeleton
+  ├ /en/skeleton
+  ├ /de/skeleton
+  └ /ru/skeleton
+
+● = prerendered as static HTML (uses generateStaticParams)
+○ = prerendered as static content
+NO dynamic (ƒ) routes in portfolio.
+
+Prerendered HTML files verified:
+- .next/server/app/en.html        ✓
+- .next/server/app/de.html        ✓
+- .next/server/app/ru.html        ✓
+- .next/server/app/en/skeleton.html ✓ (contains "skeleton")
+- .next/server/app/de/skeleton.html ✓
+- .next/server/app/ru/skeleton.html ✓
+
+Conclusion: All portfolio routes are statically generated. No dynamic SSR leak.

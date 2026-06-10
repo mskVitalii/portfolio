@@ -1,0 +1,162 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Vitalii Popov" [ref=e5] [cursor=pointer]:
+        - /url: /en
+      - generic [ref=e6]:
+        - group "Audience mode" [ref=e7]:
+          - button "HR" [ref=e8]
+          - button "Business" [pressed] [ref=e9]
+          - button "Tech" [ref=e10]
+        - button "Toggle theme" [ref=e11]:
+          - img
+        - button "Toggle menu" [ref=e13]:
+          - img
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - heading "Vitalii Popov" [level=1] [ref=e18]
+        - paragraph [ref=e19]: Full-Stack Engineer · Distributed Systems · AI
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - img
+            - text: Berlin, Germany
+          - generic [ref=e22]:
+            - img
+            - text: EN · DE · RU
+        - paragraph [ref=e23]: Full-stack engineer focused on building systems that create measurable business value. 5+ years across e-commerce, mobility, and AI.
+        - generic [ref=e24]:
+          - link "Email" [ref=e25] [cursor=pointer]:
+            - /url: mailto:msk.vitaly@gmail.com
+            - img
+            - text: Email
+          - link "LinkedIn" [ref=e26] [cursor=pointer]:
+            - /url: https://linkedin.com/in/mskvitalii
+            - img
+            - text: LinkedIn
+          - link "GitHub" [ref=e27] [cursor=pointer]:
+            - /url: https://github.com/mskvitalii
+            - img
+            - text: GitHub
+          - link "Telegram" [ref=e28] [cursor=pointer]:
+            - /url: https://t.me/mskvitalii
+            - img
+            - text: Telegram
+        - generic [ref=e29]:
+          - link "Download CV" [ref=e30] [cursor=pointer]:
+            - /url: /cv/vitalii-popov-cv.pdf
+            - img
+            - text: Download CV
+          - link "About me →" [ref=e31] [cursor=pointer]:
+            - /url: /en/about
+      - generic [ref=e32]: ↓ see impact
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - heading "Impact" [level=2] [ref=e36]
+        - paragraph [ref=e37]: Measurable outcomes from real production systems
+      - generic [ref=e38]:
+        - link "€0K Annual savings Parking Guidance System vs. market alternatives Infineon" [ref=e40] [cursor=pointer]:
+          - /url: /en/projects
+          - generic [ref=e42]:
+            - paragraph [ref=e43]: €0K
+            - paragraph [ref=e44]: Annual savings
+            - paragraph [ref=e45]: Parking Guidance System vs. market alternatives
+            - generic [ref=e46]: Infineon
+        - link "0K Users served Barrier control application Infineon" [ref=e48] [cursor=pointer]:
+          - /url: /en/projects
+          - generic [ref=e50]:
+            - paragraph [ref=e51]: 0K
+            - paragraph [ref=e52]: Users served
+            - paragraph [ref=e53]: Barrier control application
+            - generic [ref=e54]: Infineon
+        - link "0K Monthly active users Parking Guidance System, MAU Infineon" [ref=e56] [cursor=pointer]:
+          - /url: /en/projects
+          - generic [ref=e58]:
+            - paragraph [ref=e59]: 0K
+            - paragraph [ref=e60]: Monthly active users
+            - paragraph [ref=e61]: Parking Guidance System, MAU
+            - generic [ref=e62]: Infineon
+        - link "0M Items indexed Warehouse search in under 5 seconds OZON Tech" [ref=e64] [cursor=pointer]:
+          - /url: /en/projects
+          - generic [ref=e66]:
+            - paragraph [ref=e67]: 0M
+            - paragraph [ref=e68]: Items indexed
+            - paragraph [ref=e69]: Warehouse search in under 5 seconds
+            - generic [ref=e70]: OZON Tech
+        - link "0.00% Metric uplift A/B testing in SEO and UX onlineTours" [ref=e72] [cursor=pointer]:
+          - /url: /en/projects
+          - generic [ref=e74]:
+            - paragraph [ref=e75]: 0.00%
+            - paragraph [ref=e76]: Metric uplift
+            - paragraph [ref=e77]: A/B testing in SEO and UX
+            - generic [ref=e78]: onlineTours
+      - paragraph [ref=e79]:
+        - text: Each metric links to the full project case study.
+        - link "See all projects →" [ref=e80] [cursor=pointer]:
+          - /url: /en/projects
+  - contentinfo [ref=e81]:
+    - generic [ref=e82]:
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: Vitalii Popov
+          - paragraph [ref=e86]:
+            - text: Full-Stack Engineer · Berlin
+            - text: Distributed Systems · AI
+          - generic [ref=e87]:
+            - link "LinkedIn" [ref=e88] [cursor=pointer]:
+              - /url: https://linkedin.com/in/mskvitalii
+              - img [ref=e89]
+            - link "GitHub" [ref=e91] [cursor=pointer]:
+              - /url: https://github.com/mskvitalii
+              - img [ref=e92]
+            - link "msk.vitaly@gmail.com" [ref=e94] [cursor=pointer]:
+              - /url: mailto:msk.vitaly@gmail.com
+        - generic [ref=e95]:
+          - paragraph [ref=e96]: Navigation
+          - list [ref=e97]:
+            - listitem [ref=e98]:
+              - link "About" [ref=e99] [cursor=pointer]:
+                - /url: /en/about
+            - listitem [ref=e100]:
+              - link "Projects" [ref=e101] [cursor=pointer]:
+                - /url: /en/projects
+            - listitem [ref=e102]:
+              - link "Skills" [ref=e103] [cursor=pointer]:
+                - /url: /en/skills
+        - generic [ref=e104]:
+          - paragraph [ref=e105]
+          - list [ref=e106]:
+            - listitem [ref=e107]:
+              - link "Blog" [ref=e108] [cursor=pointer]:
+                - /url: /en/blog
+            - listitem [ref=e109]:
+              - link "Roadmap" [ref=e110] [cursor=pointer]:
+                - /url: /en/roadmap
+            - listitem [ref=e111]:
+              - link "Contact" [ref=e112] [cursor=pointer]:
+                - /url: /en/contact
+        - generic [ref=e113]:
+          - paragraph [ref=e114]: More
+          - list [ref=e115]:
+            - listitem [ref=e116]:
+              - link "Failure Stories" [ref=e117] [cursor=pointer]:
+                - /url: /en/failures
+            - listitem [ref=e118]:
+              - link "ADR Database" [ref=e119] [cursor=pointer]:
+                - /url: /en/decisions
+            - listitem [ref=e120]:
+              - link "Open Source" [ref=e121] [cursor=pointer]:
+                - /url: /en/open-source
+            - listitem [ref=e122]:
+              - link "Recommendations" [ref=e123] [cursor=pointer]:
+                - /url: /en/recommendations
+      - generic [ref=e124]:
+        - paragraph [ref=e125]: © 2026 Vitalii Popov. Built with Next.js, Tailwind, shadcn/ui.
+        - generic [ref=e126]:
+          - link "Sitemap" [ref=e127] [cursor=pointer]:
+            - /url: /sitemap.xml
+          - link "Download CV" [ref=e128] [cursor=pointer]:
+            - /url: /cv/vitalii-popov-cv.pdf
+  - button "Open Next.js Dev Tools" [ref=e134] [cursor=pointer]:
+    - img [ref=e135]
+  - alert [ref=e138]
