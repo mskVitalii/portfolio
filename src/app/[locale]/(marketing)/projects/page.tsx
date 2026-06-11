@@ -2,7 +2,6 @@ import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { PROJECTS } from "@/data/projects";
 import { ProjectsFilter } from "@/components/projects/ProjectsFilter";
-import { ProjectsMap } from "@/components/projects/ProjectsMap";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,7 +31,6 @@ export default async function ProjectsPage({
         </p>
       </div>
 
-      <ProjectsMap />
       <ProjectsFilter projects={PROJECTS} />
     </main>
   );
