@@ -7,6 +7,7 @@
     "about": "О себе",
     "projects": "Проекты",
     "skills": "Навыки",
+    "education": "Образование",
     "contact": "Контакты"
   },
   "HomePage": {
@@ -17,7 +18,7 @@
     "label": "Режим просмотра",
     "hr": "HR",
     "business": "Бизнес",
-    "tech": "Тех"
+    "tech": "IT"
   },
   "Theme": {
     "toggle": "Переключить тему",

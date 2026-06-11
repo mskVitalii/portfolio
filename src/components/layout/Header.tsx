@@ -5,6 +5,7 @@ import { FileDown } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { ViewModeSwitcher } from "@/components/tri-mode/ViewModeSwitcher";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileNav } from "./MobileNav";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -32,6 +33,9 @@ export function Header() {
             <Link href="/skills" className="hover:text-foreground transition-colors">
               {t("Nav.skills")}
             </Link>
+            <Link href="/education" className="hover:text-foreground transition-colors">
+              {t("Nav.education")}
+            </Link>
             <Link href="/contact" className="hover:text-foreground transition-colors">
               {t("Nav.contact")}
             </Link>
@@ -47,6 +51,7 @@ export function Header() {
             <FileDown className="h-4 w-4 mr-1.5" />
             CV
           </a>
+          <LocaleSwitcher />
           <ViewModeSwitcher />
           <ThemeToggle />
           <MobileNav />

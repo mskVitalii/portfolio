@@ -33,17 +33,17 @@ const SOCIAL_LINKS: {
   external?: boolean;
 }[] = [
   {
-    label: "Email",
-    href: "mailto:msk.vitaly@gmail.com",
-    Icon: ({ className }) => <Mail className={className} />,
-    variant: "default",
-  },
-  {
     label: "LinkedIn",
     href: "https://linkedin.com/in/mskvitalii",
     Icon: LinkedinIcon,
-    variant: "outline",
+    variant: "default",
     external: true,
+  },
+  {
+    label: "Email",
+    href: "mailto:msk.vitaly@gmail.com",
+    Icon: ({ className }) => <Mail className={className} />,
+    variant: "outline",
   },
   {
     label: "GitHub",

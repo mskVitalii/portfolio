@@ -204,14 +204,104 @@ Key files:
 
 ## Conventions
 
-Conventions not yet established. Will populate as patterns emerge during development.
+### Data layer
+- Structured data (projects, career, skills, metrics, recommendations) lives in `src/data/*.ts` as typed TypeScript arrays — **not** MDX or a CMS. MDX is reserved for long-form prose (blog posts, project write-ups) once that content exists.
+- Add or modify content by editing the corresponding `src/data/` file. Types are defined in the same file.
+
+### Routing
+- All pages live under `src/app/[locale]/(marketing)/` (route group — no URL segment).
+- The `[locale]` param drives all i18n. Use `Link` from `@/i18n/navigation` (not `next/link`) for internal links so locale is automatically prepended.
+- `generateStaticParams` must be present on every page that needs static export — see `src/app/[locale]/layout.tsx` for the pattern.
+
+### Tri-mode system
+- The site has three audience modes: `"hr"`, `"business"`, `"tech"` (Zustand store in `src/store/viewMode.ts`, persisted to `localStorage`).
+- Content that varies per mode is shaped as `{ hr: string; business: string; tech: string }` — see `Project.description` in `src/data/projects.ts`.
+- Use the `ModeAware` component (`src/components/tri-mode/ModeAware.tsx`) for conditional rendering per mode.
+- The switcher UI is `ViewModeSwitcher` in the Header.
+
+### Component conventions
+- Server Components by default. Add `"use client"` only when needed: Motion animations, Zustand hooks, event handlers, browser APIs.
+- Keep animation wrappers thin (`motion.div`, `whileInView`, etc.) and push data fetching up to Server Components.
+- shadcn/ui primitives live in `src/components/ui/`. Project-specific components go in `src/components/<feature>/`.
+
+### Fonts
+- `--font-sans`: Inter (latin + cyrillic subsets)
+- `--font-mono`: JetBrains Mono
+- Both are loaded via `next/font/google` in the root layout and applied via CSS variables.
+
+### Internationalization
+- Translation keys live in `messages/{en,de,ru}.json`. All three files must have the same keys.
+- **Do not** put translated strings in MDX frontmatter — use `useTranslations` in the component instead.
+- The `src/i18n/routing.ts` defines supported locales; update it if adding a new locale.
 <!-- GSD:conventions-end -->
 
 <!-- GSD:architecture-start source:ARCHITECTURE.md -->
 
 ## Architecture
 
-Architecture not yet mapped. Follow existing patterns found in the codebase.
+```
+src/
+  app/
+    [locale]/
+      layout.tsx          ← root layout: fonts, ThemeProvider, ViewModeProvider, Header, Footer, GA
+      page.tsx            ← home page (Hero + ImpactDashboard)
+      (marketing)/        ← route group, no URL segment
+        about/            ← CareerTimeline, hobbies
+        projects/         ← project list + [slug]/ detail pages
+        skills/           ← SkillsGraph (React Flow)
+        contact/          ← ContactForm (react-hook-form + Zod) + ContactLinks + FAQ
+        blog/             ← placeholder
+        decisions/        ← placeholder
+        failures/         ← placeholder
+        open-source/      ← placeholder
+        recommendations/  ← placeholder
+        roadmap/          ← placeholder
+      og/route.tsx        ← Edge OG image generation
+      skeleton/           ← dev sandbox
+    api/contact/route.ts  ← contact form API endpoint
+    sitemap.ts
+
+  components/
+    layout/               ← Header, Footer, MobileNav, ThemeProvider, ThemeToggle, ViewModeProvider
+    home/                 ← Hero, ImpactDashboard
+    about/                ← CareerTimeline
+    projects/             ← ProjectCard, ProjectsFilter, ProjectStatusBadge
+    skills/               ← SkillsGraph
+    contact/              ← ContactForm, ContactLinks, FAQ
+    tri-mode/             ← ModeAware, ViewModeSwitcher
+    ui/                   ← shadcn/ui primitives
+
+  data/
+    career.ts             ← CareerEntry[] (work + education history)
+    projects.ts           ← Project[] with tri-mode descriptions + impact metrics
+    skills.ts             ← Skill[] with category, level, years, linked projects
+    metrics.ts            ← impact numbers for ImpactDashboard
+    recommendations.ts    ← testimonials
+
+  store/
+    viewMode.ts           ← Zustand store (ViewMode: "hr"|"business"|"tech")
+
+  i18n/
+    routing.ts            ← locale list (en, de, ru)
+    request.ts            ← next-intl server config
+    navigation.ts         ← typed Link/useRouter/redirect exports
+
+  lib/
+    utils.ts              ← cn() helper
+    content.ts            ← MDX file reader utilities
+
+messages/
+  en.json / de.json / ru.json   ← translation keys (must stay in sync)
+
+middleware.ts             ← next-intl locale routing middleware
+```
+
+**Key architectural decisions:**
+- All structured content is TypeScript data files (`src/data/`), not a database or CMS
+- Tri-mode (hr/business/tech) content shapes sit inline in data types
+- Zustand (with `persist`) for the only piece of client state: view mode
+- React Flow used for Skills Graph — requires `'use client'`
+- OG images generated at the Edge via `next/og`
 <!-- GSD:architecture-end -->
 
 <!-- GSD:skills-start source:skills/ -->

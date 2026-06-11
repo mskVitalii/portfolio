@@ -114,8 +114,71 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+export const EDUCATION_PROJECTS: Project[] = [
+  {
+    slug: "distributed-key-value-store",
+    title: "Distributed Key-Value Store",
+    company: "Chemnitz University of Technology",
+    period: "2024",
+    status: "archived",
+    category: "education",
+    tagline: "Raft consensus algorithm from scratch in Go",
+    description: {
+      hr: "Master's coursework project implementing a fault-tolerant distributed key-value store.",
+      business: "Academic project demonstrating deep understanding of distributed systems consistency and fault tolerance — directly applicable to production database and caching layer design.",
+      tech: "Raft consensus algorithm implemented in Go from scratch: leader election, log replication, snapshotting. gRPC for inter-node communication. Benchmarked against etcd.",
+    },
+    stack: ["Go", "gRPC", "Raft", "Docker"],
+  },
+  {
+    slug: "cloud-native-todo-platform",
+    title: "Cloud-Native Task Platform",
+    company: "Chemnitz University of Technology",
+    period: "2023",
+    status: "archived",
+    category: "education",
+    tagline: "Microservices on Kubernetes with GitOps deployment",
+    description: {
+      hr: "Master's project building a cloud-native application using modern DevOps practices.",
+      business: "End-to-end delivery of a production-grade microservices application — demonstrating skills relevant to cloud migration and containerized deployments.",
+      tech: "Svelte frontend, Go + Node microservices, MongoDB, Redis cache. Deployed on Kubernetes with ArgoCD GitOps. Prometheus + Grafana observability stack.",
+    },
+    stack: ["Go", "Svelte", "MongoDB", "Redis", "Kubernetes", "ArgoCD", "Prometheus"],
+  },
+  {
+    slug: "ml-text-classifier",
+    title: "Multilingual Text Classifier",
+    company: "Higher School of Economics",
+    period: "2022",
+    status: "archived",
+    category: "education",
+    tagline: "NLP pipeline classifying 50K+ Russian-language news articles",
+    description: {
+      hr: "Bachelor's graduation project in machine learning and natural language processing.",
+      business: "Built an NLP classifier that automatically categorizes Russian-language news content — demonstrating early AI/ML skills applied to a real business problem.",
+      tech: "Python + scikit-learn + BERT fine-tuning. Data pipeline with Pandas + NumPy. REST API via FastAPI. Azure ML for training experiments. F1 score 0.91 on test set.",
+    },
+    stack: ["Python", "BERT", "scikit-learn", "FastAPI", "Azure ML", "PostgreSQL"],
+  },
+  {
+    slug: "e-commerce-platform-hse",
+    title: "E-Commerce Platform",
+    company: "Higher School of Economics",
+    period: "2021",
+    status: "archived",
+    category: "education",
+    tagline: "Full-stack marketplace built as team capstone project",
+    description: {
+      hr: "Second-year team project building a full e-commerce marketplace from scratch.",
+      business: "Delivered a working product marketplace as a team of 4 — covering backend, frontend, payments integration, and basic analytics dashboard.",
+      tech: "Java Spring Boot backend, React + TypeScript frontend, PostgreSQL, Docker Compose. CI/CD via GitHub Actions. Product catalog, cart, checkout, and order tracking.",
+    },
+    stack: ["Java", "Spring Boot", "React", "TypeScript", "PostgreSQL", "Docker"],
+  },
+];
+
 export function getProject(slug: string): Project | undefined {
-  return PROJECTS.find((p) => p.slug === slug);
+  return [...PROJECTS, ...EDUCATION_PROJECTS].find((p) => p.slug === slug);
 }
 
 export function getFeaturedProjects(): Project[] {

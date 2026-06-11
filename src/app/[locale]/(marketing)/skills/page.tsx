@@ -1,7 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { SKILLS, CATEGORY_LABELS, CATEGORY_COLORS, LEVEL_LABELS } from "@/data/skills";
-import { SkillsGraph } from "@/components/skills/SkillsGraph";
+import { SkillsExplorer } from "@/components/skills/SkillsExplorer";
 import { Badge } from "@/components/ui/badge";
 
 export function generateStaticParams() {
@@ -34,7 +34,7 @@ export default async function SkillsPage({
         </p>
       </div>
 
-      <SkillsGraph />
+      <SkillsExplorer />
 
       {/* List view below graph */}
       <div className="mt-16 grid sm:grid-cols-2 gap-8">

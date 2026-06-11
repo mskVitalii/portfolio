@@ -4,6 +4,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CareerTimeline } from "@/components/about/CareerTimeline";
+import { VideoCv } from "@/components/about/VideoCv";
+import { Certificates } from "@/components/about/Certificates";
+import { ChessStats } from "@/components/about/ChessStats";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -103,12 +106,13 @@ export default async function AboutPage({
                 Interests
               </h3>
               <div className="flex flex-wrap gap-1">
-                {INTERESTS.map((interest) => (
+                {INTERESTS.filter((i) => i !== "Chess").map((interest) => (
                   <Badge key={interest} variant="outline" className="text-xs">
                     {interest}
                   </Badge>
                 ))}
               </div>
+              <ChessStats />
             </div>
 
             <a
@@ -122,6 +126,12 @@ export default async function AboutPage({
           </aside>
         </div>
       </section>
+
+      {/* Certificates */}
+      <Certificates />
+
+      {/* Video CV */}
+      <VideoCv />
 
       {/* Timeline */}
       <section>

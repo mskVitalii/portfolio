@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/home/Hero";
 import { ImpactDashboard } from "@/components/home/ImpactDashboard";
+import { GeoMap } from "@/components/home/GeoMap";
 
 export default async function HomePage({
   params,
@@ -14,6 +15,7 @@ export default async function HomePage({
     <main>
       <Hero />
       <ImpactDashboard />
+      <GeoMap />
     </main>
   );
 }

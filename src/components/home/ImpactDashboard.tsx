@@ -8,6 +8,57 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IMPACT_METRICS } from "@/data/metrics";
 
+const REVENUE_SEGMENTS = [
+  { label: "Infineon", value: 480, color: "#6366f1", href: "/projects/infineon-parking-guidance" },
+  { label: "OZON Tech", value: 86, color: "#10b981", href: "/projects/ozon-warehouse-search" },
+  { label: "WeDo.agency", value: 52, color: "#f59e0b", href: "/projects/wedo-agency-startups" },
+];
+const TOTAL_REVENUE = REVENUE_SEGMENTS.reduce((sum, s) => sum + s.value, 0);
+
+function RevenueBar({ isInView }: { isInView: boolean }) {
+  return (
+    <div className="mb-12 rounded-2xl border bg-card p-6 md:p-8">
+      <div className="flex items-baseline gap-3 mb-1">
+        <span className="text-4xl md:text-5xl font-bold tabular-nums">
+          €{isInView ? (
+            <CountUp end={TOTAL_REVENUE} duration={1.6} separator="," />
+          ) : "0"}K
+        </span>
+        <span className="text-muted-foreground text-sm font-medium">total annual savings generated</span>
+      </div>
+      <p className="text-xs text-muted-foreground mb-5">Documented cost savings across production systems</p>
+
+      {/* Proportional bar */}
+      <div className="flex rounded-full overflow-hidden h-3 mb-4 gap-px">
+        {REVENUE_SEGMENTS.map((seg) => (
+          <motion.div
+            key={seg.label}
+            initial={{ width: 0 }}
+            animate={isInView ? { width: `${(seg.value / TOTAL_REVENUE) * 100}%` } : { width: 0 }}
+            transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+            style={{ background: seg.color }}
+            className="h-full first:rounded-l-full last:rounded-r-full"
+          />
+        ))}
+      </div>
+
+      {/* Legend */}
+      <div className="flex flex-wrap gap-4">
+        {REVENUE_SEGMENTS.map((seg) => (
+          <Link key={seg.label} href={seg.href} className="flex items-center gap-2 group">
+            <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: seg.color }} />
+            <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+              {seg.label}
+              <span className="ml-1.5 font-semibold text-foreground">€{seg.value}K</span>
+              <span className="ml-1 text-xs opacity-60">{Math.round((seg.value / TOTAL_REVENUE) * 100)}%</span>
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ImpactDashboard() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
@@ -22,7 +73,11 @@ export function ImpactDashboard() {
           </p>
         </div>
 
-        <div ref={sectionRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div ref={sectionRef}>
+          <RevenueBar isInView={isInView} />
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {IMPACT_METRICS.map((metric, i) => (
             <motion.div
               key={i}
