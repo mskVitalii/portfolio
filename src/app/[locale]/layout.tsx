@@ -4,6 +4,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { ViewModeProvider } from "@/components/layout/ViewModeProvider";
@@ -107,6 +108,7 @@ export default async function LocaleLayout({
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
+        <Analytics />
       </body>
     </html>
   );
