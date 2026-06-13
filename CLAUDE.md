@@ -197,10 +197,10 @@ A personal website that functions simultaneously as a portfolio, interactive CV,
 
 ## References
 
-The `references/` folder contains visual references and source documents. Always check it when working on design, content, or CV-related tasks.
+The `docs/references/` folder contains visual references and source documents. Always check it when working on design, content, or CV-related tasks.
 
 Key files:
-- `references/Vitalii Popov CV 07.05.26.pdf` — the latest CV. Use this as the authoritative source for dates, job titles, companies, achievements, stack, and any biographical data shown on the site.
+- `docs/references/Vitalii Popov CV 07.05.26.pdf` — the latest CV. Use this as the authoritative source for dates, job titles, companies, achievements, stack, and any biographical data shown on the site.
 
 ## Conventions
 

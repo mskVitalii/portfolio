@@ -9,7 +9,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const locales = routing.locales;
   const projectSlugs = getPageSlugs("projects");
 
-  const staticRoutes = ["", "/about", "/projects", "/skills", "/contact", "/roadmap", "/recommendations"];
+  const staticRoutes = [
+    "",
+    "/about",
+    "/projects",
+    "/skills",
+    "/contact",
+    "/education",
+    "/blog",
+    "/roadmap",
+    "/failures",
+    "/decisions",
+    "/open-source",
+    "/recommendations",
+    "/card",
+  ];
 
   const entries: MetadataRoute.Sitemap = [];
 

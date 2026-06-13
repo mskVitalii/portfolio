@@ -39,6 +39,9 @@ export function Header() {
             <Link href="/contact" className="hover:text-foreground transition-colors">
               {t("Nav.contact")}
             </Link>
+            <Link href="/card" className="hover:text-foreground transition-colors">
+              {t("Nav.card")}
+            </Link>
           </nav>
         </div>
 

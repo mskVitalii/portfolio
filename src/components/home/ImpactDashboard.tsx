@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import CountUp from "react-countup";
 import { motion, useInView } from "motion/react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +17,7 @@ const REVENUE_SEGMENTS = [
 const TOTAL_REVENUE = REVENUE_SEGMENTS.reduce((sum, s) => sum + s.value, 0);
 
 function RevenueBar({ isInView }: { isInView: boolean }) {
+  const t = useTranslations("ImpactDashboard");
   return (
     <div className="mb-12 rounded-2xl border bg-card p-6 md:p-8">
       <div className="flex items-baseline gap-3 mb-1">
@@ -24,9 +26,9 @@ function RevenueBar({ isInView }: { isInView: boolean }) {
             <CountUp end={TOTAL_REVENUE} duration={1.6} separator="," />
           ) : "0"}K
         </span>
-        <span className="text-muted-foreground text-sm font-medium">total annual savings generated</span>
+        <span className="text-muted-foreground text-sm font-medium">{t("totalSavings")}</span>
       </div>
-      <p className="text-xs text-muted-foreground mb-5">Documented cost savings across production systems</p>
+      <p className="text-xs text-muted-foreground mb-5">{t("documented")}</p>
 
       {/* Proportional bar */}
       <div className="flex rounded-full overflow-hidden h-3 mb-4 gap-px">
@@ -62,14 +64,16 @@ function RevenueBar({ isInView }: { isInView: boolean }) {
 export function ImpactDashboard() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
+  const t = useTranslations("ImpactDashboard");
+  const tCommon = useTranslations("Common");
 
   return (
     <section className="py-20 px-4 border-t bg-muted/30">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold">Impact</h2>
+          <h2 className="text-3xl font-bold">{t("title")}</h2>
           <p className="mt-2 text-muted-foreground">
-            Measurable outcomes from real production systems
+            {t("subtitle")}
           </p>
         </div>
 
@@ -102,9 +106,9 @@ export function ImpactDashboard() {
                       )}
                       {metric.suffix}
                     </p>
-                    <p className="font-semibold text-sm mt-1">{metric.label}</p>
+                    <p className="font-semibold text-sm mt-1">{t(metric.labelKey)}</p>
                     <p className="text-xs text-muted-foreground leading-snug">
-                      {metric.description}
+                      {t(metric.descriptionKey)}
                     </p>
                     <Badge variant="secondary" className="mt-2 text-xs w-fit mx-auto">
                       {metric.company}
@@ -117,9 +121,9 @@ export function ImpactDashboard() {
         </div>
 
         <p className="text-center mt-8 text-sm text-muted-foreground">
-          Each metric links to the full project case study.{" "}
+          {t("metricsNote")}{" "}
           <Link href="/projects" className="underline underline-offset-4 hover:text-foreground">
-            See all projects →
+            {tCommon("seeAllProjects")}
           </Link>
         </p>
       </div>

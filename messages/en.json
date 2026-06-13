@@ -1,6 +1,15 @@
 {
   "Common": {
-    "siteName": "Vitalii Popov"
+    "siteName": "Vitalii Popov",
+    "downloadCv": "Download CV",
+    "seeAllProjects": "See all projects →"
+  },
+  "Footer": {
+    "tagline": "Full-Stack Engineer · Berlin\nDistributed Systems · AI",
+    "navHeading": "Navigation",
+    "moreHeading": "More",
+    "sitemap": "Sitemap",
+    "downloadCv": "Download CV"
   },
   "Nav": {
     "home": "Home",
@@ -8,11 +17,53 @@
     "projects": "Projects",
     "skills": "Skills",
     "education": "Education",
-    "contact": "Contact"
+    "contact": "Contact",
+    "card": "Card",
+    "blog": "Blog",
+    "roadmap": "Roadmap",
+    "failures": "Failure Stories",
+    "decisions": "ADR Database",
+    "openSource": "Open Source",
+    "recommendations": "Recommendations"
   },
-  "HomePage": {
-    "title": "Full-stack engineer focused on building systems that create measurable business value.",
-    "subtitle": "Go · TypeScript · Distributed Systems · AI"
+  "Hero": {
+    "role": "Full-Stack Engineer · Distributed Systems · AI",
+    "tagline": "Full-stack engineer focused on building systems that create",
+    "taglineHighlight": "measurable business value",
+    "taglineEnd": ".",
+    "experience": "5+ years across e-commerce, mobility, and AI.",
+    "downloadCv": "Download CV",
+    "aboutLink": "About me →",
+    "scrollHint": "↓ see impact"
+  },
+  "ImpactDashboard": {
+    "title": "Impact",
+    "subtitle": "Measurable outcomes from real production systems",
+    "totalSavings": "total annual savings generated",
+    "documented": "Documented cost savings across production systems",
+    "metricsNote": "Each metric links to the full project case study.",
+    "annualSavings": "Annual savings",
+    "annualSavingsDesc": "Parking Guidance System vs. market alternatives",
+    "usersServed": "Users served",
+    "usersServedDesc": "Barrier control application",
+    "monthlyActiveUsers": "Monthly active users",
+    "monthlyActiveUsersDesc": "Parking Guidance System, MAU",
+    "itemsIndexed": "Items indexed",
+    "itemsIndexedDesc": "Warehouse search in under 5 seconds",
+    "metricUplift": "Metric uplift",
+    "metricUpliftDesc": "A/B testing in SEO and UX",
+    "projectsShipped": "Projects shipped",
+    "projectsShippedDesc": "Across startups, enterprise, and academia"
+  },
+  "BrandCloud": {
+    "label": "Companies I've worked with"
+  },
+  "GeoMap": {
+    "title": "Open to opportunities",
+    "subtitle": "Based in Chemnitz, Germany — targeting roles in Germany, open to EU · UK · US · UAE · CA · SG · AU",
+    "legendCurrent": "Current location (Chemnitz)",
+    "legendIdeal": "Ideal destination (Germany)",
+    "legendOpen": "Also open to (EU · UK · US · UAE · CA · SG · AU)"
   },
   "ViewMode": {
     "label": "Audience mode",
@@ -25,12 +76,27 @@
     "light": "Light",
     "dark": "Dark"
   },
-  "About": {
+  "AboutPage": {
     "title": "About me",
+    "metaDescription": "Full-stack engineer with 5+ years building distributed systems, AI tools, and scalable products. Based in Germany.",
+    "bio1": "I'm a full-stack engineer based in Berlin, Germany, currently working at Infineon Technologies while finishing my Master's in Web Engineering at Chemnitz University of Technology.",
+    "bio2": "I started writing code in 2019 and went from building 13 startups at a consultancy to backend engineering at enterprise scale — searching 200M products in under 5 seconds at OZON Tech, then building systems that save €480K/year at Infineon.",
+    "bio3": "My current focus is on the intersection of distributed systems and AI — building things that are fast, reliable, and actually solve business problems. I write occasionally on Habr / Dev / Medium — the last article got 5K+ views.",
+    "bio4": "Outside of engineering: chess, cycling, hiking, Lindy Hop dance, and Historical European martial arts. I've mentored 4 developers and translated the React Redux docs into Russian.",
+    "languagesTitle": "Languages",
+    "interestsTitle": "Interests",
+    "english": "English",
+    "german": "German",
+    "russian": "Russian",
+    "fluent": "Fluent",
+    "b1": "B1",
+    "native": "Native",
+    "careerTitle": "Career progression",
     "downloadCv": "Download CV"
   },
   "Contact": {
     "title": "Get in touch",
+    "metaDescription": "Get in touch — open to engineering roles, freelance work, and technical collaboration.",
     "subtitle": "Open to new opportunities, technical collaboration, and interesting conversations.",
     "findMe": "Find me at",
     "sendMessage": "Send a message",
@@ -38,9 +104,67 @@
   },
   "Projects": {
     "title": "Projects",
+    "metaDescription": "Engineering case studies with real business metrics — filterable by category and audience mode.",
     "subtitle": "Case studies from real engineering work. Switch the audience mode to see each project from a different perspective.",
     "allProjects": "All projects",
     "comingSoon": "Detailed write-up coming soon",
     "comingSoonSub": "The overview is above; the full case study is being written."
+  },
+  "SkillsPage": {
+    "title": "Skills",
+    "metaDescription": "Interactive skill map across backend, frontend, infrastructure, and AI — with project context and experience depth.",
+    "subtitle": "An interactive map of technologies I work with. Click any node to see experience details and related projects.",
+    "clickHint": "Click any node to see details and related projects"
+  },
+  "EducationPage": {
+    "title": "Education",
+    "metaDescription": "Master's in Web Engineering (TU Chemnitz) and Bachelor's in Applied Maths (MIEM NRU HSE). Two countries, one path.",
+    "subtitle": "Two universities, two countries, one engineering path — from Moscow to Germany. Scroll through to explore each chapter.",
+    "degree": "Degree",
+    "keyCourses": "Key Courses",
+    "techStack": "Tech Stack",
+    "academicProjects": "Academic Projects",
+    "certificates": "Certificates",
+    "certsSubtitle": "Professional certifications alongside academic degrees.",
+    "downloadDiploma": "Download Diploma (verified)",
+    "comingSoon": "Projects coming soon."
+  },
+  "CardPage": {
+    "title": "Business Card",
+    "subtitle": "Pick a front and a back, then print. A dashed cut line appears around each card when printing.",
+    "chooseFront": "Choose front",
+    "chooseBack": "Choose back",
+    "printBtn": "Print this combination",
+    "frontLabel": "Front",
+    "backLabel": "Back",
+    "metaDescription": "Printable business card for Vitalii Popov — choose a design and scan the QR code to visit the portfolio."
+  },
+  "HomePage": {
+    "metaTitle": "Vitalii Popov — Full-Stack Engineer",
+    "metaDescription": "Full-stack engineer building systems that create measurable business value. 5+ years in distributed systems, AI, and e-commerce."
+  },
+  "BlogPage": {
+    "metaTitle": "Blog",
+    "metaDescription": "Technical deep-dives, case studies, and engineering lessons from real production systems."
+  },
+  "RoadmapPage": {
+    "metaTitle": "Roadmap",
+    "metaDescription": "What I'm currently learning, building, and working towards — distributed systems, AI, and Rust."
+  },
+  "FailuresPage": {
+    "metaTitle": "Failure Stories",
+    "metaDescription": "Engineering mistakes and post-mortems. Real stories about what went wrong and what I learned from it."
+  },
+  "DecisionsPage": {
+    "metaTitle": "ADR Database",
+    "metaDescription": "Architecture Decision Records — technical decisions I've made and the reasoning behind each one."
+  },
+  "OpenSourcePage": {
+    "metaTitle": "Open Source",
+    "metaDescription": "Open-source tools and contributions by Vitalii Popov."
+  },
+  "RecommendationsPage": {
+    "metaTitle": "Recommendations",
+    "metaDescription": "What colleagues, clients, and collaborators say about working with Vitalii Popov."
   }
 }

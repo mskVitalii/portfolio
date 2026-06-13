@@ -81,8 +81,20 @@ export function ChessStats() {
             <div key={tc} className="flex flex-col items-center justify-center py-4 px-3 gap-1">
               <span className="text-lg">{TC_EMOJI[tc]}</span>
               <span className="text-xs font-medium text-muted-foreground">{TC_LABELS[tc]}</span>
-              {loaded ? (
-                rating ? (
+              <div className="flex flex-col items-center gap-1 w-full h-18.5 justify-center">
+                {!loaded ? (
+                  <>
+                    <div className="h-8 w-14 rounded-md overflow-hidden relative bg-muted/50 border border-border/40">
+                      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_ease-in-out_infinite] bg-linear-to-r from-transparent via-white/35 to-transparent" />
+                    </div>
+                    <div className="h-3.5 w-14 rounded-sm overflow-hidden relative bg-muted/40 border border-border/30">
+                      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_ease-in-out_infinite_0.25s] bg-linear-to-r from-transparent via-white/30 to-transparent" />
+                    </div>
+                    <div className="h-5 w-16 rounded-full overflow-hidden relative bg-muted/40 border border-border/30">
+                      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.8s_ease-in-out_infinite_0.5s] bg-linear-to-r from-transparent via-white/30 to-transparent" />
+                    </div>
+                  </>
+                ) : rating ? (
                   <>
                     <span className="text-2xl font-bold tabular-nums">{rating}</span>
                     {best && best > rating && (
@@ -96,10 +108,8 @@ export function ChessStats() {
                   </>
                 ) : (
                   <span className="text-sm text-muted-foreground">—</span>
-                )
-              ) : (
-                <span className="text-2xl font-bold text-muted/50 animate-pulse">···</span>
-              )}
+                )}
+              </div>
             </div>
           );
         })}

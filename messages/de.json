@@ -1,6 +1,15 @@
 {
   "Common": {
-    "siteName": "Vitalii Popov"
+    "siteName": "Vitalii Popov",
+    "downloadCv": "Lebenslauf herunterladen",
+    "seeAllProjects": "Alle Projekte →"
+  },
+  "Footer": {
+    "tagline": "Full-Stack-Entwickler · Berlin\nVerteilte Systeme · KI",
+    "navHeading": "Navigation",
+    "moreHeading": "Mehr",
+    "sitemap": "Sitemap",
+    "downloadCv": "Lebenslauf herunterladen"
   },
   "Nav": {
     "home": "Startseite",
@@ -8,11 +17,53 @@
     "projects": "Projekte",
     "skills": "Fähigkeiten",
     "education": "Bildung",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "card": "Visitenkarte",
+    "blog": "Blog",
+    "roadmap": "Roadmap",
+    "failures": "Misserfolgsgeschichten",
+    "decisions": "ADR-Datenbank",
+    "openSource": "Open Source",
+    "recommendations": "Empfehlungen"
   },
-  "HomePage": {
-    "title": "Full-Stack-Entwickler mit Fokus auf Systeme, die messbaren Geschäftswert schaffen.",
-    "subtitle": "Go · TypeScript · Verteilte Systeme · KI"
+  "Hero": {
+    "role": "Full-Stack-Entwickler · Verteilte Systeme · KI",
+    "tagline": "Full-Stack-Entwickler mit Fokus auf Systeme, die",
+    "taglineHighlight": "messbaren Geschäftswert",
+    "taglineEnd": " schaffen.",
+    "experience": "5+ Jahre in E-Commerce, Mobilität und KI.",
+    "downloadCv": "Lebenslauf herunterladen",
+    "aboutLink": "Über mich →",
+    "scrollHint": "↓ Wirkung anzeigen"
+  },
+  "ImpactDashboard": {
+    "title": "Wirkung",
+    "subtitle": "Messbare Ergebnisse aus realen Produktivsystemen",
+    "totalSavings": "jährliche Gesamteinsparungen",
+    "documented": "Dokumentierte Kosteneinsparungen in Produktivsystemen",
+    "metricsNote": "Jede Kennzahl verlinkt auf die vollständige Projektbeschreibung.",
+    "annualSavings": "Jährliche Einsparungen",
+    "annualSavingsDesc": "Parkleitanlage vs. Marktlösungen",
+    "usersServed": "Bediente Nutzer",
+    "usersServedDesc": "Schrankensteuerungsanwendung",
+    "monthlyActiveUsers": "Monatlich aktive Nutzer",
+    "monthlyActiveUsersDesc": "Parkleitanlage, MAU",
+    "itemsIndexed": "Indizierte Artikel",
+    "itemsIndexedDesc": "Lagersuche in unter 5 Sekunden",
+    "metricUplift": "Kennzahlverbesserung",
+    "metricUpliftDesc": "A/B-Tests in SEO und UX",
+    "projectsShipped": "Abgeschlossene Projekte",
+    "projectsShippedDesc": "In Startups, Unternehmen und Wissenschaft"
+  },
+  "BrandCloud": {
+    "label": "Unternehmen, mit denen ich gearbeitet habe"
+  },
+  "GeoMap": {
+    "title": "Offen für Möglichkeiten",
+    "subtitle": "Wohnhaft in Chemnitz — Zielmarkt Deutschland, offen für EU · UK · US · VAE · CA · SG · AU",
+    "legendCurrent": "Aktueller Standort (Chemnitz)",
+    "legendIdeal": "Wunschstandort (Deutschland)",
+    "legendOpen": "Auch offen für (EU · UK · US · VAE · CA · SG · AU)"
   },
   "ViewMode": {
     "label": "Zielgruppe",
@@ -25,12 +76,27 @@
     "light": "Hell",
     "dark": "Dunkel"
   },
-  "About": {
+  "AboutPage": {
     "title": "Über mich",
+    "metaDescription": "Full-Stack-Entwickler mit 5+ Jahren Erfahrung in verteilten Systemen, KI und skalierbaren Produkten. Wohnhaft in Deutschland.",
+    "bio1": "Ich bin Full-Stack-Entwickler mit Wohnsitz in Berlin und arbeite derzeit bei Infineon Technologies, während ich meinen Master in Web Engineering an der TU Chemnitz abschließe.",
+    "bio2": "Ich habe 2019 mit dem Programmieren begonnen – von 13 Startups in einer Unternehmensberatung bis hin zum Backend-Engineering auf Enterprise-Scale: 200 Mio. Produkte in unter 5 Sekunden bei OZON Tech, dann Systeme, die €480K/Jahr bei Infineon einsparen.",
+    "bio3": "Mein aktueller Fokus liegt auf der Schnittstelle von verteilten Systemen und KI – ich baue schnelle, zuverlässige Lösungen, die echte Geschäftsprobleme lösen. Ich schreibe gelegentlich auf Habr / Dev / Medium – der letzte Artikel wurde 5.000+ Mal aufgerufen.",
+    "bio4": "Außerhalb der Arbeit: Schach, Radfahren, Wandern, Lindy-Hop-Tanz und historischer europäischer Schwertkampf (HEMA). Ich habe 4 Entwickler mentoriert und die React-Redux-Dokumentation ins Russische übersetzt.",
+    "languagesTitle": "Sprachen",
+    "interestsTitle": "Interessen",
+    "english": "Englisch",
+    "german": "Deutsch",
+    "russian": "Russisch",
+    "fluent": "Fließend",
+    "b1": "B1",
+    "native": "Muttersprache",
+    "careerTitle": "Karriereverlauf",
     "downloadCv": "Lebenslauf herunterladen"
   },
   "Contact": {
     "title": "Kontakt aufnehmen",
+    "metaDescription": "Kontakt aufnehmen — offen für Engineering-Stellen, Freelance-Arbeit und technische Zusammenarbeit.",
     "subtitle": "Offen für neue Möglichkeiten, technische Zusammenarbeit und interessante Gespräche.",
     "findMe": "Hier bin ich zu finden",
     "sendMessage": "Nachricht senden",
@@ -38,9 +104,67 @@
   },
   "Projects": {
     "title": "Projekte",
+    "metaDescription": "Engineering-Fallstudien mit realen Geschäftskennzahlen — filterbar nach Kategorie und Zielgruppe.",
     "subtitle": "Fallstudien aus echten Engineering-Projekten. Zielgruppen-Modus wechseln für andere Perspektive.",
     "allProjects": "Alle Projekte",
     "comingSoon": "Ausführliche Beschreibung folgt",
     "comingSoonSub": "Die vollständige Fallstudie wird gerade geschrieben."
+  },
+  "SkillsPage": {
+    "title": "Fähigkeiten",
+    "metaDescription": "Interaktive Skill-Map über Backend, Frontend, Infrastruktur und KI — mit Projektzusammenhang und Erfahrungstiefe.",
+    "subtitle": "Eine interaktive Karte der Technologien, mit denen ich arbeite. Klicken Sie auf einen Knoten für Details und verwandte Projekte.",
+    "clickHint": "Knoten anklicken für Details und verwandte Projekte"
+  },
+  "EducationPage": {
+    "title": "Bildung",
+    "metaDescription": "Master in Web Engineering (TU Chemnitz) und Bachelor in Angewandter Mathematik (NRU HSE). Zwei Länder, ein Weg.",
+    "subtitle": "Zwei Universitäten, zwei Länder, ein Entwicklungsweg – von Moskau nach Deutschland. Scrollen Sie durch die Kapitel.",
+    "degree": "Abschluss",
+    "keyCourses": "Schwerpunkte",
+    "techStack": "Technologien",
+    "academicProjects": "Akademische Projekte",
+    "certificates": "Zertifikate",
+    "certsSubtitle": "Professionelle Zertifikate neben den akademischen Abschlüssen.",
+    "downloadDiploma": "Diplom herunterladen (verifiziert)",
+    "comingSoon": "Projekte folgen bald."
+  },
+  "CardPage": {
+    "title": "Visitenkarte",
+    "subtitle": "Vorder- und Rückseite wählen, dann drucken. Beim Drucken erscheint eine gestrichelte Schnittlinie.",
+    "chooseFront": "Vorderseite wählen",
+    "chooseBack": "Rückseite wählen",
+    "printBtn": "Kombination drucken",
+    "frontLabel": "Vorderseite",
+    "backLabel": "Rückseite",
+    "metaDescription": "Visitenkarte von Vitalii Popov — Design wählen und QR-Code scannen, um das Portfolio zu besuchen."
+  },
+  "HomePage": {
+    "metaTitle": "Vitalii Popov — Full-Stack-Entwickler",
+    "metaDescription": "Full-Stack-Entwickler, der Systeme mit messbarem Geschäftswert aufbaut. 5+ Jahre in verteilten Systemen, KI und E-Commerce."
+  },
+  "BlogPage": {
+    "metaTitle": "Blog",
+    "metaDescription": "Technische Deep-Dives, Fallstudien und Engineering-Lektionen aus echten Produktionssystemen."
+  },
+  "RoadmapPage": {
+    "metaTitle": "Roadmap",
+    "metaDescription": "Was ich gerade lerne, baue und anstrebe — verteilte Systeme, KI und Rust."
+  },
+  "FailuresPage": {
+    "metaTitle": "Misserfolgsgeschichten",
+    "metaDescription": "Engineering-Fehler und Post-Mortems. Ehrliche Berichte darüber, was schiefgelaufen ist und was ich daraus gelernt habe."
+  },
+  "DecisionsPage": {
+    "metaTitle": "ADR-Datenbank",
+    "metaDescription": "Architecture Decision Records — technische Entscheidungen und ihre Begründungen."
+  },
+  "OpenSourcePage": {
+    "metaTitle": "Open Source",
+    "metaDescription": "Open-Source-Tools und Beiträge von Vitalii Popov."
+  },
+  "RecommendationsPage": {
+    "metaTitle": "Empfehlungen",
+    "metaDescription": "Was Kollegen, Kunden und Partner über die Zusammenarbeit mit Vitalii Popov sagen."
   }
 }

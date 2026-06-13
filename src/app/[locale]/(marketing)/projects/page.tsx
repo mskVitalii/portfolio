@@ -1,5 +1,7 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 import { PROJECTS } from "@/data/projects";
 import { ProjectsFilter } from "@/components/projects/ProjectsFilter";
 
@@ -7,11 +9,19 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata = {
-  title: "Projects",
-  description:
-    "Work, experiments, and case studies — each with a business, HR, and technical perspective.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Projects" });
+  return {
+    title: t("title"),
+    description: t("metaDescription"),
+    alternates: buildAlternates(locale, "/projects"),
+  };
+}
 
 export default async function ProjectsPage({
   params,

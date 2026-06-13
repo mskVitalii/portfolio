@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" fill="none">
+  <!-- Diamond mark -->
+  <rect x="2" y="10" width="20" height="20" rx="2" transform="rotate(45 12 20)" fill="#1658DA"/>
+  <rect x="6" y="14" width="12" height="12" rx="1" transform="rotate(45 12 20)" fill="#0F2D69"/>
+  <!-- HSE University text -->
+  <text x="34" y="16" font-family="'Arial Black', 'Arial', sans-serif" font-weight="900" font-size="14" fill="white" letter-spacing="1">HSE</text>
+  <text x="34" y="30" font-family="Arial, sans-serif" font-weight="400" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.5">UNIVERSITY</text>
+</svg>

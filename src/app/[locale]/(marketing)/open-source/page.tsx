@@ -1,5 +1,7 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 import { ExternalLink, GitFork, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -9,10 +11,19 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata = {
-  title: "Open Source",
-  description: "Open source contributions, experiments, and public repositories.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "OpenSourcePage" });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: buildAlternates(locale, "/open-source"),
+  };
+}
 
 const CONTRIBUTIONS = [
   {

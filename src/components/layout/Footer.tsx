@@ -1,13 +1,5 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-
-const NAV_LINKS = [
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/skills", label: "Skills" },
-  { href: "/blog", label: "Blog" },
-  { href: "/roadmap", label: "Roadmap" },
-  { href: "/contact", label: "Contact" },
-];
 
 type IconProps = { className?: string };
 
@@ -28,7 +20,27 @@ function GithubIcon({ className }: IconProps) {
 }
 
 export function Footer() {
+  const t = useTranslations("Footer");
+  const tNav = useTranslations("Nav");
   const year = new Date().getFullYear();
+
+  const navLinks = [
+    { href: "/about", label: tNav("about") },
+    { href: "/projects", label: tNav("projects") },
+    { href: "/skills", label: tNav("skills") },
+    { href: "/blog", label: tNav("blog") },
+    { href: "/roadmap", label: tNav("roadmap") },
+    { href: "/contact", label: tNav("contact") },
+  ];
+
+  const moreLinks = [
+    { href: "/failures", label: tNav("failures") },
+    { href: "/decisions", label: tNav("decisions") },
+    { href: "/open-source", label: tNav("openSource") },
+    { href: "/recommendations", label: tNav("recommendations") },
+  ];
+
+  const [taglineLine1, taglineLine2] = t("tagline").split("\n");
 
   return (
     <footer className="border-t bg-muted/20 mt-auto">
@@ -38,9 +50,9 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <p className="font-bold mb-2">Vitalii Popov</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Full-Stack Engineer · Berlin
+              {taglineLine1}
               <br />
-              Distributed Systems · AI
+              {taglineLine2}
             </p>
             <div className="flex items-center gap-3 mt-4">
               <a
@@ -72,9 +84,9 @@ export function Footer() {
 
           {/* Navigation */}
           <div>
-            <p className="font-semibold text-sm mb-3">Navigation</p>
+            <p className="font-semibold text-sm mb-3">{t("navHeading")}</p>
             <ul className="space-y-2">
-              {NAV_LINKS.slice(0, 3).map(({ href, label }) => (
+              {navLinks.slice(0, 3).map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
@@ -90,7 +102,7 @@ export function Footer() {
           <div>
             <p className="font-semibold text-sm mb-3">&nbsp;</p>
             <ul className="space-y-2">
-              {NAV_LINKS.slice(3).map(({ href, label }) => (
+              {navLinks.slice(3).map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
@@ -105,14 +117,9 @@ export function Footer() {
 
           {/* More */}
           <div>
-            <p className="font-semibold text-sm mb-3">More</p>
+            <p className="font-semibold text-sm mb-3">{t("moreHeading")}</p>
             <ul className="space-y-2">
-              {[
-                { href: "/failures", label: "Failure Stories" },
-                { href: "/decisions", label: "ADR Database" },
-                { href: "/open-source", label: "Open Source" },
-                { href: "/recommendations", label: "Recommendations" },
-              ].map(({ href, label }) => (
+              {moreLinks.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
@@ -127,10 +134,10 @@ export function Footer() {
         </div>
 
         <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-          <p>© {year} Vitalii Popov. Built with Next.js, Tailwind, shadcn/ui.</p>
+          <p>© {year} Vitalii Popov</p>
           <div className="flex items-center gap-4">
-            <a href="/sitemap.xml" className="hover:text-foreground transition-colors">Sitemap</a>
-            <a href="/cv/vitalii-popov-cv.pdf" download="Vitalii_Popov_CV.pdf" className="hover:text-foreground transition-colors">Download CV</a>
+            <a href="/sitemap.xml" className="hover:text-foreground transition-colors">{t("sitemap")}</a>
+            <a href="/cv/vitalii-popov-cv.pdf" download="Vitalii_Popov_CV.pdf" className="hover:text-foreground transition-colors">{t("downloadCv")}</a>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useTheme } from "next-themes";
 import {
   ReactFlow,
   Background,
@@ -95,7 +96,7 @@ function edge(source: string, target: string, color = "#88888844"): Edge {
   };
 }
 
-// ── ARCHITECTURE graph (Backend System Design) ────────────────────────────
+// ── ARCHITECTURE graph ────────────────────────────────────────────────────
 
 const ARCH_NODES: Node[] = [
   labelNode("lbl-client",  "Client",          10,  10),
@@ -159,16 +160,13 @@ const FE_NODES: Node[] = [
     data: { label: "shadcn/ui", category: "frontend", level: "proficient", years: 1, handles: ["left", "right"] } },
 
   labelNode("lbl-build", "Build / Deploy",  620, 10),
-  skillNode("nextjs-deploy", 620, 40),
+  {
+    id: "nextjs-deploy",
+    type: "techNode",
+    position: { x: 620, y: 40 },
+    data: { label: "Vercel / Next.js", category: "frontend", level: "expert", years: 3, handles: ["left"] },
+  },
 ];
-
-// override nextjs-deploy
-FE_NODES[FE_NODES.length - 1] = {
-  id: "nextjs-deploy",
-  type: "techNode",
-  position: { x: 620, y: 40 },
-  data: { label: "Vercel / Next.js", category: "frontend", level: "expert", years: 3, handles: ["left"] },
-};
 
 const FE_EDGES: Edge[] = [
   edge("nextjs", "react"),
@@ -219,33 +217,51 @@ const OBS_EDGES: Edge[] = [
   edge("kubernetes", "redis"),
 ];
 
-// ─── Tabs config ─────────────────────────────────────────────────────────────
+// ─── Graph sections config ────────────────────────────────────────────────────
 
 const GRAPHS = [
-  { id: "architecture", label: "System Architecture", nodes: ARCH_NODES, edges: ARCH_EDGES },
-  { id: "frontend",     label: "Frontend Stack",      nodes: FE_NODES,   edges: FE_EDGES },
-  { id: "observability",label: "Infrastructure & Monitoring", nodes: OBS_NODES, edges: OBS_EDGES },
+  {
+    id: "architecture",
+    label: "System Architecture",
+    subtitle: "How services connect",
+    description: "A typical backend I'd build: React talks to Go / Python / C# microservices, Kafka brokers async events, and the data layer is PostgreSQL + Redis + ElasticSearch. Embedded C handles the hardware layer.",
+    nodes: ARCH_NODES,
+    edges: ARCH_EDGES,
+  },
+  {
+    id: "frontend",
+    label: "Frontend Stack",
+    subtitle: "UI engineering",
+    description: "React + Next.js as the framework core. Zustand / Redux / Jotai depending on project complexity. TypeScript everywhere, Tailwind + shadcn/ui for styling. Deployed on Vercel with ISR.",
+    nodes: FE_NODES,
+    edges: FE_EDGES,
+  },
+  {
+    id: "observability",
+    label: "Infrastructure & Monitoring",
+    subtitle: "Running things reliably",
+    description: "Go / Python services containerized with Docker, orchestrated on Kubernetes. Prometheus scrapes metrics, Grafana visualizes them. Redis for hot-path caching, Kafka for durable event streaming.",
+    nodes: OBS_NODES,
+    edges: OBS_EDGES,
+  },
 ] as const;
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Graph view ───────────────────────────────────────────────────────────────
 
 function GraphView({
   nodes: initialNodes,
   edges: initialEdges,
   onSelect,
   selectedId,
+  colorMode,
 }: {
   nodes: Node[];
   edges: Edge[];
   onSelect: (id: string | null) => void;
   selectedId: string | null;
+  colorMode: "light" | "dark";
 }) {
-  const [nodes, , onNodesChange] = useNodesState(
-    initialNodes.map((n) => ({
-      ...n,
-      selected: n.id === selectedId,
-    }))
-  );
+  const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
@@ -254,82 +270,78 @@ function GraphView({
   }, [selectedId, onSelect]);
 
   return (
-    <div className="w-full rounded-xl border overflow-hidden" style={{ height: 480 }}>
-      <ReactFlow
-        nodes={nodes.map((n) => ({ ...n, selected: n.id === selectedId }))}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onNodeClick={onNodeClick}
-        nodeTypes={nodeTypes}
-        fitView
-        fitViewOptions={{ padding: 0.18 }}
-        minZoom={0.3}
-        maxZoom={2}
-        colorMode="system"
-      >
-        <Background gap={24} size={1} />
-        <Controls showInteractive={false} />
-      </ReactFlow>
-    </div>
+    <ReactFlow
+      nodes={nodes.map((n) => ({ ...n, selected: n.id === selectedId }))}
+      edges={edges}
+      onNodesChange={onNodesChange}
+      onEdgesChange={onEdgesChange}
+      onNodeClick={onNodeClick}
+      nodeTypes={nodeTypes}
+      fitView
+      fitViewOptions={{ padding: 0.18 }}
+      minZoom={0.3}
+      maxZoom={2}
+      colorMode={colorMode}
+    >
+      <Background gap={24} size={1} />
+      <Controls showInteractive={false} />
+    </ReactFlow>
   );
 }
 
-export function SkillsExplorer() {
-  const [activeGraph, setActiveGraph] = useState<string>("architecture");
+// ─── Single graph section ─────────────────────────────────────────────────────
+
+function GraphSection({ graph }: { graph: (typeof GRAPHS)[number] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { resolvedTheme } = useTheme();
+  const [colorMode, setColorMode] = useState<"light" | "dark">("light");
 
-  const graph = GRAPHS.find((g) => g.id === activeGraph) ?? GRAPHS[0];
+  useEffect(() => {
+    setColorMode(resolvedTheme === "dark" ? "dark" : "light");
+  }, [resolvedTheme]);
+
   const selectedSkill = selectedId ? getSkill(selectedId) : null;
-  const selectedProjects = selectedSkill
-    ? PROJECTS.filter((p) => selectedSkill.projects.includes(p.slug))
-    : [];
 
-  function handleSelect(id: string | null) {
-    setSelectedId(id);
-  }
-
-  function handleTabChange(id: string) {
-    setActiveGraph(id);
-    setSelectedId(null);
-  }
+  const skillIds = (graph.nodes as Node[])
+    .filter((n) => n.type === "techNode")
+    .map((n) => n.id);
+  const projectSlugs = [
+    ...new Set(
+      skillIds.flatMap((id) => getSkill(id)?.projects ?? [])
+    ),
+  ];
+  const relatedProjects = PROJECTS.filter((p) => projectSlugs.includes(p.slug));
 
   return (
-    <div className="space-y-4">
-      {/* Tabs */}
-      <div className="flex flex-wrap gap-2">
-        {GRAPHS.map((g) => (
-          <button
-            key={g.id}
-            onClick={() => handleTabChange(g.id)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors border ${
-              g.id === activeGraph
-                ? "bg-primary text-primary-foreground border-primary"
-                : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
-            }`}
-          >
-            {g.label}
-          </button>
-        ))}
+    <div className="rounded-xl border overflow-hidden bg-card shadow-sm">
+      {/* Header */}
+      <div className="px-6 pt-6 pb-4">
+        <h3 className="text-xl font-bold">{graph.label}</h3>
+        <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-2xl">
+          {graph.description}
+        </p>
       </div>
 
-      <GraphView
-        key={activeGraph}
-        nodes={graph.nodes}
-        edges={graph.edges}
-        onSelect={handleSelect}
-        selectedId={selectedId}
-      />
+      {/* Graph */}
+      <div style={{ height: 420 }} className="border-y">
+        <GraphView
+          nodes={graph.nodes as Node[]}
+          edges={graph.edges as Edge[]}
+          onSelect={setSelectedId}
+          selectedId={selectedId}
+          colorMode={colorMode}
+        />
+      </div>
 
-      {/* Skill detail panel */}
+      {/* Selected skill detail */}
       {selectedSkill ? (
-        <div className="rounded-xl border p-5 bg-card">
-          <div className="flex items-start justify-between mb-3">
+        <div className="px-6 py-4 border-b bg-muted/30">
+          <div className="flex items-start justify-between mb-2">
             <div>
-              <h3 className="font-semibold text-lg">{selectedSkill.name}</h3>
-              <p className="text-sm text-muted-foreground">
-                {selectedSkill.years} years · {LEVEL_LABELS[selectedSkill.level]}
-              </p>
+              <span className="font-semibold">{selectedSkill.name}</span>
+              <span className="text-sm text-muted-foreground ml-2">
+                {selectedSkill.years}y · {LEVEL_LABELS[selectedSkill.level]}
+              </span>
             </div>
             <Badge
               className="text-xs text-white"
@@ -339,26 +351,42 @@ export function SkillsExplorer() {
             </Badge>
           </div>
           {selectedSkill.description && (
-            <p className="text-sm text-muted-foreground mb-4">{selectedSkill.description}</p>
-          )}
-          {selectedProjects.length > 0 && (
-            <div>
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
-                Used in
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {selectedProjects.map((p) => (
-                  <Badge key={p.slug} variant="secondary">{p.title}</Badge>
-                ))}
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground">{selectedSkill.description}</p>
           )}
         </div>
       ) : (
-        <p className="text-center text-sm text-muted-foreground py-2">
-          Click any node to see details and related projects
-        </p>
+        <div className="px-6 py-3 border-b">
+          <p className="text-xs text-muted-foreground">Click any node to see details</p>
+        </div>
       )}
+
+      {/* Related projects */}
+      {relatedProjects.length > 0 && (
+        <div className="px-6 py-4">
+          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
+            Used in
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {relatedProjects.map((p) => (
+              <Badge key={p.slug} variant="secondary">
+                {p.title}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
+export function SkillsExplorer() {
+  return (
+    <div className="space-y-8">
+      {GRAPHS.map((graph) => (
+        <GraphSection key={graph.id} graph={graph} />
+      ))}
     </div>
   );
 }

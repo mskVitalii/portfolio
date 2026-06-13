@@ -144,6 +144,11 @@
   box-shadow: 0 0 2em 4px oklch(0.88 0.25 155 / 55%), 0 0 6em 16px oklch(0.88 0.25 155 / 30%);
 }
 
+/* Shimmer skeleton animation */
+@keyframes shimmer {
+  100% { transform: translateX(200%); }
+}
+
 /* Shiki dual-theme syntax highlighting */
 code[data-theme*=" "],
 code[data-theme*=" "] span {

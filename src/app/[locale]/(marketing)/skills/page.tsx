@@ -1,5 +1,7 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 import { SKILLS, CATEGORY_LABELS, CATEGORY_COLORS, LEVEL_LABELS } from "@/data/skills";
 import { SkillsExplorer } from "@/components/skills/SkillsExplorer";
 import { Badge } from "@/components/ui/badge";
@@ -8,11 +10,19 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata = {
-  title: "Skills",
-  description:
-    "Interactive skill map across backend, frontend, infrastructure, and AI — with project context.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "SkillsPage" });
+  return {
+    title: t("title"),
+    description: t("metaDescription"),
+    alternates: buildAlternates(locale, "/skills"),
+  };
+}
 
 const CATEGORIES = ["backend", "frontend", "infrastructure", "ai"] as const;
 
@@ -23,14 +33,14 @@ export default async function SkillsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("SkillsPage");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-5xl">
       <div className="mb-10">
-        <h1 className="text-4xl font-bold mb-4">Skills</h1>
+        <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
         <p className="text-muted-foreground text-lg max-w-2xl">
-          An interactive map of technologies I work with. Click any node to see
-          experience details and related projects.
+          {t("subtitle")}
         </p>
       </div>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { buildAlternates } from "@/lib/seo";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -40,6 +41,7 @@ export async function generateMetadata({
       description: project.description.business,
       images: [ogUrl],
     },
+    alternates: buildAlternates(locale, `/projects/${slug}`),
   };
 }
 

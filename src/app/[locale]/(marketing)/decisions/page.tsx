@@ -1,5 +1,7 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { Scale } from "lucide-react";
 
@@ -7,10 +9,19 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata = {
-  title: "Engineering Decisions",
-  description: "A public ADR database — architectural decisions, tradeoffs, and outcomes.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "DecisionsPage" });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: buildAlternates(locale, "/decisions"),
+  };
+}
 
 const DECISIONS = [
   {

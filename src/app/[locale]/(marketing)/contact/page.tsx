@@ -1,19 +1,29 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ContactLinks } from "@/components/contact/ContactLinks";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { FAQ } from "@/components/contact/FAQ";
 import { Separator } from "@/components/ui/separator";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata = {
-  title: "Contact",
-  description:
-    "Get in touch for job opportunities, freelance work, or technical collaboration.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Contact" });
+  return {
+    title: t("title"),
+    description: t("metaDescription"),
+    alternates: buildAlternates(locale, "/contact"),
+  };
+}
 
 export default async function ContactPage({
   params,

@@ -1,4 +1,5 @@
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { FileDown, ExternalLink } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,26 +9,27 @@ import { VideoCv } from "@/components/about/VideoCv";
 import { Certificates } from "@/components/about/Certificates";
 import { ChessStats } from "@/components/about/ChessStats";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata = {
-  title: "About",
-  description:
-    "Full-stack engineer with 5+ years building distributed systems, AI tools, and scalable web products.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "AboutPage" });
+  return {
+    title: t("title"),
+    description: t("metaDescription"),
+    alternates: buildAlternates(locale, "/about"),
+  };
+}
 
-const INTERESTS = [
-  "Chess",
-  "Cycling",
-  "Hiking",
-  "Skiing",
-  "Lindy Hop",
-  "HEMA",
-  "Writing about tech",
-];
+const INTERESTS = ["Cycling", "Hiking", "Skiing", "Lindy Hop", "HEMA", "Writing about tech"];
 
 export default async function AboutPage({
   params,
@@ -36,32 +38,22 @@ export default async function AboutPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("AboutPage");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-4xl">
       {/* Bio */}
       <section className="mb-16">
-        <h1 className="text-4xl font-bold mb-6">About me</h1>
+        <h1 className="text-4xl font-bold mb-6">{t("title")}</h1>
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-4 text-muted-foreground leading-relaxed">
+            <p>{t("bio1")}</p>
             <p>
-              I&apos;m a full-stack engineer based in{" "}
-              <span className="text-foreground font-medium">Berlin, Germany</span>,
-              currently working at Infineon Technologies while finishing my
-              Master&apos;s in Web Engineering at Chemnitz University of Technology.
+              {t("bio2")}
             </p>
             <p>
-              I started writing code in 2019 and went from building 13 startups at a
-              consultancy to backend engineering at enterprise scale — searching{" "}
-              <span className="text-foreground font-medium">200M products</span> in under
-              5 seconds at OZON Tech, then building systems that save{" "}
-              <span className="text-foreground font-medium">€480K/year</span> at Infineon.
-            </p>
-            <p>
-              My current focus is on the intersection of distributed systems and AI —
-              building things that are fast, reliable, and actually solve business problems.
-              I write occasionally on{" "}
+              {t("bio3").split("Habr / Dev / Medium")[0]}
               <a
                 href="https://habr.com"
                 target="_blank"
@@ -70,43 +62,39 @@ export default async function AboutPage({
               >
                 Habr / Dev / Medium
                 <ExternalLink className="h-3 w-3" />
-              </a>{" "}
-              — the last article got 5K+ views.
+              </a>
+              {t("bio3").split("Habr / Dev / Medium")[1]}
             </p>
-            <p>
-              Outside of engineering: chess, cycling, hiking, Lindy Hop dance, and
-              Historical European martial arts. I&apos;ve mentored 4 developers and
-              translated the React Redux docs into Russian.
-            </p>
+            <p>{t("bio4")}</p>
           </div>
 
           <aside className="space-y-6">
             <div>
               <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">
-                Languages
+                {t("languagesTitle")}
               </h3>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
-                  <span>English</span>
-                  <span className="text-muted-foreground">Fluent</span>
+                  <span>{t("english")}</span>
+                  <span className="text-muted-foreground">{t("fluent")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>German</span>
-                  <span className="text-muted-foreground">B1</span>
+                  <span>{t("german")}</span>
+                  <span className="text-muted-foreground">{t("b1")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Russian</span>
-                  <span className="text-muted-foreground">Native</span>
+                  <span>{t("russian")}</span>
+                  <span className="text-muted-foreground">{t("native")}</span>
                 </div>
               </div>
             </div>
 
             <div>
               <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">
-                Interests
+                {t("interestsTitle")}
               </h3>
               <div className="flex flex-wrap gap-1">
-                {INTERESTS.filter((i) => i !== "Chess").map((interest) => (
+                {INTERESTS.map((interest) => (
                   <Badge key={interest} variant="outline" className="text-xs">
                     {interest}
                   </Badge>
@@ -121,7 +109,7 @@ export default async function AboutPage({
               className={cn(buttonVariants({ variant: "default" }), "w-full justify-center")}
             >
               <FileDown className="h-4 w-4 mr-2" />
-              Download CV
+              {t("downloadCv")}
             </a>
           </aside>
         </div>
@@ -135,7 +123,7 @@ export default async function AboutPage({
 
       {/* Timeline */}
       <section>
-        <h2 className="text-2xl font-bold mb-10">Career progression</h2>
+        <h2 className="text-2xl font-bold mb-10">{t("careerTitle")}</h2>
         <CareerTimeline />
       </section>
     </main>

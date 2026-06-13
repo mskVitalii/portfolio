@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { Mail, Send, FileDown, MapPin, Languages } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -26,42 +27,21 @@ function GithubIcon({ className }: IconProps) {
 }
 
 const SOCIAL_LINKS: {
-  label: string;
+  labelKey: string;
   href: string;
   Icon: (p: IconProps) => React.ReactElement;
   variant: "default" | "outline" | "ghost";
   external?: boolean;
 }[] = [
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/mskvitalii",
-    Icon: LinkedinIcon,
-    variant: "default",
-    external: true,
-  },
-  {
-    label: "Email",
-    href: "mailto:msk.vitaly@gmail.com",
-    Icon: ({ className }) => <Mail className={className} />,
-    variant: "outline",
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/mskvitalii",
-    Icon: GithubIcon,
-    variant: "outline",
-    external: true,
-  },
-  {
-    label: "Telegram",
-    href: "https://t.me/mskvitalii",
-    Icon: ({ className }) => <Send className={className} />,
-    variant: "outline",
-    external: true,
-  },
+  { labelKey: "LinkedIn",  href: "https://linkedin.com/in/mskvitalii", Icon: LinkedinIcon, variant: "default", external: true },
+  { labelKey: "Email",     href: "mailto:msk.vitaly@gmail.com", Icon: ({ className }) => <Mail className={className} />, variant: "outline" },
+  { labelKey: "GitHub",    href: "https://github.com/mskvitalii", Icon: GithubIcon, variant: "outline", external: true },
+  { labelKey: "Telegram",  href: "https://t.me/mskvitalii", Icon: ({ className }) => <Send className={className} />, variant: "outline", external: true },
 ];
 
 export function Hero() {
+  const t = useTranslations("Hero");
+
   return (
     <section className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center text-center px-4 py-16 relative">
       <motion.div
@@ -75,13 +55,13 @@ export function Hero() {
         </h1>
 
         <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium">
-          Full-Stack Engineer · Distributed Systems · AI
+          {t("role")}
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-sm">
             <MapPin className="h-3.5 w-3.5" />
-            Berlin, Germany
+            Chemnitz, Germany
           </Badge>
           <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-sm">
             <Languages className="h-3.5 w-3.5" />
@@ -90,21 +70,22 @@ export function Hero() {
         </div>
 
         <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Full-stack engineer focused on building systems that create{" "}
-          <span className="text-foreground font-medium">measurable business value</span>.
-          5+ years across e-commerce, mobility, and AI.
+          {t("tagline")}{" "}
+          <span className="text-foreground font-medium">{t("taglineHighlight")}</span>
+          {t("taglineEnd")}
+          {" "}{t("experience")}
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          {SOCIAL_LINKS.map(({ label, href, Icon, variant, external }) => (
+          {SOCIAL_LINKS.map(({ labelKey, href, Icon, variant, external }) => (
             <a
-              key={label}
+              key={labelKey}
               href={href}
               className={cn(buttonVariants({ variant }))}
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
               <Icon className="h-4 w-4 mr-2" />
-              {label}
+              {labelKey}
             </a>
           ))}
         </div>
@@ -116,13 +97,10 @@ export function Hero() {
             className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
           >
             <FileDown className="h-4 w-4 mr-2" />
-            Download CV
+            {t("downloadCv")}
           </a>
-          <Link
-            href="/about"
-            className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
-          >
-            About me →
+          <Link href="/about" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
+            {t("aboutLink")}
           </Link>
         </div>
       </motion.div>
@@ -133,7 +111,7 @@ export function Hero() {
         transition={{ delay: 1, duration: 0.4 }}
         className="absolute bottom-8 text-muted-foreground text-sm"
       >
-        ↓ see impact
+        {t("scrollHint")}
       </motion.div>
     </section>
   );

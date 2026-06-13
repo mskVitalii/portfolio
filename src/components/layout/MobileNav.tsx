@@ -7,13 +7,15 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const NAV_KEYS = ["home", "about", "projects", "skills", "contact"] as const;
+const NAV_KEYS = ["home", "about", "projects", "skills", "education", "contact", "card"] as const;
 const NAV_HREFS: Record<(typeof NAV_KEYS)[number], string> = {
   home: "/",
   about: "/about",
   projects: "/projects",
   skills: "/skills",
+  education: "/education",
   contact: "/contact",
+  card: "/card",
 };
 
 export function MobileNav() {
