@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/seo";
-import { PROJECTS } from "@/data/projects";
-import { ProjectsFilter } from "@/components/projects/ProjectsFilter";
+import { PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
+import { ProjectsView } from "@/components/projects/ProjectsView";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -41,7 +41,10 @@ export default async function ProjectsPage({
         </p>
       </div>
 
-      <ProjectsFilter projects={PROJECTS} />
+      <ProjectsView
+          projects={PROJECTS}
+          allProjects={[...PROJECTS, ...EDUCATION_PROJECTS]}
+        />
     </main>
   );
 }

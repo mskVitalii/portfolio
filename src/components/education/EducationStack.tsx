@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { FileDown, Award, ChevronRight, CheckCircle2 } from "lucide-react";
 import type { Project } from "@/data/projects";
 
@@ -114,17 +115,13 @@ const TUC_DARK = {
 
 // ─── HSE Card ──────────────────────────────────────────────────────────────────
 
-const HSE_CONTENT = {
+const HSE_STATIC = {
   navLinks: ["Study Programs", "Research", "Campus", "About"],
   breadcrumb: ["HSE University", "Education", "Bachelor's Programme", "Software Engineering"],
-  category: "BACHELOR'S PROGRAMME",
   degree: "Software Engineering",
-  faculty: "Faculty of Computer Science",
   location: "Moscow, Russia",
   period: "2019 – 2023",
   gpa: "GPA 4.2 / 5.0",
-  description:
-    "Core computer science fundamentals: algorithms, software architecture, databases, operating systems, quality assurance, project management, and Microsoft Azure Cloud. Built strong foundations in system design and distributed engineering.",
   highlights: [
     "Algorithms & Data Structures",
     "Software Architecture",
@@ -136,13 +133,14 @@ const HSE_CONTENT = {
     "QA & Testing",
   ],
   stack: ["Java", "Python", "SQL", "Azure", "Algorithms"],
-  certificate: { label: "Download Diploma", href: "/certificates/hse-diploma.pdf" },
+  certificate: { href: "/certificates/hse-diploma.pdf" },
   projectFilter: (p: Project) => p.company === "Higher School of Economics",
 };
 
 function HseCard({ projects, index, isDark }: { projects: Project[]; index: number; isDark: boolean }) {
+  const t = useTranslations("EducationPage");
   const c = isDark ? HSE_DARK : HSE_LIGHT;
-  const d = HSE_CONTENT;
+  const d = HSE_STATIC;
 
   // HSE uses Roboto Slab for headings (mimicking HSE Slab), Nunito Sans for body (mimicking HSE Sans/Proxima Nova)
   const headingFont = "var(--font-roboto-slab), 'Roboto Slab', Georgia, serif";
@@ -216,7 +214,7 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
           <div className="flex items-center gap-2 mb-4">
             <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
             <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary, fontFamily: bodyFont }}>
-              {d.category}
+              {t("hseCategory")}
             </span>
           </div>
 
@@ -227,7 +225,7 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
             {d.degree}
           </h1>
           <p className="text-base font-semibold mb-1" style={{ color: c.muted, fontFamily: bodyFont }}>
-            {d.faculty}
+            {t("hseFaculty")}
           </p>
 
           <div style={{ width: "56px", height: "3px", background: c.accentLine, margin: "16px 0" }} />
@@ -241,10 +239,10 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
           </div>
 
           <p className="text-sm leading-relaxed mb-6" style={{ color: c.bodyColor, maxWidth: "540px" }}>
-            {d.description}
+            {t("hseDescription")}
           </p>
 
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>Key Coursework</p>
+          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("keyCourseWork")}</p>
           <div className="flex flex-wrap gap-2 mb-8">
             {d.highlights.map((h) => (
               <span
@@ -257,7 +255,7 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
             ))}
           </div>
 
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>Tech Stack</p>
+          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("techStack")}</p>
           <div className="flex flex-wrap gap-2 mb-8">
             {d.stack.map((s) => (
               <span
@@ -278,7 +276,7 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
               style={{ background: c.primary, color: "white", fontFamily: bodyFont }}
             >
               <Award className="w-4 h-4" />
-              {d.certificate.label}
+              {t("downloadDiploma")}
               <FileDown className="w-3.5 h-3.5 opacity-80" />
             </a>
           )}
@@ -290,7 +288,7 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
           style={{ background: c.sideBg, borderLeft: `1px solid ${c.borderColor}` }}
         >
           <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: c.primary }}>
-            Academic Projects
+            {t("academicProjects")}
           </p>
           <div className="space-y-4">
             {projects.length > 0 ? (
@@ -338,10 +336,10 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
             style={{ background: c.infoBg, border: `1px solid ${c.infoBorder}` }}
           >
             <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: c.primary }}>
-              Accreditation
+              {t("accreditation")}
             </p>
             <p className="text-xs leading-relaxed" style={{ color: c.bodyColor }}>
-              HSE University is the largest research university in Russia and one of the leading economics and social sciences universities in Eastern Europe and Eurasia.
+              {t("hseAccreditationText")}
             </p>
           </div>
         </div>
@@ -352,17 +350,13 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
 
 // ─── TUC Card ─────────────────────────────────────────────────────────────────
 
-const TUC_CONTENT = {
+const TUC_STATIC = {
   navLinks: ["University", "Studies", "Research", "International"],
   breadcrumb: ["TU Chemnitz", "Studies", "Master's Programme", "Web Engineering"],
-  category: "MASTER'S PROGRAMME",
   degree: "Web Engineering",
-  faculty: "Faculty of Computer Science",
   location: "Chemnitz, Germany",
   period: "2023 – 2025",
-  gpa: "GPA 2.39 (German scale, 1.0 = best)",
-  description:
-    "Advanced distributed systems, cloud-native applications, software service engineering, cybersecurity, and model-driven software development. Focus on modern web architectures and scalable engineering solutions.",
+  gpa: "GPA 2.39",
   highlights: [
     "Distributed Systems",
     "Cloud Applications",
@@ -378,8 +372,9 @@ const TUC_CONTENT = {
 };
 
 function TucCard({ projects, index, isDark }: { projects: Project[]; index: number; isDark: boolean }) {
+  const t = useTranslations("EducationPage");
   const c = isDark ? TUC_DARK : TUC_LIGHT;
-  const d = TUC_CONTENT;
+  const d = TUC_STATIC;
 
   // TUC uses Roboto (officially) for everything — clean, sans-serif, German functional
   const font = "var(--font-roboto), 'Roboto', Arial, sans-serif";
@@ -468,7 +463,7 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
           </div>
 
           <div className="space-y-1 mb-8">
-            {["Overview", "Curriculum", "Thesis", "Examination Office", "Student Life"].map((item, i) => (
+            {[t("tucSideOverview"), t("tucSideCurriculum"), t("tucSideThesis"), t("tucSideExamOffice"), t("tucSideStudentLife")].map((item, i) => (
               <div
                 key={item}
                 className="text-sm px-3 py-2 rounded cursor-pointer"
@@ -488,14 +483,14 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
             style={{ background: isDark ? "rgba(255,255,255,0.04)" : "white", border: `1px solid ${c.borderColor}` }}
           >
             <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: c.primary }}>
-              Quick Facts
+              {t("quickFacts")}
             </p>
             <div className="space-y-2 text-xs" style={{ color: c.bodyColor }}>
               {[
-                ["Degree", "M.Sc."],
-                ["Duration", "4 semesters"],
-                ["ECTS", "120"],
-                ["Language", "DE / EN"],
+                [t("factDegree"), "M.Sc."],
+                [t("factDuration"), t("factDurationValue")],
+                [t("factEctsLabel"), "120"],
+                [t("factLanguage"), "DE / EN"],
                 ["GPA", "2.39"],
               ].map(([label, value]) => (
                 <div key={label} className="flex items-center gap-2">
@@ -512,7 +507,7 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
           <div className="flex items-center gap-2 mb-4">
             <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
             <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary }}>
-              {d.category}
+              {t("tucCategory")}
             </span>
           </div>
 
@@ -523,7 +518,7 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
             {d.degree}
           </h1>
           <p className="text-base font-medium mb-4" style={{ color: c.muted }}>
-            {d.faculty} · Technische Universität Chemnitz
+            {t("tucFaculty")} · Technische Universität Chemnitz
           </p>
 
           <div style={{ width: "48px", height: "3px", background: c.primary, marginBottom: "20px" }} />
@@ -533,11 +528,11 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
             <span>|</span>
             <span>{d.location}</span>
             <span>|</span>
-            <span className="font-semibold" style={{ color: c.primary }}>{d.gpa}</span>
+            <span className="font-semibold" style={{ color: c.primary }}>{d.gpa} <span className="font-normal opacity-70">({t("tucGpaNote")})</span></span>
           </div>
 
           <p className="text-sm leading-relaxed mb-8" style={{ color: c.bodyColor, maxWidth: "580px" }}>
-            {d.description}
+            {t("tucDescription")}
           </p>
 
           {/* Modules table */}
@@ -546,7 +541,7 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
               className="px-4 py-2.5 text-xs font-bold uppercase tracking-widest"
               style={{ background: c.moduleHeaderBg, color: c.moduleHeaderText }}
             >
-              Key Modules
+              {t("keyModules")}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2">
               {d.highlights.map((h, i) => (
@@ -568,7 +563,7 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
           </div>
 
           <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>
-            Technologies Used
+            {t("technologiesUsed")}
           </p>
           <div className="flex flex-wrap gap-2 mb-8">
             {d.stack.map((s) => (
@@ -585,7 +580,7 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
           {projects.length > 0 && (
             <>
               <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: c.primary }}>
-                Academic Projects
+                {t("academicProjects")}
               </p>
               <div className="space-y-3">
                 {projects.map((p) => (
@@ -624,21 +619,21 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 export function EducationStack({ projects }: { projects: Project[] }) {
+  const t = useTranslations("EducationPage");
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isDark = mounted && resolvedTheme === "dark";
 
-  const hseProjects = projects.filter(HSE_CONTENT.projectFilter);
-  const tucProjects = projects.filter(TUC_CONTENT.projectFilter);
+  const hseProjects = projects.filter(HSE_STATIC.projectFilter);
+  const tucProjects = projects.filter(TUC_STATIC.projectFilter);
 
   return (
     <div>
       <div className="container mx-auto px-4 py-16 max-w-5xl">
-        <h1 className="text-4xl font-bold mb-4">Education</h1>
+        <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
         <p className="text-muted-foreground text-lg max-w-2xl">
-          Two universities, two countries, one engineering path — from Moscow to Germany.
-          Scroll through to explore each chapter.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -648,9 +643,9 @@ export function EducationStack({ projects }: { projects: Project[] }) {
       </div>
 
       <div className="container mx-auto px-4 py-20 max-w-5xl">
-        <h2 className="text-2xl font-bold mb-2">Certificates</h2>
+        <h2 className="text-2xl font-bold mb-2">{t("certificates")}</h2>
         <p className="text-muted-foreground text-sm mb-8">
-          Professional certifications alongside academic degrees.
+          {t("certsSubtitle")}
         </p>
         <div className="grid sm:grid-cols-3 gap-4">
           {[

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -20,7 +21,12 @@ const NAV_HREFS: Record<(typeof NAV_KEYS)[number], string> = {
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const t = useTranslations("Nav");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="md:hidden">
@@ -32,8 +38,11 @@ export function MobileNav() {
         {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
-      {open && (
-        <div className="fixed inset-0 top-14 z-40 bg-background border-t">
+      {open && mounted && createPortal(
+        <div
+          className="fixed inset-x-0 bottom-0 top-14 z-40 border-t"
+          style={{ background: "var(--background)" }}
+        >
           <nav className="container mx-auto px-4 py-6 flex flex-col gap-1">
             {NAV_KEYS.map((key) => (
               <Link
@@ -46,7 +55,8 @@ export function MobileNav() {
               </Link>
             ))}
           </nav>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

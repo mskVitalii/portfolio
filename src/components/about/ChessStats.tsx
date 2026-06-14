@@ -44,7 +44,37 @@ export function ChessStats() {
       .catch(() => setError(true));
   }, []);
 
-  if (error) return null;
+  if (error)
+    return (
+      <div className="mt-4 rounded-xl border bg-card overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">♟️</span>
+            <span className="font-semibold text-sm">Chess.com</span>
+            <span className="text-xs text-muted-foreground">@{USERNAME}</span>
+          </div>
+          <a
+            href={`https://chess.com/member/${USERNAME}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+        <div className="px-4 py-3 text-xs text-muted-foreground text-center">
+          Stats unavailable — view profile on{" "}
+          <a
+            href={`https://chess.com/member/${USERNAME}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-foreground"
+          >
+            Chess.com
+          </a>
+        </div>
+      </div>
+    );
 
   const loaded = stats !== null;
 

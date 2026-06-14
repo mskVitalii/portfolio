@@ -231,6 +231,8 @@ Key files:
 
 ### Internationalization
 - Translation keys live in `messages/{en,de,ru}.json`. All three files must have the same keys.
+- **All user-visible text must be translated.** Never hardcode strings in components — always use `useTranslations("Namespace")` (client) or `getTranslations({ locale, namespace })` (server). Adding a key to one file without adding it to all three is a bug.
+- Exceptions: tech stack names, degree abbreviations (M.Sc., B.Sc.), university proper names — may stay in EN.
 - **Do not** put translated strings in MDX frontmatter — use `useTranslations` in the component instead.
 - The `src/i18n/routing.ts` defines supported locales; update it if adding a new locale.
 <!-- GSD:conventions-end -->
