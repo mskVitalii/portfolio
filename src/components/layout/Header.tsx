@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { FileDown } from "lucide-react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { ViewModeSwitcher } from "@/components/tri-mode/ViewModeSwitcher";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -10,38 +10,44 @@ import { MobileNav } from "./MobileNav";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+const NAV_LINKS = [
+  { key: "home", href: "/" as const },
+  { key: "about", href: "/about" as const },
+  { key: "projects", href: "/projects" as const },
+  { key: "skills", href: "/skills" as const },
+  { key: "education", href: "/education" as const },
+  { key: "contact", href: "/contact" as const },
+  { key: "card", href: "/card" as const },
+] as const;
+
 export function Header() {
   const t = useTranslations();
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-bold text-sm">
-            {t("Common.siteName")}
+            <span className="hidden sm:inline">{t("Common.siteName")}</span>
+            <span className="sm:hidden">VP</span>
           </Link>
           <nav className="hidden md:flex items-center gap-4 text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-foreground transition-colors">
-              {t("Nav.home")}
-            </Link>
-            <Link href="/about" className="hover:text-foreground transition-colors">
-              {t("Nav.about")}
-            </Link>
-            <Link href="/projects" className="hover:text-foreground transition-colors">
-              {t("Nav.projects")}
-            </Link>
-            <Link href="/skills" className="hover:text-foreground transition-colors">
-              {t("Nav.skills")}
-            </Link>
-            <Link href="/education" className="hover:text-foreground transition-colors">
-              {t("Nav.education")}
-            </Link>
-            <Link href="/contact" className="hover:text-foreground transition-colors">
-              {t("Nav.contact")}
-            </Link>
-            <Link href="/card" className="hover:text-foreground transition-colors">
-              {t("Nav.card")}
-            </Link>
+            {NAV_LINKS.map(({ key, href }) => {
+              const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+              return (
+                <Link
+                  key={key}
+                  href={href}
+                  className={cn(
+                    "hover:text-foreground transition-colors",
+                    isActive && "text-foreground font-medium"
+                  )}
+                >
+                  {t(`Nav.${key}`)}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 

@@ -6,6 +6,8 @@ import { Hero } from "@/components/home/Hero";
 import { ImpactDashboard } from "@/components/home/ImpactDashboard";
 import { GeoMap } from "@/components/home/GeoMap";
 import { BrandCloud } from "@/components/home/BrandCloud";
+import { HomePageCta } from "@/components/home/HomePageCta";
+import { AudienceFilter } from "@/components/home/AudienceFilter";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -36,9 +38,11 @@ export default async function HomePage({
   return (
     <main>
       <Hero />
+      <AudienceFilter />
       <BrandCloud />
       <ImpactDashboard />
       <GeoMap />
+      <HomePageCta />
     </main>
   );
 }

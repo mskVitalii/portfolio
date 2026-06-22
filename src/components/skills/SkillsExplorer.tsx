@@ -18,6 +18,7 @@ import "@xyflow/react/dist/style.css";
 import { Badge } from "@/components/ui/badge";
 import { SKILLS, CATEGORY_COLORS, LEVEL_LABELS, type Skill } from "@/data/skills";
 import { PROJECTS } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
 // ─── Shared node renderer ───────────────────────────────────────────────────
 
@@ -217,6 +218,109 @@ const OBS_EDGES: Edge[] = [
   edge("kubernetes", "redis"),
 ];
 
+// ── DEPLOY graph ─────────────────────────────────────────────────────────────
+
+const DEPLOY_NODES: Node[] = [
+  // Source
+  labelNode("lbl-src",   "Source",             0,   10),
+  { id: "github",   type: "techNode", position: { x: 0,   y: 40  }, data: { label: "GitHub",   category: "infrastructure", handles: ["right"] } },
+  { id: "gitlab",   type: "techNode", position: { x: 0,   y: 130 }, data: { label: "GitLab",   category: "infrastructure", handles: ["right"] } },
+
+  // CI / Tests
+  labelNode("lbl-ci",    "CI Pipeline",       200,  10),
+  skillNode("github-actions",                  200,  40),
+  { id: "gitlab-ci", type: "techNode", position: { x: 200, y: 130 }, data: { label: "GitLab CI", category: "infrastructure", handles: ["left", "right"] } },
+  { id: "tests",    type: "techNode", position: { x: 200, y: 230 }, data: { label: "Tests ✓",  category: "infrastructure", handles: ["left", "right", "bottom"] } },
+
+  // Build + Registry
+  labelNode("lbl-build-d", "Build",           420,  10),
+  skillNode("docker",                          420,  40),
+  skillNode("docker-registry",                 420, 140),
+
+  // Kubernetes + Helm
+  labelNode("lbl-k8s",  "Cluster",            640,  10),
+  skillNode("kubernetes",                      640,  40),
+  skillNode("helm",                            640, 140),
+
+  // Ingress
+  labelNode("lbl-ing",  "Ingress",            860,  10),
+  { id: "ingress", type: "techNode", position: { x: 860, y: 40 }, data: { label: "Ingress / LB", category: "infrastructure", handles: ["left", "bottom"] } },
+
+  // Stage — 3 pods
+  labelNode("lbl-stage", "Stage (3 pods)",    720, 240),
+  { id: "pod-s1", type: "techNode", position: { x: 660, y: 270 }, data: { label: "Pod 1", category: "infrastructure", handles: ["top"] } },
+  { id: "pod-s2", type: "techNode", position: { x: 780, y: 270 }, data: { label: "Pod 2", category: "infrastructure", handles: ["top"] } },
+  { id: "pod-s3", type: "techNode", position: { x: 900, y: 270 }, data: { label: "Pod 3", category: "infrastructure", handles: ["top"] } },
+
+  // Production — Blue / Green
+  labelNode("lbl-prod",  "Production",        720, 390),
+  { id: "traffic-router", type: "techNode", position: { x: 800, y: 420 }, data: { label: "Traffic Router\n100% / 0%", category: "infrastructure", handles: ["top", "bottom"] } },
+  { id: "pod-blue",  type: "techNode", position: { x: 680, y: 510 }, data: { label: "🔵 Blue\nlive · 100%", category: "infrastructure", handles: ["top"] } },
+  { id: "pod-green", type: "techNode", position: { x: 940, y: 510 }, data: { label: "🟢 Green\nnext · 0%",  category: "infrastructure", handles: ["top"] } },
+];
+
+const DEPLOY_EDGES: Edge[] = [
+  edge("github", "github-actions"),
+  edge("gitlab", "gitlab-ci"),
+  edge("github-actions", "tests"),
+  edge("gitlab-ci", "tests"),
+  edge("tests", "docker"),
+  edge("docker", "docker-registry"),
+  edge("docker-registry", "kubernetes"),
+  edge("helm", "kubernetes"),
+  edge("kubernetes", "ingress"),
+  edge("ingress", "pod-s1"),
+  edge("ingress", "pod-s2"),
+  edge("ingress", "pod-s3"),
+  edge("ingress", "traffic-router"),
+  edge("traffic-router", "pod-blue"),
+  edge("traffic-router", "pod-green"),
+];
+
+// ── AI graph ──────────────────────────────────────────────────────────────────
+
+const AI_NODES: Node[] = [
+  // User
+  labelNode("lbl-user",   "User",              0,   10),
+  { id: "user", type: "techNode", position: { x: 0, y: 40 }, data: { label: "User / App", category: "frontend", handles: ["right"] } },
+
+  // Context & MCP
+  labelNode("lbl-ctx",    "Context Layer",     200, 10),
+  skillNode("context-engineering",               200, 40),
+  skillNode("mcp-server",                        200, 140),
+
+  // LLM Layer
+  labelNode("lbl-llm",    "LLM",               420, 10),
+  skillNode("claude-code",                       420, 40),
+  skillNode("copilot",                           420, 130),
+  skillNode("ollama",                            420, 220),
+  skillNode("huggingface",                       420, 310),
+
+  // RAG pipeline
+  labelNode("lbl-rag",    "RAG Pipeline",      650, 10),
+  skillNode("rag",                               650, 40),
+  skillNode("langchain",                         650, 140),
+  skillNode("embedding-models",                  650, 240),
+  skillNode("qdrant",                            650, 340),
+];
+
+const AI_EDGES: Edge[] = [
+  edge("user", "context-engineering"),
+  edge("user", "mcp-server"),
+  edge("context-engineering", "claude-code"),
+  edge("context-engineering", "rag"),
+  edge("mcp-server", "claude-code"),
+  edge("mcp-server", "ollama"),
+  edge("claude-code", "rag"),
+  edge("langchain", "claude-code"),
+  edge("langchain", "ollama"),
+  edge("langchain", "huggingface"),
+  edge("rag", "langchain"),
+  edge("rag", "embedding-models"),
+  edge("embedding-models", "qdrant"),
+  edge("qdrant", "langchain"),
+];
+
 // ─── Graph sections config ────────────────────────────────────────────────────
 
 const GRAPHS = [
@@ -243,6 +347,22 @@ const GRAPHS = [
     description: "Go / Python services containerized with Docker, orchestrated on Kubernetes. Prometheus scrapes metrics, Grafana visualizes them. Redis for hot-path caching, Kafka for durable event streaming.",
     nodes: OBS_NODES,
     edges: OBS_EDGES,
+  },
+  {
+    id: "deploy",
+    label: "Deployment Pipeline",
+    subtitle: "From commit to production",
+    description: "GitHub and GitLab trigger parallel CI pipelines. Tests run first (unit + integration) — no deploy without green. Docker builds the image, publishes to registry. Helm charts deploy to Kubernetes: three pods in Stage for QA, then a Traffic Router in Production shifts 100% load between Blue (live) and Green (next) for zero-downtime rollout.",
+    nodes: DEPLOY_NODES,
+    edges: DEPLOY_EDGES,
+  },
+  {
+    id: "ai",
+    label: "AI Engineering Stack",
+    subtitle: "RAG · LLM · MCP",
+    description: "Context Engineering shapes what the model sees. MCP Servers expose tools and APIs to LLMs. The RAG pipeline chunks data, embeds with text-embedding models, stores vectors in Qdrant, and orchestrates retrieval via LangChain. LLM layer: Claude (certified), Copilot, Ollama for private inference, Hugging Face for fine-tuning.",
+    nodes: AI_NODES,
+    edges: AI_EDGES,
   },
 ] as const;
 
@@ -289,10 +409,17 @@ function GraphView({
   );
 }
 
+interface Cert {
+  name: string;
+  issuer: string;
+  url: string;
+}
+
 // ─── Single graph section ─────────────────────────────────────────────────────
 
-function GraphSection({ graph }: { graph: (typeof GRAPHS)[number] }) {
+function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?: Cert[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [certsOpen, setCertsOpen] = useState(true);
   const { resolvedTheme } = useTheme();
   const [colorMode, setColorMode] = useState<"light" | "dark">("light");
 
@@ -362,7 +489,7 @@ function GraphSection({ graph }: { graph: (typeof GRAPHS)[number] }) {
 
       {/* Related projects */}
       {relatedProjects.length > 0 && (
-        <div className="px-6 py-4">
+        <div className={cn("px-6 py-4", certs && certs.length > 0 && "border-b")}>
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
             Used in
           </p>
@@ -375,9 +502,51 @@ function GraphSection({ graph }: { graph: (typeof GRAPHS)[number] }) {
           </div>
         </div>
       )}
+
+      {/* Optional certifications */}
+      {certs && certs.length > 0 && (
+        <div className="px-6 py-4">
+          <button
+            onClick={() => setCertsOpen((v) => !v)}
+            className="flex items-center gap-2 text-sm font-medium text-amber-500 hover:text-amber-400 transition-colors"
+          >
+            <span className="text-base">★</span>
+            Certifications ({certs.length})
+            <span className="text-xs opacity-60">{certsOpen ? "▲" : "▼"}</span>
+          </button>
+          {certsOpen && (
+            <div className="mt-3 flex flex-wrap gap-3">
+              {certs.map((cert) => (
+                <a
+                  key={cert.url}
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 hover:border-amber-500/60 transition-all group text-sm"
+                >
+                  <span className="text-amber-500 text-xs">★</span>
+                  <div>
+                    <div className="font-medium text-foreground text-xs">{cert.name}</div>
+                    <div className="text-[11px] text-muted-foreground">{cert.issuer}</div>
+                  </div>
+                  <svg className="w-3 h-3 text-muted-foreground group-hover:text-amber-500 shrink-0 ml-1 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
+
+const AI_CERTS: Cert[] = [
+  { name: "Claude API & SDK Fundamentals",  issuer: "Anthropic (Skilljar)", url: "https://verify.skilljar.com/c/arhv5wtraues" },
+  { name: "Anthropic API Essentials",        issuer: "Anthropic (Skilljar)", url: "https://verify.skilljar.com/c/zxjoevsgqx84" },
+  { name: "Claude Code Practitioner",        issuer: "Anthropic (Skilljar)", url: "https://verify.skilljar.com/c/7msxhy7wnwq3" },
+];
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
@@ -385,7 +554,11 @@ export function SkillsExplorer() {
   return (
     <div className="space-y-8">
       {GRAPHS.map((graph) => (
-        <GraphSection key={graph.id} graph={graph} />
+        <GraphSection
+          key={graph.id}
+          graph={graph}
+          certs={graph.id === "ai" ? AI_CERTS : undefined}
+        />
       ))}
     </div>
   );

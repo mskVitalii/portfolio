@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
-import { Mail, Send, MapPin, Printer } from "lucide-react";
+import { Mail, Send, MapPin, Printer, Lock, EyeOff, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CardWheel, type WheelCard, type Rarity, RARITY_COLORS, CARD_W, CARD_H } from "./CardWheel";
+import { Card3DViewer } from "./Card3DViewer";
+import confetti from "canvas-confetti";
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -543,55 +546,437 @@ function HoloBack() {
   );
 }
 
+// ── Design 11: Terminal ───────────────────────────────────────────────────────
+
+function TerminalFront() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex flex-col" style={{ background: "#0d1117" }}>
+      <div className="flex items-center gap-1.5 px-3 py-1.5 border-b border-white/10" style={{ background: "#161b22" }}>
+        <div className="w-2 h-2 rounded-full bg-red-500/80" />
+        <div className="w-2 h-2 rounded-full bg-yellow-500/80" />
+        <div className="w-2 h-2 rounded-full bg-green-500/80" />
+        <span className="text-[9px] text-white/30 ml-1 font-mono">vitalii@popov ~ %</span>
+      </div>
+      <div className="flex flex-1 p-3 gap-3">
+        <div className="flex-1 font-mono text-[9px] space-y-0.5">
+          <p><span className="text-green-400">$ </span><span className="text-white/70">whoami</span></p>
+          <p className="text-green-300">{INFO.name}</p>
+          <p className="mt-1"><span className="text-green-400">$ </span><span className="text-white/70">cat role.txt</span></p>
+          <p className="text-cyan-300">{INFO.title}</p>
+          <p className="text-cyan-300/70">{INFO.subtitle}</p>
+          <p className="mt-1"><span className="text-green-400">$ </span><span className="text-white/70">cat contact.json</span></p>
+          <p className="text-yellow-300/80">{"{"}</p>
+          <p className="pl-2 text-white/60">"email": <span className="text-green-300">"{INFO.email}"</span></p>
+          <p className="pl-2 text-white/60">"tg": <span className="text-green-300">"{INFO.telegram}"</span></p>
+          <p className="text-yellow-300/80">{"}"}</p>
+        </div>
+        <div className="flex flex-col items-end justify-end shrink-0">
+          <div className="border border-green-400/30 p-1">
+            <QRCodeSVG value={SITE_URL} size={52} level="M" fgColor="#4ade80" bgColor="#0d1117" />
+          </div>
+          <p className="text-[8px] text-green-400/40 mt-0.5 font-mono">portfolio</p>
+        </div>
+      </div>
+      <div className="px-3 pb-1.5 flex items-center gap-1 font-mono">
+        <span className="text-green-400 text-[9px]">$</span>
+        <span className="w-1.5 h-3 bg-green-400/70 animate-pulse" />
+      </div>
+    </div>
+  );
+}
+
+function TerminalBack() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex items-center justify-center" style={{ background: "#0d1117" }}>
+      <div className="absolute inset-0 overflow-hidden opacity-10">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div key={i} className="absolute font-mono text-[8px] text-green-400 whitespace-nowrap" style={{ top: `${i * 17}px`, left: "-8px" }}>
+            01001010 10110100 01100001 11010010 00111001 10010100
+          </div>
+        ))}
+      </div>
+      <div className="text-center relative z-10 font-mono">
+        <p className="text-[10px] text-green-400/60">~ %</p>
+        <p className="text-3xl font-bold text-green-400">VP</p>
+        <p className="text-[8px] text-green-400/40 mt-1">{SITE_URL}</p>
+        <span className="inline-block w-2 h-4 bg-green-400/60 mt-1 animate-pulse" />
+      </div>
+    </div>
+  );
+}
+
+// ── Design 12: Retro ─────────────────────────────────────────────────────────
+
+function RetroFront() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex" style={{ background: "#1a0533" }}>
+      <div className="absolute top-0 left-0 right-0 h-2" style={{ background: "linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff)" }} />
+      <div className="absolute bottom-0 left-0 right-0 h-2" style={{ background: "linear-gradient(90deg, #00ffff, #ff00ff, #00ffff)" }} />
+      <div className="absolute left-0 top-0 bottom-0 w-2" style={{ background: "linear-gradient(180deg, #ff00ff, #00ffff)" }} />
+      <div className="flex flex-1 pl-5 pr-4 py-5 gap-4 relative z-10">
+        <div className="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.25em] mb-1" style={{ color: "#ff00ff", fontFamily: "monospace" }}>◆ {INFO.title} ◆</p>
+            <h1 className="text-xl font-black leading-tight" style={{ color: "#ffffff", textShadow: "2px 2px 0 #ff00ff, -1px -1px 0 #00ffff", fontFamily: "monospace" }}>{INFO.name}</h1>
+            <p className="text-[10px] mt-1" style={{ color: "#00ffff", fontFamily: "monospace" }}>{INFO.subtitle}</p>
+          </div>
+          <div className="space-y-0.5 font-mono text-[8px]" style={{ color: "#ff00ff99" }}>
+            <p>✉ {INFO.email}</p>
+            <p>✈ {INFO.telegram}</p>
+            <p>◉ {INFO.location}</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-end gap-1 shrink-0">
+          <div className="p-1" style={{ border: "2px solid #ff00ff" }}>
+            <QRCodeSVG value={SITE_URL} size={58} level="M" fgColor="#00ffff" bgColor="#1a0533" />
+          </div>
+          <p className="text-[8px] font-mono" style={{ color: "#ff00ff60" }}>PORTFOLIO</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RetroBack() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex items-center justify-center" style={{ background: "#1a0533" }}>
+      <div className="absolute top-0 left-0 right-0 h-2" style={{ background: "linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff)" }} />
+      <div className="absolute bottom-0 left-0 right-0 h-2" style={{ background: "linear-gradient(90deg, #00ffff, #ff00ff, #00ffff)" }} />
+      <div className="text-center relative z-10 font-mono">
+        <p className="text-[10px]" style={{ color: "#ff00ff80" }}>◆ ◆ ◆</p>
+        <p className="text-4xl font-black mt-1" style={{ color: "#ffffff", textShadow: "3px 3px 0 #ff00ff, -2px -2px 0 #00ffff" }}>VP</p>
+        <p className="text-[10px] mt-2" style={{ color: "#00ffff" }}>◆ ◆ ◆</p>
+        <p className="text-[8px] mt-2" style={{ color: "#ff00ff50" }}>{SITE_URL}</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Design 13: Aurora ─────────────────────────────────────────────────────────
+
+function AuroraFront() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex" style={{ background: "#020818" }}>
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 20% 50%, #0d9488aa 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #7c3aedaa 0%, transparent 50%), radial-gradient(ellipse at 60% 80%, #0891b2aa 0%, transparent 45%)" }} />
+      <div className="absolute inset-0 backdrop-blur-[1px]" />
+      <div className="flex flex-1 p-5 gap-4 relative z-10">
+        <div className="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color: "#5eead4" }}>{INFO.title}</p>
+            <h1 className="text-xl font-bold leading-tight text-white" style={{ textShadow: "0 0 20px rgba(94,234,212,0.3)" }}>{INFO.name}</h1>
+            <p className="text-xs mt-1" style={{ color: "#a78bfa" }}>{INFO.subtitle}</p>
+          </div>
+          <ContactList className="text-teal-100/70" />
+        </div>
+        <div className="flex flex-col items-center justify-end gap-1 shrink-0">
+          <div className="p-1.5 rounded-lg" style={{ background: "rgba(94,234,212,0.08)", border: "1px solid rgba(94,234,212,0.25)" }}>
+            <QRCodeSVG value={SITE_URL} size={64} level="M" fgColor="#5eead4" bgColor="transparent" />
+          </div>
+          <p className="text-[9px]" style={{ color: "#5eead450" }}>portfolio</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AuroraBack() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex items-center justify-center" style={{ background: "#020818" }}>
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 30% 60%, #0d948899 0%, transparent 55%), radial-gradient(ellipse at 70% 30%, #7c3aed88 0%, transparent 55%), radial-gradient(ellipse at 50% 90%, #0891b288 0%, transparent 45%)" }} />
+      <div className="text-center relative z-10">
+        <p className="text-4xl font-bold text-white" style={{ textShadow: "0 0 30px rgba(94,234,212,0.6)" }}>VP</p>
+        <div className="w-12 h-px mx-auto my-2" style={{ background: "linear-gradient(90deg, transparent, #5eead4, transparent)" }} />
+        <p className="text-[10px]" style={{ color: "#5eead470" }} >{SITE_URL}</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Design 14: Crimson ────────────────────────────────────────────────────────
+
+function CrimsonFront() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex" style={{ background: "#0c0205" }}>
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, #dc2626, transparent)" }} />
+      <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-red-700" />
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 10% 50%, rgba(220,38,38,0.12) 0%, transparent 60%)" }} />
+      <div className="flex flex-1 pl-5 pr-4 py-4 gap-4 relative z-10">
+        <div className="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.2em] mb-1" style={{ color: "#ef4444", letterSpacing: "0.2em" }}>{INFO.title}</p>
+            <h1 className="text-xl font-bold leading-tight text-white">{INFO.name}</h1>
+            <p className="text-[11px] mt-0.5" style={{ color: "#7f1d1d" }}>{INFO.subtitle}</p>
+          </div>
+          <ContactList className="text-red-100/50" />
+        </div>
+        <div className="flex flex-col items-center justify-end gap-1 shrink-0">
+          <div className="p-1.5" style={{ border: "1px solid #7f1d1d" }}>
+            <QRCodeSVG value={SITE_URL} size={64} level="M" fgColor="#ef4444" bgColor="#0c0205" />
+          </div>
+          <p className="text-[8px]" style={{ color: "#7f1d1d" }}>PORTFOLIO</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CrimsonBack() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex items-center justify-center" style={{ background: "#0c0205" }}>
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(220,38,38,0.15) 0%, transparent 60%)" }} />
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, #dc2626, transparent)" }} />
+      <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, transparent, #dc2626, transparent)" }} />
+      <div className="text-center relative z-10">
+        <p className="text-5xl font-bold" style={{ color: "#dc2626", textShadow: "0 0 20px rgba(220,38,38,0.4)" }}>VP</p>
+        <div className="w-8 h-px mx-auto my-2 bg-red-800" />
+        <p className="text-[9px] uppercase tracking-widest" style={{ color: "#7f1d1d" }}>Full-Stack Engineer</p>
+        <p className="text-[8px] mt-1" style={{ color: "#450a0a" }}>{SITE_URL}</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Design 15: Carbon ─────────────────────────────────────────────────────────
+
+function CarbonFront() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex" style={{ background: "#0a0a0a" }}>
+      <div
+        className="absolute inset-0 opacity-[0.22]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(45deg, #ffffff08 0px, #ffffff08 1px, transparent 1px, transparent 8px), repeating-linear-gradient(-45deg, #ffffff05 0px, #ffffff05 1px, transparent 1px, transparent 8px)`,
+          backgroundSize: "8px 8px",
+        }}
+      />
+      <div className="absolute left-0 top-0 bottom-0 w-1" style={{ background: "linear-gradient(180deg, #d4af37, #f5d060, #b8960c, #f5d060, #d4af37)" }} />
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg, #d4af37, transparent)" }} />
+      <div className="flex flex-1 pl-4 pr-4 py-4 gap-4 relative z-10">
+        <div className="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.25em] mb-0.5" style={{ color: "#d4af37" }}>{INFO.title}</p>
+            <h1 className="text-xl font-bold leading-tight text-white">{INFO.name}</h1>
+            <p className="text-[11px] mt-0.5" style={{ color: "#d4af3780" }}>{INFO.subtitle}</p>
+          </div>
+          <ContactList className="text-zinc-400" />
+        </div>
+        <div className="flex flex-col items-center justify-end gap-1 shrink-0">
+          <div className="p-1.5" style={{ border: "1px solid #d4af37", background: "rgba(212,175,55,0.05)" }}>
+            <QRCodeSVG value={SITE_URL} size={64} level="M" fgColor="#d4af37" bgColor="transparent" />
+          </div>
+          <p className="text-[8px]" style={{ color: "#d4af3760" }}>PORTFOLIO</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CarbonBack() {
+  return (
+    <div className="relative w-full h-full overflow-hidden flex items-center justify-center" style={{ background: "#0a0a0a" }}>
+      <div
+        className="absolute inset-0 opacity-[0.22]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(45deg, #ffffff08 0px, #ffffff08 1px, transparent 1px, transparent 8px), repeating-linear-gradient(-45deg, #ffffff05 0px, #ffffff05 1px, transparent 1px, transparent 8px)`,
+          backgroundSize: "8px 8px",
+        }}
+      />
+      <div className="text-center relative z-10">
+        <p className="text-4xl font-bold text-white" style={{ textShadow: "0 0 20px rgba(212,175,55,0.4)" }}>VP</p>
+        <div className="w-10 h-px mx-auto my-2" style={{ background: "linear-gradient(90deg, transparent, #d4af37, transparent)" }} />
+        <p className="text-[9px] uppercase tracking-widest" style={{ color: "#d4af37" }}>Full-Stack Engineer</p>
+        <p className="text-[8px] mt-1" style={{ color: "#d4af3740" }}>{SITE_URL}</p>
+      </div>
+    </div>
+  );
+}
+
+// ── Design 16: Ghost (legendary — matte transparent glass) ───────────────────
+
+function GhostFront() {
+  return (
+    <div
+      className="relative w-full h-full overflow-hidden flex"
+      style={{ background: "linear-gradient(135deg, rgba(220,230,255,0.08) 0%, rgba(160,180,220,0.04) 100%)" }}
+    >
+      {/* Frost highlight strip at top */}
+      <div className="absolute top-0 left-0 right-0 h-12" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.07), transparent)" }} />
+      {/* Subtle dot grid */}
+      <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)", backgroundSize: "14px 14px", opacity: 0.5 }} />
+      {/* Left accent line */}
+      <div className="absolute left-0 top-0 bottom-0 w-px" style={{ background: "linear-gradient(180deg, transparent, rgba(200,220,255,0.5), rgba(200,220,255,0.2), transparent)" }} />
+      {/* Corner brackets */}
+      {[["top-2.5 left-2.5", "border-t border-l"], ["top-2.5 right-2.5", "border-t border-r"], ["bottom-2.5 left-2.5", "border-b border-l"], ["bottom-2.5 right-2.5", "border-b border-r"]].map(([pos, border]) => (
+        <div key={pos} className={`absolute ${pos} w-3.5 h-3.5 ${border}`} style={{ borderColor: "rgba(200,220,255,0.35)" }} />
+      ))}
+      <div className="flex flex-1 pl-5 pr-4 py-5 gap-4 relative z-10">
+        <div className="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.28em] mb-0.5" style={{ color: "rgba(180,200,255,0.5)" }}>{INFO.title}</p>
+            <h1 className="text-xl font-bold leading-tight" style={{ color: "rgba(230,240,255,0.92)" }}>{INFO.name}</h1>
+            <p className="text-[11px] mt-0.5" style={{ color: "rgba(180,200,255,0.35)" }}>{INFO.subtitle}</p>
+          </div>
+          <div className="space-y-1 text-xs" style={{ color: "rgba(200,215,255,0.55)" }}>
+            <div className="flex items-center gap-1.5"><Mail className="w-3 h-3 shrink-0" /><span>{INFO.email}</span></div>
+            <div className="flex items-center gap-1.5"><LinkedinIcon className="w-3 h-3 shrink-0" /><span>{INFO.linkedin}</span></div>
+            <div className="flex items-center gap-1.5"><GithubIcon className="w-3 h-3 shrink-0" /><span>{INFO.github}</span></div>
+            <div className="flex items-center gap-1.5"><Send className="w-3 h-3 shrink-0" /><span>{INFO.telegram}</span></div>
+            <div className="flex items-center gap-1.5"><MapPin className="w-3 h-3 shrink-0" /><span>{INFO.location}</span></div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-end gap-1 shrink-0">
+          <div className="p-1.5" style={{ border: "1px solid rgba(200,215,255,0.18)", background: "rgba(200,215,255,0.04)" }}>
+            <QRCodeSVG value={SITE_URL} size={64} level="M" fgColor="rgba(200,220,255,0.65)" bgColor="transparent" />
+          </div>
+          <p className="text-[8px] uppercase tracking-widest" style={{ color: "rgba(180,200,255,0.25)" }}>portfolio</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GhostBack() {
+  return (
+    <div
+      className="relative w-full h-full overflow-hidden flex items-center justify-center"
+      style={{ background: "linear-gradient(135deg, rgba(220,230,255,0.06) 0%, rgba(160,180,220,0.03) 100%)" }}
+    >
+      {/* Radial glow from center */}
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 55% 55% at 50% 50%, rgba(140,170,255,0.1), transparent 70%)" }} />
+      {/* Dot grid */}
+      <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "14px 14px", opacity: 0.6 }} />
+      {/* Corner brackets */}
+      {[["top-2.5 left-2.5", "border-t border-l"], ["top-2.5 right-2.5", "border-t border-r"], ["bottom-2.5 left-2.5", "border-b border-l"], ["bottom-2.5 right-2.5", "border-b border-r"]].map(([pos, border]) => (
+        <div key={pos} className={`absolute ${pos} w-3.5 h-3.5 ${border}`} style={{ borderColor: "rgba(200,220,255,0.3)" }} />
+      ))}
+      <div className="text-center relative z-10">
+        <p className="text-4xl font-bold tracking-wider" style={{ color: "rgba(220,235,255,0.85)", textShadow: "0 0 24px rgba(140,170,255,0.35)" }}>VP</p>
+        <div className="w-10 h-px mx-auto my-2.5" style={{ background: "linear-gradient(90deg, transparent, rgba(180,200,255,0.45), transparent)" }} />
+        <p className="text-[9px] uppercase tracking-[0.3em]" style={{ color: "rgba(160,185,255,0.35)" }}>{SITE_URL}</p>
+      </div>
+    </div>
+  );
+}
+
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-type CardFace = { id: string; label: string; Component: React.FC };
+type CardFace = { id: string; label: string; Component: React.FC; rarity?: Rarity; weight?: number };
 
 const FRONTS: CardFace[] = [
-  { id: "classic",    label: "Classic",    Component: ClassicFront },
-  { id: "neon",       label: "Neon",       Component: NeonFront },
-  { id: "split",      label: "Split",      Component: SplitFront },
-  { id: "paper",      label: "Paper",      Component: PaperFront },
-  { id: "gradient",   label: "Gradient",   Component: GradientFront },
-  { id: "metal",      label: "Metal",      Component: MetalFront },
-  { id: "blueprint",  label: "Blueprint",  Component: BlueprintFront },
-  { id: "ink",        label: "Ink",        Component: InkFront },
-  { id: "linen",      label: "Linen",      Component: LinenFront },
-  { id: "holo",       label: "Holo",       Component: HoloFront },
+  { id: "classic",    label: "Classic",    Component: ClassicFront,    rarity: "common",    weight: 40 },
+  { id: "neon",       label: "Neon",       Component: NeonFront,       rarity: "rare",      weight: 20 },
+  { id: "split",      label: "Split",      Component: SplitFront,      rarity: "common",    weight: 40 },
+  { id: "paper",      label: "Paper",      Component: PaperFront,      rarity: "rare",      weight: 20 },
+  { id: "gradient",   label: "Gradient",   Component: GradientFront,   rarity: "epic",      weight: 8 },
+  { id: "metal",      label: "Metal",      Component: MetalFront,      rarity: "rare",      weight: 20 },
+  { id: "blueprint",  label: "Blueprint",  Component: BlueprintFront,  rarity: "epic",      weight: 8 },
+  { id: "ink",        label: "Ink",        Component: InkFront,        rarity: "common",    weight: 40 },
+  { id: "linen",      label: "Linen",      Component: LinenFront,      rarity: "rare",      weight: 20 },
+  { id: "holo",       label: "Holo",       Component: HoloFront,       rarity: "legendary", weight: 2 },
+  { id: "terminal",   label: "Terminal",   Component: TerminalFront,   rarity: "common",    weight: 40 },
+  { id: "retro",      label: "Retro",      Component: RetroFront,      rarity: "rare",      weight: 20 },
+  { id: "aurora",     label: "Aurora",     Component: AuroraFront,     rarity: "epic",      weight: 8 },
+  { id: "crimson",    label: "Crimson",    Component: CrimsonFront,    rarity: "rare",      weight: 20 },
+  { id: "carbon",     label: "Carbon",     Component: CarbonFront,     rarity: "legendary", weight: 2 },
+  { id: "ghost",      label: "Ghost",      Component: GhostFront,      rarity: "legendary", weight: 2 },
 ];
 
 const BACKS: CardFace[] = [
-  { id: "classic",    label: "Classic",    Component: ClassicBack },
-  { id: "neon",       label: "Neon",       Component: NeonBack },
-  { id: "split",      label: "Split",      Component: SplitBack },
-  { id: "paper",      label: "Paper",      Component: PaperBack },
-  { id: "gradient",   label: "Gradient",   Component: GradientBack },
-  { id: "metal",      label: "Metal",      Component: MetalBack },
-  { id: "blueprint",  label: "Blueprint",  Component: BlueprintBack },
-  { id: "ink",        label: "Ink",        Component: InkBack },
-  { id: "linen",      label: "Linen",      Component: LinenBack },
-  { id: "holo",       label: "Holo",       Component: HoloBack },
+  { id: "classic",    label: "Classic",    Component: ClassicBack,    rarity: "common",    weight: 40 },
+  { id: "neon",       label: "Neon",       Component: NeonBack,       rarity: "rare",      weight: 20 },
+  { id: "split",      label: "Split",      Component: SplitBack,      rarity: "common",    weight: 40 },
+  { id: "paper",      label: "Paper",      Component: PaperBack,      rarity: "rare",      weight: 20 },
+  { id: "gradient",   label: "Gradient",   Component: GradientBack,   rarity: "epic",      weight: 8 },
+  { id: "metal",      label: "Metal",      Component: MetalBack,      rarity: "rare",      weight: 20 },
+  { id: "blueprint",  label: "Blueprint",  Component: BlueprintBack,  rarity: "epic",      weight: 8 },
+  { id: "ink",        label: "Ink",        Component: InkBack,        rarity: "common",    weight: 40 },
+  { id: "linen",      label: "Linen",      Component: LinenBack,      rarity: "rare",      weight: 20 },
+  { id: "holo",       label: "Holo",       Component: HoloBack,       rarity: "legendary", weight: 2 },
+  { id: "terminal",   label: "Terminal",   Component: TerminalBack,   rarity: "common",    weight: 40 },
+  { id: "retro",      label: "Retro",      Component: RetroBack,      rarity: "rare",      weight: 20 },
+  { id: "aurora",     label: "Aurora",     Component: AuroraBack,     rarity: "epic",      weight: 8 },
+  { id: "crimson",    label: "Crimson",    Component: CrimsonBack,    rarity: "rare",      weight: 20 },
+  { id: "carbon",     label: "Carbon",     Component: CarbonBack,     rarity: "legendary", weight: 2 },
+  { id: "ghost",      label: "Ghost",      Component: GhostBack,      rarity: "legendary", weight: 2 },
 ];
 
-// ─── Mini card preview ────────────────────────────────────────────────────────
+// ─── Collection localStorage hook ─────────────────────────────────────────────
 
+const COLLECTION_KEY = "vp-card-collection";
+const OWNER_PASSWORD = "vp-owner";
 const FULL_W = 340;
 const FULL_H = 213;
-const MINI_W = 160;
-const MINI_H = Math.round((MINI_W / FULL_W) * FULL_H); // ~100px
 
-function MiniCard({ face, selected, onClick }: { face: CardFace; selected: boolean; onClick: () => void }) {
-  const scale = MINI_W / FULL_W;
+const RARITY_ORDER: Record<Rarity, number> = {
+  legendary: 0,
+  epic: 1,
+  rare: 2,
+  common: 3,
+};
+
+interface CardCollection {
+  unlocked: string[];
+  counts: Record<string, number>;
+  spinCount: number;
+}
+
+function loadCollection(): CardCollection {
+  try {
+    const raw = localStorage.getItem(COLLECTION_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        unlocked: parsed.unlocked ?? [],
+        counts: parsed.counts ?? {},
+        spinCount: parsed.spinCount ?? 0,
+      };
+    }
+  } catch { /* ignore */ }
+  return { unlocked: [], counts: {}, spinCount: 0 };
+}
+
+function saveCollection(col: CardCollection) {
+  try { localStorage.setItem(COLLECTION_KEY, JSON.stringify(col)); } catch { /* ignore */ }
+}
+
+// ─── Card item in collection grid ─────────────────────────────────────────────
+
+function CollectionItem({
+  face,
+  unlocked,
+  count,
+  selected,
+  ownerMode,
+  onClick,
+}: {
+  face: CardFace;
+  unlocked: boolean;
+  count: number;
+  selected: boolean;
+  ownerMode: boolean;
+  onClick: () => void;
+}) {
+  const accessible = unlocked || ownerMode;
+  const rc = RARITY_COLORS[(face.rarity ?? "common") as Rarity];
+  const scale = CARD_W / FULL_W;
+
   return (
-    <button onClick={onClick} className="flex flex-col items-center gap-1.5 focus:outline-none group">
+    <button
+      onClick={accessible ? onClick : undefined}
+      disabled={!accessible}
+      className={cn(
+        "relative flex flex-col items-center gap-1.5 group focus:outline-none",
+        !accessible && "cursor-not-allowed"
+      )}
+    >
       <div
         className={cn(
-          "relative overflow-hidden rounded-lg transition-all duration-200",
-          selected
-            ? "ring-2 ring-primary ring-offset-2 shadow-xl scale-[1.04]"
-            : "ring-1 ring-border/60 hover:ring-primary/50 hover:shadow-md hover:scale-[1.02]"
+          "relative overflow-hidden rounded-lg border-2 transition-all duration-200",
+          rc.border,
+          selected && "ring-2 ring-primary ring-offset-2 shadow-xl scale-[1.04]",
+          accessible && !selected && "hover:scale-[1.02] hover:shadow-lg",
+          !accessible && "opacity-40 grayscale"
         )}
-        style={{ width: MINI_W, height: MINI_H }}
+        style={{ width: CARD_W, height: CARD_H }}
       >
         <div
           style={{
@@ -605,143 +990,289 @@ function MiniCard({ face, selected, onClick }: { face: CardFace; selected: boole
         >
           <face.Component />
         </div>
+
+        {/* Lock overlay */}
+        {!accessible && (
+          <div className="absolute inset-0 flex items-center justify-center bg-background/60 backdrop-blur-sm">
+            <Lock className="w-6 h-6 text-muted-foreground" />
+          </div>
+        )}
+
+        {/* Count badge */}
+        {count > 0 && (
+          <div className="absolute top-1 right-1 bg-primary text-primary-foreground text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+            {count > 9 ? "9+" : count}
+          </div>
+        )}
+
+        {/* Rarity stripe */}
+        <div className={cn("absolute bottom-0 left-0 right-0 text-center py-0.5 text-[9px] font-bold uppercase tracking-widest", rc.badge)}>
+          {face.rarity ?? "common"}
+        </div>
       </div>
-      <span className={cn("text-xs transition-colors", selected ? "text-primary font-semibold" : "text-muted-foreground group-hover:text-foreground")}>
+      <span className={cn(
+        "text-xs transition-colors",
+        selected ? "text-primary font-semibold" : accessible ? "text-foreground group-hover:text-primary" : "text-muted-foreground"
+      )}>
         {face.label}
       </span>
     </button>
   );
 }
 
+// ─── Reset confirmation modal ──────────────────────────────────────────────────
+
+function ResetModal({ onConfirm, onCancel, t }: {
+  onConfirm: () => void;
+  onCancel: () => void;
+  t: ReturnType<typeof useTranslations<"CardPage">>;
+}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onCancel} />
+      <div className="relative z-10 w-full max-w-sm rounded-2xl border bg-card p-6 shadow-2xl">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center shrink-0">
+            <RotateCcw className="w-5 h-5 text-destructive" />
+          </div>
+          <h3 className="font-bold text-lg">{t("resetModalTitle")}</h3>
+        </div>
+        <p className="text-sm text-muted-foreground mb-6">{t("resetModalDesc")}</p>
+        <div className="flex gap-3">
+          <button
+            onClick={onCancel}
+            className="flex-1 px-4 py-2 rounded-lg border text-sm font-medium hover:bg-muted transition-colors"
+          >
+            {t("resetCancel")}
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 px-4 py-2 rounded-lg bg-destructive text-destructive-foreground text-sm font-medium hover:bg-destructive/90 transition-colors"
+          >
+            {t("resetConfirm")}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main component ───────────────────────────────────────────────────────────
+
+const WHEEL_CARDS: WheelCard[] = FRONTS.map((f) => ({
+  id: f.id,
+  label: f.label,
+  rarity: (f.rarity ?? "common") as Rarity,
+  weight: f.weight ?? 20,
+  Component: f.Component,
+}));
+
+const SORTED_FRONTS = [...FRONTS].sort((a, b) =>
+  RARITY_ORDER[(a.rarity ?? "common") as Rarity] - RARITY_ORDER[(b.rarity ?? "common") as Rarity]
+);
 
 export function BusinessCard() {
   const t = useTranslations("CardPage");
-  const [selectedFront, setSelectedFront] = useState("classic");
-  const [selectedBack, setSelectedBack] = useState("classic");
+  const [collection, setCollection] = useState<CardCollection>({ unlocked: [], counts: {}, spinCount: 0 });
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [ownerMode, setOwnerMode] = useState(false);
+  const [ownerInput, setOwnerInput] = useState("");
+  const [ownerShow, setOwnerShow] = useState(false);
+  const [ownerError, setOwnerError] = useState(false);
+  const [resetModalOpen, setResetModalOpen] = useState(false);
 
-  const front = FRONTS.find((f) => f.id === selectedFront) ?? FRONTS[0];
-  const back = BACKS.find((b) => b.id === selectedBack) ?? BACKS[0];
+  // Load collection from localStorage on mount
+  useEffect(() => { setCollection(loadCollection()); }, []);
+
+  const handleWheelResult = useCallback((card: WheelCard) => {
+    setCollection((prev) => {
+      const next: CardCollection = {
+        unlocked: prev.unlocked.includes(card.id) ? prev.unlocked : [...prev.unlocked, card.id],
+        counts: { ...prev.counts, [card.id]: (prev.counts[card.id] ?? 0) + 1 },
+        spinCount: prev.spinCount + 1,
+      };
+      saveCollection(next);
+      return next;
+    });
+    setSelectedId(card.id);
+
+    const goldenColors = ["#f59e0b", "#fbbf24", "#fcd34d", "#ffffff", "#f97316"];
+    if (card.rarity === "legendary") {
+      // Huge multi-burst
+      confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 }, colors: goldenColors, scalar: 1.4, zIndex: 9999 });
+      setTimeout(() => confetti({ particleCount: 150, angle: 60, spread: 80, origin: { x: 0, y: 0.6 }, colors: goldenColors, scalar: 1.2, zIndex: 9999 }), 200);
+      setTimeout(() => confetti({ particleCount: 150, angle: 120, spread: 80, origin: { x: 1, y: 0.6 }, colors: goldenColors, scalar: 1.2, zIndex: 9999 }), 350);
+      setTimeout(() => confetti({ particleCount: 120, spread: 100, origin: { y: 0.3 }, colors: goldenColors, gravity: 0.5, scalar: 1.1, zIndex: 9999 }), 600);
+      setTimeout(() => confetti({ particleCount: 80, angle: 90, spread: 160, origin: { x: 0.5, y: 0 }, colors: goldenColors, startVelocity: 50, scalar: 1.4, zIndex: 9999 }), 900);
+    } else if (card.rarity === "epic") {
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 }, colors: ["#a855f7", "#c084fc", "#e879f9", "#7c3aed"] });
+      setTimeout(() => confetti({ particleCount: 50, spread: 50, origin: { y: 0.65 }, colors: ["#7c3aed", "#8b5cf6", "#d946ef"] }), 300);
+    } else if (card.rarity === "rare") {
+      confetti({ particleCount: 35, spread: 50, origin: { y: 0.65 }, colors: ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe"] });
+    }
+    // common: no confetti
+  }, []);
+
+  const handleOwnerSubmit = () => {
+    if (ownerInput === OWNER_PASSWORD) {
+      setOwnerMode(true);
+      setOwnerError(false);
+      setOwnerShow(false);
+      setOwnerInput("");
+    } else {
+      setOwnerError(true);
+    }
+  };
+
+  const handleReset = () => {
+    try { localStorage.removeItem(COLLECTION_KEY); } catch { /* ignore */ }
+    setCollection({ unlocked: [], counts: {}, spinCount: 0 });
+    setSelectedId(null);
+    setResetModalOpen(false);
+  };
+
+  const selectedFront = FRONTS.find((f) => f.id === selectedId);
+  const selectedBack  = BACKS.find((b) => b.id === selectedId);
+
+  const unlockedCount = collection.unlocked.length;
+  const totalCount = FRONTS.length;
 
   return (
     <div className="min-h-screen flex flex-col items-center py-12 px-4 bg-muted/20">
-
-      {/* Print styles */}
       <style>{`
         @media print {
           html, body { visibility: hidden; }
-
-          .card-print-area {
-            visibility: visible !important;
-            display: flex !important;
-            flex-direction: column;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-          }
-
-          .card-print-area * {
-            visibility: visible !important;
-          }
-
-          .card-print-page {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            page-break-after: always;
-            break-after: page;
-          }
-
-          .card-print-wrapper {
-            width: 85.6mm;
-            height: 53.98mm;
-            position: relative;
-            overflow: hidden;
-            border-radius: 3mm;
-            outline: 2px dashed #aaa;
-            outline-offset: 5mm;
-          }
-
-          .card-print-wrapper,
-          .card-print-wrapper * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            color-scheme: light !important;
-          }
+          .card-print-area { visibility: visible !important; display: flex !important; flex-direction: column; position: absolute; top: 0; left: 0; width: 100%; }
+          .card-print-area * { visibility: visible !important; }
+          .card-print-page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; page-break-after: always; break-after: page; }
+          .card-print-wrapper { width: 85.6mm; height: 53.98mm; position: relative; overflow: hidden; border-radius: 3mm; outline: 2px dashed #aaa; outline-offset: 5mm; }
+          .card-print-wrapper, .card-print-wrapper * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-scheme: light !important; }
         }
       `}</style>
 
-      {/* Large preview */}
-      <div className="print:hidden flex flex-col sm:flex-row gap-8 mb-8 items-start">
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-xs text-muted-foreground uppercase tracking-wider">{t("frontLabel")}</p>
-          <div className="w-85 h-53.25 rounded-2xl overflow-hidden shadow-2xl border border-border/40">
-            <front.Component />
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-xs text-muted-foreground uppercase tracking-wider">{t("backLabel")}</p>
-          <div className="w-85 h-53.25 rounded-2xl overflow-hidden shadow-2xl border border-border/40">
-            <back.Component />
-          </div>
-        </div>
+      {/* Reset modal */}
+      {resetModalOpen && (
+        <ResetModal
+          t={t}
+          onConfirm={handleReset}
+          onCancel={() => setResetModalOpen(false)}
+        />
+      )}
+
+      {/* Wheel */}
+      <div className="print:hidden w-full max-w-3xl mb-16">
+        <CardWheel cards={WHEEL_CARDS} onResult={handleWheelResult} />
       </div>
 
-      <Button onClick={() => window.print()} className="gap-2 mb-12 print:hidden">
-        <Printer className="w-4 h-4" />
-        {t("printBtn")}
-      </Button>
-
-      {/* Front gallery */}
-      <div className="print:hidden w-full max-w-5xl mb-14">
-        <p className="text-xs font-medium text-center mb-6 uppercase tracking-widest text-muted-foreground">
-          {t("chooseFront")}
-        </p>
+      {/* Collection grid */}
+      <div className="print:hidden w-full max-w-5xl mb-12">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Your collection — {unlockedCount}/{totalCount} unlocked
+            {collection.spinCount > 0 && ` · ${collection.spinCount} spin${collection.spinCount !== 1 ? "s" : ""}`}
+          </p>
+          <div className="flex items-center gap-3">
+            {ownerMode && (
+              <span className="text-xs text-amber-500 font-semibold uppercase tracking-widest">★ Owner Mode</span>
+            )}
+            {unlockedCount > 0 && (
+              <button
+                onClick={() => setResetModalOpen(true)}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground/50 hover:text-destructive transition-colors"
+              >
+                <RotateCcw className="w-3 h-3" />
+                {t("resetBtn")}
+              </button>
+            )}
+          </div>
+        </div>
         <div className="flex flex-wrap gap-5 justify-center">
-          {FRONTS.map((face) => (
-            <MiniCard
+          {SORTED_FRONTS.map((face) => (
+            <CollectionItem
               key={face.id}
               face={face}
-              selected={face.id === selectedFront}
-              onClick={() => setSelectedFront(face.id)}
+              unlocked={collection.unlocked.includes(face.id)}
+              count={collection.counts[face.id] ?? 0}
+              selected={face.id === selectedId}
+              ownerMode={ownerMode}
+              onClick={() => setSelectedId(face.id === selectedId ? null : face.id)}
             />
           ))}
         </div>
       </div>
 
-      {/* Back gallery */}
-      <div className="print:hidden w-full max-w-5xl">
-        <p className="text-xs font-medium text-center mb-6 uppercase tracking-widest text-muted-foreground">
-          {t("chooseBack")}
-        </p>
-        <div className="flex flex-wrap gap-5 justify-center">
-          {BACKS.map((face) => (
-            <MiniCard
-              key={face.id}
-              face={face}
-              selected={face.id === selectedBack}
-              onClick={() => setSelectedBack(face.id)}
-            />
-          ))}
+      {/* 3D Card Viewer */}
+      {selectedFront && selectedBack && (
+        <div className="print:hidden w-full max-w-3xl mb-12">
+          <Card3DViewer
+            Front={selectedFront.Component}
+            Back={selectedBack.Component}
+            rarity={(selectedFront.rarity ?? "common") as Rarity}
+            label={selectedFront.label}
+            hint={t("viewer3dHint")}
+          />
+          <div className="flex justify-center mt-5">
+            <Button onClick={() => window.print()} variant="outline" className="gap-2">
+              <Printer className="w-4 h-4" />
+              {t("printBtn")}
+            </Button>
+          </div>
         </div>
+      )}
+
+      {/* Owner Mode toggle */}
+      <div className="print:hidden mt-4 w-full max-w-sm">
+        {!ownerMode && !ownerShow && (
+          <button
+            onClick={() => setOwnerShow(true)}
+            className="text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors mx-auto block"
+          >
+            Owner Mode
+          </button>
+        )}
+        {ownerShow && !ownerMode && (
+          <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card">
+            <p className="text-xs font-medium text-muted-foreground">Enter owner password</p>
+            <div className="flex gap-2">
+              <input
+                type="password"
+                value={ownerInput}
+                onChange={(e) => { setOwnerInput(e.target.value); setOwnerError(false); }}
+                onKeyDown={(e) => e.key === "Enter" && handleOwnerSubmit()}
+                placeholder="Password"
+                className="flex-1 text-sm px-3 py-1.5 rounded-lg border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+              <Button size="sm" onClick={handleOwnerSubmit}>Enter</Button>
+            </div>
+            {ownerError && <p className="text-xs text-destructive">Incorrect password</p>}
+            <button onClick={() => { setOwnerShow(false); setOwnerInput(""); setOwnerError(false); }} className="text-xs text-muted-foreground hover:text-foreground">Cancel</button>
+          </div>
+        )}
+        {ownerMode && (
+          <button
+            onClick={() => setOwnerMode(false)}
+            className="text-xs text-amber-500/60 hover:text-amber-500 transition-colors mx-auto flex items-center gap-1"
+          >
+            <EyeOff className="w-3 h-3" /> Exit Owner Mode
+          </button>
+        )}
       </div>
 
-      {/* Print output — hidden on screen, visible on print */}
-      <div className="hidden card-print-area">
-        <div className="card-print-page">
-          <div className="card-print-wrapper">
-            <front.Component />
+      {/* Print output */}
+      {selectedFront && selectedBack && (
+        <div className="hidden card-print-area">
+          <div className="card-print-page">
+            <div className="card-print-wrapper">
+              <selectedFront.Component />
+            </div>
+          </div>
+          <div className="card-print-page">
+            <div className="card-print-wrapper">
+              <selectedBack.Component />
+            </div>
           </div>
         </div>
-        <div className="card-print-page">
-          <div className="card-print-wrapper">
-            <back.Component />
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

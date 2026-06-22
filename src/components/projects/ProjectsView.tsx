@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { LayoutGrid, AlignLeft } from "lucide-react";
 import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectsTimeline } from "./ProjectsTimeline";
@@ -47,7 +47,9 @@ export function ProjectsView({ projects, allProjects }: Props) {
       </div>
 
       {view === "grid" ? (
-        <ProjectsFilter projects={projects} />
+        <Suspense fallback={<div className="text-muted-foreground text-sm py-8 text-center">Loading…</div>}>
+          <ProjectsFilter projects={projects} />
+        </Suspense>
       ) : (
         <ProjectsTimeline projects={allProjects} />
       )}

@@ -4,25 +4,25 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const NAV_KEYS = ["home", "about", "projects", "skills", "education", "contact", "card"] as const;
-const NAV_HREFS: Record<(typeof NAV_KEYS)[number], string> = {
-  home: "/",
-  about: "/about",
-  projects: "/projects",
-  skills: "/skills",
-  education: "/education",
-  contact: "/contact",
-  card: "/card",
-};
+const NAV_LINKS = [
+  { key: "home", href: "/" as const },
+  { key: "about", href: "/about" as const },
+  { key: "projects", href: "/projects" as const },
+  { key: "skills", href: "/skills" as const },
+  { key: "education", href: "/education" as const },
+  { key: "contact", href: "/contact" as const },
+  { key: "card", href: "/card" as const },
+] as const;
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const t = useTranslations("Nav");
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -32,10 +32,10 @@ export function MobileNav() {
     <div className="md:hidden">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "px-2")}
+        className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "px-3 min-w-11 min-h-11")}
         aria-label="Toggle menu"
       >
-        {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
 
       {open && mounted && createPortal(
@@ -44,16 +44,22 @@ export function MobileNav() {
           style={{ background: "var(--background)" }}
         >
           <nav className="container mx-auto px-4 py-6 flex flex-col gap-1">
-            {NAV_KEYS.map((key) => (
-              <Link
-                key={key}
-                href={NAV_HREFS[key]}
-                onClick={() => setOpen(false)}
-                className="text-lg font-medium py-3 px-2 rounded-lg hover:bg-muted transition-colors"
-              >
-                {t(key)}
-              </Link>
-            ))}
+            {NAV_LINKS.map(({ key, href }) => {
+              const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+              return (
+                <Link
+                  key={key}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "text-lg py-3 px-2 rounded-lg hover:bg-muted transition-colors",
+                    isActive ? "font-bold text-foreground bg-muted" : "font-medium text-muted-foreground"
+                  )}
+                >
+                  {t(key)}
+                </Link>
+              );
+            })}
           </nav>
         </div>,
         document.body

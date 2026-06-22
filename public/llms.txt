@@ -1,0 +1,47 @@
+# Vitalii Popov — Full-Stack Engineer
+
+> Personal portfolio, CV, and engineering case studies for Vitalii Popov — full-stack engineer specialising in distributed systems and AI. Based in Chemnitz, Germany. Open to Berlin and EU/UK/US/UAE roles.
+
+## About
+
+Vitalii Popov is a full-stack engineer with 5+ years of experience building systems that create measurable business value across e-commerce, mobility, and AI domains.
+
+**Current role:** Full-Stack Developer at Infineon Technologies AG (2024–present)
+**Education:** M.Sc. Web Engineering, Chemnitz University of Technology (in progress); B.Sc. Applied Mathematics, NRU HSE Moscow
+
+## Key Achievements
+
+- Replaced a €480K/year commercial parking guidance vendor with an in-house system at Infineon (8,000 users, 3,000 MAU)
+- Built warehouse search for 200M+ items in under 5 seconds at OZON Tech
+- Delivered 13 startup projects at WeDo.agency
+- Published technical articles with 5,000+ views
+
+## Core Stack
+
+Backend: Python, C#, Go, Node.js
+Frontend: React, TypeScript, Next.js
+Infrastructure: Docker, Kubernetes, Helm, GitHub CI/CD
+AI/ML: RAG pipelines, Qdrant, LangChain, Ollama, MCP, Hugging Face, Embedding models
+Databases: PostgreSQL, Redis, Elasticsearch, ClickHouse
+
+## Pages
+
+- [Home](https://vitalii-popov.dev/en/) — Hero, impact metrics, geo availability
+- [Projects](https://vitalii-popov.dev/en/projects) — Engineering case studies with business metrics
+- [Skills](https://vitalii-popov.dev/en/skills) — Interactive skill map with architecture diagrams
+- [About](https://vitalii-popov.dev/en/about) — Career timeline, bio, interests
+- [Education](https://vitalii-popov.dev/en/education) — TU Chemnitz M.Sc. + NRU HSE B.Sc.
+- [Contact](https://vitalii-popov.dev/en/contact) — Contact form and social links
+- [CV](https://vitalii-popov.dev/cv/vitalii-popov-cv.pdf) — Downloadable PDF CV
+
+## Contact
+
+Email: msk.vitaly@gmail.com
+LinkedIn: https://linkedin.com/in/mskvitalii
+GitHub: https://github.com/mskvitalii
+Telegram: https://t.me/mskvitalii
+
+## Availability
+
+Open to: Full-time engineering roles, freelance/contract work, technical collaboration
+Locations: Germany (preferred), EU, UK, US, UAE, Canada, Singapore, Australia (remote/relocation)

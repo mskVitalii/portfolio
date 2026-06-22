@@ -13,7 +13,7 @@ interface ViewModeStore {
 export const useViewModeStore = create<ViewModeStore>()(
   persist(
     (set) => ({
-      mode: "business",
+      mode: "hr",
       setMode: (mode) => set({ mode }),
     }),
     { name: "portfolio-view-mode" }
