@@ -135,14 +135,14 @@ export function CardWheel({ cards, onResult }: Props) {
       </div>
 
       {/* Wheel viewport */}
-      <div ref={viewportRef} className="relative w-full max-w-2xl overflow-hidden rounded-xl border bg-muted/40">
+      <div ref={viewportRef} className="relative w-full max-w-2xl overflow-hidden rounded-xl border bg-muted">
         {/* Center indicator */}
         <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-amber-400 z-20 pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 border-l-[6px] border-r-[6px] border-t-10 border-l-transparent border-r-transparent border-t-amber-400 z-20" />
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 border-l-[6px] border-r-[6px] border-b-10 border-l-transparent border-r-transparent border-b-amber-400 z-20" />
         {/* Fade edges */}
-        <div className="absolute inset-y-0 left-0 w-24 bg-linear-to-r from-background/90 to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-linear-to-l from-background/90 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-24 bg-linear-to-r from-muted to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-24 bg-linear-to-l from-muted to-transparent z-10 pointer-events-none" />
 
         <div className="py-4 flex items-center" style={{ height: CARD_H + 32 }}>
           {/* key forces remount on each spin → fresh DOM element, transform starts at 0 */}
@@ -176,7 +176,7 @@ export function CardWheel({ cards, onResult }: Props) {
                     <card.Component />
                   </div>
                   <div className={cn("absolute bottom-0 left-0 right-0 text-center py-0.5 text-[9px] font-bold uppercase tracking-widest", rc.badge)}>
-                    {card.rarity}
+                    {t(`rarity${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}` as "rarityCommon")}
                   </div>
                 </div>
               );
@@ -199,9 +199,9 @@ export function CardWheel({ cards, onResult }: Props) {
             {isLegendary ? t("wheelResultLegendary") : t("wheelResultCommon")}
           </p>
           <p className="text-sm mt-0.5 opacity-80">
-            {result.label}{" "}
+            {t(`skin${result.id.charAt(0).toUpperCase() + result.id.slice(1)}` as "skinClassic")}{" "}
             <span className={cn("font-semibold", RARITY_COLORS[result.rarity].text)}>
-              · {result.rarity}
+              · {t(`rarity${result.rarity.charAt(0).toUpperCase() + result.rarity.slice(1)}` as "rarityCommon")}
             </span>
           </p>
         </div>

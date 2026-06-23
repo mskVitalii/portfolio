@@ -335,10 +335,11 @@ export interface Card3DViewerProps {
   Back: React.FC;
   rarity: Rarity;
   label: string;
+  rarityLabel: string;
   hint: string;
 }
 
-export function Card3DViewer({ Front, Back, rarity, label, hint }: Card3DViewerProps) {
+export function Card3DViewer({ Front, Back, rarity, label, rarityLabel, hint }: Card3DViewerProps) {
   const cfg = SCENE[rarity];
   const [mounted, setMounted] = useState(false);
   const [autoRotate, setAutoRotate] = useState(true);
@@ -357,9 +358,8 @@ export function Card3DViewer({ Front, Back, rarity, label, hint }: Card3DViewerP
 
   if (!mounted) return (
     <div
-      className={cn("w-full rounded-2xl animate-pulse", RARITY_BORDER[rarity])}
+      className={cn("w-full rounded-2xl animate-pulse h-52 sm:h-80 lg:h-105", RARITY_BORDER[rarity])}
       style={{
-        height: CANVAS_H,
         background: `radial-gradient(ellipse 70% 70% at 50% 45%, ${cfg.bgInner} 0%, ${cfg.bg} 100%)`,
         boxShadow: RARITY_GLOW[rarity],
       }}
@@ -377,15 +377,14 @@ export function Card3DViewer({ Front, Back, rarity, label, hint }: Card3DViewerP
           "text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full",
           RARITY_COLORS[rarity].badge
         )}>
-          {rarity}
+          {rarityLabel}
         </span>
       </div>
 
       {/* Canvas */}
       <div
-        className={cn("relative w-full rounded-2xl overflow-hidden", RARITY_BORDER[rarity])}
+        className={cn("relative w-full rounded-2xl overflow-hidden h-52 sm:h-80 lg:h-105", RARITY_BORDER[rarity])}
         style={{
-          height: CANVAS_H,
           background: `radial-gradient(ellipse 70% 70% at 50% 45%, ${cfg.bgInner} 0%, ${cfg.bg} 100%)`,
           boxShadow: RARITY_GLOW[rarity],
           contain: "paint layout",

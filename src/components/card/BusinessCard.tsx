@@ -955,6 +955,7 @@ function CollectionItem({
   ownerMode: boolean;
   onClick: () => void;
 }) {
+  const t = useTranslations("CardPage");
   const accessible = unlocked || ownerMode;
   const rc = RARITY_COLORS[(face.rarity ?? "common") as Rarity];
   const scale = CARD_W / FULL_W;
@@ -1007,14 +1008,14 @@ function CollectionItem({
 
         {/* Rarity stripe */}
         <div className={cn("absolute bottom-0 left-0 right-0 text-center py-0.5 text-[9px] font-bold uppercase tracking-widest", rc.badge)}>
-          {face.rarity ?? "common"}
+          {t(`rarity${(face.rarity ?? "common").charAt(0).toUpperCase() + (face.rarity ?? "common").slice(1)}` as "rarityCommon")}
         </div>
       </div>
       <span className={cn(
         "text-xs transition-colors",
         selected ? "text-primary font-semibold" : accessible ? "text-foreground group-hover:text-primary" : "text-muted-foreground"
       )}>
-        {face.label}
+        {t(`skin${face.id.charAt(0).toUpperCase() + face.id.slice(1)}` as "skinClassic")}
       </span>
     </button>
   );
@@ -1141,10 +1142,10 @@ export function BusinessCard() {
     <div className="min-h-screen flex flex-col items-center py-12 px-4 bg-muted/20">
       <style>{`
         @media print {
-          html, body { visibility: hidden; }
+          html, body { visibility: hidden; background: white !important; }
           .card-print-area { visibility: visible !important; display: flex !important; flex-direction: column; position: absolute; top: 0; left: 0; width: 100%; }
           .card-print-area * { visibility: visible !important; }
-          .card-print-page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; page-break-after: always; break-after: page; }
+          .card-print-page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; page-break-after: always; break-after: page; background: white !important; }
           .card-print-wrapper { width: 85.6mm; height: 53.98mm; position: relative; overflow: hidden; border-radius: 3mm; outline: 2px dashed #aaa; outline-offset: 5mm; }
           .card-print-wrapper, .card-print-wrapper * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-scheme: light !important; }
         }
@@ -1168,12 +1169,12 @@ export function BusinessCard() {
       <div className="print:hidden w-full max-w-5xl mb-12">
         <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
           <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Your collection — {unlockedCount}/{totalCount} unlocked
-            {collection.spinCount > 0 && ` · ${collection.spinCount} spin${collection.spinCount !== 1 ? "s" : ""}`}
+            {t("collectionHeader", { unlocked: unlockedCount, total: totalCount })}
+            {collection.spinCount > 0 && ` ${t("collectionSpins", { count: collection.spinCount })}`}
           </p>
           <div className="flex items-center gap-3">
             {ownerMode && (
-              <span className="text-xs text-amber-500 font-semibold uppercase tracking-widest">★ Owner Mode</span>
+              <span className="text-xs text-amber-500 font-semibold uppercase tracking-widest">{t("ownerModeLabel")}</span>
             )}
             {unlockedCount > 0 && (
               <button
@@ -1208,7 +1209,8 @@ export function BusinessCard() {
             Front={selectedFront.Component}
             Back={selectedBack.Component}
             rarity={(selectedFront.rarity ?? "common") as Rarity}
-            label={selectedFront.label}
+            label={t(`skin${selectedFront.id.charAt(0).toUpperCase() + selectedFront.id.slice(1)}` as "skinClassic")}
+            rarityLabel={t(`rarity${((selectedFront.rarity ?? "common").charAt(0).toUpperCase() + (selectedFront.rarity ?? "common").slice(1))}` as "rarityCommon")}
             hint={t("viewer3dHint")}
           />
           <div className="flex justify-center mt-5">
@@ -1232,20 +1234,20 @@ export function BusinessCard() {
         )}
         {ownerShow && !ownerMode && (
           <div className="flex flex-col gap-2 p-4 rounded-xl border bg-card">
-            <p className="text-xs font-medium text-muted-foreground">Enter owner password</p>
+            <p className="text-xs font-medium text-muted-foreground">{t("ownerModePasswordPrompt")}</p>
             <div className="flex gap-2">
               <input
                 type="password"
                 value={ownerInput}
                 onChange={(e) => { setOwnerInput(e.target.value); setOwnerError(false); }}
                 onKeyDown={(e) => e.key === "Enter" && handleOwnerSubmit()}
-                placeholder="Password"
+                placeholder={t("ownerModePasswordPlaceholder")}
                 className="flex-1 text-sm px-3 py-1.5 rounded-lg border bg-background focus:outline-none focus:ring-1 focus:ring-primary"
               />
-              <Button size="sm" onClick={handleOwnerSubmit}>Enter</Button>
+              <Button size="sm" onClick={handleOwnerSubmit}>{t("ownerModeEnter")}</Button>
             </div>
-            {ownerError && <p className="text-xs text-destructive">Incorrect password</p>}
-            <button onClick={() => { setOwnerShow(false); setOwnerInput(""); setOwnerError(false); }} className="text-xs text-muted-foreground hover:text-foreground">Cancel</button>
+            {ownerError && <p className="text-xs text-destructive">{t("ownerModeError")}</p>}
+            <button onClick={() => { setOwnerShow(false); setOwnerInput(""); setOwnerError(false); }} className="text-xs text-muted-foreground hover:text-foreground">{t("ownerModeCancel")}</button>
           </div>
         )}
         {ownerMode && (
@@ -1253,7 +1255,7 @@ export function BusinessCard() {
             onClick={() => setOwnerMode(false)}
             className="text-xs text-amber-500/60 hover:text-amber-500 transition-colors mx-auto flex items-center gap-1"
           >
-            <EyeOff className="w-3 h-3" /> Exit Owner Mode
+            <EyeOff className="w-3 h-3" /> {t("ownerModeExit")}
           </button>
         )}
       </div>
