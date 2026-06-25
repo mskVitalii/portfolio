@@ -21,8 +21,8 @@ export const RARITY_COLORS: Record<Rarity, { border: string; badge: string; text
   legendary: { border: "border-amber-400",  badge: "bg-amber-500 text-black",   text: "text-amber-400",   glow: "shadow-amber-400/60" },
 };
 
-export const CARD_W = 180;
-export const CARD_H = 113;
+export const CARD_W = 210;
+export const CARD_H = 132;
 
 // Weight-based random pick
 function pickByWeight(cards: WheelCard[]): WheelCard {

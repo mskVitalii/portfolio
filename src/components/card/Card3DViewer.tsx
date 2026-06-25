@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useRef, useState, useEffect, useCallback } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, OrbitControls, ContactShadows, Environment } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
@@ -21,10 +21,11 @@ const HTML_H = 213;
 // Camera setup
 const CAM_Z = 4.5;
 const CAM_FOV = 45;
-const CANVAS_H = 420;
+const CAM_FOV_MOBILE = 28; // zoomed in on mobile so card fills frame
 
-// distanceFactor: empirically calibrated for current camera + canvas setup
-const DF = CW * CANVAS_H / HTML_W;
+// drei Html transform mode: matrix elements scaled by df/400.
+// For HTML face to equal CW world units: HTML_W × (df/400) = CW → df = CW×400/HTML_W
+const DF = CW * 400 / HTML_W; // = 4.0, constant at all canvas sizes
 
 // ─── Per-rarity scene config ──────────────────────────────────────────────────
 
@@ -133,22 +134,6 @@ function useFaceVisibility(groupRef: React.RefObject<THREE.Group | null>) {
   return { frontRef, backRef };
 }
 
-// ─── distanceFactor calibrated to physical canvas height ──────────────────────
-
-function useDynamicDF(): number {
-  const { gl } = useThree();
-  const [df, setDf] = useState(DF);
-
-  useEffect(() => {
-    const size = new THREE.Vector2();
-    gl.getSize(size);
-    setDf(CW * size.y / HTML_W);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return df;
-}
-
 // ─── 3D card mesh with HTML face overlays ────────────────────────────────────
 
 interface CardMeshProps {
@@ -161,7 +146,6 @@ interface CardMeshProps {
 function CardMesh({ Front, Back, rarity, autoRotate }: CardMeshProps) {
   const groupRef = useRef<THREE.Group>(null);
   const cfg = SCENE[rarity];
-  const df = useDynamicDF();
   const { frontRef, backRef } = useFaceVisibility(groupRef as React.RefObject<THREE.Group>);
 
   useFrame((_, delta) => {
@@ -201,9 +185,9 @@ function CardMesh({ Front, Back, rarity, autoRotate }: CardMeshProps) {
       <Html
         transform
         position={[0, 0, CD / 2 + 0.001]}
-        distanceFactor={df}
+        distanceFactor={DF}
         zIndexRange={[1, 0]}
-        style={{ overflow: "visible" }}
+        style={{ overflow: "hidden" }}
       >
         <div ref={frontRef} style={faceStyle}>
           <Front />
@@ -215,9 +199,9 @@ function CardMesh({ Front, Back, rarity, autoRotate }: CardMeshProps) {
         transform
         position={[0, 0, -(CD / 2 + 0.001)]}
         rotation={[0, Math.PI, 0]}
-        distanceFactor={df}
+        distanceFactor={DF}
         zIndexRange={[1, 0]}
-        style={{ overflow: "visible" }}
+        style={{ overflow: "hidden" }}
       >
         <div ref={backRef} style={faceStyle}>
           <Back />
@@ -342,10 +326,18 @@ export interface Card3DViewerProps {
 export function Card3DViewer({ Front, Back, rarity, label, rarityLabel, hint }: Card3DViewerProps) {
   const cfg = SCENE[rarity];
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [autoRotate, setAutoRotate] = useState(true);
   const resumeRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+    const mq = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const handleInteractionStart = useCallback(() => {
     setAutoRotate(false);
@@ -358,7 +350,7 @@ export function Card3DViewer({ Front, Back, rarity, label, rarityLabel, hint }: 
 
   if (!mounted) return (
     <div
-      className={cn("w-full rounded-2xl animate-pulse h-52 sm:h-80 lg:h-105", RARITY_BORDER[rarity])}
+      className={cn("w-full rounded-2xl animate-pulse h-44 sm:h-80 lg:h-105", RARITY_BORDER[rarity])}
       style={{
         background: `radial-gradient(ellipse 70% 70% at 50% 45%, ${cfg.bgInner} 0%, ${cfg.bg} 100%)`,
         boxShadow: RARITY_GLOW[rarity],
@@ -383,7 +375,7 @@ export function Card3DViewer({ Front, Back, rarity, label, rarityLabel, hint }: 
 
       {/* Canvas */}
       <div
-        className={cn("relative w-full rounded-2xl overflow-hidden h-52 sm:h-80 lg:h-105", RARITY_BORDER[rarity])}
+        className={cn("relative w-full rounded-2xl overflow-hidden h-44 sm:h-80 lg:h-105", RARITY_BORDER[rarity])}
         style={{
           background: `radial-gradient(ellipse 70% 70% at 50% 45%, ${cfg.bgInner} 0%, ${cfg.bg} 100%)`,
           boxShadow: RARITY_GLOW[rarity],
@@ -391,7 +383,7 @@ export function Card3DViewer({ Front, Back, rarity, label, rarityLabel, hint }: 
         }}
       >
         <Canvas
-          camera={{ position: [0, 0, CAM_Z], fov: CAM_FOV }}
+          camera={{ position: [0, 0, CAM_Z], fov: isMobile ? CAM_FOV_MOBILE : CAM_FOV }}
           dpr={[1, 1]}
           gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         >
