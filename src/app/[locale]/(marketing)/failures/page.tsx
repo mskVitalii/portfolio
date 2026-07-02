@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, ArrowRight } from "lucide-react";
 
@@ -16,11 +16,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "FailuresPage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/failures",
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, "/failures"),
-  };
+  });
 }
 
 const FAILURES = [

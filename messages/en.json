@@ -60,10 +60,14 @@
   },
   "GeoMap": {
     "title": "Open to opportunities",
-    "subtitle": "Based in Chemnitz, Germany — targeting roles in Germany, open to EU · UK · US · UAE · CA · SG · AU",
+    "subtitle": "Based in Chemnitz, Germany — targeting roles in Germany, open to EU · UK · US · UAE · CA · SG · JP · KR · AU",
     "legendCurrent": "Current location (Chemnitz)",
     "legendIdeal": "Ideal destination (Germany)",
-    "legendOpen": "Also open to (EU · UK · US · UAE · CA · SG · AU)"
+    "legendOpen": "Also open to (EU · UK · US · UAE · CA · SG · JP · KR · AU)",
+    "markerCurrent": "📍 Now",
+    "markerIdeal": "🎯 Ideal",
+    "markerNearYou": "🎯 Near {city}",
+    "markerOpen": "✓ Open"
   },
   "ViewMode": {
     "label": "Audience mode",
@@ -89,18 +93,70 @@
     "german": "German",
     "russian": "Russian",
     "fluent": "Fluent",
-    "b1": "B1",
+    "b2": "B2",
     "native": "Native",
-    "careerTitle": "Career progression",
     "downloadCv": "Download CV"
   },
   "Contact": {
-    "title": "Get in touch",
+    "title": "Hire me!",
     "metaDescription": "Get in touch — open to engineering roles, freelance work, and technical collaboration.",
     "subtitle": "Open to new opportunities, technical collaboration, and interesting conversations.",
     "findMe": "Find me at",
-    "sendMessage": "Send a message",
-    "faq": "Frequently asked questions"
+    "faq": "Frequently asked questions",
+    "faqHr": [
+      {
+        "q": "Are you open to relocation?",
+        "a": "Based in Chemnitz, Germany. Open to roles across Germany, the EU, UK, US, UAE, Canada, Singapore, Japan, South Korea, and Australia — remote-first works too."
+      },
+      {
+        "q": "What languages do you speak?",
+        "a": "English (fluent), German (B2), Russian (native)."
+      },
+      {
+        "q": "What's your notice period?",
+        "a": "Currently full-time at Infineon Technologies — happy to discuss timing once there's mutual interest."
+      },
+      {
+        "q": "Are you open to contract or freelance work?",
+        "a": "Yes — short-term consulting and technical leadership engagements are welcome alongside full-time roles."
+      }
+    ],
+    "faqTech": [
+      {
+        "q": "What's your primary stack?",
+        "a": "Go, Python, and TypeScript/React in production, with Kafka, ElasticSearch, PostgreSQL, Redis, and Kubernetes underneath. Increasingly working with RAG, LangChain, and MCP on the AI side."
+      },
+      {
+        "q": "Do you have production on-call experience?",
+        "a": "Yes — I've built and operated services handling real traffic at Infineon and OZON Tech, including Kubernetes deployments monitored with Prometheus and Grafana."
+      },
+      {
+        "q": "How do you approach architecture decisions?",
+        "a": "Trade-off driven, documented as ADRs — see the Decisions page for real examples from past projects."
+      },
+      {
+        "q": "Can I see your code or side projects?",
+        "a": "Check the Skills page for an interactive breakdown of my stack, or Projects for full case studies."
+      }
+    ],
+    "faqBusiness": [
+      {
+        "q": "Can you work directly with a non-technical founder?",
+        "a": "Yes — at WeDo.agency I shipped 13 startup projects working directly with founders, translating business goals into technical scope."
+      },
+      {
+        "q": "How do you scope an MVP?",
+        "a": "I focus on the smallest slice that proves the business hypothesis, then iterate — happy to walk through trade-offs openly."
+      },
+      {
+        "q": "Are you open to fractional or part-time engagements?",
+        "a": "Yes — open to discussing scope, time commitment, and rates directly."
+      },
+      {
+        "q": "What kind of ROI have you delivered?",
+        "a": "€480K/year in savings at Infineon, €86K at OZON Tech, and an 11.63% metric uplift at onlineTours — see the Impact Dashboard for details."
+      }
+    ]
   },
   "Projects": {
     "title": "Projects",
@@ -114,7 +170,11 @@
     "title": "Skills",
     "metaDescription": "Interactive skill map across backend, frontend, infrastructure, and AI — with project context and experience depth.",
     "subtitle": "An interactive map of technologies I work with. Click any node to see experience details and related projects.",
-    "clickHint": "Click any node to see details and related projects"
+    "clickHint": "Click any node to see details and related projects",
+    "matcherTitle": "Match skills against a job description",
+    "matcherPlaceholder": "Paste a job posting or list of requirements — matching skills get highlighted below.",
+    "matcherSummary": "{matched} of {total} skills matched",
+    "matcherEmpty": "Paste some text above to see which skills match."
   },
   "EducationPage": {
     "title": "Education",
@@ -150,7 +210,11 @@
     "tucSideCurriculum": "Curriculum",
     "tucSideThesis": "Thesis",
     "tucSideExamOffice": "Examination Office",
-    "tucSideStudentLife": "Student Life"
+    "tucSideStudentLife": "Student Life",
+    "certCategoryCloud": "Cloud",
+    "certCategoryLanguage": "Language",
+    "certCategoryDevelopment": "Development",
+    "certCategoryOther": "Other"
   },
   "CardPage": {
     "title": "Business Card",
@@ -209,28 +273,19 @@
     "hrTitle": "HR / Recruiter",
     "hrTag": "STAR & FAQ",
     "hrDesc": "Structured experience stories, competency signals, and answers to the questions you always ask.",
-    "hrFeature1": "STAR-format achievements",
-    "hrFeature2": "Competency signals",
-    "hrFeature3": "Common interview FAQs",
     "businessTitle": "Business / Founder",
     "businessTag": "Economics only",
     "businessDesc": "Revenue impact, cost savings, timelines, and ROI — no jargon, just outcomes.",
-    "businessFeature1": "€480K annual savings",
-    "businessFeature2": "Time-to-value metrics",
-    "businessFeature3": "Risk & delivery record",
     "techTitle": "Engineer / CTO",
     "techTag": "Technical depth",
-    "techDesc": "Architecture decisions, system design tradeoffs, and the stack choices behind each project.",
-    "techFeature1": "System design details",
-    "techFeature2": "Stack & architecture",
-    "techFeature3": "Tradeoffs & ADRs",
-    "cta": "Apply this view →"
+    "techDesc": "Architecture decisions, system design tradeoffs, and the stack choices behind each project."
   },
   "HomePageCta": {
     "title": "Want to learn more?",
     "subtitle": "Explore my projects with full business context, or read about my engineering journey.",
     "projects": "See all projects →",
-    "about": "About me →"
+    "about": "About me →",
+    "contact": "Contact →"
   },
   "HomePage": {
     "metaTitle": "Vitalii Popov — Full-Stack Engineer",
@@ -259,5 +314,11 @@
   "RecommendationsPage": {
     "metaTitle": "Recommendations",
     "metaDescription": "What colleagues, clients, and collaborators say about working with Vitalii Popov."
+  },
+  "ContactLinks": {
+    "emailDescription": "Best for detailed project inquiries",
+    "linkedinDescription": "Professional network and recommendations",
+    "githubDescription": "Open source projects and code",
+    "telegramDescription": "Fastest response for quick questions"
   }
 }

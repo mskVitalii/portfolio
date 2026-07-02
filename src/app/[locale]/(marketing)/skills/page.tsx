@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
-import { SKILLS, CATEGORY_LABELS, CATEGORY_COLORS, LEVEL_LABELS } from "@/data/skills";
+import { buildPageMetadata } from "@/lib/seo";
 import { SkillsExplorer } from "@/components/skills/SkillsExplorer";
-import { Badge } from "@/components/ui/badge";
+import { SkillsKeywordMatcher } from "@/components/skills/SkillsKeywordMatcher";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -17,14 +16,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "SkillsPage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/skills",
     title: t("title"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, "/skills"),
-  };
+  });
 }
-
-const CATEGORIES = ["backend", "frontend", "infrastructure", "ai"] as const;
 
 export default async function SkillsPage({
   params,
@@ -46,36 +44,7 @@ export default async function SkillsPage({
 
       <SkillsExplorer />
 
-      {/* List view below graph */}
-      <div className="mt-16 grid sm:grid-cols-2 gap-8">
-        {CATEGORIES.map((cat) => {
-          const catSkills = SKILLS.filter((s) => s.category === cat || (cat === "backend" && s.category === "languages"));
-          if (catSkills.length === 0) return null;
-          return (
-            <div key={cat}>
-              <h3
-                className="font-semibold mb-4 text-sm uppercase tracking-wider"
-                style={{ color: CATEGORY_COLORS[cat] }}
-              >
-                {CATEGORY_LABELS[cat]}
-              </h3>
-              <div className="space-y-2">
-                {catSkills.map((skill) => (
-                  <div key={skill.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                    <div className="flex items-center gap-3">
-                      <span className="font-medium text-sm">{skill.name}</span>
-                      <span className="text-xs text-muted-foreground">{skill.years}y</span>
-                    </div>
-                    <Badge variant="outline" className="text-xs">
-                      {LEVEL_LABELS[skill.level]}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <SkillsKeywordMatcher />
     </main>
   );
 }

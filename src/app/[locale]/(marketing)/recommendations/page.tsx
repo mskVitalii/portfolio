@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 import { ExternalLink } from "lucide-react";
 
 export function generateStaticParams() {
@@ -15,11 +15,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "RecommendationsPage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/recommendations",
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, "/recommendations"),
-  };
+  });
 }
 
 export default async function RecommendationsPage({

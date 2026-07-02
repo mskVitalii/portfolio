@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, buildOpenGraphLocale } from "@/lib/seo";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -33,7 +33,10 @@ export async function generateMetadata({
     openGraph: {
       title: `${project.title} | Vitalii Popov`,
       description: project.description.business,
+      type: "website",
+      siteName: "Vitalii Popov",
       images: [{ url: ogUrl, width: 1200, height: 630 }],
+      ...buildOpenGraphLocale(locale),
     },
     twitter: {
       card: "summary_large_image",

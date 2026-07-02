@@ -2,7 +2,6 @@
 
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check } from "lucide-react";
 import { useViewMode, type ViewMode } from "@/store/viewMode";
 import { cn } from "@/lib/utils";
 
@@ -11,44 +10,36 @@ const MODES: {
   color: string;
   activeBg: string;
   activeBorder: string;
-  checkColor: string;
   tagKey: "hrTag" | "businessTag" | "techTag";
   titleKey: "hrTitle" | "businessTitle" | "techTitle";
   descKey: "hrDesc" | "businessDesc" | "techDesc";
-  features: ["hrFeature1" | "businessFeature1" | "techFeature1", "hrFeature2" | "businessFeature2" | "techFeature2", "hrFeature3" | "businessFeature3" | "techFeature3"];
 }[] = [
   {
     id: "hr",
     color: "text-violet-500",
     activeBg: "bg-violet-500/10",
     activeBorder: "border-violet-500",
-    checkColor: "text-violet-500",
     tagKey: "hrTag",
     titleKey: "hrTitle",
     descKey: "hrDesc",
-    features: ["hrFeature1", "hrFeature2", "hrFeature3"],
   },
   {
     id: "business",
     color: "text-emerald-500",
     activeBg: "bg-emerald-500/10",
     activeBorder: "border-emerald-500",
-    checkColor: "text-emerald-500",
     tagKey: "businessTag",
     titleKey: "businessTitle",
     descKey: "businessDesc",
-    features: ["businessFeature1", "businessFeature2", "businessFeature3"],
   },
   {
     id: "tech",
     color: "text-blue-500",
     activeBg: "bg-blue-500/10",
     activeBorder: "border-blue-500",
-    checkColor: "text-blue-500",
     tagKey: "techTag",
     titleKey: "techTitle",
     descKey: "techDesc",
-    features: ["techFeature1", "techFeature2", "techFeature3"],
   },
 ];
 
@@ -99,15 +90,7 @@ export function AudienceFilter() {
                 <h3 className={cn("text-lg font-bold mb-2", isActive ? m.color : "text-foreground")}>
                   {t(m.titleKey)}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{t(m.descKey)}</p>
-                <ul className="space-y-1.5">
-                  {m.features.map((fk) => (
-                    <li key={fk} className="flex items-center gap-2 text-sm">
-                      <Check className={cn("h-3.5 w-3.5 shrink-0", isActive ? m.checkColor : "text-muted-foreground")} />
-                      <span className={isActive ? "text-foreground" : "text-muted-foreground"}>{t(fk)}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-muted-foreground leading-relaxed">{t(m.descKey)}</p>
               </motion.button>
             );
           })}

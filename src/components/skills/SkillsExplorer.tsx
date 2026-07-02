@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import {
   ReactFlow,
   Background,
@@ -418,6 +419,7 @@ interface Cert {
 // ─── Single graph section ─────────────────────────────────────────────────────
 
 function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?: Cert[] }) {
+  const t = useTranslations("SkillsPage");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [certsOpen, setCertsOpen] = useState(true);
   const { resolvedTheme } = useTheme();
@@ -483,7 +485,7 @@ function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?
         </div>
       ) : (
         <div className="px-6 py-3 border-b">
-          <p className="text-xs text-muted-foreground">Click any node to see details</p>
+          <p className="text-xs text-muted-foreground">{t("clickHint")}</p>
         </div>
       )}
 

@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { FileDown, Award, ChevronRight, CheckCircle2 } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { Certificates } from "@/components/education/Certificates";
 
 // ─── HSE Logo SVG ──────────────────────────────────────────────────────────────
 
@@ -647,22 +648,7 @@ export function EducationStack({ projects }: { projects: Project[] }) {
         <p className="text-muted-foreground text-sm mb-8">
           {t("certsSubtitle")}
         </p>
-        <div className="grid sm:grid-cols-3 gap-4">
-          {[
-            { title: "Microsoft Azure Fundamentals (AZ-900)", issuer: "Microsoft", year: 2022 },
-            { title: "IELTS Academic — C1", issuer: "British Council", year: 2022 },
-            { title: "DSH — German University Admission", issuer: "TU Chemnitz", year: 2023 },
-          ].map((cert) => (
-            <div key={cert.title} className="rounded-xl border bg-card p-4 flex flex-col gap-2">
-              <Award className="w-5 h-5 text-primary" />
-              <p className="font-semibold text-sm">{cert.title}</p>
-              <p className="text-xs text-muted-foreground">{cert.issuer}</p>
-              <span className="text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded w-fit">
-                {cert.year}
-              </span>
-            </div>
-          ))}
-        </div>
+        <Certificates />
       </div>
     </div>
   );

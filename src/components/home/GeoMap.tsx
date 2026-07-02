@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
+import { useViewMode } from "@/store/viewMode";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -29,6 +31,9 @@ const COUNTRY_FILLS: Record<string, LocationTier> = {
   "724": "open",    // Spain
   "620": "open",    // Portugal
   "702": "open",    // Singapore
+  "392": "open",    // Japan
+  "410": "open",    // South Korea
+  "344": "open",    // Hong Kong
   "36":  "open",    // Australia
 };
 
@@ -39,17 +44,54 @@ const TIER_COLORS: Record<LocationTier, string> = {
   ask:     "#f59e0b22",
 };
 
-const MARKERS = [
-  { name: "Chemnitz", coordinates: [12.93, 50.83] as [number, number], tier: "current" as LocationTier, label: "📍 Now" },
-  { name: "Berlin", coordinates: [13.4, 52.52] as [number, number], tier: "ideal" as LocationTier, label: "🎯 Ideal" },
-  { name: "Dubai", coordinates: [55.3, 25.2] as [number, number], tier: "open" as LocationTier, label: "✓ Open" },
-];
+const CURRENT_MARKER = { name: "Chemnitz", coordinates: [12.93, 50.83] as [number, number] };
+const DEFAULT_IDEAL_MARKER = { name: "Berlin", coordinates: [13.4, 52.52] as [number, number] };
+const OPEN_MARKER = { name: "Dubai", coordinates: [55.3, 25.2] as [number, number] };
 
 // Legend labels are rendered inside the component using translations
 const LEGEND_TIERS = ["current", "ideal", "open"] as const;
 
+export interface VisitorGeo {
+  city: string;
+  country: string;
+  lat: number;
+  lon: number;
+}
+
 export function GeoMap() {
   const t = useTranslations("GeoMap");
+  const { mode } = useViewMode();
+  const [visitorGeo, setVisitorGeo] = useState<VisitorGeo | null>(null);
+
+  useEffect(() => {
+    if (mode !== "hr") return;
+    let cancelled = false;
+    fetch("/api/geo")
+      .then((res) => res.json())
+      .then((data: VisitorGeo | null) => {
+        if (!cancelled) setVisitorGeo(data);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [mode]);
+
+  const showVisitorAsIdeal = mode === "hr" && visitorGeo?.country === "DE";
+
+  const idealMarker = showVisitorAsIdeal
+    ? { name: visitorGeo!.city, coordinates: [visitorGeo!.lon, visitorGeo!.lat] as [number, number] }
+    : DEFAULT_IDEAL_MARKER;
+
+  const markers: { name: string; coordinates: [number, number]; tier: LocationTier; label: string }[] = [
+    { ...CURRENT_MARKER, tier: "current", label: t("markerCurrent") },
+    {
+      ...idealMarker,
+      tier: "ideal",
+      label: showVisitorAsIdeal ? t("markerNearYou", { city: visitorGeo!.city }) : t("markerIdeal"),
+    },
+    { ...OPEN_MARKER, tier: "open", label: t("markerOpen") },
+  ];
 
   return (
     <section className="py-20 px-4 border-t">
@@ -90,7 +132,7 @@ export function GeoMap() {
               }
             </Geographies>
 
-            {MARKERS.map(({ name, coordinates, tier, label }) => (
+            {markers.map(({ name, coordinates, tier, label }) => (
               <Marker key={name} coordinates={coordinates}>
                 <circle r={5} fill={TIER_COLORS[tier]} stroke="white" strokeWidth={1.5} />
                 <text

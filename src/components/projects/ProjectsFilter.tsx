@@ -15,13 +15,23 @@ const CATEGORIES: { value: "all" | ProjectCategory; label: string }[] = [
   { value: "personal", label: "Personal" },
 ];
 
+const CATEGORY_VALUES = CATEGORIES.map((c) => c.value);
+
 export function ProjectsFilter({ projects }: { projects: Project[] }) {
-  const [active, setActive] = useState<"all" | ProjectCategory>("all");
   const searchParams = useSearchParams();
   const router = useRouter();
+  const categoryParam = searchParams.get("category");
+  const initialCategory =
+    categoryParam && CATEGORY_VALUES.includes(categoryParam as ProjectCategory)
+      ? (categoryParam as ProjectCategory)
+      : "all";
+  const [active, setActive] = useState<"all" | ProjectCategory>(initialCategory);
   const companyFilter = searchParams.get("company");
 
-  const byCategory = active === "all" ? projects : projects.filter((p) => p.category === active);
+  // Pet/personal projects are hidden from the general pool by default —
+  // only shown when explicitly selected via the "Personal" tab or ?category=personal.
+  const byCategory =
+    active === "all" ? projects.filter((p) => p.category !== "personal") : projects.filter((p) => p.category === active);
   const filtered = companyFilter
     ? byCategory.filter((p) => p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
     : byCategory;
@@ -67,7 +77,7 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
             {cat.label}
             <span className="ml-1.5 text-xs opacity-60">
               {cat.value === "all"
-                ? projects.length
+                ? projects.filter((p) => p.category !== "personal").length
                 : projects.filter((p) => p.category === cat.value).length}
             </span>
           </button>

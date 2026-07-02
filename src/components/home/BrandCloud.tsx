@@ -6,17 +6,16 @@ import { Link } from "@/i18n/navigation";
 
 interface Brand {
   name: string;
-  logo?: string;
+  logo: string;
   company: string;
   darkBg?: boolean;
-  textLogo?: { text: string; color: string };
 }
 
 const BRANDS: Brand[] = [
   {
     name: "Infineon Technologies",
+    logo: "/brands/infineon.svg",
     company: "Infineon Technologies AG",
-    textLogo: { text: "INFINEON", color: "#009999" },
   },
   { name: "OZON Tech",   logo: "/brands/ozon.svg",        company: "OZON Tech" },
   { name: "WeDo.agency", logo: "/brands/wedo.jpeg",       company: "WeDo.agency" },
@@ -50,14 +49,7 @@ export function BrandCloud() {
                 title={`Projects at ${brand.name}`}
                 className="flex items-center"
               >
-                {brand.textLogo ? (
-                  <span
-                    className="font-bold tracking-widest text-sm"
-                    style={{ color: brand.textLogo.color, letterSpacing: "0.12em" }}
-                  >
-                    {brand.textLogo.text}
-                  </span>
-                ) : brand.darkBg ? (
+                {brand.darkBg ? (
                   <span className="inline-flex items-center justify-center rounded-lg bg-zinc-800 px-3 py-1.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img

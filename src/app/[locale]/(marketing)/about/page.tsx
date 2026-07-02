@@ -4,12 +4,10 @@ import { FileDown, ExternalLink } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { CareerTimeline } from "@/components/about/CareerTimeline";
-import { VideoCv } from "@/components/about/VideoCv";
-import { Certificates } from "@/components/about/Certificates";
+import { Link } from "@/i18n/navigation";
 import { ChessStats } from "@/components/about/ChessStats";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -22,14 +20,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "AboutPage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/about",
     title: t("title"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, "/about"),
-  };
+  });
 }
 
 const INTERESTS = ["Cycling", "Hiking", "Skiing", "Lindy Hop", "HEMA", "Writing about tech"];
+const PROGRAMMING_INTEREST = "Programming";
 
 export default async function AboutPage({
   params,
@@ -80,7 +80,7 @@ export default async function AboutPage({
                 </div>
                 <div className="flex justify-between">
                   <span>{t("german")}</span>
-                  <span className="text-muted-foreground">{t("b1")}</span>
+                  <span className="text-muted-foreground">{t("b2")}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{t("russian")}</span>
@@ -99,6 +99,14 @@ export default async function AboutPage({
                     {interest}
                   </Badge>
                 ))}
+                <Link href="/projects?category=personal">
+                  <Badge
+                    variant="outline"
+                    className="text-xs hover:border-primary/50 hover:text-primary transition-colors"
+                  >
+                    {PROGRAMMING_INTEREST}
+                  </Badge>
+                </Link>
               </div>
               <ChessStats />
             </div>
@@ -113,18 +121,6 @@ export default async function AboutPage({
             </a>
           </aside>
         </div>
-      </section>
-
-      {/* Certificates */}
-      <Certificates />
-
-      {/* Video CV */}
-      <VideoCv />
-
-      {/* Timeline */}
-      <section>
-        <h2 className="text-2xl font-bold mb-10">{t("careerTitle")}</h2>
-        <CareerTimeline />
       </section>
     </main>
   );

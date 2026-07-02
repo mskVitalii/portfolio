@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 import { BusinessCard } from "@/components/card/BusinessCard";
 
 export function generateStaticParams() {
@@ -15,11 +15,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "CardPage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/card",
     title: t("title"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, "/card"),
-  };
+  });
 }
 
 export default async function CardPage({

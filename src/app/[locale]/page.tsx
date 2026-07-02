@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/home/Hero";
 import { ImpactDashboard } from "@/components/home/ImpactDashboard";
 import { GeoMap } from "@/components/home/GeoMap";
@@ -20,11 +20,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "HomePage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "",
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, ""),
-  };
+  });
 }
 
 export default async function HomePage({
@@ -38,10 +39,10 @@ export default async function HomePage({
   return (
     <main>
       <Hero />
-      <AudienceFilter />
-      <BrandCloud />
       <ImpactDashboard />
+      <BrandCloud />
       <GeoMap />
+      <AudienceFilter />
       <HomePageCta />
     </main>
   );

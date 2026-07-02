@@ -27,6 +27,9 @@ export function HomePageCta() {
           <Link href="/about" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
             {t("about")}
           </Link>
+          <Link href="/contact" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
+            {t("contact")}
+          </Link>
         </div>
       </motion.div>
     </section>

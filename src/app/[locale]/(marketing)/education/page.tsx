@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/seo";
 import { EDUCATION_PROJECTS } from "@/data/projects";
 import { EducationStack } from "@/components/education/EducationStack";
 
@@ -16,11 +16,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "EducationPage" });
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/education",
     title: t("title"),
     description: t("metaDescription"),
-    alternates: buildAlternates(locale, "/education"),
-  };
+  });
 }
 
 export default async function EducationPage({
