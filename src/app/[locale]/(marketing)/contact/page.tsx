@@ -4,7 +4,8 @@ import { ContactLinks } from "@/components/contact/ContactLinks";
 import { FAQ } from "@/components/contact/FAQ";
 import { Separator } from "@/components/ui/separator";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -33,9 +34,11 @@ export default async function ContactPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Contact");
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "contact", "/contact");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-4xl">
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="mb-10">
         <h1 className="text-4xl font-bold">{t("title")}</h1>
         <p className="mt-3 text-muted-foreground text-lg">

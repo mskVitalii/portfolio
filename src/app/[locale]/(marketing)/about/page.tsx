@@ -8,7 +8,8 @@ import { ChessStats } from "@/components/about/ChessStats";
 import { LeetCodeStats } from "@/components/about/LeetCodeStats";
 import { AboutGallery } from "@/components/about/AboutGallery";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const WRITING_LINKS = {
   ru: [{ label: "Habr", href: "https://habr.com/ru/users/mskVitalii/" }],
@@ -55,9 +56,11 @@ export default async function AboutPage({
     WRITING_LINKS[locale as keyof typeof WRITING_LINKS] ?? WRITING_LINKS.en;
   const [bio4Before, bio4After] = t("bio4").split("%%LINKS%%");
   const [bio2Before, bio2Between, bio2After] = t("bio2").split(/%%HOME%%|%%PROJECTS%%/);
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "about", "/about");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-4xl">
+      <JsonLd data={breadcrumbJsonLd} />
       {/* Bio */}
       <section className="mb-16">
         <div className="grid md:grid-cols-3 gap-8">

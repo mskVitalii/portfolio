@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
 import { BusinessCard } from "@/components/card/BusinessCard";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,6 +31,12 @@ export default async function CardPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "card", "/card");
 
-  return <BusinessCard />;
+  return (
+    <>
+      <JsonLd data={breadcrumbJsonLd} />
+      <BusinessCard />
+    </>
+  );
 }

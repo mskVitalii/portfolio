@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
-import { buildAlternates, buildOpenGraphLocale } from "@/lib/seo";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { buildAlternates, buildOpenGraphLocale, buildBreadcrumbJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -69,6 +70,13 @@ export default async function ProjectDetailPage({
   const project = getProject(slug);
   if (!project) notFound();
 
+  const tNav = await getTranslations({ locale, namespace: "Nav" });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [
+    { name: tNav("home"), path: "" },
+    { name: tNav("projects"), path: "/projects" },
+    { name: project.title, path: `/projects/${slug}` },
+  ]);
+
   let mdxContent: React.ReactNode = null;
   const slugs = getPageSlugs("projects", locale);
 
@@ -95,6 +103,7 @@ export default async function ProjectDetailPage({
 
   return (
     <main className="container mx-auto px-4 py-12 max-w-4xl">
+      <JsonLd data={breadcrumbJsonLd} />
       <Link
         href="/projects"
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "mb-8 -ml-2")}

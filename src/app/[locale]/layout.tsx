@@ -70,6 +70,23 @@ async function PersonJsonLd({ locale }: { locale: string }) {
   );
 }
 
+function WebsiteJsonLd({ locale }: { locale: string }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Vitalii Popov",
+    url: `${BASE_URL}/${locale}`,
+    inLanguage: locale,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 export default async function LocaleLayout({
   children,
   params,
@@ -90,6 +107,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <PersonJsonLd locale={locale} />
+      <WebsiteJsonLd locale={locale} />
       <ViewModeProvider>
         <Suspense>
           <ModeParamSync />

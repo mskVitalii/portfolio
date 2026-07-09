@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
 import { EDUCATION_PROJECTS } from "@/data/projects";
 import { EducationStack } from "@/components/education/EducationStack";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -31,9 +32,11 @@ export default async function EducationPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "education", "/education");
 
   return (
     <main>
+      <JsonLd data={breadcrumbJsonLd} />
       <EducationStack projects={EDUCATION_PROJECTS} />
     </main>
   );

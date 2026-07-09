@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { Scale } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -93,9 +94,11 @@ export default async function DecisionsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "decisions", "/decisions");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-3xl">
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="mb-12">
         <div className="flex items-center gap-3 mb-4">
           <Scale className="h-8 w-8 text-primary" />

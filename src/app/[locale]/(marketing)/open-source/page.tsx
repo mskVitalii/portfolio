@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
 import { ExternalLink, GitFork, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -55,9 +56,11 @@ export default async function OpenSourcePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "openSource", "/open-source");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-3xl">
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="mb-12">
         <h1 className="text-4xl font-bold mb-4">Open Source</h1>
         <p className="text-muted-foreground text-lg max-w-2xl">

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
 import { SkillsExplorer } from "@/components/skills/SkillsExplorer";
 import { SkillsKeywordMatcher } from "@/components/skills/SkillsKeywordMatcher";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,9 +33,11 @@ export default async function SkillsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("SkillsPage");
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "skills", "/skills");
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-5xl">
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="mb-10">
         <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
         <p className="text-muted-foreground text-lg max-w-2xl">

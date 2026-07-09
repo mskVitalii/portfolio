@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server";
+
 export const BASE_URL = "https://vitaliipopov.dev";
 const LOCALES = ["en", "de", "ru"] as const;
 
@@ -54,4 +56,28 @@ export function buildPageMetadata({
       images: ["/og-default.png"],
     },
   };
+}
+
+export type BreadcrumbItem = { name: string; path: string };
+
+export function buildBreadcrumbJsonLd(locale: string, items: BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${BASE_URL}/${locale}${item.path}`,
+    })),
+  };
+}
+
+/** Breadcrumb for a top-level marketing page reachable directly from Home, using the shared Nav translations. */
+export async function buildNavBreadcrumbJsonLd(locale: string, navKey: string, path: string) {
+  const t = await getTranslations({ locale, namespace: "Nav" });
+  return buildBreadcrumbJsonLd(locale, [
+    { name: t("home"), path: "" },
+    { name: t(navKey), path },
+  ]);
 }
