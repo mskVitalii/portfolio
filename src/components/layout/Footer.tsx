@@ -12,11 +12,9 @@ export function Footer() {
     { href: "/about", label: tNav("about") },
     { href: "/projects", label: tNav("projects") },
     { href: "/skills", label: tNav("skills") },
-    { href: "/contact", label: tNav("contact") },
-  ];
-
-  const moreLinks = [
+    { href: "/card", label: tNav("card") },
     { href: "/recommendations", label: tNav("recommendations") },
+    { href: "/contact", label: tNav("contact") },
   ];
 
   const [taglineLine1, taglineLine2] = t("tagline").split("\n");
@@ -24,7 +22,7 @@ export function Footer() {
   return (
     <footer className="border-t bg-muted/20 mt-auto">
       <div className="container mx-auto px-4 py-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <p className="font-bold mb-2">Vitalii Popov</p>
@@ -82,23 +80,6 @@ export function Footer() {
             <p className="font-semibold text-sm mb-3">&nbsp;</p>
             <ul className="space-y-2">
               {navLinks.slice(3).map(({ href, label }) => (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* More */}
-          <div>
-            <p className="font-semibold text-sm mb-3">{t("moreHeading")}</p>
-            <ul className="space-y-2">
-              {moreLinks.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
