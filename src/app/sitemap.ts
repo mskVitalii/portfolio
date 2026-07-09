@@ -16,11 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/skills",
     "/contact",
     "/education",
-    "/blog",
-    "/roadmap",
-    "/failures",
-    "/decisions",
-    "/open-source",
     "/recommendations",
     "/card",
   ];

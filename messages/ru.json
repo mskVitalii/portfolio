@@ -19,11 +19,6 @@
     "education": "Образование",
     "contact": "Контакты",
     "card": "Визитка",
-    "blog": "Блог",
-    "roadmap": "Роадмап",
-    "failures": "Истории провалов",
-    "decisions": "База ADR",
-    "openSource": "Открытый код",
     "recommendations": "Рекомендации"
   },
   "Hero": {
@@ -482,26 +477,6 @@
   "HomePage": {
     "metaTitle": "Виталий Попов — Full-Stack инженер",
     "metaDescription": "Full-stack инженер, создающий системы с измеримой бизнес-ценностью. 5+ лет в распределённых системах, ИИ и e-commerce."
-  },
-  "BlogPage": {
-    "metaTitle": "Блог",
-    "metaDescription": "Технические разборы, кейсы и инженерные уроки из реальных производственных систем."
-  },
-  "RoadmapPage": {
-    "metaTitle": "Роадмап",
-    "metaDescription": "Что я сейчас учу, строю и планирую — распределённые системы, ИИ и Rust."
-  },
-  "FailuresPage": {
-    "metaTitle": "Истории провалов",
-    "metaDescription": "Инженерные ошибки и разборы полётов. Честные истории о том, что пошло не так и чему я научился."
-  },
-  "DecisionsPage": {
-    "metaTitle": "База ADR",
-    "metaDescription": "Architecture Decision Records — технические решения и аргументация к ним."
-  },
-  "OpenSourcePage": {
-    "metaTitle": "Открытый код",
-    "metaDescription": "Open-source инструменты и контрибьюции Виталия Попова."
   },
   "RecommendationsPage": {
     "metaTitle": "Рекомендации",

@@ -19,11 +19,6 @@
     "education": "Bildung",
     "contact": "Kontakt",
     "card": "Visitenkarte",
-    "blog": "Blog",
-    "roadmap": "Roadmap",
-    "failures": "Misserfolgsgeschichten",
-    "decisions": "ADR-Datenbank",
-    "openSource": "Open Source",
     "recommendations": "Empfehlungen"
   },
   "Hero": {
@@ -482,26 +477,6 @@
   "HomePage": {
     "metaTitle": "Vitalii Popov — Full-Stack-Entwickler",
     "metaDescription": "Full-Stack-Entwickler, der Systeme mit messbarem Geschäftswert aufbaut. 5+ Jahre in verteilten Systemen, KI und E-Commerce."
-  },
-  "BlogPage": {
-    "metaTitle": "Blog",
-    "metaDescription": "Technische Deep-Dives, Fallstudien und Engineering-Lektionen aus echten Produktionssystemen."
-  },
-  "RoadmapPage": {
-    "metaTitle": "Roadmap",
-    "metaDescription": "Was ich gerade lerne, baue und anstrebe — verteilte Systeme, KI und Rust."
-  },
-  "FailuresPage": {
-    "metaTitle": "Misserfolgsgeschichten",
-    "metaDescription": "Engineering-Fehler und Post-Mortems. Ehrliche Berichte darüber, was schiefgelaufen ist und was ich daraus gelernt habe."
-  },
-  "DecisionsPage": {
-    "metaTitle": "ADR-Datenbank",
-    "metaDescription": "Architecture Decision Records — technische Entscheidungen und ihre Begründungen."
-  },
-  "OpenSourcePage": {
-    "metaTitle": "Open Source",
-    "metaDescription": "Open-Source-Tools und Beiträge von Vitalii Popov."
   },
   "RecommendationsPage": {
     "metaTitle": "Empfehlungen",

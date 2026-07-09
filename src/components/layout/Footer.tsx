@@ -12,15 +12,10 @@ export function Footer() {
     { href: "/about", label: tNav("about") },
     { href: "/projects", label: tNav("projects") },
     { href: "/skills", label: tNav("skills") },
-    { href: "/blog", label: tNav("blog") },
-    { href: "/roadmap", label: tNav("roadmap") },
     { href: "/contact", label: tNav("contact") },
   ];
 
   const moreLinks = [
-    { href: "/failures", label: tNav("failures") },
-    { href: "/decisions", label: tNav("decisions") },
-    { href: "/open-source", label: tNav("openSource") },
     { href: "/recommendations", label: tNav("recommendations") },
   ];
 
