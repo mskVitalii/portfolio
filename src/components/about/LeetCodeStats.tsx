@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -13,6 +14,12 @@ type LeetCodeData = {
 
 const DIFFICULTIES: Difficulty[] = ["Easy", "Medium", "Hard"];
 
+const DIFFICULTY_LABEL_KEYS: Record<Difficulty, "easy" | "medium" | "hard"> = {
+  Easy: "easy",
+  Medium: "medium",
+  Hard: "hard",
+};
+
 const DIFFICULTY_COLOR: Record<Difficulty, string> = {
   Easy: "text-emerald-500",
   Medium: "text-amber-500",
@@ -22,6 +29,7 @@ const DIFFICULTY_COLOR: Record<Difficulty, string> = {
 const USERNAME = "mskKote";
 
 export function LeetCodeStats() {
+  const t = useTranslations("GameStats");
   const [data, setData] = useState<LeetCodeData | null>(null);
   const [error, setError] = useState(false);
 
@@ -54,7 +62,7 @@ export function LeetCodeStats() {
           </a>
         </div>
         <div className="px-4 py-3 text-xs text-muted-foreground text-center">
-          Stats unavailable — view profile on{" "}
+          {t("statsUnavailable")}{" "}
           <a
             href={`https://leetcode.com/${USERNAME}`}
             target="_blank"
@@ -94,7 +102,9 @@ export function LeetCodeStats() {
 
           return (
             <div key={diff} className="flex flex-col items-center justify-center py-4 px-3 gap-1">
-              <span className={`text-xs font-medium ${DIFFICULTY_COLOR[diff]}`}>{diff}</span>
+              <span className={`text-xs font-medium ${DIFFICULTY_COLOR[diff]}`}>
+                {t(`leetcode.${DIFFICULTY_LABEL_KEYS[diff]}`)}
+              </span>
               <div className="flex flex-col items-center gap-1 w-full h-8 justify-center">
                 {!loaded ? (
                   <div className="h-6 w-10 rounded-md overflow-hidden relative bg-muted/50 border border-border/40">
@@ -115,12 +125,12 @@ export function LeetCodeStats() {
         <div className="flex items-center justify-center gap-2 px-4 py-2 border-t bg-muted/20">
           {totalSolved !== undefined && (
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-              {totalSolved} solved
+              {t("leetcode.solved", { count: totalSolved })}
             </Badge>
           )}
           {data?.ranking && (
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-              rank #{data.ranking.toLocaleString()}
+              {t("leetcode.rank", { value: data.ranking.toLocaleString() })}
             </Badge>
           )}
         </div>

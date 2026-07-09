@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -14,11 +15,11 @@ type ChessRating = {
 
 type ChessStats = Partial<Record<TimeControl, ChessRating>>;
 
-const TC_LABELS: Record<TimeControl, string> = {
-  chess_bullet: "Bullet",
-  chess_blitz: "Blitz",
-  chess_rapid: "Rapid",
-  chess_daily: "Daily",
+const TC_LABEL_KEYS: Record<TimeControl, "bullet" | "blitz" | "rapid" | "daily"> = {
+  chess_bullet: "bullet",
+  chess_blitz: "blitz",
+  chess_rapid: "rapid",
+  chess_daily: "daily",
 };
 
 const TC_EMOJI: Record<TimeControl, string> = {
@@ -32,6 +33,7 @@ const DISPLAYED: TimeControl[] = ["chess_bullet", "chess_blitz", "chess_rapid", 
 const USERNAME = "mskvitalii";
 
 export function ChessStats() {
+  const t = useTranslations("GameStats");
   const [stats, setStats] = useState<ChessStats | null>(null);
   const [error, setError] = useState(false);
 
@@ -63,7 +65,7 @@ export function ChessStats() {
           </a>
         </div>
         <div className="px-4 py-3 text-xs text-muted-foreground text-center">
-          Stats unavailable — view profile on{" "}
+          {t("statsUnavailable")}{" "}
           <a
             href={`https://chess.com/member/${USERNAME}`}
             target="_blank"
@@ -110,7 +112,9 @@ export function ChessStats() {
           return (
             <div key={tc} className="flex flex-col items-center justify-center py-4 px-3 gap-1">
               <span className="text-lg">{TC_EMOJI[tc]}</span>
-              <span className="text-xs font-medium text-muted-foreground">{TC_LABELS[tc]}</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                {t(`chess.${TC_LABEL_KEYS[tc]}`)}
+              </span>
               <div className="flex flex-col items-center gap-1 w-full h-18.5 justify-center">
                 {!loaded ? (
                   <>
@@ -128,11 +132,13 @@ export function ChessStats() {
                   <>
                     <span className="text-2xl font-bold tabular-nums">{rating}</span>
                     {best && best > rating && (
-                      <span className="text-[10px] text-muted-foreground">best {best}</span>
+                      <span className="text-[10px] text-muted-foreground">
+                        {t("chess.best", { rating: best })}
+                      </span>
                     )}
                     {winPct !== null && (
                       <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-                        {winPct}% wins
+                        {t("chess.winsPct", { pct: winPct })}
                       </Badge>
                     )}
                   </>

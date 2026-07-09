@@ -271,6 +271,24 @@
       "programming": "Programming"
     }
   },
+  "GameStats": {
+    "statsUnavailable": "Stats unavailable — view profile on",
+    "chess": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "daily": "Daily",
+      "best": "best {rating}",
+      "winsPct": "{pct}% wins"
+    },
+    "leetcode": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "solved": "{count} solved",
+      "rank": "rank #{value}"
+    }
+  },
   "Contact": {
     "title": "Hire me!",
     "metaDescription": "Get in touch — open to engineering roles, freelance work, and technical collaboration.",

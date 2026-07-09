@@ -271,6 +271,24 @@
       "programming": "Programmieren"
     }
   },
+  "GameStats": {
+    "statsUnavailable": "Statistik nicht verfügbar — Profil ansehen auf",
+    "chess": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "daily": "Fernschach",
+      "best": "beste {rating}",
+      "winsPct": "{pct}% Siege"
+    },
+    "leetcode": {
+      "easy": "Leicht",
+      "medium": "Mittel",
+      "hard": "Schwer",
+      "solved": "{count} gelöst",
+      "rank": "Rang #{value}"
+    }
+  },
   "Contact": {
     "title": "Stellen Sie mich ein!",
     "metaDescription": "Kontakt aufnehmen — offen für Engineering-Stellen, Freelance-Arbeit und technische Zusammenarbeit.",
