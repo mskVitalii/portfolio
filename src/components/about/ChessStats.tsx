@@ -46,7 +46,7 @@ export function ChessStats() {
 
   if (error)
     return (
-      <div className="mt-4 rounded-xl border bg-card overflow-hidden">
+      <div className="rounded-xl border bg-card overflow-hidden">
         <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">
           <div className="flex items-center gap-2">
             <span className="text-lg">♟️</span>
@@ -79,7 +79,7 @@ export function ChessStats() {
   const loaded = stats !== null;
 
   return (
-    <div className="mt-4 rounded-xl border bg-card overflow-hidden">
+    <div className="rounded-xl border bg-card overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">
         <div className="flex items-center gap-2">
           <span className="text-lg">♟️</span>

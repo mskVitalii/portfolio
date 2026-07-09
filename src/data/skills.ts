@@ -32,7 +32,7 @@ export const SKILLS: Skill[] = [
     category: "backend",
     years: 5,
     level: "expert",
-    projects: ["infineon-parking-guidance", "wedo-agency-startups"],
+    projects: ["infineon-parking-guidance", "wedo-ecommerce-bidder", "wedo-ai-video-dubbing", "wedo-telegram-bots"],
     description: "FastAPI, data pipelines, CV integrations, scripting",
   },
   {
@@ -41,7 +41,7 @@ export const SKILLS: Skill[] = [
     category: "backend",
     years: 2,
     level: "proficient",
-    projects: ["infineon-parking-guidance", "ozon-warehouse-search"],
+    projects: ["infineon-parking-guidance", "ozon-barcode-scanner"],
     description: "Device management, WebSocket integrations, .NET services",
   },
   {
@@ -50,7 +50,7 @@ export const SKILLS: Skill[] = [
     category: "backend",
     years: 3,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: ["wedo-horsium-game"],
     description: "NestJS, REST APIs, real-time features",
   },
   {
@@ -70,7 +70,7 @@ export const SKILLS: Skill[] = [
     category: "frontend",
     years: 5,
     level: "expert",
-    projects: ["infineon-parking-guidance", "online-tours-ab", "wedo-agency-startups"],
+    projects: ["infineon-parking-guidance", "online-tours-ab", "ncahoots-admin-panel", "flyboots-store", "bot-iot-smart-home"],
     description: "Hooks, RSC, complex state management, performance optimization",
   },
   {
@@ -88,7 +88,7 @@ export const SKILLS: Skill[] = [
     category: "frontend",
     years: 3,
     level: "expert",
-    projects: ["wedo-agency-startups"],
+    projects: ["wedo-ai-video-dubbing", "wedo-ai-music-generator"],
     description: "App Router, SSG/SSR/ISR, middleware, i18n",
   },
   {
@@ -108,7 +108,7 @@ export const SKILLS: Skill[] = [
     category: "infrastructure",
     years: 4,
     level: "expert",
-    projects: ["ozon-warehouse-search", "online-tours-ab"],
+    projects: ["ozon-warehouse-search", "online-tours-ab", "wedo-telegram-bots"],
     description: "Multi-stage builds, Compose, production containers",
   },
   {
@@ -135,7 +135,7 @@ export const SKILLS: Skill[] = [
     category: "infrastructure",
     years: 3,
     level: "proficient",
-    projects: ["ozon-warehouse-search", "online-tours-ab"],
+    projects: ["ozon-warehouse-search", "online-tours-ab", "wedo-telegram-bots"],
     description: "Caching, session storage, pub/sub",
   },
   {
@@ -144,7 +144,7 @@ export const SKILLS: Skill[] = [
     category: "infrastructure",
     years: 4,
     level: "expert",
-    projects: ["ozon-warehouse-search", "wedo-agency-startups"],
+    projects: ["ozon-barcode-scanner", "wedo-telegram-bots"],
     description: "Query optimization, migrations, full-text search",
   },
   {
@@ -173,7 +173,7 @@ export const SKILLS: Skill[] = [
     category: "infrastructure",
     years: 3,
     level: "expert",
-    projects: ["online-tours-ab", "wedo-agency-startups"],
+    projects: ["online-tours-ab", "wedo-telegram-bots"],
     description: "CI/CD pipelines, matrix builds, Docker image publishing, automated deploy workflows",
   },
   {
@@ -202,7 +202,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 2,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: ["wedo-shopify-ai-support", "wedo-ai-video-dubbing", "wedo-ai-music-generator"],
     description: "Prompt engineering, GPT-3/4 APIs, RAG patterns",
   },
   {
@@ -211,7 +211,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 2,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: [],
     description: "Retrieval-Augmented Generation pipelines — chunking, embedding, hybrid search, re-ranking",
   },
   {
@@ -220,7 +220,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 1,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: [],
     description: "Vector database — collections, payload filtering, hybrid search",
   },
   {
@@ -229,7 +229,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 2,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: [],
     description: "text-embedding-ada-002, sentence-transformers, multilingual embeddings",
   },
   {
@@ -238,7 +238,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 1,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: [],
     description: "Chains, agents, document loaders, memory — Python and JS",
   },
   {
@@ -265,7 +265,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 2,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: [],
     description: "Prompt design, context window management, structured outputs, few-shot and chain-of-thought",
   },
   {
@@ -274,7 +274,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 2,
     level: "proficient",
-    projects: ["wedo-agency-startups"],
+    projects: [],
     description: "Transformers library, model hub, Inference API, fine-tuning pipelines",
   },
   {

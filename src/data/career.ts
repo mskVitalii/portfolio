@@ -78,8 +78,8 @@ export const CAREER: CareerEntry[] = [
     orgType: "Business consulting & development",
     location: "Remote",
     description:
-      "Shipped 13 startups and projects — AI tools, e-commerce platforms, real-time dashboards, Telegram bots. Led a team of 3 developers on a Silicon Valley startup admin app.",
-    achievements: ["13 projects shipped", "€52K/year ad savings for client"],
+      "Shipped 9 client products — AI tools, e-commerce platforms, real-time dashboards, Telegram bots — taking each from a client's idea to a delivered MVP.",
+    achievements: ["9 products shipped", "€52K/year ad savings for client"],
     stack: ["Python", "React", "Next.js", "NestJS", "Angular", "Docker", "Firebase", "PostgreSQL"],
   },
   {

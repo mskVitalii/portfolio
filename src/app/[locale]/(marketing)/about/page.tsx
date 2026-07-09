@@ -1,13 +1,26 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { FileDown, ExternalLink } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { ChessStats } from "@/components/about/ChessStats";
+import { LeetCodeStats } from "@/components/about/LeetCodeStats";
+import { AboutGallery } from "@/components/about/AboutGallery";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo";
+
+const WRITING_LINKS = {
+  ru: [{ label: "Habr", href: "https://habr.com/ru/users/mskVitalii/" }],
+  en: [
+    { label: "Medium", href: "https://medium.com/@msk.vitalii" },
+    { label: "Dev.to", href: "https://dev.to/mskvitalii" },
+  ],
+  de: [
+    { label: "Medium", href: "https://medium.com/@msk.vitalii" },
+    { label: "Dev.to", href: "https://dev.to/mskvitalii" },
+  ],
+} as const;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -28,8 +41,7 @@ export async function generateMetadata({
   });
 }
 
-const INTERESTS = ["Cycling", "Hiking", "Skiing", "Lindy Hop", "HEMA", "Writing about tech"];
-const PROGRAMMING_INTEREST = "Programming";
+const INTEREST_KEYS = ["cycling", "hiking", "skiing", "lindyHop", "hema", "writingAboutTech"] as const;
 
 export default async function AboutPage({
   params,
@@ -39,36 +51,62 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("AboutPage");
+  const writingLinks =
+    WRITING_LINKS[locale as keyof typeof WRITING_LINKS] ?? WRITING_LINKS.en;
+  const [bio4Before, bio4After] = t("bio4").split("%%LINKS%%");
+  const [bio2Before, bio2Between, bio2After] = t("bio2").split(/%%HOME%%|%%PROJECTS%%/);
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-4xl">
       {/* Bio */}
       <section className="mb-16">
-        <h1 className="text-4xl font-bold mb-6">{t("title")}</h1>
-
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2 space-y-4 text-muted-foreground leading-relaxed">
+            <h1 className="text-4xl font-bold text-foreground">{t("title")}</h1>
             <p>{t("bio1")}</p>
             <p>
-              {t("bio2")}
+              {bio2Before}
+              <Link href="/" className="text-foreground underline underline-offset-4">
+                {t("bio2HomeLabel")}
+              </Link>
+              {bio2Between}
+              <Link href="/projects" className="text-foreground underline underline-offset-4">
+                {t("bio2ProjectsLabel")}
+              </Link>
+              {bio2After}
             </p>
             <p>
-              {t("bio3").split("Habr / Dev / Medium")[0]}
-              <a
-                href="https://habr.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground underline underline-offset-4 inline-flex items-center gap-1"
-              >
-                Habr / Dev / Medium
-                <ExternalLink className="h-3 w-3" />
-              </a>
-              {t("bio3").split("Habr / Dev / Medium")[1]}
+              {bio4Before}
+              {writingLinks.map((link, i) => (
+                <span key={link.href}>
+                  {i > 0 && " / "}
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground underline underline-offset-4 inline-flex items-center gap-1"
+                  >
+                    {link.label}
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </span>
+              ))}
+              {bio4After}
             </p>
-            <p>{t("bio4")}</p>
           </div>
 
           <aside className="space-y-6">
+            <div className="mx-auto aspect-[4/5] w-40 overflow-hidden rounded-2xl ring-2 ring-border md:mx-0 md:w-full">
+              <Image
+                src="/images/about/avatar/vitalii.jpg"
+                alt={t("avatarAlt")}
+                width={600}
+                height={750}
+                className="h-full w-full object-cover"
+                priority
+              />
+            </div>
+
             <div>
               <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">
                 {t("languagesTitle")}
@@ -94,9 +132,9 @@ export default async function AboutPage({
                 {t("interestsTitle")}
               </h3>
               <div className="flex flex-wrap gap-1">
-                {INTERESTS.map((interest) => (
-                  <Badge key={interest} variant="outline" className="text-xs">
-                    {interest}
+                {INTEREST_KEYS.map((key) => (
+                  <Badge key={key} variant="outline" className="text-xs">
+                    {t(`interests.${key}`)}
                   </Badge>
                 ))}
                 <Link href="/projects?category=personal">
@@ -104,24 +142,21 @@ export default async function AboutPage({
                     variant="outline"
                     className="text-xs hover:border-primary/50 hover:text-primary transition-colors"
                   >
-                    {PROGRAMMING_INTEREST}
+                    {t("interests.programming")}
                   </Badge>
                 </Link>
               </div>
-              <ChessStats />
             </div>
-
-            <a
-              href="/cv/vitalii-popov-cv.pdf"
-              download="Vitalii_Popov_CV.pdf"
-              className={cn(buttonVariants({ variant: "default" }), "w-full justify-center")}
-            >
-              <FileDown className="h-4 w-4 mr-2" />
-              {t("downloadCv")}
-            </a>
           </aside>
         </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <ChessStats />
+          <LeetCodeStats />
+        </div>
       </section>
+
+      <AboutGallery />
     </main>
   );
 }

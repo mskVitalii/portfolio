@@ -5,14 +5,15 @@ import { buildAlternates, buildOpenGraphLocale } from "@/lib/seo";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
-import { ArrowLeft, Calendar, Building2, AlertCircle } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, Calendar, Building2, AlertCircle, ExternalLink } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useMDXComponents } from "../../../../../../mdx-components";
 import { getPageContent, getPageSlugs } from "@/lib/content";
-import { getProject } from "@/data/projects";
+import { getProject, PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
 import { ProjectStatusBadge } from "@/components/projects/ProjectStatusBadge";
 import { routing } from "@/i18n/routing";
 
@@ -49,7 +50,7 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  const slugs = getPageSlugs("projects");
+  const slugs = [...PROJECTS, ...EDUCATION_PROJECTS].map((p) => p.slug);
   return routing.locales.flatMap((locale) =>
     slugs.map((slug) => ({ locale, slug }))
   );
@@ -148,13 +149,42 @@ export default async function ProjectDetailPage({
       )}
 
       {/* Stack */}
-      <div className="flex flex-wrap gap-2 mb-10">
+      <div className="flex flex-wrap gap-2 mb-6">
         {project.stack.map((tech) => (
           <Badge key={tech} variant="secondary">
             {tech}
           </Badge>
         ))}
       </div>
+
+      {/* External links */}
+      {project.links && project.links.length > 0 && (
+        <div className="flex flex-wrap gap-3 mb-10">
+          {project.links.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+            >
+              {link.label}
+              <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* Image gallery */}
+      {project.images && project.images.length > 0 && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10">
+          {project.images.map((src) => (
+            <div key={src} className="relative aspect-video rounded-lg overflow-hidden border bg-muted">
+              <Image src={src} alt={project.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 33vw" />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* MDX body */}
       {mdxContent ? (
