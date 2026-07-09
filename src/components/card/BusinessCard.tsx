@@ -903,7 +903,7 @@ const BACKS: CardFace[] = [
 // ─── Collection localStorage hook ─────────────────────────────────────────────
 
 const COLLECTION_KEY = "vp-card-collection";
-const OWNER_PASSWORD = "vp-owner";
+const OWNER_PASSWORD = "0451";
 const FULL_W = 340;
 const FULL_H = 213;
 
