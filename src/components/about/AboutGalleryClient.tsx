@@ -6,6 +6,7 @@ import { ZoomIn, ChevronLeft, ChevronRight, Flame, X } from "lucide-react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 import { TinderDeck, type TinderPhoto, type TinderStrings } from "@/components/about/TinderDeck";
+import { useAchievementsStore } from "@/store/achievements";
 import { cn } from "@/lib/utils";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -76,6 +77,12 @@ export function AboutGalleryClient({
   const [zoomIndex, setZoomIndex] = useState<number | null>(null);
   const [tinderOpen, setTinderOpen] = useState(false);
   const [activeCountry, setActiveCountry] = useState<string | null>(null);
+  const unlockAchievement = useAchievementsStore((s) => s.unlock);
+
+  const handleTinderFinished = (liked: number) => {
+    if (liked === 1) unlockAchievement("tinderFavorite");
+    else if (liked > 1) unlockAchievement("tinderPolyamory");
+  };
 
   const visibleGridPhotos = activeCountry
     ? gridPhotos.filter((photo) => photo.tags.includes(activeCountry))
@@ -260,7 +267,7 @@ export function AboutGalleryClient({
             >
               <X className="h-5 w-5" />
             </DialogClose>
-            <TinderDeck photos={tinderPhotos} strings={tinder} />
+            <TinderDeck photos={tinderPhotos} strings={tinder} onFinished={handleTinderFinished} />
           </DialogContent>
         </Dialog>
       )}

@@ -18,7 +18,8 @@
     "education": "Bildung",
     "contact": "Kontakt",
     "card": "Visitenkarte",
-    "recommendations": "Empfehlungen"
+    "recommendations": "Empfehlungen",
+    "achievements": "Erfolge"
   },
   "Hero": {
     "role": "Full-Stack-Entwickler · Verteilte Systeme · KI",
@@ -486,5 +487,71 @@
     "linkedinDescription": "Berufliches Netzwerk und Empfehlungen",
     "githubDescription": "Open-Source-Projekte und Code",
     "telegramDescription": "Schnellste Antwort bei kurzen Fragen"
+  },
+  "Achievements": {
+    "unlockedLabel": "Erfolg freigeschaltet",
+    "visitHome": {
+      "title": "Willkommen daheim",
+      "description": "Besuche die Startseite."
+    },
+    "visitAbout": {
+      "title": "Erstes Kennenlernen",
+      "description": "Besuche die Seite Über mich."
+    },
+    "visitCard": {
+      "title": "Kartensammler",
+      "description": "Besuche die Visitenkarten-Seite."
+    },
+    "visitContact": {
+      "title": "Kontaktaufnahme",
+      "description": "Besuche die Kontaktseite."
+    },
+    "visitEducation": {
+      "title": "Unterricht beginnt",
+      "description": "Besuche die Bildungsseite."
+    },
+    "visitProjects": {
+      "title": "Portfolio-Entdecker",
+      "description": "Besuche die Projekte-Seite."
+    },
+    "visitRecommendations": {
+      "title": "Man spricht darüber",
+      "description": "Besuche die Empfehlungen-Seite."
+    },
+    "visitSkills": {
+      "title": "Skillbaum freigeschaltet",
+      "description": "Besuche die Fähigkeiten-Seite."
+    },
+    "visitAll": {
+      "title": "Große Rundreise",
+      "description": "Besuche jede Seite der Website."
+    },
+    "tinderFavorite": {
+      "title": "Liebe auf den ersten Swipe",
+      "description": "Like genau ein Foto im Tinder-Stapel."
+    },
+    "tinderPolyamory": {
+      "title": "Polyamorie",
+      "description": "Like mehr als ein Foto im Tinder-Stapel."
+    },
+    "legendarySkin": {
+      "title": "Volltreffer",
+      "description": "Drehe ein legendäres Visitenkarten-Design."
+    },
+    "contactClick": {
+      "title": "Lass uns reden",
+      "description": "Klicke auf einen beliebigen Kontakt-Link."
+    },
+    "cvDownload": {
+      "title": "Aktenzeichen",
+      "description": "Lade den Lebenslauf herunter."
+    }
+  },
+  "AchievementsPage": {
+    "title": "Erfolge",
+    "subtitle": "Verfolge alles, was du beim Erkunden der Seite freigeschaltet hast — im Steam-Stil.",
+    "metaDescription": "Eine Erfolge-Galerie im Steam-Stil zum Erkunden von Vitalii Popovs Portfolio-Website.",
+    "progressLabel": "{unlocked}/{total} freigeschaltet",
+    "unlockedOn": "Freigeschaltet am {date}"
   }
 }

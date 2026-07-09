@@ -15,6 +15,7 @@ export function Footer() {
     { href: "/card", label: tNav("card") },
     { href: "/recommendations", label: tNav("recommendations") },
     { href: "/contact", label: tNav("contact") },
+    { href: "/achievements", label: tNav("achievements") },
   ];
 
   const [taglineLine1, taglineLine2] = t("tagline").split("\n");

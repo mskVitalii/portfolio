@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CardWheel, type WheelCard, type Rarity, RARITY_COLORS, CARD_W, CARD_H } from "./CardWheel";
 import { Card3DViewer } from "./Card3DViewer";
+import { useAchievementsStore } from "@/store/achievements";
 import confetti from "canvas-confetti";
 
 function LinkedinIcon({ className }: { className?: string }) {
@@ -1081,6 +1082,7 @@ export function BusinessCard() {
   const [ownerShow, setOwnerShow] = useState(false);
   const [ownerError, setOwnerError] = useState(false);
   const [resetModalOpen, setResetModalOpen] = useState(false);
+  const unlockAchievement = useAchievementsStore((s) => s.unlock);
 
   // Load collection from localStorage on mount
   useEffect(() => { setCollection(loadCollection()); }, []);
@@ -1099,6 +1101,7 @@ export function BusinessCard() {
 
     const goldenColors = ["#f59e0b", "#fbbf24", "#fcd34d", "#ffffff", "#f97316"];
     if (card.rarity === "legendary") {
+      unlockAchievement("legendarySkin");
       // Huge multi-burst
       confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 }, colors: goldenColors, scalar: 1.4, zIndex: 9999 });
       setTimeout(() => confetti({ particleCount: 150, angle: 60, spread: 80, origin: { x: 0, y: 0.6 }, colors: goldenColors, scalar: 1.2, zIndex: 9999 }), 200);
@@ -1112,7 +1115,7 @@ export function BusinessCard() {
       confetti({ particleCount: 35, spread: 50, origin: { y: 0.65 }, colors: ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe"] });
     }
     // common: no confetti
-  }, []);
+  }, [unlockAchievement]);
 
   const handleOwnerSubmit = () => {
     if (ownerInput === OWNER_PASSWORD) {

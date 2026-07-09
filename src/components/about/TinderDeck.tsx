@@ -34,9 +34,11 @@ const STACK_DEPTH = 3;
 export function TinderDeck({
   photos,
   strings,
+  onFinished,
 }: {
   photos: TinderPhoto[];
   strings: TinderStrings;
+  onFinished?: (liked: number) => void;
 }) {
   const [index, setIndex] = useState(0);
   const [liked, setLiked] = useState(0);
@@ -47,10 +49,12 @@ export function TinderDeck({
   const finished = index >= total;
 
   const handleSwipeComplete = (direction: SwipeDirection) => {
-    if (direction === "like") setLiked((n) => n + 1);
+    const nextLiked = direction === "like" ? liked + 1 : liked;
+    if (direction === "like") setLiked(nextLiked);
     else setPassed((n) => n + 1);
     setIndex((i) => i + 1);
     setPendingDirection(null);
+    if (index + 1 >= total) onFinished?.(nextLiked);
   };
 
   const reset = () => {

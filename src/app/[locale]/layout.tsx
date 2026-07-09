@@ -10,6 +10,7 @@ import { ViewModeProvider } from "@/components/layout/ViewModeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ModeParamSync } from "@/components/layout/ModeParamSync";
+import { AchievementsProvider } from "@/components/achievements/AchievementsProvider";
 import { BASE_URL, buildOpenGraphLocale } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -115,6 +116,7 @@ export default async function LocaleLayout({
         <Header />
         <div className="flex-1">{children}</div>
         <Footer />
+        <AchievementsProvider />
       </ViewModeProvider>
       {process.env.NEXT_PUBLIC_GA_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />

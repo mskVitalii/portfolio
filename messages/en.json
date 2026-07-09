@@ -18,7 +18,8 @@
     "education": "Education",
     "contact": "Contact",
     "card": "Card",
-    "recommendations": "Recommendations"
+    "recommendations": "Recommendations",
+    "achievements": "Achievements"
   },
   "Hero": {
     "role": "Full-Stack Engineer · Distributed Systems · AI",
@@ -486,5 +487,71 @@
     "linkedinDescription": "Professional network and recommendations",
     "githubDescription": "Open source projects and code",
     "telegramDescription": "Fastest response for quick questions"
+  },
+  "Achievements": {
+    "unlockedLabel": "Achievement Unlocked",
+    "visitHome": {
+      "title": "Welcome Home",
+      "description": "Visit the homepage."
+    },
+    "visitAbout": {
+      "title": "Getting Acquainted",
+      "description": "Visit the About page."
+    },
+    "visitCard": {
+      "title": "Card Collector",
+      "description": "Visit the Business Card page."
+    },
+    "visitContact": {
+      "title": "Reaching Out",
+      "description": "Visit the Contact page."
+    },
+    "visitEducation": {
+      "title": "Class Is in Session",
+      "description": "Visit the Education page."
+    },
+    "visitProjects": {
+      "title": "Portfolio Browser",
+      "description": "Visit the Projects page."
+    },
+    "visitRecommendations": {
+      "title": "Word on the Street",
+      "description": "Visit the Recommendations page."
+    },
+    "visitSkills": {
+      "title": "Skill Tree Unlocked",
+      "description": "Visit the Skills page."
+    },
+    "visitAll": {
+      "title": "Grand Tour",
+      "description": "Visit every page on the site."
+    },
+    "tinderFavorite": {
+      "title": "Love at First Swipe",
+      "description": "Like exactly one photo in the Tinder deck."
+    },
+    "tinderPolyamory": {
+      "title": "Polyamory",
+      "description": "Like more than one photo in the Tinder deck."
+    },
+    "legendarySkin": {
+      "title": "Jackpot",
+      "description": "Spin a legendary business card skin."
+    },
+    "contactClick": {
+      "title": "Let's Talk",
+      "description": "Click any contact link."
+    },
+    "cvDownload": {
+      "title": "Paper Trail",
+      "description": "Download the CV."
+    }
+  },
+  "AchievementsPage": {
+    "title": "Achievements",
+    "subtitle": "Track everything you've unlocked while exploring the site — Steam-style.",
+    "metaDescription": "A Steam-style achievement gallery for exploring Vitalii Popov's portfolio site.",
+    "progressLabel": "{unlocked}/{total} unlocked",
+    "unlockedOn": "Unlocked {date}"
   }
 }

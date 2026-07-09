@@ -18,7 +18,8 @@
     "education": "Образование",
     "contact": "Контакты",
     "card": "Визитка",
-    "recommendations": "Рекомендации"
+    "recommendations": "Рекомендации",
+    "achievements": "Достижения"
   },
   "Hero": {
     "role": "Full-Stack инженер · Распределённые системы · ИИ",
@@ -486,5 +487,71 @@
     "linkedinDescription": "Профессиональная сеть и рекомендации",
     "githubDescription": "Open-source проекты и код",
     "telegramDescription": "Самый быстрый ответ на короткие вопросы"
+  },
+  "Achievements": {
+    "unlockedLabel": "Достижение получено",
+    "visitHome": {
+      "title": "Добро пожаловать",
+      "description": "Посетите главную страницу."
+    },
+    "visitAbout": {
+      "title": "Знакомство",
+      "description": "Посетите страницу «О себе»."
+    },
+    "visitCard": {
+      "title": "Коллекционер визиток",
+      "description": "Посетите страницу визитки."
+    },
+    "visitContact": {
+      "title": "На связи",
+      "description": "Посетите страницу контактов."
+    },
+    "visitEducation": {
+      "title": "Начинаем урок",
+      "description": "Посетите страницу образования."
+    },
+    "visitProjects": {
+      "title": "Обзор портфолио",
+      "description": "Посетите страницу проектов."
+    },
+    "visitRecommendations": {
+      "title": "Слухи ходят",
+      "description": "Посетите страницу рекомендаций."
+    },
+    "visitSkills": {
+      "title": "Дерево навыков открыто",
+      "description": "Посетите страницу навыков."
+    },
+    "visitAll": {
+      "title": "Большое путешествие",
+      "description": "Посетите все страницы сайта."
+    },
+    "tinderFavorite": {
+      "title": "Любовь с первого свайпа",
+      "description": "Лайкните ровно одно фото в Tinder-колоде."
+    },
+    "tinderPolyamory": {
+      "title": "Полиамория",
+      "description": "Лайкните больше одного фото в Tinder-колоде."
+    },
+    "legendarySkin": {
+      "title": "Джекпот",
+      "description": "Выбейте легендарный дизайн визитки."
+    },
+    "contactClick": {
+      "title": "Давайте поговорим",
+      "description": "Кликните по любой контактной ссылке."
+    },
+    "cvDownload": {
+      "title": "Бумажный след",
+      "description": "Скачайте резюме."
+    }
+  },
+  "AchievementsPage": {
+    "title": "Достижения",
+    "subtitle": "Отслеживайте всё, что вы открыли, исследуя сайт — в стиле Steam.",
+    "metaDescription": "Галерея достижений в стиле Steam для исследования портфолио Виталия Попова.",
+    "progressLabel": "{unlocked}/{total} открыто",
+    "unlockedOn": "Открыто {date}"
   }
 }
