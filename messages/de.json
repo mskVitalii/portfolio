@@ -538,6 +538,14 @@
       "title": "Volltreffer",
       "description": "Drehe ein legendäres Visitenkarten-Design."
     },
+    "ludomania": {
+      "title": "Ludomanie",
+      "description": "Drehe das Visitenkarten-Rad mehr als 20 Mal."
+    },
+    "skillsMatch": {
+      "title": "Perfekte Übereinstimmung",
+      "description": "Finde 3+ passende Skills im Skill-Abgleich."
+    },
     "contactClick": {
       "title": "Lass uns reden",
       "description": "Klicke auf einen beliebigen Kontakt-Link."
@@ -545,11 +553,15 @@
     "cvDownload": {
       "title": "Aktenzeichen",
       "description": "Lade den Lebenslauf herunter."
+    },
+    "completionist": {
+      "title": "Platin",
+      "description": "Schalte alle anderen Erfolge frei."
     }
   },
   "AchievementsPage": {
     "title": "Erfolge",
-    "subtitle": "Verfolge alles, was du beim Erkunden der Seite freigeschaltet hast — im Steam-Stil.",
+    "subtitle": "Verfolge alles, was du beim Erkunden der Seite freigeschaltet hast.",
     "metaDescription": "Eine Erfolge-Galerie im Steam-Stil zum Erkunden von Vitalii Popovs Portfolio-Website.",
     "progressLabel": "{unlocked}/{total} freigeschaltet",
     "unlockedOn": "Freigeschaltet am {date}"

@@ -1,14 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useAchievementsStore } from "@/store/achievements";
 import { SKILLS, CATEGORY_LABELS, CATEGORY_COLORS, LEVEL_LABELS, type SkillCategory } from "@/data/skills";
 
 const CATEGORIES = ["backend", "frontend", "infrastructure", "ai"] as const;
+const MATCH_ACHIEVEMENT_THRESHOLD = 3;
 
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -27,9 +29,14 @@ function matchSkillIds(text: string): Set<string> {
 export function SkillsKeywordMatcher() {
   const t = useTranslations("SkillsPage");
   const [text, setText] = useState("");
+  const unlockAchievement = useAchievementsStore((s) => s.unlock);
 
   const matchedIds = useMemo(() => matchSkillIds(text), [text]);
   const hasInput = text.trim().length > 0;
+
+  useEffect(() => {
+    if (matchedIds.size >= MATCH_ACHIEVEMENT_THRESHOLD) unlockAchievement("skillsMatch");
+  }, [matchedIds, unlockAchievement]);
 
   return (
     <div className="mt-16">

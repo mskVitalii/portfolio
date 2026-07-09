@@ -99,7 +99,7 @@ export default async function AboutPage({
           </div>
 
           <aside className="space-y-6">
-            <div className="mx-auto aspect-[4/5] w-40 overflow-hidden rounded-2xl ring-2 ring-border md:mx-0 md:w-full">
+            <div className="mx-auto aspect-4/5 w-full max-w-xs overflow-hidden rounded-2xl ring-2 ring-border md:mx-0 md:max-w-none">
               <Image
                 src="/images/about/avatar/vitalii.jpg"
                 alt={t("avatarAlt")}

@@ -1099,6 +1099,8 @@ export function BusinessCard() {
     });
     setSelectedId(card.id);
 
+    if (collection.spinCount + 1 > 20) unlockAchievement("ludomania");
+
     const goldenColors = ["#f59e0b", "#fbbf24", "#fcd34d", "#ffffff", "#f97316"];
     if (card.rarity === "legendary") {
       unlockAchievement("legendarySkin");
@@ -1115,7 +1117,7 @@ export function BusinessCard() {
       confetti({ particleCount: 35, spread: 50, origin: { y: 0.65 }, colors: ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe"] });
     }
     // common: no confetti
-  }, [unlockAchievement]);
+  }, [unlockAchievement, collection.spinCount]);
 
   const handleOwnerSubmit = () => {
     if (ownerInput === OWNER_PASSWORD) {

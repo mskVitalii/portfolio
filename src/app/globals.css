@@ -130,6 +130,9 @@
   html {
     @apply font-sans;
   }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 /* Neon glow on primary elements in dark mode (inspired by slsbmb.com) */

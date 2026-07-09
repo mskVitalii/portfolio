@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { useAchievementsStore } from "@/store/achievements";
 import { SOCIAL_LINKS } from "@/data/social";
-import { PAGE_ACHIEVEMENTS, ALL_PAGE_ACHIEVEMENT_IDS } from "@/data/achievements";
+import { ACHIEVEMENTS, PAGE_ACHIEVEMENTS, ALL_PAGE_ACHIEVEMENT_IDS } from "@/data/achievements";
 import { AchievementToaster } from "./AchievementToast";
 
 const SCROLL_BOTTOM_THRESHOLD_PX = 48;
@@ -45,6 +45,14 @@ export function AchievementsProvider() {
   useEffect(() => {
     if (ALL_PAGE_ACHIEVEMENT_IDS.every((id) => unlocked[id])) {
       unlock("visitAll");
+    }
+  }, [unlocked, unlock]);
+
+  // Final meta achievement once every other achievement has been unlocked.
+  useEffect(() => {
+    const others = ACHIEVEMENTS.filter((a) => a.id !== "completionist");
+    if (others.every((a) => unlocked[a.id])) {
+      unlock("completionist");
     }
   }, [unlocked, unlock]);
 

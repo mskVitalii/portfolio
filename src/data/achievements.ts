@@ -13,6 +13,9 @@ import {
   Gem,
   Send,
   FileDown,
+  Dices,
+  Target,
+  Crown,
   type LucideIcon,
 } from "lucide-react";
 
@@ -29,8 +32,11 @@ export type AchievementId =
   | "tinderFavorite"
   | "tinderPolyamory"
   | "legendarySkin"
+  | "ludomania"
+  | "skillsMatch"
   | "contactClick"
-  | "cvDownload";
+  | "cvDownload"
+  | "completionist";
 
 export interface AchievementDef {
   id: AchievementId;
@@ -50,8 +56,11 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "tinderFavorite", icon: Heart },
   { id: "tinderPolyamory", icon: Flame },
   { id: "legendarySkin", icon: Gem },
+  { id: "ludomania", icon: Dices },
+  { id: "skillsMatch", icon: Target },
   { id: "contactClick", icon: Send },
   { id: "cvDownload", icon: FileDown },
+  { id: "completionist", icon: Crown },
 ];
 
 /** Maps the first URL segment (locale already stripped) to the page-visit achievement it unlocks. */

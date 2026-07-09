@@ -538,6 +538,14 @@
       "title": "Jackpot",
       "description": "Spin a legendary business card skin."
     },
+    "ludomania": {
+      "title": "Ludomania",
+      "description": "Spin the business card wheel more than 20 times."
+    },
+    "skillsMatch": {
+      "title": "Perfect Match",
+      "description": "Match 3+ skills against a job description in the Skills Matcher."
+    },
     "contactClick": {
       "title": "Let's Talk",
       "description": "Click any contact link."
@@ -545,11 +553,15 @@
     "cvDownload": {
       "title": "Paper Trail",
       "description": "Download the CV."
+    },
+    "completionist": {
+      "title": "Platinum",
+      "description": "Unlock every other achievement."
     }
   },
   "AchievementsPage": {
     "title": "Achievements",
-    "subtitle": "Track everything you've unlocked while exploring the site — Steam-style.",
+    "subtitle": "Track everything you've unlocked while exploring the site.",
     "metaDescription": "A Steam-style achievement gallery for exploring Vitalii Popov's portfolio site.",
     "progressLabel": "{unlocked}/{total} unlocked",
     "unlockedOn": "Unlocked {date}"
