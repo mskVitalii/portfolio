@@ -131,7 +131,6 @@ const HSE_STATIC = {
   location: "Moscow, Russia",
   period: "2019 – 2023",
   gpa: "GPA 4.2 / 5.0",
-  stack: ["Java", "Python", "SQL", "Azure", "Algorithms"],
   certificate: { href: "/certificates/hse-diploma.pdf" },
   projectFilter: (p: Project) => p.company === "Higher School of Economics",
 };
@@ -243,22 +242,9 @@ function HseCard({ isDark, children }: { isDark: boolean; children?: React.React
             <span className="font-semibold" style={{ color: c.primary }}>{d.gpa}</span>
           </div>
 
-          <p className="text-sm leading-relaxed mb-6" style={{ color: c.bodyColor }}>
+          <p className="text-sm leading-relaxed mb-8" style={{ color: c.bodyColor }}>
             {t("hseDescription")}
           </p>
-
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("techStack")}</p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {d.stack.map((s) => (
-              <span
-                key={s}
-                className="text-xs font-semibold px-3 py-1.5 rounded border"
-                style={{ borderColor: c.primary, color: c.primary, background: "transparent" }}
-              >
-                {s}
-              </span>
-            ))}
-          </div>
 
           {d.certificate && (
             <a
@@ -307,7 +293,6 @@ const TUC_STATIC = {
     "gRPC & APIs",
     "NoSQL Databases",
   ],
-  stack: ["Go", "gRPC", "Redis", "MongoDB", "Svelte", "Cloud", "Docker"],
   projectFilter: (p: Project) => p.company === "Chemnitz University of Technology",
 };
 
@@ -507,21 +492,6 @@ function TucCard({ isDark }: { isDark: boolean }) {
                 </div>
               ))}
             </div>
-          </div>
-
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>
-            {t("technologiesUsed")}
-          </p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {d.stack.map((s) => (
-              <span
-                key={s}
-                className="text-xs font-medium px-3 py-1.5 rounded border"
-                style={{ borderColor: c.primary, color: c.primary, background: c.chipBg }}
-              >
-                {s}
-              </span>
-            ))}
           </div>
         </div>
       </div>
