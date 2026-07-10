@@ -140,7 +140,7 @@ export default async function AboutPage({
                     {t(`interests.${key}`)}
                   </Badge>
                 ))}
-                <Link href="/projects?category=personal">
+                <Link href="/projects#personal">
                   <Badge
                     variant="outline"
                     className="text-xs hover:border-primary/50 hover:text-primary transition-colors"

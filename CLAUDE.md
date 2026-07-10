@@ -200,7 +200,9 @@ A personal website that functions simultaneously as a portfolio, interactive CV,
 The `docs/references/` folder contains visual references and source documents. Always check it when working on design, content, or CV-related tasks.
 
 Key files:
-- `docs/references/Vitalii Popov CV 07.05.26.pdf` — the latest CV. Use this as the authoritative source for dates, job titles, companies, achievements, stack, and any biographical data shown on the site.
+- `docs/references/my_files/Vitalii Popov CV 07.05.26.pdf` — the latest CV. Use this as the authoritative source for dates, job titles, companies, achievements, stack, and any biographical data shown on the site.
+- `docs/references/my_files/HSE Bachelor Diploma Vitalii Popov.pdf` — HSE Diploma Supplement. Authoritative source for the Bachelor's coursework list, credits, grades, and the graduation thesis title ("News Aggregator on Geographic Map") for the Education page.
+- `docs/references/my_files/TUC Transcript of records (ENG).pdf` — TU Chemnitz transcript. Authoritative source for the Master's module list, credits, and grades. Note: as of the transcript date, the Master-Arbeit (thesis) is still in progress (status `AB`, 85/120 ECTS earned) — the Master's is **not yet complete**; don't state it as finished elsewhere on the site without checking this file first.
 
 ## Conventions
 

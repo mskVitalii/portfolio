@@ -12,7 +12,7 @@ import { IMPACT_METRICS } from "@/data/metrics";
 const REVENUE_SEGMENTS = [
   { label: "Infineon", value: 480, color: "#6366f1", href: "/projects/infineon-parking-guidance" },
   { label: "OZON Tech", value: 86, color: "#10b981", href: "/projects/ozon-warehouse-search" },
-  { label: "WeDo.agency", value: 52, color: "#f59e0b", href: "/projects?company=WeDo.agency" },
+  { label: "WeDo.agency", value: 52, color: "#f59e0b", href: "/projects?company=WeDo.agency#work" },
 ];
 const TOTAL_REVENUE = REVENUE_SEGMENTS.reduce((sum, s) => sum + s.value, 0);
 

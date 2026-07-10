@@ -45,7 +45,7 @@ export function BrandCloud() {
               className="transition-all duration-200"
             >
               <Link
-                href={`/projects?company=${encodeURIComponent(brand.company)}`}
+                href={`/projects?company=${encodeURIComponent(brand.company)}#work`}
                 title={`Projects at ${brand.name}`}
                 className="flex items-center"
               >

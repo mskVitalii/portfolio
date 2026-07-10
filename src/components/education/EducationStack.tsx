@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
-import { FileDown, Award, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { FileDown, Award, ChevronRight, CheckCircle2, ExternalLink, GraduationCap } from "lucide-react";
 import type { Project } from "@/data/projects";
 import { Certificates } from "@/components/education/Certificates";
 
@@ -84,6 +85,8 @@ const TUC_LIGHT = {
   sideBg: "#F8FAF9",
   breadcrumbBg: "#F4F4F4",
   borderColor: "#DDDDDD",
+  infoBg: "#E6F2EF",
+  infoBorder: "#B9D9D0",
   moduleHeaderBg: "#005F50",
   moduleHeaderText: "#FFFFFF",
   moduleBg: "white",
@@ -107,6 +110,8 @@ const TUC_DARK = {
   sideBg: "#071210",
   breadcrumbBg: "#0C1E1A",
   borderColor: "rgba(0,168,120,0.2)",
+  infoBg: "rgba(0,168,120,0.08)",
+  infoBorder: "rgba(0,168,120,0.25)",
   moduleHeaderBg: "#005F50",
   moduleHeaderText: "#FFFFFF",
   moduleBg: "rgba(255,255,255,0.03)",
@@ -114,12 +119,15 @@ const TUC_DARK = {
   projectBg: "rgba(0,168,120,0.06)",
 };
 
-// ─── HSE Card ──────────────────────────────────────────────────────────────────
+type Colors = typeof HSE_LIGHT | typeof TUC_LIGHT;
+
+// ─── HSE Card (hero) ────────────────────────────────────────────────────────────
 
 const HSE_STATIC = {
   navLinks: ["Study Programs", "Research", "Campus", "About"],
   breadcrumb: ["HSE University", "Education", "Bachelor's Programme", "Software Engineering"],
-  degree: "Software Engineering",
+  code: "09.03.04",
+  programUrl: "https://www.hse.ru/en/ba/se/",
   location: "Moscow, Russia",
   period: "2019 – 2023",
   gpa: "GPA 4.2 / 5.0",
@@ -138,7 +146,7 @@ const HSE_STATIC = {
   projectFilter: (p: Project) => p.company === "Higher School of Economics",
 };
 
-function HseCard({ projects, index, isDark }: { projects: Project[]; index: number; isDark: boolean }) {
+function HseCard({ isDark }: { isDark: boolean }) {
   const t = useTranslations("EducationPage");
   const c = isDark ? HSE_DARK : HSE_LIGHT;
   const d = HSE_STATIC;
@@ -149,13 +157,10 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
 
   return (
     <div
-      className="sticky w-full flex flex-col overflow-hidden"
+      className="w-full flex flex-col overflow-hidden"
       style={{
-        top: `${index * 64}px`,
-        zIndex: 10 + index,
         background: c.bg,
         fontFamily: bodyFont,
-        minHeight: "100vh",
         boxShadow: "0 -4px 24px rgba(0,0,0,0.14)",
       }}
     >
@@ -209,154 +214,100 @@ function HseCard({ projects, index, isDark }: { projects: Project[]; index: numb
       </div>
 
       {/* ── Content ── */}
-      <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left */}
-        <div className="flex-1 px-6 md:px-12 py-8 md:py-12">
-          <div className="flex items-center gap-2 mb-4">
-            <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
-            <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary, fontFamily: bodyFont }}>
-              {t("hseCategory")}
-            </span>
-          </div>
-
-          <h1
-            className="leading-tight mb-2"
-            style={{ color: c.headingColor, fontSize: "clamp(26px, 3.5vw, 44px)", fontWeight: 900, fontFamily: headingFont }}
-          >
-            {d.degree}
-          </h1>
-          <p className="text-base font-semibold mb-1" style={{ color: c.muted, fontFamily: bodyFont }}>
-            {t("hseFaculty")}
-          </p>
-
-          <div style={{ width: "56px", height: "3px", background: c.accentLine, margin: "16px 0" }} />
-
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mb-6" style={{ color: c.muted }}>
-            <span>{d.period}</span>
-            <span>|</span>
-            <span>{d.location}</span>
-            <span>|</span>
-            <span className="font-semibold" style={{ color: c.primary }}>{d.gpa}</span>
-          </div>
-
-          <p className="text-sm leading-relaxed mb-6" style={{ color: c.bodyColor, maxWidth: "540px" }}>
-            {t("hseDescription")}
-          </p>
-
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("keyCourseWork")}</p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {d.highlights.map((h) => (
-              <span
-                key={h}
-                className="text-xs font-semibold px-3 py-1.5 rounded"
-                style={{ background: c.chipBg, color: c.chipText, border: `1px solid ${c.chipBorder}` }}
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("techStack")}</p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {d.stack.map((s) => (
-              <span
-                key={s}
-                className="text-xs font-semibold px-3 py-1.5 rounded border"
-                style={{ borderColor: c.primary, color: c.primary, background: "transparent" }}
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-
-          {d.certificate && (
-            <a
-              href={d.certificate.href}
-              download
-              className="inline-flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded transition-opacity hover:opacity-85"
-              style={{ background: c.primary, color: "white", fontFamily: bodyFont }}
-            >
-              <Award className="w-4 h-4" />
-              {t("downloadDiploma")}
-              <FileDown className="w-3.5 h-3.5 opacity-80" />
-            </a>
-          )}
+      <div className="flex-1 px-6 md:px-12 py-8 md:py-12 max-w-2xl">
+        <div className="flex items-center gap-2 mb-4">
+          <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
+          <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary, fontFamily: bodyFont }}>
+            {t("hseCategory")}
+          </span>
         </div>
 
-        {/* Right */}
-        <div
-          className="lg:w-96 shrink-0 px-6 md:px-10 py-8 md:py-12"
-          style={{ background: c.sideBg, borderLeft: `1px solid ${c.borderColor}` }}
+        <h1
+          className="leading-tight mb-1"
+          style={{ color: c.headingColor, fontSize: "clamp(26px, 3.5vw, 44px)", fontWeight: 900, fontFamily: headingFont }}
         >
-          <p className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: c.primary }}>
-            {t("academicProjects")}
-          </p>
-          <div className="space-y-4">
-            {projects.length > 0 ? (
-              projects.map((p) => (
-                <div
-                  key={p.slug}
-                  className="rounded-lg p-4"
-                  style={{ background: c.projectCardBg, border: `1px solid ${c.projectCardBorder}` }}
-                >
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3
-                      className="font-bold text-sm leading-snug"
-                      style={{ color: c.headingColor, fontFamily: headingFont }}
-                    >
-                      {p.title}
-                    </h3>
-                    <span className="text-xs shrink-0 font-medium" style={{ color: c.muted }}>{p.period}</span>
-                  </div>
-                  <p className="text-xs leading-relaxed mb-3" style={{ color: c.bodyColor }}>{p.tagline}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {p.stack.slice(0, 4).map((s) => (
-                      <span
-                        key={s}
-                        className="text-[10px] font-semibold px-2 py-0.5 rounded"
-                        style={{ background: c.chipBg, color: c.chipText }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div
-                className="rounded-lg p-6 text-center"
-                style={{ background: c.projectCardBg, border: `1px dashed ${c.borderColor}` }}
-              >
-                <p className="text-sm" style={{ color: c.muted }}>Projects coming soon.</p>
-              </div>
-            )}
-          </div>
+          {t("hseDegreeName")}
+        </h1>
+        <a
+          href={d.programUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold mb-2 hover:underline"
+          style={{ color: c.primary }}
+        >
+          {t("programCodeLabel")} {d.code}
+          <ExternalLink className="w-3 h-3" />
+        </a>
+        <p className="text-base font-semibold mb-1" style={{ color: c.muted, fontFamily: bodyFont }}>
+          {t("hseFaculty")}
+        </p>
 
-          <div
-            className="mt-6 rounded-lg p-4"
-            style={{ background: c.infoBg, border: `1px solid ${c.infoBorder}` }}
-          >
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: c.primary }}>
-              {t("accreditation")}
-            </p>
-            <p className="text-xs leading-relaxed" style={{ color: c.bodyColor }}>
-              {t("hseAccreditationText")}
-            </p>
-          </div>
+        <div style={{ width: "56px", height: "3px", background: c.accentLine, margin: "16px 0" }} />
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mb-6" style={{ color: c.muted }}>
+          <span>{d.period}</span>
+          <span>|</span>
+          <span>{d.location}</span>
+          <span>|</span>
+          <span className="font-semibold" style={{ color: c.primary }}>{d.gpa}</span>
         </div>
+
+        <p className="text-sm leading-relaxed mb-6" style={{ color: c.bodyColor, maxWidth: "540px" }}>
+          {t("hseDescription")}
+        </p>
+
+        <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("keyCourseWork")}</p>
+        <div className="flex flex-wrap gap-2 mb-8">
+          {d.highlights.map((h) => (
+            <span
+              key={h}
+              className="text-xs font-semibold px-3 py-1.5 rounded"
+              style={{ background: c.chipBg, color: c.chipText, border: `1px solid ${c.chipBorder}` }}
+            >
+              {h}
+            </span>
+          ))}
+        </div>
+
+        <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("techStack")}</p>
+        <div className="flex flex-wrap gap-2 mb-8">
+          {d.stack.map((s) => (
+            <span
+              key={s}
+              className="text-xs font-semibold px-3 py-1.5 rounded border"
+              style={{ borderColor: c.primary, color: c.primary, background: "transparent" }}
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+
+        {d.certificate && (
+          <a
+            href={d.certificate.href}
+            download
+            className="inline-flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded transition-opacity hover:opacity-85"
+            style={{ background: c.primary, color: "white", fontFamily: bodyFont }}
+          >
+            <Award className="w-4 h-4" />
+            {t("downloadDiploma")}
+            <FileDown className="w-3.5 h-3.5 opacity-80" />
+          </a>
+        )}
       </div>
     </div>
   );
 }
 
-// ─── TUC Card ─────────────────────────────────────────────────────────────────
+// ─── TUC Card (hero) ────────────────────────────────────────────────────────────
 
 const TUC_STATIC = {
   navLinks: ["University", "Studies", "Research", "International"],
   breadcrumb: ["TU Chemnitz", "Studies", "Master's Programme", "Web Engineering"],
   degree: "Web Engineering",
+  programUrl: "https://www.tu-chemnitz.de/informatik/studium/studiengaenge/ma_web_engineering.php.en",
   location: "Chemnitz, Germany",
-  period: "2023 – 2025",
+  period: "2023 – present",
   gpa: "GPA 2.39",
   highlights: [
     "Distributed Systems",
@@ -372,7 +323,7 @@ const TUC_STATIC = {
   projectFilter: (p: Project) => p.company === "Chemnitz University of Technology",
 };
 
-function TucCard({ projects, index, isDark }: { projects: Project[]; index: number; isDark: boolean }) {
+function TucCard({ isDark }: { isDark: boolean }) {
   const t = useTranslations("EducationPage");
   const c = isDark ? TUC_DARK : TUC_LIGHT;
   const d = TUC_STATIC;
@@ -382,13 +333,10 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
 
   return (
     <div
-      className="sticky w-full flex flex-col overflow-hidden"
+      className="w-full flex flex-col overflow-hidden"
       style={{
-        top: `${index * 64}px`,
-        zIndex: 10 + index,
         background: c.bg,
         fontFamily: font,
-        minHeight: "100vh",
         boxShadow: "0 -4px 24px rgba(0,0,0,0.14)",
       }}
     >
@@ -518,6 +466,16 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
           >
             {d.degree}
           </h1>
+          <a
+            href={d.programUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold mb-4 hover:underline"
+            style={{ color: c.primary }}
+          >
+            {t("viewProgramPage")}
+            <ExternalLink className="w-3 h-3" />
+          </a>
           <p className="text-base font-medium mb-4" style={{ color: c.muted }}>
             {t("tucFaculty")} · Technische Universität Chemnitz
           </p>
@@ -577,41 +535,281 @@ function TucCard({ projects, index, isDark }: { projects: Project[]; index: numb
               </span>
             ))}
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-          {projects.length > 0 && (
-            <>
-              <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: c.primary }}>
-                {t("academicProjects")}
+// ─── Academic journey (year / module groups + projects), full-width, normal flow ──
+
+interface JourneyGroup {
+  key: string;
+  label: string;
+  meta?: string;
+  subjects: string[];
+  projectSlugs: string[];
+}
+
+const HSE_YEAR_SUBJECTS: Record<string, string[]> = {
+  hseYear1: [
+    "Calculus", "Algebra", "Discrete Mathematics", "Programming", "History",
+    "Introduction into Software Engineering", "Safe Living Basics",
+    "Computer-based Workshop on Algebra (Python)", "Computer-based Workshop on Mathematical Analysis (Python)",
+  ],
+  hseYear2: [
+    "Algorithms and Data Structures", "Operating Systems", "Databases",
+    "Computer System Architecture", "Software Design", "Software Quality Assurance and Testing",
+    "Development and Analysis of Requirements",
+  ],
+  hseYear3: [
+    "Software Systems Architecture Design", "Distributed Databases and Data Warehouses",
+    "Information Systems and Organisations", "Analysis and Modeling of Business Processes",
+    "Mathematical Methods for Data Analysis", "IoT Ecosystems",
+    "Group Dynamics & Communication in SE Professional Practice",
+    "Probability Theory and Mathematical Statistics", "Queuing Theory",
+  ],
+  hseYear4: [
+    "Agile in Enterprise Environment", "Software Project Management", "Software Engineering Economics",
+    "Electronic Business", "Modern Information Technologies in Business", "Intellectual Property Law",
+    "Philosophy of Science", "Research Seminars", "Graduation Internship",
+  ],
+};
+
+const HSE_GROUPS: { key: string; projectSlugs: string[] }[] = [
+  { key: "hseYear1", projectSlugs: ["fassonapi-coursework", "cyberphys-color-robot"] },
+  { key: "hseYear2", projectSlugs: ["tango-streaming-coursework", "checkpoint-coursework"] },
+  { key: "hseYear3", projectSlugs: ["lightning-diagram-editor"] },
+  { key: "hseYear4", projectSlugs: ["react-redux-docs-translation"] },
+];
+
+const HSE_THESIS_SLUG = "news-aggregator-thesis";
+
+// Sourced directly from the official TU Chemnitz transcript (module groups + credits)
+const TUC_GROUP_SUBJECTS: Record<string, string[]> = {
+  tucGroupSchwerpunkt: [
+    "Current Trends in Web Engineering", "Cloud & Web Anwendungen", "Software Service Engineering",
+    "Datenbanken und Web-Techniken", "Datenbanken und Objektorientierung",
+  ],
+  tucGroupVertiefung: ["Entwurf Verteilter Systeme", "XML", "Mediencodierung", "Strategic IT Management"],
+  tucGroupSeminare: ["Seminar Web Engineering", "Vorbereitungsseminar Planspiel Web Engineering", "Planspiel Web Engineering"],
+  tucGroupSchluessel: ["Deutsch als Fremdsprache I (A1)", "Deutsch als Fremdsprache II (A2)"],
+};
+
+const TUC_GROUPS: { key: string; credits: number; projectSlugs: string[] }[] = [
+  { key: "tucGroupSchwerpunkt", credits: 20, projectSlugs: ["sse-software-service-engineering"] },
+  { key: "tucGroupVertiefung", credits: 20, projectSlugs: ["chemnitz-map-assignment"] },
+  { key: "tucGroupSeminare", credits: 37, projectSlugs: ["swe-low-code-sql"] },
+  { key: "tucGroupSchluessel", credits: 8, projectSlugs: [] },
+];
+
+const TUC_THESIS_SLUG = "master-thesis-semantic-search";
+
+function githubLink(project: Project): string | undefined {
+  return project.links?.find((l) => l.label.toLowerCase().includes("github"))?.url;
+}
+
+function MiniProjectCard({ project, c, headingFont }: { project: Project; c: Colors; headingFont: string }) {
+  const t = useTranslations("EducationPage");
+  const gh = githubLink(project);
+  return (
+    <div
+      className="rounded-lg p-4 flex flex-col gap-2"
+      style={{ background: "projectCardBg" in c ? c.projectCardBg : c.projectBg, border: `1px solid ${c.borderColor}` }}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <Link
+          href={`/projects/${project.slug}`}
+          className="font-semibold text-sm leading-snug hover:underline"
+          style={{ color: c.headingColor, fontFamily: headingFont }}
+        >
+          {project.title}
+        </Link>
+        {gh && (
+          <a
+            href={gh}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={t("githubLinkLabel")}
+            aria-label={t("githubLinkLabel")}
+            className="shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+            style={{ color: c.primary }}
+          >
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        )}
+      </div>
+      <p className="text-xs leading-relaxed" style={{ color: c.bodyColor }}>{project.tagline}</p>
+      <div className="flex items-center justify-between gap-2 mt-auto">
+        <div className="flex flex-wrap gap-1">
+          {project.stack.slice(0, 3).map((s) => (
+            <span key={s} className="text-[10px] font-semibold px-2 py-0.5 rounded" style={{ background: c.chipBg, color: c.chipText }}>
+              {s}
+            </span>
+          ))}
+        </div>
+        <span className="text-[10px] shrink-0 font-medium" style={{ color: c.muted }}>{project.period}</span>
+      </div>
+    </div>
+  );
+}
+
+function ThesisSpotlight({
+  project,
+  label,
+  c,
+  headingFont,
+  bodyFont,
+}: {
+  project: Project;
+  label: string;
+  c: Colors;
+  headingFont: string;
+  bodyFont: string;
+}) {
+  const t = useTranslations("EducationPage");
+  const inProgress = project.status === "active";
+  return (
+    <div
+      className="rounded-2xl p-6 md:p-8 mb-10"
+      style={{
+        background: c.infoBg,
+        border: `1.5px solid ${c.primary}`,
+      }}
+    >
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <GraduationCap className="w-5 h-5" style={{ color: c.primary }} />
+        <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary, fontFamily: bodyFont }}>
+          {label}
+        </span>
+        {inProgress && (
+          <span
+            className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
+            style={{ background: c.primary, color: "white" }}
+          >
+            {t("inProgressLabel")}
+          </span>
+        )}
+      </div>
+      <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: c.headingColor, fontFamily: headingFont }}>
+        {project.title}
+      </h3>
+      <p className="text-sm leading-relaxed mb-4" style={{ color: c.bodyColor, maxWidth: "680px" }}>
+        {project.description.business}
+      </p>
+      {project.statusNote && (
+        <p className="text-xs italic mb-4" style={{ color: c.muted }}>{project.statusNote}</p>
+      )}
+      <div className="flex flex-wrap gap-2 mb-5">
+        {project.stack.map((s) => (
+          <span key={s} className="text-xs font-semibold px-2.5 py-1 rounded" style={{ background: c.chipBg, color: c.chipText }}>
+            {s}
+          </span>
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <Link
+          href={`/projects/${project.slug}`}
+          className="text-sm font-semibold hover:underline"
+          style={{ color: c.primary }}
+        >
+          {t("viewCaseStudy")} →
+        </Link>
+        {project.links?.map((link) => (
+          <a
+            key={link.url}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors"
+            style={{ borderColor: c.primary, color: c.primary }}
+          >
+            {link.label}
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AcademicJourney({
+  groups,
+  subjectsByGroup,
+  thesisSlug,
+  thesisLabel,
+  projects,
+  c,
+  headingFont,
+  bodyFont,
+}: {
+  groups: { key: string; credits?: number; projectSlugs: string[] }[];
+  subjectsByGroup: Record<string, string[]>;
+  thesisSlug: string;
+  thesisLabel: string;
+  projects: Project[];
+  c: Colors;
+  headingFont: string;
+  bodyFont: string;
+}) {
+  const t = useTranslations("EducationPage");
+  const byslug = new Map(projects.map((p) => [p.slug, p]));
+  const thesis = byslug.get(thesisSlug);
+
+  return (
+    <div className="container mx-auto px-4 py-14 max-w-5xl">
+      <h2 className="text-2xl font-bold mb-8" style={{ fontFamily: headingFont }}>{t("academicProjects")}</h2>
+
+      {thesis && (
+        <ThesisSpotlight project={thesis} label={thesisLabel} c={c} headingFont={headingFont} bodyFont={bodyFont} />
+      )}
+
+      <div className="space-y-6">
+        {groups.map((g) => {
+          const groupProjects = g.projectSlugs.map((s) => byslug.get(s)).filter((p): p is Project => !!p);
+          return (
+            <div
+              key={g.key}
+              className="rounded-xl p-5 md:p-6"
+              style={{ border: `1px solid ${c.borderColor}`, background: c.sideBg }}
+            >
+              <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
+                <h3 className="text-base font-bold" style={{ color: c.headingColor, fontFamily: headingFont }}>
+                  {t(g.key)}
+                </h3>
+                {"credits" in g && g.credits && (
+                  <span className="text-xs font-medium" style={{ color: c.muted }}>
+                    {g.credits} {t("creditsLabel")}
+                  </span>
+                )}
+              </div>
+
+              <p className="text-[11px] font-bold tracking-widest uppercase mb-2" style={{ color: c.muted }}>
+                {t("subjectsLabel")}
               </p>
-              <div className="space-y-3">
-                {projects.map((p) => (
-                  <div
-                    key={p.slug}
-                    className="rounded p-4"
-                    style={{ background: c.projectBg, border: `1px solid ${c.borderColor}` }}
-                  >
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <h3 className="font-semibold text-sm" style={{ color: c.headingColor }}>{p.title}</h3>
-                      <span className="text-xs shrink-0" style={{ color: c.muted }}>{p.period}</span>
-                    </div>
-                    <p className="text-xs leading-relaxed mb-2" style={{ color: c.bodyColor }}>{p.tagline}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {p.stack.slice(0, 4).map((s) => (
-                        <span
-                          key={s}
-                          className="text-[10px] font-medium px-2 py-0.5 rounded"
-                          style={{ background: c.chipBg, color: c.chipText }}
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {(subjectsByGroup[g.key] ?? []).map((s) => (
+                  <span key={s} className="text-xs px-2.5 py-1 rounded" style={{ background: c.chipBg, color: c.chipText }}>
+                    {s}
+                  </span>
                 ))}
               </div>
-            </>
-          )}
-        </div>
+
+              {groupProjects.length > 0 && (
+                <>
+                  <p className="text-[11px] font-bold tracking-widest uppercase mb-2" style={{ color: c.muted }}>
+                    {t("projectsLabel")}
+                  </p>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {groupProjects.map((p) => (
+                      <MiniProjectCard key={p.slug} project={p} c={c} headingFont={headingFont} />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -626,6 +824,12 @@ export function EducationStack({ projects }: { projects: Project[] }) {
   useEffect(() => setMounted(true), []);
   const isDark = mounted && resolvedTheme === "dark";
 
+  const hseColors = isDark ? HSE_DARK : HSE_LIGHT;
+  const tucColors = isDark ? TUC_DARK : TUC_LIGHT;
+  const hseHeadingFont = "var(--font-roboto-slab), 'Roboto Slab', Georgia, serif";
+  const hseBodyFont = "var(--font-nunito), 'Nunito Sans', 'Proxima Nova', 'Helvetica Neue', Arial, sans-serif";
+  const tucFont = "var(--font-roboto), 'Roboto', Arial, sans-serif";
+
   const hseProjects = projects.filter(HSE_STATIC.projectFilter);
   const tucProjects = projects.filter(TUC_STATIC.projectFilter);
 
@@ -638,10 +842,35 @@ export function EducationStack({ projects }: { projects: Project[] }) {
         </p>
       </div>
 
-      <div style={{ height: `calc(200vh + ${2 * 64}px)` }} className="relative">
-        <HseCard projects={hseProjects} index={0} isDark={isDark} />
-        <TucCard projects={tucProjects} index={1} isDark={isDark} />
-      </div>
+      {/* ── HSE section: hero + all HSE academic projects, contained together ── */}
+      <section style={{ background: hseColors.bg }}>
+        <HseCard isDark={isDark} />
+        <AcademicJourney
+          groups={HSE_GROUPS}
+          subjectsByGroup={HSE_YEAR_SUBJECTS}
+          thesisSlug={HSE_THESIS_SLUG}
+          thesisLabel={t("bachelorThesisLabel")}
+          projects={hseProjects}
+          c={hseColors}
+          headingFont={hseHeadingFont}
+          bodyFont={hseBodyFont}
+        />
+      </section>
+
+      {/* ── TUC section: hero + all TUC academic projects, contained together ── */}
+      <section style={{ background: tucColors.bg }}>
+        <TucCard isDark={isDark} />
+        <AcademicJourney
+          groups={TUC_GROUPS}
+          subjectsByGroup={TUC_GROUP_SUBJECTS}
+          thesisSlug={TUC_THESIS_SLUG}
+          thesisLabel={t("masterThesisLabel")}
+          projects={tucProjects}
+          c={tucColors}
+          headingFont={tucFont}
+          bodyFont={tucFont}
+        />
+      </section>
 
       <div className="container mx-auto px-4 py-20 max-w-5xl">
         <h2 className="text-2xl font-bold mb-2">{t("certificates")}</h2>

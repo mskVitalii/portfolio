@@ -29,15 +29,15 @@ export const CAREER: CareerEntry[] = [
   },
   {
     type: "education",
-    period: "10/2023 – 09/2025",
+    period: "10/2023 – present",
     start: 2023,
-    end: 2025,
+    end: null,
     role: "Master's in Web Engineering",
     org: "Chemnitz University of Technology",
     orgType: "Academic",
     location: "Chemnitz, Germany",
     description:
-      "Distributed systems, cloud applications, software service engineering, cybersecurity, model-driven software development. GPA 2.39.",
+      "Distributed systems, cloud applications, software service engineering, cybersecurity, model-driven software development. Thesis in progress. GPA 2.39 so far.",
     stack: ["Go", "Redis", "MongoDB", "Svelte", "Cloud"],
   },
   {

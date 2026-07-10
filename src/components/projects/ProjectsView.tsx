@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { LayoutGrid, AlignLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectsTimeline } from "./ProjectsTimeline";
 import type { Project } from "@/data/projects";
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function ProjectsView({ projects, allProjects }: Props) {
+  const t = useTranslations("Projects");
   const [view, setView] = useState<View>("grid");
 
   return (
@@ -30,7 +32,7 @@ export function ProjectsView({ projects, allProjects }: Props) {
             }`}
           >
             <AlignLeft className="w-3.5 h-3.5" />
-            List
+            {t("viewList")}
           </button>
           <button
             onClick={() => setView("timeline")}
@@ -41,13 +43,13 @@ export function ProjectsView({ projects, allProjects }: Props) {
             }`}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
-            Timeline
+            {t("viewTimeline")}
           </button>
         </div>
       </div>
 
       {view === "grid" ? (
-        <Suspense fallback={<div className="text-muted-foreground text-sm py-8 text-center">Loading…</div>}>
+        <Suspense fallback={<div className="text-muted-foreground text-sm py-8 text-center">{t("loading")}</div>}>
           <ProjectsFilter projects={projects} />
         </Suspense>
       ) : (
