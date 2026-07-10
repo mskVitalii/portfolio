@@ -131,22 +131,12 @@ const HSE_STATIC = {
   location: "Moscow, Russia",
   period: "2019 – 2023",
   gpa: "GPA 4.2 / 5.0",
-  highlights: [
-    "Algorithms & Data Structures",
-    "Software Architecture",
-    "Databases & SQL",
-    "OS & Networks",
-    "Microsoft Azure",
-    "Project Management",
-    "OOP & Design Patterns",
-    "QA & Testing",
-  ],
   stack: ["Java", "Python", "SQL", "Azure", "Algorithms"],
   certificate: { href: "/certificates/hse-diploma.pdf" },
   projectFilter: (p: Project) => p.company === "Higher School of Economics",
 };
 
-function HseCard({ isDark }: { isDark: boolean }) {
+function HseCard({ isDark, children }: { isDark: boolean; children?: React.ReactNode }) {
   const t = useTranslations("EducationPage");
   const c = isDark ? HSE_DARK : HSE_LIGHT;
   const d = HSE_STATIC;
@@ -214,85 +204,83 @@ function HseCard({ isDark }: { isDark: boolean }) {
       </div>
 
       {/* ── Content ── */}
-      <div className="flex-1 px-6 md:px-12 py-8 md:py-12 max-w-2xl">
-        <div className="flex items-center gap-2 mb-4">
-          <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
-          <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary, fontFamily: bodyFont }}>
-            {t("hseCategory")}
-          </span>
-        </div>
-
-        <h1
-          className="leading-tight mb-1"
-          style={{ color: c.headingColor, fontSize: "clamp(26px, 3.5vw, 44px)", fontWeight: 900, fontFamily: headingFont }}
-        >
-          {t("hseDegreeName")}
-        </h1>
-        <a
-          href={d.programUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold mb-2 hover:underline"
-          style={{ color: c.primary }}
-        >
-          {t("programCodeLabel")} {d.code}
-          <ExternalLink className="w-3 h-3" />
-        </a>
-        <p className="text-base font-semibold mb-1" style={{ color: c.muted, fontFamily: bodyFont }}>
-          {t("hseFaculty")}
-        </p>
-
-        <div style={{ width: "56px", height: "3px", background: c.accentLine, margin: "16px 0" }} />
-
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mb-6" style={{ color: c.muted }}>
-          <span>{d.period}</span>
-          <span>|</span>
-          <span>{d.location}</span>
-          <span>|</span>
-          <span className="font-semibold" style={{ color: c.primary }}>{d.gpa}</span>
-        </div>
-
-        <p className="text-sm leading-relaxed mb-6" style={{ color: c.bodyColor, maxWidth: "540px" }}>
-          {t("hseDescription")}
-        </p>
-
-        <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("keyCourseWork")}</p>
-        <div className="flex flex-wrap gap-2 mb-8">
-          {d.highlights.map((h) => (
-            <span
-              key={h}
-              className="text-xs font-semibold px-3 py-1.5 rounded"
-              style={{ background: c.chipBg, color: c.chipText, border: `1px solid ${c.chipBorder}` }}
-            >
-              {h}
+      <div className="flex-1 flex flex-col lg:flex-row lg:justify-center">
+        <div className="lg:w-100 lg:shrink-0 px-6 md:px-12 py-8 md:py-12">
+          <div className="flex items-center gap-2 mb-4">
+            <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
+            <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary, fontFamily: bodyFont }}>
+              {t("hseCategory")}
             </span>
-          ))}
-        </div>
+          </div>
 
-        <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("techStack")}</p>
-        <div className="flex flex-wrap gap-2 mb-8">
-          {d.stack.map((s) => (
-            <span
-              key={s}
-              className="text-xs font-semibold px-3 py-1.5 rounded border"
-              style={{ borderColor: c.primary, color: c.primary, background: "transparent" }}
-            >
-              {s}
-            </span>
-          ))}
-        </div>
-
-        {d.certificate && (
-          <a
-            href={d.certificate.href}
-            download
-            className="inline-flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded transition-opacity hover:opacity-85"
-            style={{ background: c.primary, color: "white", fontFamily: bodyFont }}
+          <h1
+            className="leading-tight mb-1"
+            style={{ color: c.headingColor, fontSize: "clamp(26px, 3.5vw, 44px)", fontWeight: 900, fontFamily: headingFont }}
           >
-            <Award className="w-4 h-4" />
-            {t("downloadDiploma")}
-            <FileDown className="w-3.5 h-3.5 opacity-80" />
+            {t("hseDegreeName")}
+          </h1>
+          <a
+            href={d.programUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold mb-2 hover:underline"
+            style={{ color: c.primary }}
+          >
+            {t("programCodeLabel")} {d.code}
+            <ExternalLink className="w-3 h-3" />
           </a>
+          <p className="text-base font-semibold mb-1" style={{ color: c.muted, fontFamily: bodyFont }}>
+            {t("hseFaculty")}
+          </p>
+
+          <div style={{ width: "56px", height: "3px", background: c.accentLine, margin: "16px 0" }} />
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mb-6" style={{ color: c.muted }}>
+            <span>{d.period}</span>
+            <span>|</span>
+            <span>{d.location}</span>
+            <span>|</span>
+            <span className="font-semibold" style={{ color: c.primary }}>{d.gpa}</span>
+          </div>
+
+          <p className="text-sm leading-relaxed mb-6" style={{ color: c.bodyColor }}>
+            {t("hseDescription")}
+          </p>
+
+          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: c.muted }}>{t("techStack")}</p>
+          <div className="flex flex-wrap gap-2 mb-8">
+            {d.stack.map((s) => (
+              <span
+                key={s}
+                className="text-xs font-semibold px-3 py-1.5 rounded border"
+                style={{ borderColor: c.primary, color: c.primary, background: "transparent" }}
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+
+          {d.certificate && (
+            <a
+              href={d.certificate.href}
+              download
+              className="inline-flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded transition-opacity hover:opacity-85"
+              style={{ background: c.primary, color: "white", fontFamily: bodyFont }}
+            >
+              <Award className="w-4 h-4" />
+              {t("downloadDiploma")}
+              <FileDown className="w-3.5 h-3.5 opacity-80" />
+            </a>
+          )}
+        </div>
+
+        {children && (
+          <div
+            className="flex-1 px-6 md:px-12 py-8 md:py-12 lg:max-w-2xl lg:border-l"
+            style={{ borderColor: c.borderColor }}
+          >
+            {children}
+          </div>
         )}
       </div>
     </div>
@@ -452,7 +440,7 @@ function TucCard({ isDark }: { isDark: boolean }) {
         </div>
 
         {/* Main */}
-        <div className="flex-1 px-6 md:px-10 py-8 md:py-12">
+        <div className="flex-1 px-6 md:px-10 py-8 md:py-12 max-w-3xl mx-auto w-full">
           <div className="flex items-center gap-2 mb-4">
             <div style={{ width: "3px", height: "16px", background: c.primary, borderRadius: "2px" }} />
             <span className="text-xs font-bold tracking-widest uppercase" style={{ color: c.primary }}>
@@ -576,11 +564,12 @@ const HSE_YEAR_SUBJECTS: Record<string, string[]> = {
   ],
 };
 
+// Most recent year first, matching the descending order used elsewhere on the site
 const HSE_GROUPS: { key: string; projectSlugs: string[] }[] = [
-  { key: "hseYear1", projectSlugs: ["fassonapi-coursework", "cyberphys-color-robot"] },
-  { key: "hseYear2", projectSlugs: ["tango-streaming-coursework", "checkpoint-coursework"] },
-  { key: "hseYear3", projectSlugs: ["lightning-diagram-editor"] },
   { key: "hseYear4", projectSlugs: ["react-redux-docs-translation"] },
+  { key: "hseYear3", projectSlugs: ["lightning-diagram-editor"] },
+  { key: "hseYear2", projectSlugs: ["tango-streaming-coursework", "checkpoint-coursework"] },
+  { key: "hseYear1", projectSlugs: ["fassonapi-coursework", "cyberphys-color-robot"] },
 ];
 
 const HSE_THESIS_SLUG = "news-aggregator-thesis";
@@ -742,6 +731,7 @@ function AcademicJourney({
   c,
   headingFont,
   bodyFont,
+  className = "container mx-auto px-4 py-14 max-w-5xl",
 }: {
   groups: { key: string; credits?: number; projectSlugs: string[] }[];
   subjectsByGroup: Record<string, string[]>;
@@ -751,13 +741,14 @@ function AcademicJourney({
   c: Colors;
   headingFont: string;
   bodyFont: string;
+  className?: string;
 }) {
   const t = useTranslations("EducationPage");
   const byslug = new Map(projects.map((p) => [p.slug, p]));
   const thesis = byslug.get(thesisSlug);
 
   return (
-    <div className="container mx-auto px-4 py-14 max-w-5xl">
+    <div className={className}>
       <h2 className="text-2xl font-bold mb-8" style={{ fontFamily: headingFont }}>{t("academicProjects")}</h2>
 
       {thesis && (
@@ -842,19 +833,22 @@ export function EducationStack({ projects }: { projects: Project[] }) {
         </p>
       </div>
 
-      {/* ── HSE section: hero + all HSE academic projects, contained together ── */}
+      {/* ── HSE section: hero + all HSE academic projects, contained together.
+             Desktop: two columns (hero left, projects right). Mobile/tablet: stacked. ── */}
       <section style={{ background: hseColors.bg }}>
-        <HseCard isDark={isDark} />
-        <AcademicJourney
-          groups={HSE_GROUPS}
-          subjectsByGroup={HSE_YEAR_SUBJECTS}
-          thesisSlug={HSE_THESIS_SLUG}
-          thesisLabel={t("bachelorThesisLabel")}
-          projects={hseProjects}
-          c={hseColors}
-          headingFont={hseHeadingFont}
-          bodyFont={hseBodyFont}
-        />
+        <HseCard isDark={isDark}>
+          <AcademicJourney
+            groups={HSE_GROUPS}
+            subjectsByGroup={HSE_YEAR_SUBJECTS}
+            thesisSlug={HSE_THESIS_SLUG}
+            thesisLabel={t("bachelorThesisLabel")}
+            projects={hseProjects}
+            c={hseColors}
+            headingFont={hseHeadingFont}
+            bodyFont={hseBodyFont}
+            className=""
+          />
+        </HseCard>
       </section>
 
       {/* ── TUC section: hero + all TUC academic projects, contained together ── */}
