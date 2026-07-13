@@ -28,9 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/en${route}`,
       lastModified: new Date(),
       alternates: {
-        languages: Object.fromEntries(
-          locales.map((locale) => [locale, `${BASE_URL}/${locale}${route}`])
-        ),
+        languages: {
+          ...Object.fromEntries(locales.map((locale) => [locale, `${BASE_URL}/${locale}${route}`])),
+          "x-default": `${BASE_URL}/en${route}`,
+        },
       },
     });
   }
@@ -40,9 +41,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/en/projects/${slug}`,
       lastModified: new Date(),
       alternates: {
-        languages: Object.fromEntries(
-          locales.map((locale) => [locale, `${BASE_URL}/${locale}/projects/${slug}`])
-        ),
+        languages: {
+          ...Object.fromEntries(locales.map((locale) => [locale, `${BASE_URL}/${locale}/projects/${slug}`])),
+          "x-default": `${BASE_URL}/en/projects/${slug}`,
+        },
       },
     });
   }
@@ -54,9 +56,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${BASE_URL}/en/projects/${project.slug}`,
         lastModified: new Date(),
         alternates: {
-          languages: Object.fromEntries(
-            locales.map((locale) => [locale, `${BASE_URL}/${locale}/projects/${project.slug}`])
-          ),
+          languages: {
+            ...Object.fromEntries(locales.map((locale) => [locale, `${BASE_URL}/${locale}/projects/${project.slug}`])),
+            "x-default": `${BASE_URL}/en/projects/${project.slug}`,
+          },
         },
       });
     }

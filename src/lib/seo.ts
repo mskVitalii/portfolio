@@ -12,9 +12,13 @@ const OG_LOCALES: Record<(typeof LOCALES)[number], string> = {
 export function buildAlternates(locale: string, path: string) {
   return {
     canonical: `${BASE_URL}/${locale}${path}`,
-    languages: Object.fromEntries(
-      LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])
-    ) as Record<string, string>,
+    languages: {
+      ...Object.fromEntries(LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])),
+      // Fallback for languages we don't explicitly serve — Google recommends
+      // an x-default entry alongside per-locale hreflang, pointing at the
+      // default-locale version.
+      "x-default": `${BASE_URL}/en${path}`,
+    } as Record<string, string>,
   };
 }
 

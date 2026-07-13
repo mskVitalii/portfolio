@@ -88,6 +88,11 @@ export async function GET(request: NextRequest) {
     {
       width: 1200,
       height: 630,
+      headers: {
+        // Output is fully determined by the query params — safe to cache
+        // long-term instead of re-rendering on every crawl/unfurl.
+        "Cache-Control": "public, immutable, no-transform, max-age=31536000",
+      },
     }
   );
 }
