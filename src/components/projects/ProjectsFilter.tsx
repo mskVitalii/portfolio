@@ -14,6 +14,16 @@ const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = 
   { id: "personal", category: "personal", titleKey: "sectionPersonal" },
 ];
 
+// Sort key from a project's start date ("MM/YYYY [– MM/YYYY|present]") so the
+// most recent — and presumably most relevant — work surfaces first.
+function periodStartKey(period: string): number {
+  const start = period.split(/\s*[–—-]\s*/)[0].trim();
+  const match = start.match(/(\d{1,2})\/(\d{4})/);
+  if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
+  const year = start.match(/\d{4}/);
+  return year ? parseInt(year[0], 10) * 12 : 0;
+}
+
 export function ProjectsFilter({ projects }: { projects: Project[] }) {
   const t = useTranslations("Projects");
   const searchParams = useSearchParams();
@@ -31,11 +41,13 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
 
   const sections = SECTIONS.map((s) => ({
     ...s,
-    projects: projects.filter(
-      (p) =>
-        p.category === s.category &&
-        (s.id !== "work" || !companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
-    ),
+    projects: projects
+      .filter(
+        (p) =>
+          p.category === s.category &&
+          (s.id !== "work" || !companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
+      )
+      .sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period)),
   })).filter((s) => s.projects.length > 0);
 
   return (

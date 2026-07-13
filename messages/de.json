@@ -370,7 +370,9 @@
     "matcherTitle": "Skills mit einer Stellenausschreibung abgleichen",
     "matcherPlaceholder": "Stellenausschreibung oder Anforderungsliste einfügen — passende Skills werden unten hervorgehoben.",
     "matcherSummary": "{matched} von {total} Skills gefunden",
-    "matcherEmpty": "Text oben einfügen, um passende Skills zu sehen."
+    "matcherEmpty": "Text oben einfügen, um passende Skills zu sehen.",
+    "switchModeTitle": "So ist es gebaut",
+    "switchModeBody": "Interaktive Architekturdiagramme sind im Business- oder Tech-Modus verfügbar."
   },
   "EducationPage": {
     "title": "Bildung",

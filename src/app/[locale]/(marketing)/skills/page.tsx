@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
-import { SkillsExplorer } from "@/components/skills/SkillsExplorer";
-import { SkillsKeywordMatcher } from "@/components/skills/SkillsKeywordMatcher";
+import { SkillsModeContent } from "@/components/skills/SkillsModeContent";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
@@ -45,9 +44,7 @@ export default async function SkillsPage({
         </p>
       </div>
 
-      <SkillsExplorer />
-
-      <SkillsKeywordMatcher />
+      <SkillsModeContent />
     </main>
   );
 }

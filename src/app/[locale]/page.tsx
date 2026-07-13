@@ -20,12 +20,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "HomePage" });
-  return buildPageMetadata({
+  const meta = await buildPageMetadata({
     locale,
     path: "",
     title: t("metaTitle"),
     description: t("metaDescription"),
   });
+  return { ...meta, title: { absolute: t("metaTitle") } };
 }
 
 export default async function HomePage({

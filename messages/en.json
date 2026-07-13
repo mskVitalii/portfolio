@@ -370,7 +370,9 @@
     "matcherTitle": "Match skills against a job description",
     "matcherPlaceholder": "Paste a job posting or list of requirements — matching skills get highlighted below.",
     "matcherSummary": "{matched} of {total} skills matched",
-    "matcherEmpty": "Paste some text above to see which skills match."
+    "matcherEmpty": "Paste some text above to see which skills match.",
+    "switchModeTitle": "See how it's built",
+    "switchModeBody": "Interactive architecture diagrams are available in Business or Tech mode."
   },
   "EducationPage": {
     "title": "Education",

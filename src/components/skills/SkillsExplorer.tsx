@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
+import { useViewMode } from "@/store/viewMode";
 import {
   ReactFlow,
   Background,
@@ -330,6 +331,7 @@ const GRAPHS = [
     label: "System Architecture",
     subtitle: "How services connect",
     description: "A typical backend I'd build: React talks to Go / Python / C# microservices, Kafka brokers async events, and the data layer is PostgreSQL + Redis + ElasticSearch. Embedded C handles the hardware layer.",
+    businessDescription: "Splitting the backend into independent services means one failing part doesn't take the whole product down, and new features ship without rewriting the core. This same pattern replaced a paid vendor system and saved €480K/year.",
     nodes: ARCH_NODES,
     edges: ARCH_EDGES,
   },
@@ -338,6 +340,7 @@ const GRAPHS = [
     label: "Frontend Stack",
     subtitle: "UI engineering",
     description: "React + Next.js as the framework core. Zustand / Redux / Jotai depending on project complexity. TypeScript everywhere, Tailwind + shadcn/ui for styling. Deployed on Vercel with ISR.",
+    businessDescription: "A fast-loading, type-safe frontend protects revenue directly — every 100ms of load time affects conversion, and TypeScript catches bugs before they reach paying users. Static generation keeps hosting costs low even as traffic grows.",
     nodes: FE_NODES,
     edges: FE_EDGES,
   },
@@ -346,6 +349,7 @@ const GRAPHS = [
     label: "Infrastructure & Monitoring",
     subtitle: "Running things reliably",
     description: "Go / Python services containerized with Docker, orchestrated on Kubernetes. Prometheus scrapes metrics, Grafana visualizes them. Redis for hot-path caching, Kafka for durable event streaming.",
+    businessDescription: "Monitoring catches problems before customers notice them, cutting downtime and support costs. Containerized services scale automatically with demand, so the product stays fast during traffic spikes without paying for idle servers the rest of the time.",
     nodes: OBS_NODES,
     edges: OBS_EDGES,
   },
@@ -354,6 +358,7 @@ const GRAPHS = [
     label: "Deployment Pipeline",
     subtitle: "From commit to production",
     description: "GitHub and GitLab trigger parallel CI pipelines. Tests run first (unit + integration) — no deploy without green. Docker builds the image, publishes to registry. Helm charts deploy to Kubernetes: three pods in Stage for QA, then a Traffic Router in Production shifts 100% load between Blue (live) and Green (next) for zero-downtime rollout.",
+    businessDescription: "Automated tests and zero-downtime rollouts mean new features ship several times a week without risking an outage — deployment moves from a rare, risky event to a routine one, so the business reacts to customer feedback faster.",
     nodes: DEPLOY_NODES,
     edges: DEPLOY_EDGES,
   },
@@ -362,6 +367,7 @@ const GRAPHS = [
     label: "AI Engineering Stack",
     subtitle: "RAG · LLM · MCP",
     description: "Context Engineering shapes what the model sees. MCP Servers expose tools and APIs to LLMs. The RAG pipeline chunks data, embeds with text-embedding models, stores vectors in Qdrant, and orchestrates retrieval via LangChain. LLM layer: Claude (certified), Copilot, Ollama for private inference, Hugging Face for fine-tuning.",
+    businessDescription: "AI tooling automates repetitive engineering work, shortening the time from idea to shipped feature. The same pipeline powers customer-facing capabilities — intelligent search, automation, assistants — that create new product value.",
     nodes: AI_NODES,
     edges: AI_EDGES,
   },
@@ -403,6 +409,7 @@ function GraphView({
       minZoom={0.3}
       maxZoom={2}
       colorMode={colorMode}
+      preventScrolling={false}
     >
       <Background gap={24} size={1} />
       <Controls showInteractive={false} />
@@ -420,6 +427,7 @@ interface Cert {
 
 function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?: Cert[] }) {
   const t = useTranslations("SkillsPage");
+  const { mode } = useViewMode();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [certsOpen, setCertsOpen] = useState(true);
   const { resolvedTheme } = useTheme();
@@ -447,7 +455,7 @@ function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?
       <div className="px-6 pt-6 pb-4">
         <h3 className="text-xl font-bold">{graph.label}</h3>
         <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-2xl">
-          {graph.description}
+          {mode === "business" ? graph.businessDescription : graph.description}
         </p>
       </div>
 

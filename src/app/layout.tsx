@@ -93,6 +93,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       suppressHydrationWarning
+      data-view-mode="hr"
       className={`${inter.variable} ${jetbrainsMono.variable} ${roboto.variable} ${nunitoSans.variable} ${robotoSlab.variable}`}
     >
       <body className="min-h-full flex flex-col antialiased">

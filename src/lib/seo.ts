@@ -26,7 +26,18 @@ export function buildOpenGraphLocale(locale: string) {
   };
 }
 
-export function buildPageMetadata({
+/** Builds a locale-prefixed URL for the dynamic `/[locale]/og` image route (must match its actual path — an unprefixed `/og` 404s since locales are always prefixed). */
+export function buildOgImageUrl(
+  locale: string,
+  { title, subtitle, metric }: { title: string; subtitle?: string; metric?: string }
+) {
+  const params = new URLSearchParams({ title });
+  if (subtitle) params.set("subtitle", subtitle);
+  if (metric) params.set("metric", metric);
+  return `/${locale}/og?${params.toString()}`;
+}
+
+export async function buildPageMetadata({
   locale,
   path,
   title,
@@ -37,6 +48,9 @@ export function buildPageMetadata({
   title: string;
   description: string;
 }) {
+  const t = await getTranslations({ locale, namespace: "Common" });
+  const siteName = t("siteName");
+  const ogImage = buildOgImageUrl(locale, { title });
   return {
     title,
     description,
@@ -45,16 +59,41 @@ export function buildPageMetadata({
       title,
       description,
       type: "website" as const,
-      siteName: "Vitalii Popov",
-      images: [{ url: "/og-default.png", width: 1200, height: 630 }],
+      siteName,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
       ...buildOpenGraphLocale(locale),
     },
     twitter: {
       card: "summary_large_image" as const,
       title,
       description,
-      images: ["/og-default.png"],
+      images: [ogImage],
     },
+  };
+}
+
+export type FaqItem = { q: string; a: string };
+
+/**
+ * FAQPage schema — not QAPage. QAPage is for forum-style pages with a single
+ * question and multiple community-submitted answers (Stack Overflow style);
+ * misusing it on an owner-authored FAQ violates Google's structured-data
+ * content policy. Only pass items that are actually rendered in the page's
+ * default (server-rendered) output, since structured data must match visible
+ * content — mode-gated FAQ variants that aren't in the initial DOM don't qualify.
+ */
+export function buildFaqPageJsonLd(items: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
   };
 }
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { buildAlternates, buildOpenGraphLocale, buildBreadcrumbJsonLd } from "@/lib/seo";
+import { buildAlternates, buildOpenGraphLocale, buildBreadcrumbJsonLd, buildOgImageUrl } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
@@ -27,22 +27,28 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return {};
 
-  const ogUrl = `/og?title=${encodeURIComponent(project.title)}&subtitle=${encodeURIComponent(project.tagline)}${project.impact?.[0] ? `&metric=${encodeURIComponent(project.impact[0].value)}` : ""}`;
+  const t = await getTranslations({ locale, namespace: "Common" });
+  const siteName = t("siteName");
+  const ogUrl = buildOgImageUrl(locale, {
+    title: project.title,
+    subtitle: project.tagline,
+    metric: project.impact?.[0]?.value,
+  });
 
   return {
     title: project.title,
     description: project.description.business,
     openGraph: {
-      title: `${project.title} | Vitalii Popov`,
+      title: `${project.title} | ${siteName}`,
       description: project.description.business,
       type: "website",
-      siteName: "Vitalii Popov",
+      siteName,
       images: [{ url: ogUrl, width: 1200, height: 630 }],
       ...buildOpenGraphLocale(locale),
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} | Vitalii Popov`,
+      title: `${project.title} | ${siteName}`,
       description: project.description.business,
       images: [ogUrl],
     },

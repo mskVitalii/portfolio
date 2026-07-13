@@ -29,19 +29,19 @@ export function AchievementToaster() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 80, scale: 0.9 }}
               transition={{ type: "spring", stiffness: 300, damping: 26 }}
-              className="pointer-events-auto overflow-hidden rounded-lg border border-sky-400/40 bg-slate-900 text-white shadow-2xl shadow-black/40"
+              className="pointer-events-auto overflow-hidden rounded-lg border border-primary/40 bg-card text-card-foreground shadow-2xl shadow-black/20"
             >
               <ToastTimer onDone={() => dismissToast(id)} />
               <div className="flex items-start gap-3 p-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-sky-400 to-sky-600 text-slate-900 shadow-inner">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-inner">
                   <Icon className="h-6 w-6" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-sky-400">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-primary">
                     {t("unlockedLabel")}
                   </p>
                   <p className="truncate text-sm font-semibold">{t(`${id}.title`)}</p>
-                  <p className="text-xs leading-snug text-white/60">{t(`${id}.description`)}</p>
+                  <p className="text-xs leading-snug text-muted-foreground">{t(`${id}.description`)}</p>
                 </div>
               </div>
             </motion.div>
@@ -65,7 +65,7 @@ function ToastTimer({ onDone }: { onDone: () => void }) {
       animate={{ scaleX: 0 }}
       transition={{ duration: AUTO_DISMISS_MS / 1000, ease: "linear" }}
       style={{ transformOrigin: "left" }}
-      className="h-0.5 bg-gradient-to-r from-sky-400 to-sky-600"
+      className="h-0.5 bg-primary"
     />
   );
 }

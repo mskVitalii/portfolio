@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/education",
     "/recommendations",
     "/card",
+    "/achievements",
   ];
 
   const entries: MetadataRoute.Sitemap = [];

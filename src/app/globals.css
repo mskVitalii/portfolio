@@ -120,6 +120,47 @@
   --sidebar-ring: oklch(0.88 0.25 155);
 }
 
+/* Audience-lens accent: the active tri-mode (HR/Business/Tech) drives the
+   site's primary color everywhere, so the current lens is visible at a glance —
+   not just inside the AudienceFilter cards on the home page. */
+:root[data-view-mode="hr"] {
+  --primary: oklch(0.56 0.21 300);
+  --ring: oklch(0.56 0.21 300);
+  --sidebar-primary: oklch(0.56 0.21 300);
+  --sidebar-ring: oklch(0.56 0.21 300);
+}
+:root[data-view-mode="business"] {
+  --primary: oklch(0.6 0.17 155);
+  --ring: oklch(0.6 0.17 155);
+  --sidebar-primary: oklch(0.6 0.17 155);
+  --sidebar-ring: oklch(0.6 0.17 155);
+}
+:root[data-view-mode="tech"] {
+  --primary: oklch(0.58 0.19 250);
+  --ring: oklch(0.58 0.19 250);
+  --sidebar-primary: oklch(0.58 0.19 250);
+  --sidebar-ring: oklch(0.58 0.19 250);
+}
+
+:root.dark[data-view-mode="hr"] {
+  --primary: oklch(0.8 0.2 300);
+  --ring: oklch(0.8 0.2 300);
+  --sidebar-primary: oklch(0.8 0.2 300);
+  --sidebar-ring: oklch(0.8 0.2 300);
+}
+:root.dark[data-view-mode="business"] {
+  --primary: oklch(0.88 0.25 155);
+  --ring: oklch(0.88 0.25 155);
+  --sidebar-primary: oklch(0.88 0.25 155);
+  --sidebar-ring: oklch(0.88 0.25 155);
+}
+:root.dark[data-view-mode="tech"] {
+  --primary: oklch(0.78 0.17 250);
+  --ring: oklch(0.78 0.17 250);
+  --sidebar-primary: oklch(0.78 0.17 250);
+  --sidebar-ring: oklch(0.78 0.17 250);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -135,16 +176,21 @@
   }
 }
 
-/* Neon glow on primary elements in dark mode (inspired by slsbmb.com) */
+/* Neon glow on primary elements in dark mode (inspired by slsbmb.com) —
+   color follows the active audience-lens accent via --primary */
 .dark [class*="bg-primary"]:not([class*="bg-primary-foreground"]),
 .dark button[class*="bg-primary"] {
-  box-shadow: 0 0 1.5em 2px oklch(0.88 0.25 155 / 35%), 0 0 4em 10px oklch(0.88 0.25 155 / 20%);
+  box-shadow:
+    0 0 1.5em 2px oklch(from var(--primary) l c h / 35%),
+    0 0 4em 10px oklch(from var(--primary) l c h / 20%);
   transition: box-shadow 0.3s ease;
 }
 
 .dark [class*="bg-primary"]:not([class*="bg-primary-foreground"]):hover,
 .dark button[class*="bg-primary"]:hover {
-  box-shadow: 0 0 2em 4px oklch(0.88 0.25 155 / 55%), 0 0 6em 16px oklch(0.88 0.25 155 / 30%);
+  box-shadow:
+    0 0 2em 4px oklch(from var(--primary) l c h / 55%),
+    0 0 6em 16px oklch(from var(--primary) l c h / 30%);
 }
 
 /* Shimmer skeleton animation */

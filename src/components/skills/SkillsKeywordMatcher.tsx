@@ -39,7 +39,7 @@ export function SkillsKeywordMatcher() {
   }, [matchedIds, unlockAchievement]);
 
   return (
-    <div className="mt-16">
+    <div>
       <div className="rounded-xl border bg-card p-6">
         <div className="flex items-center gap-2 mb-3">
           <Search className="h-4 w-4 text-muted-foreground" />

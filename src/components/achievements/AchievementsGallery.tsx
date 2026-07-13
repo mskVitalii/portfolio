@@ -26,7 +26,7 @@ export function AchievementsGallery() {
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-muted">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-sky-400 to-sky-600 transition-all duration-500"
+            className="h-full rounded-full bg-primary transition-all duration-500"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -42,13 +42,13 @@ export function AchievementsGallery() {
               key={a.id}
               className={cn(
                 "flex items-start gap-3.5 rounded-xl border p-4 transition-all",
-                isUnlocked ? "border-sky-400/40 bg-sky-400/5" : "border-border bg-muted/20 grayscale"
+                isUnlocked ? "border-primary/40 bg-primary/5" : "border-border bg-muted/20 grayscale"
               )}
             >
               <div
                 className={cn(
                   "flex h-12 w-12 shrink-0 items-center justify-center rounded-lg",
-                  isUnlocked ? "bg-gradient-to-br from-sky-400 to-sky-600 text-slate-900" : "bg-muted text-muted-foreground"
+                  isUnlocked ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                 )}
               >
                 {isUnlocked ? <Icon className="h-6 w-6" /> : <Lock className="h-5 w-5" />}
@@ -61,7 +61,7 @@ export function AchievementsGallery() {
                   {t(`${a.id}.description`)}
                 </p>
                 {isUnlocked && ts && (
-                  <p className="mt-1.5 text-[10px] font-medium uppercase tracking-wide text-sky-500/80">
+                  <p className="mt-1.5 text-[10px] font-medium uppercase tracking-wide text-primary/80">
                     {tPage("unlockedOn", { date: new Date(ts).toLocaleDateString() })}
                   </p>
                 )}
