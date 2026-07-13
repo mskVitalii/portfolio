@@ -30,7 +30,7 @@ export function MobileNav() {
   }, []);
 
   return (
-    <div className="md:hidden">
+    <div className="nav:hidden">
       <button
         onClick={() => setOpen((v) => !v)}
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "px-3 min-w-11 min-h-11")}

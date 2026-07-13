@@ -485,6 +485,7 @@
   "AudienceFilter": {
     "title": "Was führt Sie hier her?",
     "subtitle": "Wählen Sie Ihre Perspektive — die Website passt den Inhalt an.",
+    "keyboardHint": "Am Desktop <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> drücken, um direkt zur Perspektive zu wechseln.",
     "hrTitle": "HR / Recruiter",
     "hrTag": "STAR & FAQ",
     "hrDesc": "Strukturierte Erfahrungsberichte, Kompetenzhinweise und Antworten auf die häufigsten Fragen.",

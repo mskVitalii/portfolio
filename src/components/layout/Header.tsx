@@ -33,7 +33,7 @@ export function Header() {
             <span className="hidden sm:inline">{t("Common.siteName")}</span>
             <span className="sm:hidden">VP</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-4 text-sm text-muted-foreground">
+          <nav className="hidden nav:flex items-center gap-4 text-sm text-muted-foreground">
             {NAV_LINKS.map(({ key, href }) => {
               const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
               return (

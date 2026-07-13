@@ -59,6 +59,15 @@ export function AudienceFilter() {
         >
           <h2 className="text-3xl font-bold">{t("title")}</h2>
           <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
+          <p className="hidden sm:block mt-3 text-xs text-muted-foreground/70">
+            {t.rich("keyboardHint", {
+              kbd: (chunks) => (
+                <kbd className="mx-0.5 inline-block rounded border border-border bg-muted px-1.5 py-0.5 align-middle font-mono text-[10px] font-semibold text-foreground shadow-[0_1px_0_var(--border)]">
+                  {chunks}
+                </kbd>
+              ),
+            })}
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -6,6 +6,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Header nav has 8 links + locale/mode/theme switchers — needs more room
+     than the default md (768px) breakpoint before it stops wrapping. */
+  --breakpoint-nav: 1200px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);

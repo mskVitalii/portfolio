@@ -485,6 +485,7 @@
   "AudienceFilter": {
     "title": "What brings you here?",
     "subtitle": "Pick your lens — the site adapts content to your perspective.",
+    "keyboardHint": "On desktop, press <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> to jump straight to a lens.",
     "hrTitle": "HR / Recruiter",
     "hrTag": "STAR & FAQ",
     "hrDesc": "Structured experience stories, competency signals, and answers to the questions you always ask.",
