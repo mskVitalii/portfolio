@@ -3,24 +3,50 @@ title: "Warehouse Search Engine"
 company: "OZON Tech"
 period: "2021 – 2023"
 status: "archived"
-statusNote: "Project continues at OZON; left when relocating to Germany for Master's."
 category: "work"
 tagline: "200M warehouse items searchable in under 5 seconds"
-stack: ["Go", "ElasticSearch", "Kafka", "Redis", "PostgreSQL", "C#", "Docker", "Kubernetes", "Prometheus", "Grafana"]
+stack: ["Go", "ElasticSearch", "Kafka", "Redis", "PostgreSQL", "Docker", "Kubernetes", "Prometheus", "Grafana"]
 impact:
   - label: "Items indexed"
     value: "200M"
   - label: "Search latency"
     value: "<5 sec"
-  - label: "Cost savings"
-    value: "€86K"
 ---
+
+<ModeAware modes="hr">
+
+## The story, in brief
+
+**Situation:** OZON's warehouse pickers searched a 200-million-row PostgreSQL table with a plain `LIKE` query. At that scale it had become unusable — pickers were losing time just finding an item, with no way to see where a package had been.
+
+**Task:** Replace it with search fast enough for real-time warehouse work, and give staff visibility into an item's full movement history — not just its current location.
+
+**Action:** Built a Go microservice backed by ElasticSearch and Kafka, replacing the SQL query with proper full-text and fuzzy search — including a custom analyzer for staff typing SKUs in both Cyrillic and Latin script.
+
+**Result:** 200M items searchable in under 5 seconds. Warehouse staff can trace an item's full movement history instead of just its last known location, so packages stop getting lost between fulfilment centres.
+
+### Frequently asked
+
+**What was the hardest part of this project?**
+Handling Russian transliteration — staff type the same SKU as "БОЛТ М8" or "bolt m8" interchangeably. Getting ElasticSearch's analyzer to match both directions without a flood of false positives took a lot of iteration on real query logs.
+
+**Why not just optimize the existing SQL query?**
+At 200M rows, a `LIKE` query was already on the optimized path — there was no query-tuning fix left. The storage engine itself was the wrong tool for fuzzy text search at that scale.
+
+**What would you do differently?**
+Define the cache-invalidation contract up front. It was tied entirely to Kafka events, which caused a cache-miss storm after batch product updates — a short TTL as a backstop would have caught that from day one.
+
+</ModeAware>
+
+<ModeAware modes="business tech">
 
 ## Context
 
 OZON is one of Russia's largest e-commerce platforms — think Amazon scale for Eastern Europe. The warehouse operations team manages inventory across multiple fulfilment centres. When a picker needs to locate an item across 200M SKUs, every second of search latency has a direct operational cost.
 
 The existing search was a SQL LIKE query on a PostgreSQL table. At 200M rows, it was unusable.
+
+The tool is built for warehouse staff on the floor: beyond just finding an item, it lets them pull up a package's full movement history, so nothing gets lost or stuck between fulfilment centres without a trace.
 
 ## What was built
 
@@ -31,7 +57,9 @@ A Go microservice providing full-text and fuzzy search over the warehouse catalo
 - **Redis** for hot-path caching of the top 10,000 most-searched SKUs, dropping P95 latency from ~800ms to ~40ms for common queries.
 - **REST API** consumed by the warehouse management web app.
 
-A parallel project added a **C# barcode scanner integration** — USB scanners on warehouse terminals now feed directly into the order management system via WebSockets, eliminating manual data entry. This saved €86K/year in labour.
+</ModeAware>
+
+<ModeAware modes="tech">
 
 ## Architecture
 
@@ -40,9 +68,11 @@ Product Catalog  ──Kafka──►  Go Search Service  ──REST──►  W
    (updates)                  │                              (React)
                               ├──► ElasticSearch
                               └──► Redis (cache)
-
-Barcode Scanners ──USB──► C# Agent ──WebSocket──► PostgreSQL ──► Orders
 ```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
 
 ## Technical decisions
 
@@ -63,3 +93,5 @@ Prometheus metrics scraped by Grafana. Key dashboards: query latency P50/P95/P99
 ## What I'd do differently
 
 The cache invalidation logic was tied to Kafka events, which meant a cache miss storm after a batch product update. I'd add a short TTL as a safety net even when explicit invalidation is in place.
+
+</ModeAware>

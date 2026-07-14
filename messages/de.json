@@ -381,6 +381,10 @@
       {
         "q": "Wie sieht Ihre Testphilosophie aus?",
         "a": "Tests sollten die Fehlerarten abfangen, die in Produktion tatsächlich auftreten, nicht nur eine Coverage-Zahl erreichen — Unit-Tests plus Lasttests haben mir ermöglicht, den OZON-Suchservice mit Zuversicht bei 200 Millionen Artikeln auszuliefern."
+      },
+      {
+        "q": "Wie nutzen Sie KI in Ihrem Entwicklungsworkflow?",
+        "a": "Claude Code kombiniert mit TDD — Tests sind es, die KI-generierten Code vertrauenswürdig machen, nicht nur schnell. Außerdem kenne ich strukturierte Agentic-Workflows wie GSD und Superpowers, um KI-unterstützte Entwicklung diszipliniert zu halten."
       }
     ],
     "faqBusiness": [
@@ -438,6 +442,7 @@
     "sectionPersonal": "Persönliche Projekte",
     "companyLabel": "Unternehmen:",
     "clearCompanyFilter": "Unternehmensfilter entfernen",
+    "projectCount": "{count, plural, one {# Projekt} other {# Projekte}}",
     "noProjectsYet": "Noch keine Projekte in dieser Kategorie.",
     "viewList": "Liste",
     "viewTimeline": "Zeitachse",

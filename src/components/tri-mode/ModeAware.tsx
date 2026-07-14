@@ -4,8 +4,17 @@ import { useEffect, useState } from "react";
 import { useViewMode, type ViewMode } from "@/store/viewMode";
 
 interface ModeAwareProps {
-  modes: ViewMode[];
+  /** Accepts an array (`modes={["hr", "tech"]}`) from plain TSX, or a
+   * space/comma-separated string (`modes="hr tech"`) — MDX-compiled JSX
+   * attribute *expressions* don't reliably survive the compileMDX pipeline,
+   * so content authored in .mdx files should use the string form. */
+  modes: ViewMode[] | string;
   children: React.ReactNode;
+}
+
+function normalizeModes(modes: ViewMode[] | string): ViewMode[] {
+  if (Array.isArray(modes)) return modes;
+  return modes.split(/[\s,]+/).filter(Boolean) as ViewMode[];
 }
 
 export function ModeAware({ modes, children }: ModeAwareProps) {
@@ -15,6 +24,6 @@ export function ModeAware({ modes, children }: ModeAwareProps) {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
-  if (!modes.includes(mode)) return null;
+  if (!normalizeModes(modes).includes(mode)) return null;
   return <>{children}</>;
 }

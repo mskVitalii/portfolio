@@ -15,6 +15,33 @@ impact:
     value: "3,000"
 ---
 
+<ModeAware modes="hr">
+
+## The story, in brief
+
+**Situation:** Infineon's Dresden campus has hundreds of parking spaces across several lots. The company was evaluating commercial parking-guidance vendors — the best quote came in at €480,000/year in licensing and maintenance fees.
+
+**Task:** Build an in-house alternative — hardware to dashboard — for a fraction of that recurring cost.
+
+**Action:** Built embedded firmware for license-plate recognition and occupancy counting running directly on IP cameras, Python backend services to aggregate zone occupancy, a C# device-management layer, and a React dashboard for real-time visibility.
+
+**Result:** €480,000/year saved versus the vendor quote. The barrier-control subsystem now independently serves 8,000 registered users, with 3,000 monthly active.
+
+### Frequently asked
+
+**What was the hardest part of this project?**
+Bridging the embedded and web worlds cleanly. Writing C for resource-constrained cameras and then wiring that into a React dashboard meant designing a strict protocol boundary — MQTT was chosen over HTTP polling to keep end-to-end latency under 500ms.
+
+**How did you handle hardware failures in production?**
+Graceful degradation: if a camera goes offline, the system doesn't show stale data — it marks that zone as "unknown" so the dashboard reflects real uncertainty instead of quietly lying to drivers.
+
+**What would you do differently?**
+Define the MQTT topic schema as a formal, versioned contract from day one. It grew organically instead and became inconsistent across camera types.
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
 ## Context
 
 Infineon's Dresden campus has hundreds of parking spaces spread across several lots. Before this project, the company was evaluating commercial parking guidance vendors — the best offer was **€480,000/year** in licensing and maintenance fees.
@@ -29,6 +56,10 @@ A full parking guidance system, from hardware to dashboard:
 - **Python microservices** aggregate zone occupancy, handle authentication, and serve the REST/WebSocket API.
 - **C# device management layer** handles camera provisioning, firmware updates, and health monitoring.
 - **React + TypeScript dashboard** gives security staff and drivers a real-time map of available spaces.
+
+</ModeAware>
+
+<ModeAware modes="tech">
 
 ## Architecture
 
@@ -46,6 +77,10 @@ A full parking guidance system, from hardware to dashboard:
 
 Cameras run the detection locally (edge computing) — only occupancy events are sent over the network, not video. This keeps bandwidth low and avoids GDPR issues with centralized video storage.
 
+</ModeAware>
+
+<ModeAware modes="business tech">
+
 ## Challenges
 
 **The embedded + web bridge.** Writing C for resource-constrained cameras and then wiring it to a React SPA required designing a clean protocol boundary. MQTT was chosen over HTTP polling to keep latency under 500ms.
@@ -61,3 +96,5 @@ The system went live on campus. **€480,000/year saved** vs. the vendor quote. 
 ## What I'd do differently
 
 The MQTT topic structure grew organically and became inconsistent across camera types. I'd define the topic schema upfront as a formal contract and version it from day one.
+
+</ModeAware>

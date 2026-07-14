@@ -3,7 +3,6 @@ title: "A/B Testing & UI Platform"
 company: "onlineTours"
 period: "2023 – 2024"
 status: "archived"
-statusNote: "Contract ended; moved to Infineon full-time."
 category: "work"
 tagline: "11.63% uplift in key business metrics via experimentation"
 stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook"]
@@ -11,6 +10,33 @@ impact:
   - label: "Metric uplift"
     value: "11.63%"
 ---
+
+<ModeAware modes="hr">
+
+## The story, in brief
+
+**Situation:** onlineTours' growth team had hypotheses about SEO landing pages and booking-flow UX but no reliable way to test them — the frontend was a mix of legacy React and Rails-rendered HTML, with no component library and no A/B testing infrastructure.
+
+**Task:** Give the team both a modern, reusable component library and a proper server-side A/B testing pipeline, so experiments could ship without flicker or engineering babysitting every test.
+
+**Action:** Built a React + TypeScript component library (documented in Storybook, A/B-variant-aware by design) alongside server-side experiment assignment in Ruby on Rails, backed by Redis for fast, deterministic variant reads on every page load.
+
+**Result:** The highest-impact experiment — redesigning the tour listing page's price display — delivered an 11.63% uplift on the primary booking conversion metric over a 4-week test window.
+
+### Frequently asked
+
+**What was the hardest part of this project?**
+Avoiding assignment flicker. Client-side A/B logic shows the control version for a frame before the test variant loads — moving assignment to the server so the correct variant is baked into the initial HTML fixed that, but required rethinking how the Rails and React layers talked to each other.
+
+**How did you measure success?**
+Primary booking conversion rate, tracked per variant over a fixed 4-week window before any test was called.
+
+**What would you do differently?**
+Move experiment configuration out of the Rails codebase and into a dedicated feature-flag service, so the product team could start and stop tests without an engineering deploy.
+
+</ModeAware>
+
+<ModeAware modes="business tech">
 
 ## Context
 
@@ -41,3 +67,5 @@ The most impactful experiment was a redesign of the **tour listing page** — sp
 ## What I'd do differently
 
 The experiment configuration was stored in the Rails codebase — changing an experiment required a deploy. I'd move experiment config to a feature flag service (LaunchDarkly or a simple Redis-backed JSON) so the product team can start and stop tests without involving engineering.
+
+</ModeAware>

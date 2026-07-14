@@ -60,7 +60,6 @@ export const PROJECTS: Project[] = [
     company: "onlineTours",
     period: "08/2023 – 07/2024",
     status: "archived",
-    statusNote: "Contract ended; moved to Infineon full-time.",
     category: "work",
     tagline: "11.63% uplift in key business metrics via experimentation",
     description: {
@@ -80,7 +79,6 @@ export const PROJECTS: Project[] = [
     company: "OZON Tech",
     period: "07/2021 – 07/2023",
     status: "archived",
-    statusNote: "Project continues at OZON; left when relocating to Germany for Master's.",
     category: "work",
     tagline: "200M warehouse items searchable in under 5 seconds",
     featured: true,
@@ -102,14 +100,13 @@ export const PROJECTS: Project[] = [
     company: "OZON Tech",
     period: "07/2021 – 07/2023",
     status: "archived",
-    statusNote: "Project continues at OZON; left when relocating to Germany for Master's.",
     category: "work",
     tagline: "€86K/year saved by replacing manual scanning workflows",
     description: {
-      hr: "Backend Developer building the point-update service behind OZON's warehouse barcode scanners.",
+      hr: "Backend Developer building the point-update service behind OZON's warehouse barcode scanners, deployed to speed up the returns processing zone.",
       business:
-        "Integrated barcode scanner hardware with a real-time point-update service, saving €86,000/year for the company. Still in use today.",
-      tech: "C# integration of barcode scanner hardware over WebSockets, with a PostgreSQL-backed point-update service. Also rewrote a Mattermost bot that monitors warehouse errors from Python to C#.",
+        "Integrated barcode scanner hardware with a real-time point-update service in OZON's returns zone, cutting manual data-entry — saving €86,000/year while giving warehouse ops a scalable foundation for return-processing throughput as order volume grew. Still in use today.",
+      tech: "C# integration of barcode scanner hardware over WebSockets, with a PostgreSQL-backed point-update service rolled out across many distributed returns-zone terminals. Also rewrote a Mattermost bot that monitors warehouse errors from Python to C#.",
     },
     impact: [{ label: "Cost savings", value: "€86K/yr" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],

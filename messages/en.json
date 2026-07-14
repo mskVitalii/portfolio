@@ -381,6 +381,10 @@
       {
         "q": "What's your testing philosophy?",
         "a": "Tests should catch the failure modes that actually happen in production, not just hit a coverage number — unit tests plus load tests were what let me ship the OZON search service with confidence at 200M-item scale."
+      },
+      {
+        "q": "How do you use AI in your development workflow?",
+        "a": "Claude Code paired with TDD — tests are what make AI-generated code trustworthy, not just fast. I'm also familiar with structured agentic workflows like GSD and Superpowers for keeping AI-assisted development disciplined."
       }
     ],
     "faqBusiness": [
@@ -438,6 +442,7 @@
     "sectionPersonal": "Personal Projects",
     "companyLabel": "Company:",
     "clearCompanyFilter": "Clear company filter",
+    "projectCount": "{count, plural, one {# project} other {# projects}}",
     "noProjectsYet": "No projects in this category yet.",
     "viewList": "List",
     "viewTimeline": "Timeline",

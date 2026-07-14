@@ -1,16 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import type { ProjectStatus } from "@/data/projects";
 
-const STATUS_CONFIG: Record<
-  ProjectStatus,
-  { label: string; variant: "default" | "secondary" | "outline" | "destructive" }
-> = {
-  active: { label: "Active", variant: "default" },
-  archived: { label: "Archived", variant: "secondary" },
-  deprecated: { label: "Deprecated", variant: "destructive" },
-};
-
+// "Active" and "Archived" are noise — nearly every project is one or the
+// other, so the label carries no signal. "Deprecated" is the one status
+// worth flagging, since it tells a reader the project didn't pan out.
 export function ProjectStatusBadge({ status }: { status: ProjectStatus }) {
-  const { label, variant } = STATUS_CONFIG[status];
-  return <Badge variant={variant} className="text-xs">{label}</Badge>;
+  if (status !== "deprecated") return null;
+  return (
+    <Badge variant="destructive" className="text-xs">
+      Deprecated
+    </Badge>
+  );
 }

@@ -6,6 +6,7 @@ import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { X, Building2 } from "lucide-react";
 import { ProjectCard } from "./ProjectCard";
+import { ProjectCompanyBundle } from "./ProjectCompanyBundle";
 import type { Project, ProjectCategory } from "@/data/projects";
 
 const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = [
@@ -13,6 +14,10 @@ const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = 
   { id: "hackathons", category: "hackathon", titleKey: "sectionHackathons" },
   { id: "personal", category: "personal", titleKey: "sectionPersonal" },
 ];
+
+// Companies with several conceptually-linked projects read better as a single
+// expandable bundle than as separate cards scattered across the work grid.
+const BUNDLE_COMPANIES = ["Infineon Technologies AG", "OZON Tech"];
 
 // Sort key from a project's start date ("MM/YYYY [– MM/YYYY|present]") so the
 // most recent — and presumably most relevant — work surfaces first.
@@ -22,6 +27,38 @@ function periodStartKey(period: string): number {
   if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
   const year = start.match(/\d{4}/);
   return year ? parseInt(year[0], 10) * 12 : 0;
+}
+
+type WorkEntry =
+  | { kind: "project"; sortKey: number; project: Project }
+  | { kind: "bundle"; sortKey: number; company: string; projects: Project[] };
+
+function buildWorkEntries(workProjects: Project[]): WorkEntry[] {
+  const byCompany = new Map<string, Project[]>();
+  const singles: Project[] = [];
+
+  for (const p of workProjects) {
+    if (p.company && BUNDLE_COMPANIES.includes(p.company)) {
+      if (!byCompany.has(p.company)) byCompany.set(p.company, []);
+      byCompany.get(p.company)!.push(p);
+    } else {
+      singles.push(p);
+    }
+  }
+
+  const entries: WorkEntry[] = [
+    ...singles.map((project): WorkEntry => ({
+      kind: "project",
+      sortKey: periodStartKey(project.period),
+      project,
+    })),
+    ...[...byCompany.entries()].map(([company, ps]): WorkEntry => {
+      const sorted = [...ps].sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period));
+      return { kind: "bundle", sortKey: periodStartKey(sorted[0].period), company, projects: sorted };
+    }),
+  ];
+
+  return entries.sort((a, b) => b.sortKey - a.sortKey);
 }
 
 export function ProjectsFilter({ projects }: { projects: Project[] }) {
@@ -39,29 +76,39 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
     }
   }, [companyFilter]);
 
-  const sections = SECTIONS.map((s) => ({
+  const workProjects = projects
+    .filter(
+      (p) =>
+        p.category === "work" &&
+        (!companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
+    )
+    .sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period));
+  const workEntries = buildWorkEntries(workProjects);
+
+  const otherSections = SECTIONS.filter((s) => s.id !== "work").map((s) => ({
     ...s,
     projects: projects
-      .filter(
-        (p) =>
-          p.category === s.category &&
-          (s.id !== "work" || !companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
-      )
+      .filter((p) => p.category === s.category)
       .sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period)),
   })).filter((s) => s.projects.length > 0);
+
+  const navSections = [
+    ...(workProjects.length > 0 ? [{ id: "work", titleKey: "sectionWork", count: workProjects.length }] : []),
+    ...otherSections.map((s) => ({ id: s.id, titleKey: s.titleKey, count: s.projects.length })),
+  ];
 
   return (
     <div>
       {/* Anchor nav — jumps down the page to each section, never mixes categories together */}
       <div className="flex flex-wrap gap-2 mb-8">
-        {sections.map((s) => (
+        {navSections.map((s) => (
           <a
             key={s.id}
             href={`#${s.id}`}
             className="px-4 py-1.5 rounded-full text-sm font-medium border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground transition-colors"
           >
             {t(s.titleKey)}
-            <span className="ml-1.5 text-xs opacity-60">{s.projects.length}</span>
+            <span className="ml-1.5 text-xs opacity-60">{s.count}</span>
           </a>
         ))}
       </div>
@@ -84,7 +131,22 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
         </div>
       )}
 
-      {sections.map((s) => (
+      {workEntries.length > 0 && (
+        <section id="work" className="scroll-mt-20 mb-16 last:mb-0">
+          <h2 className="text-2xl font-bold mb-6">{t("sectionWork")}</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            {workEntries.map((entry, i) =>
+              entry.kind === "bundle" ? (
+                <ProjectCompanyBundle key={entry.company} company={entry.company} projects={entry.projects} />
+              ) : (
+                <ProjectCard key={entry.project.slug} project={entry.project} index={i} />
+              )
+            )}
+          </div>
+        </section>
+      )}
+
+      {otherSections.map((s) => (
         <section key={s.id} id={s.id} className="scroll-mt-20 mb-16 last:mb-0">
           <h2 className="text-2xl font-bold mb-6">{t(s.titleKey)}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -95,7 +157,7 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
         </section>
       ))}
 
-      {sections.length === 0 && (
+      {navSections.length === 0 && (
         <p className="text-muted-foreground text-center py-16">{t("noProjectsYet")}</p>
       )}
     </div>

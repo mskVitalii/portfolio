@@ -1,0 +1,91 @@
+---
+title: "Barcode Scanner Integration"
+company: "OZON Tech"
+period: "2021 – 2023"
+status: "archived"
+category: "work"
+tagline: "€86K/year saved by replacing manual scanning workflows"
+stack: ["C#", "WebSockets", "PostgreSQL"]
+impact:
+  - label: "Cost savings"
+    value: "€86K/yr"
+---
+
+<ModeAware modes="hr">
+
+## The story, in brief
+
+**Situation:** OZON's returns zone — where customer-returned items get logged back into inventory — ran on manual data entry. It was the slowest, most error-prone step in the warehouse workflow, and a hard cap on how fast a fulfilment centre could process returns as order volume grew.
+
+**Task:** Automate that at the point of scan, without taking any of the returns-zone terminals offline for a rollout, and without disrupting the team already working the floor.
+
+**Action:** Integrated USB barcode scanners at each returns-zone terminal with a C# service pushing scan events over WebSockets into a PostgreSQL-backed order-update pipeline. Because terminals were spread across many physical stations, the rollout used a central config service that pushed updates to each terminal individually rather than one all-or-nothing deploy.
+
+**Result:** €86,000/year saved in manual labour, and the returns zone stopped being the workflow's bottleneck — a strategic fix, not just a one-off cost cut, since return volume kept growing after launch.
+
+### Frequently asked
+
+**What was the hardest part of this project?**
+Rolling out and updating the scanner agent across dozens of physically distributed terminals without a shared deploy window — a bad update at one terminal couldn't be allowed to jam that station's queue for everyone else.
+
+**Why was this needed specifically in the returns zone?**
+Returns were the most manual, least instrumented part of the warehouse workflow, so it had the highest return on automation of anywhere in the building.
+
+**What would you do differently?**
+Add per-terminal health checks to the rollout pipeline itself, so a mis-updated terminal would be caught automatically instead of waiting for a picker to report it.
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Context
+
+The returns zone was OZON's slowest warehouse workflow — clerks manually logged every returned item into the order system by hand, which capped how fast a fulfilment centre could process returns as volume grew. The goal was to automate that at the point of scan, not review it after the fact.
+
+## What was built
+
+- **C# service** integrating USB barcode scanner hardware at returns-zone terminals.
+- **Real-time point-update service** pushing scan events over WebSockets into a PostgreSQL-backed order pipeline.
+- Also rewrote a **Mattermost bot** that monitors warehouse errors, porting it from Python to C# for consistency with the rest of the stack.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architecture
+
+```
+Returns-zone terminals (many, physically distributed)
+
+  Terminal 1  ──USB──┐
+  Terminal 2  ──USB──┼──►  C# Scanner Agent  ──WebSocket──►  Point-Update Service  ──►  PostgreSQL  ──►  Orders
+  Terminal N  ──USB──┘                                              ▲
+                                                                     │ targeted push
+                                                          Central Config Service
+                                                        (per-terminal agent/config
+                                                         updates, no shared deploy)
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technical decisions
+
+**Why WebSockets over REST polling?** Scan events needed to land in the order system within milliseconds of a physical scan — polling would add latency and load for no benefit at this volume.
+
+**Why point-updates instead of a single deploy?** Terminals were spread across the returns-zone floor and couldn't all go offline at once during a rollout. A central config service pushed agent and config updates to each terminal individually, so a rollout never stalled the whole zone.
+
+## Challenges
+
+Coordinating updates across many independently-running terminal agents without a shared deploy window. A bad agent version at one terminal had to stay contained to that terminal's queue, not cascade into the rest of the zone.
+
+## Observability
+
+Reused the same Prometheus/Grafana stack as the warehouse search service. Per-terminal scan throughput and error rate were the key dashboards for catching a misbehaving terminal before it fell behind on returns.
+
+## What I'd do differently
+
+Add automated per-terminal health checks to the rollout pipeline itself, so a bad update surfaced immediately instead of waiting for a picker to notice a stuck queue.
+
+</ModeAware>
