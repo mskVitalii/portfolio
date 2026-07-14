@@ -16,7 +16,7 @@
     "projects": "Projekte",
     "skills": "Fähigkeiten",
     "education": "Bildung",
-    "contact": "Kontakt",
+    "hireMe": "Einstellen",
     "card": "Visitenkarte",
     "recommendations": "Empfehlungen",
     "achievements": "Erfolge"
@@ -284,12 +284,17 @@
       "rank": "Rang #{value}"
     }
   },
-  "Contact": {
+  "HireMe": {
     "title": "Stellen Sie mich ein!",
     "metaDescription": "Kontakt aufnehmen — offen für Engineering-Stellen, Freelance-Arbeit und technische Zusammenarbeit.",
     "subtitle": "Offen für neue Möglichkeiten, technische Zusammenarbeit und interessante Gespräche.",
     "findMe": "Hier bin ich zu finden",
     "faq": "Häufig gestellte Fragen",
+    "faqSearchPlaceholder": "Fragen durchsuchen…",
+    "faqNoResults": "Keine Fragen gefunden.",
+    "faqHrHeading": "HR-Interview",
+    "faqBusinessHeading": "Gründer-Interview",
+    "faqTechHeading": "Tech-Lead-Interview",
     "faqHr": [
       {
         "q": "Sind Sie offen für einen Umzug?",
@@ -301,17 +306,45 @@
       },
       {
         "q": "Wie ist Ihre Kündigungsfrist?",
-        "a": "Aktuell fest angestellt bei Infineon Technologies — den Zeitpunkt bespreche ich gerne, sobald beiderseitiges Interesse besteht."
+        "a": "Ein Monat, in meiner aktuellen Rolle bei Infineon Technologies."
       },
       {
         "q": "Sind Sie offen für Freelance- oder Vertragsarbeit?",
-        "a": "Ja — neben Festanstellungen sind kurzfristige Beratung und technische Leitungsaufgaben willkommen."
+        "a": "Offen für Vollzeit-Vertragsrollen. Freelance-Arbeit nur über eine Vermittlungsplattform wie remozo.com."
+      },
+      {
+        "q": "Was sind Ihre langfristigen Karriereziele?",
+        "a": "Ich arbeite auf die deutsche Staatsbürgerschaft hin, deshalb suche ich eine stabile Rolle, in der ich mich die nächsten 5 Jahre weiterentwickeln kann — idealerweise an der Schnittstelle von verteilten Systemen und KI."
+      },
+      {
+        "q": "Was ist Ihre größte berufliche Errungenschaft?",
+        "a": "Das Parking Guidance System bei Infineon von Grund auf aufzubauen — Backend, Frontend und die eingebettete Computer Vision —, wodurch ein bezahlter Anbieter ersetzt wurde und das System heute 8.000 Nutzer bedient."
+      },
+      {
+        "q": "Was motiviert Sie, gute Arbeit zu leisten?",
+        "a": "Dinge zu bauen, die messbare Wirkung erzielen, und eine echte Begeisterung für Technologie — das hat mich überhaupt erst zur Softwareentwicklung gebracht."
+      },
+      {
+        "q": "Wie bleiben Sie auf dem Laufenden über Branchentrends?",
+        "a": "Durch praktisches Ausprobieren — ich habe Anthropic-Zertifizierungen für die Claude API/SDK und Claude Code und schreibe gelegentlich Artikel (der letzte kam auf 5K+ Aufrufe über Habr, Dev und Medium)."
+      },
+      {
+        "q": "Können Sie ein Beispiel für Teamarbeit zur Erreichung eines Ziels nennen?",
+        "a": "Die Leitung eines 3-köpfigen Teams für die NCahoots-Admin-App bei WeDo.agency — ich habe React eingeführt und Linting, Formatting sowie Pre-Commit-Hooks aufgesetzt, um die Qualität im Team konsistent zu halten."
+      },
+      {
+        "q": "Welche Eigenschaften sind für Erfolg am wichtigsten?",
+        "a": "Geschwindigkeit — schnell zu liefern und zu iterieren zählt heute mehr als ein von Anfang an perfektes Design."
+      },
+      {
+        "q": "Welche Gehaltsvorstellungen haben Sie?",
+        "a": "Aktuell peile ich 50.000–70.000 €/Jahr an, das deckt auch die Gehaltsschwelle für die Blaue Karte EU."
       }
     ],
     "faqTech": [
       {
-        "q": "Was ist Ihr primärer Stack?",
-        "a": "Go, Python und TypeScript/React im produktiven Einsatz, dazu Kafka, ElasticSearch, PostgreSQL, Redis und Kubernetes. Im KI-Bereich zunehmend RAG, LangChain und MCP."
+        "q": "Wie gehen Sie an Codequalität und Mentoring heran?",
+        "a": "Ich richte automatisierte Qualitäts-Gates früh ein — Linter, Formatter, Pre-Commit-Hooks —, damit sich Code-Reviews auf das Design statt auf den Stil konzentrieren können, und habe dabei mehrere Entwickler mentoriert."
       },
       {
         "q": "Haben Sie Erfahrung mit Production-On-Call?",
@@ -324,6 +357,30 @@
       {
         "q": "Kann ich Ihren Code oder Nebenprojekte sehen?",
         "a": "Auf der Skills-Seite gibt es eine interaktive Übersicht meines Stacks, auf der Projects-Seite vollständige Fallstudien."
+      },
+      {
+        "q": "Wie entscheiden Sie zwischen Refactoring und Neuschreiben?",
+        "a": "Standardmäßig refactore ich — die meisten Systeme brauchen kein Neuschreiben, sondern nur, dass die am häufigsten geänderten Teile aufgeräumt werden. Ein Neuschreiben lohnt sich nur, wenn die Architektur selbst das Problem ist."
+      },
+      {
+        "q": "Wie gehen Sie System-Design für Skalierbarkeit an?",
+        "a": "Ich starte von der echten Last, nicht von einer hypothetischen — bei OZON Tech habe ich einen Go-Microservice entworfen, der 200 Millionen Lagerartikel in unter 5 Sekunden mit ElasticSearch und Kafka durchsucht, getestet unter realistischer Last vor dem Launch."
+      },
+      {
+        "q": "Wie gehen Sie mit Incident Response um?",
+        "a": "Erst beheben, dann verstehen, dann verhindern. Ich habe bei Infineon und OZON Tech Production-On-Call mit Kubernetes-Deployments betrieben, überwacht mit Prometheus und Grafana — das Ziel ist, eine Regression im Dashboard zu sehen, bevor ein Kunde sie merkt."
+      },
+      {
+        "q": "Wie bewerten Sie, ob eine neue Technologie eingeführt werden sollte?",
+        "a": "Ich prototype sie an einem echten Problem, das ich bereits habe, nicht an einem Spielzeugbeispiel — so haben es RAG, LangChain und MCP in meinen Stack geschafft, und andere Tools eben nicht."
+      },
+      {
+        "q": "Wie gehen Sie mit Meinungsverschiedenheiten zur technischen Richtung um?",
+        "a": "Ich dokumentiere die Abwägungen als ADR und lasse, wo möglich, die Daten entscheiden — die meisten „Meinungsverschiedenheiten“ sind eigentlich unausgesprochene Annahmen über Prioritäten."
+      },
+      {
+        "q": "Wie sieht Ihre Testphilosophie aus?",
+        "a": "Tests sollten die Fehlerarten abfangen, die in Produktion tatsächlich auftreten, nicht nur eine Coverage-Zahl erreichen — Unit-Tests plus Lasttests haben mir ermöglicht, den OZON-Suchservice mit Zuversicht bei 200 Millionen Artikeln auszuliefern."
       }
     ],
     "faqBusiness": [
@@ -342,6 +399,30 @@
       {
         "q": "Welchen ROI haben Sie bisher erzielt?",
         "a": "480.000 € jährliche Einsparungen bei Infineon, 86.000 € bei OZON Tech und 11,63 % Metrik-Steigerung bei onlineTours — Details im Impact Dashboard."
+      },
+      {
+        "q": "Haben Sie schon einmal etwas von 0 auf 1 aufgebaut?",
+        "a": "Ja — ich habe das Parking Guidance System bei Infineon von Grund auf aufgebaut: Backend, Frontend und die eingebettete Computer Vision, von der Idee bis zum Live-System mit 8.000 Nutzern."
+      },
+      {
+        "q": "Wie wohl fühlen Sie sich damit, mehrere Rollen gleichzeitig zu übernehmen?",
+        "a": "Sehr wohl — bei WeDo.agency habe ich 9 verschiedene Startup-Produkte umgesetzt, oft allein, von Backend über Frontend und Infrastruktur bis hin zu KI/ML-Teilen."
+      },
+      {
+        "q": "Wie gehen Sie mit unklaren oder unvollständigen Anforderungen um?",
+        "a": "Ich liefere die kleinste Version, die die eigentliche Annahme testet, und lasse die tatsächliche Nutzung entscheiden, was als Nächstes kommt — so scope ich jedes MVP."
+      },
+      {
+        "q": "Sind Sie offen für Unternehmensanteile als Teil der Vergütung?",
+        "a": "Offen dafür, das als Teil des Gesamtpakets zu besprechen, besonders bei einer Rolle mit echter Verantwortung — Details bespreche ich gerne direkt."
+      },
+      {
+        "q": "Wie hoch ist Ihre Risikobereitschaft für ein Early-Stage-Unternehmen?",
+        "a": "Ich habe ein Jahr bei WeDo.agency verbracht und dort schnell für Early-Stage-Kunden geliefert, das Tempo ist mir also vertraut — allerdings suche ich aktuell eine Rolle, der ich mich langfristig verschreiben kann."
+      },
+      {
+        "q": "Wie liefern Sie schnell, ohne etwas kaputt zu machen?",
+        "a": "Ich automatisiere die Sicherheitsnetze, statt sie zu überspringen — meine CI/CD-Pipelines liefern in unter 10 Sekunden pro Deploy, sodass schnelles Liefern nicht auf Kosten der Absicherung geht."
       }
     ]
   },
@@ -501,7 +582,7 @@
     "subtitle": "Erkunden Sie meine Projekte mit vollem Geschäftskontext oder lesen Sie meinen Werdegang.",
     "projects": "Alle Projekte →",
     "about": "Über mich →",
-    "contact": "Kontakt →"
+    "hireMe": "Einstellen →"
   },
   "HomePage": {
     "metaTitle": "Vitalii Popov — Full-Stack-Entwickler",
@@ -511,7 +592,7 @@
     "metaTitle": "Empfehlungen",
     "metaDescription": "Was Kollegen, Kunden und Partner über die Zusammenarbeit mit Vitalii Popov sagen."
   },
-  "ContactLinks": {
+  "HireMeLinks": {
     "emailDescription": "Am besten für ausführliche Projektanfragen",
     "linkedinDescription": "Berufliches Netzwerk und Empfehlungen",
     "githubDescription": "Open-Source-Projekte und Code",
@@ -531,9 +612,9 @@
       "title": "Kartensammler",
       "description": "Besuche die Visitenkarten-Seite."
     },
-    "visitContact": {
+    "visitHireMe": {
       "title": "Kontaktaufnahme",
-      "description": "Besuche die Kontaktseite."
+      "description": "Besuche die Seite „Einstellen“."
     },
     "visitEducation": {
       "title": "Unterricht beginnt",

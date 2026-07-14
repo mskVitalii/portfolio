@@ -16,7 +16,7 @@
     "projects": "Projects",
     "skills": "Skills",
     "education": "Education",
-    "contact": "Contact",
+    "hireMe": "Hire me",
     "card": "Card",
     "recommendations": "Recommendations",
     "achievements": "Achievements"
@@ -284,12 +284,17 @@
       "rank": "rank #{value}"
     }
   },
-  "Contact": {
+  "HireMe": {
     "title": "Hire me!",
     "metaDescription": "Get in touch — open to engineering roles, freelance work, and technical collaboration.",
     "subtitle": "Open to new opportunities, technical collaboration, and interesting conversations.",
     "findMe": "Find me at",
     "faq": "Frequently asked questions",
+    "faqSearchPlaceholder": "Search questions…",
+    "faqNoResults": "No questions match your search.",
+    "faqHrHeading": "HR interview",
+    "faqBusinessHeading": "Founders interview",
+    "faqTechHeading": "Tech lead interview",
     "faqHr": [
       {
         "q": "Are you open to relocation?",
@@ -301,17 +306,45 @@
       },
       {
         "q": "What's your notice period?",
-        "a": "Currently full-time at Infineon Technologies — happy to discuss timing once there's mutual interest."
+        "a": "One month, at my current role with Infineon Technologies."
       },
       {
         "q": "Are you open to contract or freelance work?",
-        "a": "Yes — short-term consulting and technical leadership engagements are welcome alongside full-time roles."
+        "a": "Open to full-time contract roles. For freelance work, only through an intermediary/EOR platform like remozo.com."
+      },
+      {
+        "q": "What are your long-term career goals?",
+        "a": "I'm working toward German citizenship, so I'm looking for a stable role I can grow in over the next 5 years — ideally at the intersection of distributed systems and AI."
+      },
+      {
+        "q": "What's your greatest professional achievement?",
+        "a": "Building Infineon's Parking Guidance System from the ground up — backend, frontend, and the embedded computer vision — replacing a paid vendor and now serving 8,000 users."
+      },
+      {
+        "q": "What motivates you to perform well at work?",
+        "a": "Building things that create measurable impact, plus a genuine love of technology — it's what got me into engineering in the first place."
+      },
+      {
+        "q": "How do you stay current with industry trends?",
+        "a": "Hands-on experimentation — I hold Anthropic certifications in the Claude API/SDK and Claude Code, and I write the occasional article (the last one hit 5K+ views across Habr, Dev, and Medium)."
+      },
+      {
+        "q": "Can you give an example of working as part of a team to achieve a goal?",
+        "a": "Leading a 3-person team on the NCahoots admin app at WeDo.agency — I introduced React and set up linting, formatting, and pre-commit hooks to keep quality consistent across the team."
+      },
+      {
+        "q": "What do you consider the most important qualities for success?",
+        "a": "Speed — shipping fast and iterating matters more today than getting the design perfect upfront."
+      },
+      {
+        "q": "What are your salary expectations?",
+        "a": "Currently targeting €50–70K/year, which also covers the EU Blue Card salary threshold."
       }
     ],
     "faqTech": [
       {
-        "q": "What's your primary stack?",
-        "a": "Go, Python, and TypeScript/React in production, with Kafka, ElasticSearch, PostgreSQL, Redis, and Kubernetes underneath. Increasingly working with RAG, LangChain, and MCP on the AI side."
+        "q": "How do you approach code quality and mentoring?",
+        "a": "I set up automated quality gates early — linters, formatters, pre-commit hooks — so code review can focus on design instead of style, and I've mentored several developers along the way."
       },
       {
         "q": "Do you have production on-call experience?",
@@ -324,6 +357,30 @@
       {
         "q": "Can I see your code or side projects?",
         "a": "Check the Skills page for an interactive breakdown of my stack, or Projects for full case studies."
+      },
+      {
+        "q": "How do you decide when to refactor vs. rewrite?",
+        "a": "I default to refactor — most systems don't need a rewrite, just the parts that changed most often cleaned up first. A rewrite only makes sense when the architecture itself is the blocker."
+      },
+      {
+        "q": "How do you approach system design for scalability?",
+        "a": "Start from real load, not a hypothetical one — at OZON Tech I designed a Go microservice that searches 200M warehouse items in under 5 seconds using ElasticSearch and Kafka, load-tested before it ever shipped."
+      },
+      {
+        "q": "What's your approach to incident response?",
+        "a": "Fix first, understand second, prevent third. I've run production on-call at Infineon and OZON Tech with Kubernetes deployments monitored through Prometheus and Grafana, so the goal is catching a regression on a dashboard before a customer does."
+      },
+      {
+        "q": "How do you evaluate whether to adopt a new technology?",
+        "a": "I prototype it against a real problem I already have, not a toy example — that's how RAG, LangChain, and MCP earned a place in my stack, and how plenty of other tools didn't."
+      },
+      {
+        "q": "How do you handle disagreements about technical direction?",
+        "a": "Write the trade-offs down as an ADR and let the data settle it where possible — most 'disagreements' turn out to be unstated assumptions about priorities."
+      },
+      {
+        "q": "What's your testing philosophy?",
+        "a": "Tests should catch the failure modes that actually happen in production, not just hit a coverage number — unit tests plus load tests were what let me ship the OZON search service with confidence at 200M-item scale."
       }
     ],
     "faqBusiness": [
@@ -342,6 +399,30 @@
       {
         "q": "What kind of ROI have you delivered?",
         "a": "€480K/year in savings at Infineon, €86K at OZON Tech, and an 11.63% metric uplift at onlineTours — see the Impact Dashboard for details."
+      },
+      {
+        "q": "Have you built something from 0 to 1 before?",
+        "a": "Yes — I built Infineon's Parking Guidance System from the ground up: backend, frontend, and the embedded computer vision, taking it from an idea to a live system used by 8,000 people."
+      },
+      {
+        "q": "How comfortable are you wearing multiple hats?",
+        "a": "Very — at WeDo.agency I shipped 9 different startup products, often solo, covering backend, frontend, infrastructure, and sometimes the AI/ML pieces too."
+      },
+      {
+        "q": "How do you operate with ambiguous or incomplete requirements?",
+        "a": "I ship the smallest version that tests the real assumption, then let actual usage tell me what to build next — that's how I scope every MVP."
+      },
+      {
+        "q": "Are you open to equity as part of compensation?",
+        "a": "Open to discussing it as part of the overall package, especially for a role with real ownership — happy to talk specifics directly."
+      },
+      {
+        "q": "What's your risk tolerance for joining an early-stage company?",
+        "a": "I've spent a year at WeDo.agency shipping fast for early-stage clients, so I'm comfortable with the pace — that said, I'm currently looking for a role I can commit to long-term."
+      },
+      {
+        "q": "How do you move fast without breaking things?",
+        "a": "Automate the guardrails instead of skipping them — I've gotten CI/CD pipelines down to under 10 seconds per deploy, which means shipping quickly without losing the safety net."
       }
     ]
   },
@@ -501,7 +582,7 @@
     "subtitle": "Explore my projects with full business context, or read about my engineering journey.",
     "projects": "See all projects →",
     "about": "About me →",
-    "contact": "Contact →"
+    "hireMe": "Hire me →"
   },
   "HomePage": {
     "metaTitle": "Vitalii Popov — Full-Stack Engineer",
@@ -511,7 +592,7 @@
     "metaTitle": "Recommendations",
     "metaDescription": "What colleagues, clients, and collaborators say about working with Vitalii Popov."
   },
-  "ContactLinks": {
+  "HireMeLinks": {
     "emailDescription": "Best for detailed project inquiries",
     "linkedinDescription": "Professional network and recommendations",
     "githubDescription": "Open source projects and code",
@@ -531,9 +612,9 @@
       "title": "Card Collector",
       "description": "Visit the Business Card page."
     },
-    "visitContact": {
+    "visitHireMe": {
       "title": "Reaching Out",
-      "description": "Visit the Contact page."
+      "description": "Visit the Hire Me page."
     },
     "visitEducation": {
       "title": "Class Is in Session",

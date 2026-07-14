@@ -23,7 +23,7 @@ export type AchievementId =
   | "visitHome"
   | "visitAbout"
   | "visitCard"
-  | "visitContact"
+  | "visitHireMe"
   | "visitEducation"
   | "visitProjects"
   | "visitRecommendations"
@@ -47,7 +47,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "visitHome", icon: Home },
   { id: "visitAbout", icon: UserRound },
   { id: "visitCard", icon: CreditCard },
-  { id: "visitContact", icon: Mail },
+  { id: "visitHireMe", icon: Mail },
   { id: "visitEducation", icon: GraduationCap },
   { id: "visitProjects", icon: FolderKanban },
   { id: "visitRecommendations", icon: Quote },
@@ -68,7 +68,7 @@ export const PAGE_ACHIEVEMENTS: Record<string, AchievementId> = {
   "": "visitHome",
   about: "visitAbout",
   card: "visitCard",
-  contact: "visitContact",
+  "hire-me": "visitHireMe",
   education: "visitEducation",
   projects: "visitProjects",
   recommendations: "visitRecommendations",

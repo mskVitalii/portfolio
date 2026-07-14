@@ -14,7 +14,7 @@ export function Footer() {
     { href: "/skills", label: tNav("skills") },
     { href: "/card", label: tNav("card") },
     { href: "/recommendations", label: tNav("recommendations") },
-    { href: "/contact", label: tNav("contact") },
+    { href: "/hire-me", label: tNav("hireMe") },
     { href: "/achievements", label: tNav("achievements") },
   ];
 

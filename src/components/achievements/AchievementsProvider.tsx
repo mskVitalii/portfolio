@@ -57,7 +57,7 @@ export function AchievementsProvider() {
   }, [unlocked, unlock]);
 
   // Click delegation for contact links (email/LinkedIn/GitHub/Telegram) and CV downloads,
-  // wherever they appear on the site (Header, Footer, Hero, Contact page, ...).
+  // wherever they appear on the site (Header, Footer, Hero, Hire Me page, ...).
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement | null)?.closest?.("a[href]") as HTMLAnchorElement | null;

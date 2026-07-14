@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { key: "skills", href: "/skills" as const },
   { key: "education", href: "/education" as const },
   { key: "recommendations", href: "/recommendations" as const },
-  { key: "contact", href: "/contact" as const },
+  { key: "hireMe", href: "/hire-me" as const },
   { key: "card", href: "/card" as const },
 ] as const;
 

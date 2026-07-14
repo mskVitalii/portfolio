@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { ContactLinks } from "@/components/contact/ContactLinks";
-import { FAQ } from "@/components/contact/FAQ";
+import { HireMeLinks } from "@/components/hire-me/HireMeLinks";
+import { FAQ } from "@/components/hire-me/FAQ";
 import { Separator } from "@/components/ui/separator";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata, buildNavBreadcrumbJsonLd, buildFaqPageJsonLd, type FaqItem } from "@/lib/seo";
@@ -17,27 +17,31 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Contact" });
+  const t = await getTranslations({ locale, namespace: "HireMe" });
   return buildPageMetadata({
     locale,
-    path: "/contact",
+    path: "/hire-me",
     title: t("title"),
     description: t("metaDescription"),
   });
 }
 
-export default async function ContactPage({
+export default async function HireMePage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("Contact");
-  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "contact", "/contact");
-  // FAQ defaults to "hr" mode on first render (matches the view-mode store's
-  // default and the server-rendered HTML a crawler actually sees).
-  const faqJsonLd = buildFaqPageJsonLd(t.raw("faqHr") as FaqItem[]);
+  const t = await getTranslations("HireMe");
+  const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "hireMe", "/hire-me");
+  // All three FAQ sections render unconditionally now (no mode-gating), so the
+  // schema can safely cover every question instead of just one lens.
+  const faqJsonLd = buildFaqPageJsonLd([
+    ...(t.raw("faqHr") as FaqItem[]),
+    ...(t.raw("faqBusiness") as FaqItem[]),
+    ...(t.raw("faqTech") as FaqItem[]),
+  ]);
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-4xl">
@@ -50,15 +54,13 @@ export default async function ContactPage({
         </p>
       </div>
 
-      {/* Social links */}
       <section className="mb-12">
         <h2 className="text-xl font-semibold mb-4">{t("findMe")}</h2>
-        <ContactLinks />
+        <HireMeLinks />
       </section>
 
       <Separator className="my-10" />
 
-      {/* FAQ */}
       <section>
         <h2 className="text-xl font-semibold mb-6">{t("faq")}</h2>
         <FAQ />
