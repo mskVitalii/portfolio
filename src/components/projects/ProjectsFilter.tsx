@@ -17,7 +17,7 @@ const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = 
 
 // Companies with several conceptually-linked projects read better as a single
 // expandable bundle than as separate cards scattered across the work grid.
-const BUNDLE_COMPANIES = ["Infineon Technologies AG", "OZON Tech"];
+const BUNDLE_COMPANIES = ["Infineon Technologies AG", "OZON Tech", "onlineTours", "egsha", "WeDo.agency", "dunlimited"];
 
 // Sort key from a project's start date ("MM/YYYY [– MM/YYYY|present]") so the
 // most recent — and presumably most relevant — work surfaces first.

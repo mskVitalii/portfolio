@@ -122,7 +122,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "wedo-ecommerce-bidder",
     title: "E-Commerce Ad Bidder",
-    company: "WeDo.agency",
+    company: "egsha",
     period: "05/2020 – 06/2021",
     status: "archived",
     statusNote: "Agency pivoted; product was client-owned and handed off.",
@@ -140,7 +140,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "wedo-shopify-ai-support",
     title: "AI Support for Shopify Stores",
-    company: "WeDo.agency",
+    company: "dunlimited",
     period: "05/2020 – 06/2021",
     status: "archived",
     statusNote: "Agency pivoted; product was client-owned and handed off.",
@@ -153,6 +153,22 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: "Tickets handled", value: "660/mo" }],
     stack: ["Python", "Shopify", "AI"],
+  },
+  {
+    slug: "dunlimited-triplewhale-integration",
+    title: "TripleWhale Integration",
+    company: "dunlimited",
+    period: "05/2020 – 06/2021",
+    status: "archived",
+    statusNote: "Agency pivoted; product was client-owned and handed off.",
+    category: "work",
+    tagline: "Synced Shopify order & ad-spend data into TripleWhale for attribution reporting",
+    description: {
+      hr: "Full-Stack Developer building a data-sync pipeline between a Shopify store and TripleWhale, a Shopify attribution & analytics platform.",
+      business: "Automated a pipeline pushing order and ad-spend data into TripleWhale, giving the client accurate marketing attribution reporting without manual data entry.",
+      tech: "Python service syncing Shopify order and ad-spend data into TripleWhale via its API.",
+    },
+    stack: ["Python", "Shopify", "TripleWhale"],
   },
   {
     slug: "wedo-ai-video-dubbing",
@@ -253,8 +269,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "wedo-telegram-bots",
-    title: "Telegram Bots Suite",
-    company: "WeDo.agency",
+    title: "TG ботов",
+    company: "dunlimited",
     period: "05/2020 – 06/2021",
     status: "archived",
     statusNote: "Agency pivoted; product was client-owned and handed off.",
@@ -276,10 +292,11 @@ export const PROJECTS: Project[] = [
   {
     slug: "phone-repair-resale",
     title: "iPhone Repair & Resale",
+    company: "egsha",
     period: "01/2018 – 03/2018",
     status: "archived",
     statusNote: "Small resale venture, wound down after a bad parts order.",
-    category: "personal",
+    category: "work",
     tagline: "First small business — refurbished and resold used iPhones",
     description: {
       hr: "Ran a small iPhone refurbishment and resale business with a school friend — handled sourcing and inventory while a partner handled repairs and sales.",
@@ -326,21 +343,6 @@ export const PROJECTS: Project[] = [
     images: ["/images/projects/domclick-ad-generator/ad-form-screenshot.png"],
   },
   {
-    slug: "pet-clock-app",
-    title: "First Vanilla JS Clock App",
-    period: "07/2020",
-    status: "archived",
-    category: "personal",
-    tagline: "First front-end project, built in a single overnight session",
-    description: {
-      hr: "A first attempt at front-end development using plain JavaScript, no framework.",
-      business: "No commercial goal — a personal learning exercise.",
-      tech: "Vanilla JS/CSS clock UI. Rough around the edges — CSS and JS fundamentals were still new at the time.",
-    },
-    stack: ["JavaScript"],
-    images: ["/images/projects/pet-clock-app/clock-app.png"],
-  },
-  {
     slug: "parallax-comic-hackathon",
     title: "Parallax Comic Hackathon",
     period: "07/2020",
@@ -357,21 +359,6 @@ export const PROJECTS: Project[] = [
       { label: "Demo", url: "https://mskkote.github.io/Scott-Pilgrim-Parallax/" },
       { label: "GitHub", url: "https://github.com/mskKote/Scott-Pilgrim-Parallax" },
     ],
-  },
-  {
-    slug: "proganomicon",
-    title: "Proganomicon — Dev Library Reviews",
-    period: "07/2020 – 08/2020",
-    status: "archived",
-    statusNote: "Stopped — content creation without a real product wasn't motivating.",
-    category: "personal",
-    tagline: "Short-lived content project reviewing front-end libraries and tools",
-    description: {
-      hr: "Ran a short content project reviewing front-end libraries and tools — charting, UI kits, drag-and-drop, sliders, heatmaps, CMS — to build broad tooling literacy fast.",
-      business: "Published write-ups to a small community page; stopped after realizing content-for-content's-sake wasn't sustainable without a real product behind it.",
-      tech: "Research and evaluation only — no software shipped.",
-    },
-    stack: [],
   },
   {
     slug: "neural-network-visualizer",
@@ -480,22 +467,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/ncahoots-admin-panel/sample-data-1.jpeg",
       "/images/projects/ncahoots-admin-panel/sample-data-2.jpeg",
     ],
-  },
-  {
-    slug: "traffic-arbitrage-experiments",
-    title: "Traffic Arbitrage Experiments",
-    period: "12/2020 – 01/2021",
-    status: "deprecated",
-    statusNote: "Never taken further; pivoted into a small file-renaming utility instead.",
-    category: "personal",
-    tagline: "Short-lived attempt at a webview app for affiliate traffic",
-    description: {
-      hr: "Explored traffic-arbitrage/affiliate marketing with a friend — built a simple webview wrapper app, but stopped before it went anywhere.",
-      business: "Didn't proceed past the prototype stage; the friend later automated the same process by hiring dedicated bot developers instead.",
-      tech: "Later the same summer, built and documented a small desktop utility for batch-renaming files.",
-    },
-    stack: ["Other"],
-    images: ["/images/projects/traffic-arbitrage-experiments/file-renamer-app.png"],
   },
   {
     slug: "trustore-landing",
@@ -686,7 +657,7 @@ export const PROJECTS: Project[] = [
     period: "03/2022 – 05/2022",
     status: "archived",
     statusNote: "Led a 4-person student team; marketing outreach to artists didn't convert.",
-    category: "personal",
+    category: "hackathon",
     tagline: "Editor turning 2D art into gyroscope-driven 2.5D parallax content",
     description: {
       hr: "Led a 4-person university-course team building an editor that converts 2D illustrations into gyroscope- and scroll-driven 2.5D parallax content — a concept revisited from his first hackathon two years earlier.",
@@ -699,10 +670,11 @@ export const PROJECTS: Project[] = [
   {
     slug: "flyboots-store",
     title: "FlyBoots — Cross-Border Resale Store",
+    company: "egsha",
     period: "01/2023 – 02/2023",
     status: "archived",
     statusNote: "Delivered for launch; friend's business, no further engagement afterward.",
-    category: "personal",
+    category: "work",
     tagline: "E-commerce store for a friend's Poizon cross-border resale business",
     description: {
       hr: "Built an e-commerce store for a friend's clothing-resale business, sourcing inventory from the Chinese marketplace Poizon. Introduced a lightweight Scrum process partway through to resolve team conflict, and owned payments, shipping integrations, state management, CMS and the static build.",
@@ -715,9 +687,10 @@ export const PROJECTS: Project[] = [
   {
     slug: "audioland-musicgen",
     title: "Audioland — AI Music Generation Plugin",
+    company: "WeDo.agency",
     period: "07/2023 – 10/2023",
     status: "archived",
-    category: "personal",
+    category: "work",
     tagline: "Startup attempt during his Master's: an AI music-generation ChatGPT plugin",
     description: {
       hr: "Explored a startup idea during his Master's studies in Chemnitz: an AI plugin for generating music from a ChatGPT prompt.",
