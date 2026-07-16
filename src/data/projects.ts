@@ -507,7 +507,6 @@ export const PROJECTS: Project[] = [
       de: "Tool zur Mitarbeiteraktivitäts-Verfolgung",
       ru: "Инструмент учёта активности сотрудников",
     },
-    company: "WeDo.agency",
     period: "05/2020 – 06/2021",
     status: "archived",
     statusNote: {
@@ -528,9 +527,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик внутреннего инструмента мониторинга активности сотрудников.",
       },
       business: {
-        en: "Internal program to control and report on employee activity, with 9 configurable tracking options. One of many small, parallel client engagements run through WeDo.agency rather than a single product — from AI-powered tools to e-commerce storefronts to internal ops dashboards.",
-        de: "Internes Programm zur Kontrolle und zum Reporting von Mitarbeiteraktivität mit 9 konfigurierbaren Tracking-Optionen. Eines von vielen kleinen, parallel laufenden Kundenprojekten über WeDo.agency statt eines einzelnen Produkts — von KI-Tools über E-Commerce-Shops bis zu internen Ops-Dashboards.",
-        ru: "Внутренняя программа контроля и отчётности по активности сотрудников с 9 настраиваемыми опциями отслеживания. Один из многих небольших параллельных клиентских проектов через WeDo.agency, а не единый продукт — от AI-инструментов до e-commerce витрин и внутренних дашбордов.",
+        en: "Internal program to control and report on employee activity, with 9 configurable tracking options. One of many small, standalone freelance engagements rather than a single product — from AI-powered tools to e-commerce storefronts to internal ops dashboards.",
+        de: "Internes Programm zur Kontrolle und zum Reporting von Mitarbeiteraktivität mit 9 konfigurierbaren Tracking-Optionen. Eines von vielen kleinen, eigenständigen Freelance-Projekten statt eines einzelnen Produkts — von KI-Tools über E-Commerce-Shops bis zu internen Ops-Dashboards.",
+        ru: "Внутренняя программа контроля и отчётности по активности сотрудников с 9 настраиваемыми опциями отслеживания. Один из многих небольших самостоятельных фриланс-проектов, а не единый продукт — от AI-инструментов до e-commerce витрин и внутренних дашбордов.",
       },
       tech: {
         en: "Built with Angular.",
@@ -548,7 +547,6 @@ export const PROJECTS: Project[] = [
       de: "Horsium — Pferdezucht-Simulator",
       ru: "Horsium — симулятор коневодства",
     },
-    company: "WeDo.agency",
     period: "05/2020 – 06/2021",
     status: "active",
     statusNote: {
@@ -611,9 +609,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик Audioland — плагина генерации музыки для ChatGPT, включая пайплайн деплоя и авто-масштабируемую очередь.",
       },
       business: {
-        en: "Audioland (and its sibling project, Dubbing) existed to take speechki.com public on the Cyprus stock exchange — the plan required demonstrating real profit from speechki.com's neural-network products. The startup didn't make it, not for lack of product, but because of OpenAI's plugin monetization policy: plugins could not be monetized before, during, or after operation — meaning not at all. A track generates in under a minute.",
-        de: "Audioland (und das Schwesterprojekt Dubbing) existierten, um speechki.com an die Börse Zypern zu bringen — der Plan erforderte den Nachweis echten Gewinns aus speechki.coms KI-Produkten. Das Startup scheiterte nicht am Produkt, sondern an OpenAIs Monetarisierungsrichtlinie für Plugins: Plugins durften weder vor, während noch nach dem Betrieb monetarisiert werden — also gar nicht. Ein Musikstück wird in unter einer Minute generiert.",
-        ru: "Audioland (и родственный проект Dubbing) существовали ради вывода speechki.com на Кипрскую фондовую биржу — план требовал показать реальную прибыль на нейросетевых продуктах speechki.com. Стартап не взлетел не из-за продукта, а из-за политики монетизации плагинов OpenAI: плагины нельзя было монетизировать ни до, ни во время, ни после эксплуатации ботов — то есть никак. Трек генерируется меньше чем за минуту.",
+        en: "Audioland (and its sibling project, Dubbing) existed to take speechki.com public on the Cyprus stock exchange — the plan required demonstrating real profit from speechki.com's neural-network products. The startup didn't make it, not for lack of product, but because of OpenAI's plugin monetization policy: \"plugins could not be monetized before, during, or after operation\" — meaning not at all.",
+        de: "Audioland (und das Schwesterprojekt Dubbing) existierten, um speechki.com an die Börse Zypern zu bringen — der Plan erforderte den Nachweis echten Gewinns aus speechki.coms KI-Produkten. Das Startup scheiterte nicht am Produkt, sondern an OpenAIs Monetarisierungsrichtlinie für Plugins: „Plugins durften weder vor, während noch nach dem Betrieb monetarisiert werden“ — also gar nicht.",
+        ru: "Audioland (и родственный проект Dubbing) существовали ради вывода speechki.com на Кипрскую фондовую биржу — план требовал показать реальную прибыль на нейросетевых продуктах speechki.com. Стартап не взлетел не из-за продукта, а из-за политики монетизации плагинов OpenAI: «нельзя монетизировать ни до, ни во время, ни после эксплуатации ботов» — то есть никак.",
       },
       tech: {
         en: "AI app deployed with Next.js and Firebase; generated tracks stored in Minio object storage. Generation requests go through a queue administered by an algorithm that spins up AWS machines on demand — that's what makes the pipeline scale.",

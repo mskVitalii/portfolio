@@ -2,9 +2,8 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useViewMode } from "@/store/viewMode";
-import { localize } from "@/lib/localized";
 import {
   ReactFlow,
   Background,
@@ -20,8 +19,6 @@ import {
 import "@xyflow/react/dist/style.css";
 import { Badge } from "@/components/ui/badge";
 import { SKILLS, CATEGORY_COLORS, LEVEL_LABELS, type Skill } from "@/data/skills";
-import { PROJECTS } from "@/data/projects";
-import { cn } from "@/lib/utils";
 
 // ─── Shared node renderer ───────────────────────────────────────────────────
 
@@ -427,8 +424,6 @@ interface Cert {
 // ─── Single graph section ─────────────────────────────────────────────────────
 
 function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?: Cert[] }) {
-  const t = useTranslations("SkillsPage");
-  const locale = useLocale();
   const { mode } = useViewMode();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [certsOpen, setCertsOpen] = useState(true);
@@ -440,16 +435,6 @@ function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?
   }, [resolvedTheme]);
 
   const selectedSkill = selectedId ? getSkill(selectedId) : null;
-
-  const skillIds = (graph.nodes as Node[])
-    .filter((n) => n.type === "techNode")
-    .map((n) => n.id);
-  const projectSlugs = [
-    ...new Set(
-      skillIds.flatMap((id) => getSkill(id)?.projects ?? [])
-    ),
-  ];
-  const relatedProjects = PROJECTS.filter((p) => projectSlugs.includes(p.slug));
 
   return (
     <div className="rounded-xl border overflow-hidden bg-card shadow-sm">
@@ -473,7 +458,7 @@ function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?
       </div>
 
       {/* Selected skill detail */}
-      {selectedSkill ? (
+      {selectedSkill && (
         <div className="px-6 py-4 border-b bg-muted/30">
           <div className="flex items-start justify-between mb-2">
             <div>
@@ -492,26 +477,6 @@ function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?
           {selectedSkill.description && (
             <p className="text-sm text-muted-foreground">{selectedSkill.description}</p>
           )}
-        </div>
-      ) : (
-        <div className="px-6 py-3 border-b">
-          <p className="text-xs text-muted-foreground">{t("clickHint")}</p>
-        </div>
-      )}
-
-      {/* Related projects */}
-      {relatedProjects.length > 0 && (
-        <div className={cn("px-6 py-4", certs && certs.length > 0 && "border-b")}>
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
-            {t("usedIn")}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {relatedProjects.map((p) => (
-              <Badge key={p.slug} variant="secondary">
-                {localize(p.title, locale)}
-              </Badge>
-            ))}
-          </div>
         </div>
       )}
 

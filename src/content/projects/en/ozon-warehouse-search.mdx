@@ -17,13 +17,28 @@ impact:
 
 ## The story, in brief
 
-**Situation:** OZON's warehouse pickers searched a 200-million-row PostgreSQL table with a plain `LIKE` query. At that scale it had become unusable — pickers were losing time just finding an item, with no way to see where a package had been.
+<StarStory>
+<StarSituation>
 
-**Task:** Replace it with search fast enough for real-time warehouse work, and give staff visibility into an item's full movement history — not just its current location.
+OZON's warehouse pickers searched a 200-million-row PostgreSQL table with a plain `LIKE` query. At that scale it had become unusable — pickers were losing time just finding an item, with no way to see where a package had been.
 
-**Action:** Built a Go microservice backed by ElasticSearch and Kafka, replacing the SQL query with proper full-text and fuzzy search — including a custom analyzer for staff typing SKUs in both Cyrillic and Latin script.
+</StarSituation>
+<StarTask>
 
-**Result:** 200M items searchable in under 5 seconds. Warehouse staff can trace an item's full movement history instead of just its last known location, so packages stop getting lost between fulfilment centres.
+Replace it with search fast enough for real-time warehouse work, and give staff visibility into an item's full movement history — not just its current location.
+
+</StarTask>
+<StarAction>
+
+Built a Go microservice backed by ElasticSearch and Kafka, replacing the SQL query with proper full-text and fuzzy search — including a custom analyzer for staff typing SKUs in both Cyrillic and Latin script.
+
+</StarAction>
+<StarResult>
+
+200M items searchable in under 5 seconds. Warehouse staff can trace an item's full movement history instead of just its last known location, so packages stop getting lost between fulfilment centres.
+
+</StarResult>
+</StarStory>
 
 ### Frequently asked
 

@@ -92,14 +92,16 @@ export function Hero() {
         </div>
       </motion.div>
 
-      <motion.div
+      <motion.button
+        type="button"
+        onClick={() => document.getElementById("impact")?.scrollIntoView({ behavior: "smooth" })}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.4 }}
-        className="absolute bottom-8 text-muted-foreground text-sm"
+        className="absolute bottom-8 text-muted-foreground text-sm hover:text-foreground transition-colors"
       >
         {t("scrollHint")}
-      </motion.div>
+      </motion.button>
     </section>
   );
 }

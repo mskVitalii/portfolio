@@ -13,6 +13,8 @@ import { ProjectStatusBadge } from "./ProjectStatusBadge";
 import { ProjectImageGallery } from "./ProjectImageGallery";
 import { ProjectDescription } from "./ProjectDescription";
 import { AdBidderDemo } from "./AdBidderDemo";
+import { IpoSimulator } from "./IpoSimulator";
+import { PseoLanguageGrid } from "./PseoLanguageGrid";
 import type { Project } from "@/data/projects";
 
 /** Full case-study block for one project — title through MDX write-up. Reused
@@ -104,6 +106,12 @@ export async function ProjectDetailSection({
 
       {/* Interactive demo for the ad-bidding mechanic */}
       {project.slug === "wedo-ecommerce-bidder" && <AdBidderDemo />}
+
+      {/* Interactive demo for the Cyprus IPO mechanic */}
+      {project.slug === "audioland-musicgen" && <IpoSimulator />}
+
+      {/* Interactive demo for the programmatic-SEO language-pair mechanic */}
+      {project.slug === "wedo-ai-video-dubbing" && <PseoLanguageGrid />}
 
       {/* Stack */}
       <div className="flex flex-wrap gap-2 mb-6">

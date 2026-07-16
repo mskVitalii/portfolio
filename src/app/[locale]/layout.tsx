@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { ViewModeProvider } from "@/components/layout/ViewModeProvider";
 import { Header } from "@/components/layout/Header";
+import { ExploreMore } from "@/components/layout/ExploreMore";
 import { Footer } from "@/components/layout/Footer";
 import { ModeParamSync } from "@/components/layout/ModeParamSync";
 import { AchievementsProvider } from "@/components/achievements/AchievementsProvider";
@@ -156,6 +157,7 @@ export default async function LocaleLayout({
         </Suspense>
         <Header />
         <div className="flex-1">{children}</div>
+        <ExploreMore />
         <Footer />
         <AchievementsProvider />
       </ViewModeProvider>

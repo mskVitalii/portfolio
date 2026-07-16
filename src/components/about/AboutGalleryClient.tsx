@@ -118,7 +118,18 @@ export function AboutGalleryClient({
   return (
     <section className="mb-16">
       <h2 className="mb-3 text-2xl font-bold">{title}</h2>
-      <p className="mb-10 max-w-2xl text-muted-foreground leading-relaxed">{intro}</p>
+      <p className="mb-6 max-w-2xl text-muted-foreground leading-relaxed">{intro}</p>
+
+      {tinderPhotos.length > 0 && (
+        <button
+          type="button"
+          onClick={() => setTinderOpen(true)}
+          className="mb-10 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#FD267A] to-[#FF6036] px-6 py-3 text-base font-semibold text-white shadow-md transition-transform hover:scale-105 sm:w-auto"
+        >
+          <Flame className="h-5 w-5" fill="currentColor" />
+          {openTinderLabel}
+        </button>
+      )}
 
       {/* Travel map */}
       <div className="mb-12">
@@ -209,21 +220,9 @@ export function AboutGalleryClient({
 
       {/* Grid */}
       <div className="mb-16">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-            {gridTitle}
-          </h3>
-          {tinderPhotos.length > 0 && (
-            <button
-              type="button"
-              onClick={() => setTinderOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#FD267A] to-[#FF6036] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105"
-            >
-              <Flame className="h-4 w-4" fill="currentColor" />
-              {openTinderLabel}
-            </button>
-          )}
-        </div>
+        <h3 className="mb-6 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          {gridTitle}
+        </h3>
         <div className="columns-2 sm:columns-3 lg:columns-4 gap-3 [column-fill:balance]">
           {visibleGridPhotos.map((photo, i) => (
             <button

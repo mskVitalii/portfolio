@@ -10,6 +10,9 @@
     "sitemap": "Sitemap",
     "downloadCv": "Lebenslauf herunterladen"
   },
+  "ExploreMore": {
+    "title": "Weiter entdecken"
+  },
   "Nav": {
     "home": "Startseite",
     "about": "Über mich",
@@ -501,6 +504,49 @@
       "rankTop": "Oben in den Ergebnissen",
       "rankBottom": "Unten in den Ergebnissen"
     },
+    "ipoSim": {
+      "title": "So zahlt sich ein Börsengang auf Zypern wirklich aus",
+      "description": "speechki.com an die Börse zu bringen bedeutete mehr als gute Zahlen — es bedeutete, genau diese Abfolge zu durchlaufen, bei der nur eine Partei einen festen Zahltag hat und alle anderen darauf wetten, wo der Markt landet.",
+      "step1": "Mindestens 50.000 $ realen, geprüften Gewinn nachweisen",
+      "step2": "Das geistige Eigentum in eine neue Holding-Gesellschaft auslagern, frei von der alten Investoren-Cap-Table",
+      "step3": "Eine unabhängige Prüfung legt die Unternehmensbewertung fest und verifiziert die Bücher",
+      "step4": "Ein Broker kauft die Aktien mit einem Abschlag auf diese Bewertung — das ist der eigentliche Zahltag für das Unternehmen",
+      "step5": "Die Aktien werden frei an der Börse gehandelt — das Unternehmen sieht davon keinen Cent mehr",
+      "saleLabel": "Verkaufspreis des Unternehmens",
+      "restart": "Markt neu mischen",
+      "auditEstimateTemplate": "Ein unabhängiges Audit schätzte den Unternehmenswert auf <b>{value}</b>",
+      "marketValueTemplate": "Der Markt bewertete das Unternehmen letztlich mit <b>{value}</b>",
+      "companyLabel": "Unternehmen",
+      "vsMarketValue": "ggü. Marktwert",
+      "companyCaption": "Fest im Moment des Aktienkaufs durch den Broker — der Markt danach ändert daran nichts",
+      "companyCaptionLeftOnTable": "Der Zahltag selbst war fix — aber der Markt hat das Unternehmen so viel höher bewertet als die Prüfung, dass das, was liegen blieb, ihn inzwischen übersteigt",
+      "brokerLabel": "Broker",
+      "brokerCaptionUp": "Der Markt hat das Unternehmen höher bewertet als die Prüfung — der Broker streicht die Differenz ein",
+      "brokerCaptionDown": "Der Markt bestätigte die Prüfung — kein zusätzlicher Gewinn blieb liegen",
+      "brokerCaptionLoss": "Der Markt ist unter den Einkaufspreis des Brokers gefallen — ein echter Verlust, nicht nur eine verpasste Chance",
+      "exchangeLabel": "Börse",
+      "exchangeCaption": "Kleine Handelsgebühren in jeder Periode, in beide Richtungen — das Unternehmen sieht nichts davon",
+      "referenceAudit": "Audit-Schätzung",
+      "referenceOffer": "Einkaufspreis des Brokers",
+      "legendUp": "Kurs steigt",
+      "legendDown": "Kurs fällt"
+    },
+    "pseoSim": {
+      "title": "So skaliert der programmatische SEO-Trick wirklich",
+      "description": "Jede unterstützte Sprache, gepaart mit jeder anderen Sprache, wurde zu einer eigenen Landingpage — den Regler ziehen, um zu sehen, warum aus 60 Sprachen Tausende Seiten werden, dann eine auswählen, um genau zu sehen, welche Seiten sie erzeugt.",
+      "languageCountLabel": "Unterstützte Sprachen",
+      "formulaCaption": "Sprachen × andere Sprachen = Landingpages",
+      "pickLanguageLabel": "Ausgangssprache wählen",
+      "generatesTemplate": "{lang} allein erzeugt {count} Landingpages — eine pro Zielsprache:",
+      "languages": [
+        "Englisch", "Spanisch", "Französisch", "Deutsch", "Italienisch", "Portugiesisch", "Niederländisch", "Polnisch", "Schwedisch", "Norwegisch",
+        "Dänisch", "Finnisch", "Russisch", "Ukrainisch", "Tschechisch", "Slowakisch", "Ungarisch", "Rumänisch", "Bulgarisch", "Griechisch",
+        "Türkisch", "Arabisch", "Hebräisch", "Persisch", "Hindi", "Bengalisch", "Urdu", "Punjabi", "Tamil", "Telugu",
+        "Marathi", "Gujarati", "Thailändisch", "Vietnamesisch", "Indonesisch", "Malaiisch", "Filipino", "Chinesisch (Mandarin)", "Kantonesisch", "Japanisch",
+        "Koreanisch", "Mongolisch", "Kasachisch", "Usbekisch", "Aserbaidschanisch", "Georgisch", "Armenisch", "Serbisch", "Kroatisch", "Slowenisch",
+        "Litauisch", "Lettisch", "Estnisch", "Isländisch", "Swahili", "Amharisch", "Zulu", "Afrikaans", "Katalanisch", "Baskisch"
+      ]
+    },
     "creditHeading": "Gemeinsam entwickelt mit",
     "creditLinkedIn": "Auf LinkedIn ansehen",
     "faqSectionTitle": "Fragen zu diesen Fallstudien",
@@ -556,14 +602,12 @@
     "title": "Fähigkeiten",
     "metaDescription": "Interaktive Skill-Map über Backend, Frontend, Infrastruktur und KI — mit Projektzusammenhang und Erfahrungstiefe.",
     "subtitle": "Eine interaktive Karte der Technologien, mit denen ich arbeite. Klicken Sie auf einen Knoten für Details und verwandte Projekte.",
-    "clickHint": "Knoten anklicken für Details und verwandte Projekte",
     "matcherTitle": "Skills mit einer Stellenausschreibung abgleichen",
     "matcherPlaceholder": "Stellenausschreibung oder Anforderungsliste einfügen — passende Skills werden unten hervorgehoben.",
     "matcherSummary": "{matched} von {total} Skills gefunden",
     "matcherEmpty": "Text oben einfügen, um passende Skills zu sehen.",
     "switchModeTitle": "So ist es gebaut",
-    "switchModeBody": "Interaktive Architekturdiagramme sind im Business- oder Tech-Modus verfügbar.",
-    "usedIn": "Verwendet in"
+    "switchModeBody": "Interaktive Architekturdiagramme sind im Business- oder Tech-Modus verfügbar."
   },
   "EducationPage": {
     "title": "Bildung",

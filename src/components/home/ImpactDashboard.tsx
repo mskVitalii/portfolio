@@ -68,7 +68,7 @@ export function ImpactDashboard() {
   const tCommon = useTranslations("Common");
 
   return (
-    <section className="py-20 px-4 border-t bg-muted/30">
+    <section id="impact" className="py-20 px-4 border-t bg-muted/30">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold">{t("title")}</h2>

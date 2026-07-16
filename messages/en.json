@@ -10,6 +10,9 @@
     "sitemap": "Sitemap",
     "downloadCv": "Download CV"
   },
+  "ExploreMore": {
+    "title": "Keep exploring"
+  },
   "Nav": {
     "home": "Home",
     "about": "About",
@@ -501,6 +504,49 @@
       "rankTop": "Top of results",
       "rankBottom": "Bottom of results"
     },
+    "ipoSim": {
+      "title": "How a Cyprus IPO actually pays out",
+      "description": "Taking speechki.com public meant more than good numbers — it meant walking this exact sequence, where only one party's payday is fixed and everyone else is betting on where the market lands.",
+      "step1": "Show at least $50K in real, audited profit",
+      "step2": "Spin the IP into a fresh holding entity, clean of the old investor cap table",
+      "step3": "An independent audit sets the company's valuation and verifies its books",
+      "step4": "A broker buys the shares at a discount to that valuation — this is the company's actual payday",
+      "step5": "Shares start trading freely on the exchange — the company never sees another cent from that",
+      "saleLabel": "Price the company sold for",
+      "restart": "Reshuffle the market",
+      "auditEstimateTemplate": "An independent audit estimated the company's value at <b>{value}</b>",
+      "marketValueTemplate": "The market eventually valued the company at <b>{value}</b>",
+      "companyLabel": "Company",
+      "vsMarketValue": "vs. market value",
+      "companyCaption": "Locked in the moment the broker buys — the market afterward doesn't change it",
+      "companyCaptionLeftOnTable": "The payday itself was fixed — but the market re-rated the company so far above the audit that what got left on the table now outweighs it",
+      "brokerLabel": "Broker",
+      "brokerCaptionUp": "The market re-rated the company above the audit — broker pockets the gap",
+      "brokerCaptionDown": "The market agreed with the audit — no windfall left on the table",
+      "brokerCaptionLoss": "The market crashed below what the broker paid — a real loss, not just a missed windfall",
+      "exchangeLabel": "Exchange",
+      "exchangeCaption": "Small trading fees every period, in either direction — the company sees none of it",
+      "referenceAudit": "Audit estimate",
+      "referenceOffer": "Broker's buy-in price",
+      "legendUp": "Price up",
+      "legendDown": "Price down"
+    },
+    "pseoSim": {
+      "title": "How the programmatic-SEO trick actually scales",
+      "description": "Every supported language paired with every other language became its own landing page — drag the slider to see why 60 languages turns into thousands of pages, then pick one to see exactly which pages it generates.",
+      "languageCountLabel": "Supported languages",
+      "formulaCaption": "languages × other languages = landing pages",
+      "pickLanguageLabel": "Pick a source language",
+      "generatesTemplate": "{lang} alone generates {count} landing pages — one per target language:",
+      "languages": [
+        "English", "Spanish", "French", "German", "Italian", "Portuguese", "Dutch", "Polish", "Swedish", "Norwegian",
+        "Danish", "Finnish", "Russian", "Ukrainian", "Czech", "Slovak", "Hungarian", "Romanian", "Bulgarian", "Greek",
+        "Turkish", "Arabic", "Hebrew", "Persian", "Hindi", "Bengali", "Urdu", "Punjabi", "Tamil", "Telugu",
+        "Marathi", "Gujarati", "Thai", "Vietnamese", "Indonesian", "Malay", "Filipino", "Chinese (Mandarin)", "Cantonese", "Japanese",
+        "Korean", "Mongolian", "Kazakh", "Uzbek", "Azerbaijani", "Georgian", "Armenian", "Serbian", "Croatian", "Slovenian",
+        "Lithuanian", "Latvian", "Estonian", "Icelandic", "Swahili", "Amharic", "Zulu", "Afrikaans", "Catalan", "Basque"
+      ]
+    },
     "creditHeading": "Built together with",
     "creditLinkedIn": "View on LinkedIn",
     "faqSectionTitle": "Questions about these case studies",
@@ -556,14 +602,12 @@
     "title": "Skills",
     "metaDescription": "Interactive skill map across backend, frontend, infrastructure, and AI — with project context and experience depth.",
     "subtitle": "An interactive map of technologies I work with. Click any node to see experience details and related projects.",
-    "clickHint": "Click any node to see details and related projects",
     "matcherTitle": "Match skills against a job description",
     "matcherPlaceholder": "Paste a job posting or list of requirements — matching skills get highlighted below.",
     "matcherSummary": "{matched} of {total} skills matched",
     "matcherEmpty": "Paste some text above to see which skills match.",
     "switchModeTitle": "See how it's built",
-    "switchModeBody": "Interactive architecture diagrams are available in Business or Tech mode.",
-    "usedIn": "Used in"
+    "switchModeBody": "Interactive architecture diagrams are available in Business or Tech mode."
   },
   "EducationPage": {
     "title": "Education",
