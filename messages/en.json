@@ -438,6 +438,8 @@
     "metaDescription": "Engineering case studies with real business metrics — filterable by category and audience mode.",
     "subtitle": "Case studies from real engineering work. Switch the audience mode to see each project from a different perspective.",
     "allProjects": "All projects",
+    "nextProjectLabel": "Next project",
+    "backToAllProjects": "Back to all projects",
     "sectionWork": "Commercial Work",
     "sectionHackathons": "Hackathons",
     "sectionFreelance": "Freelance Projects",
@@ -482,7 +484,11 @@
       "githubReranker": "GitHub — Reranker",
       "originalHackathonDemo": "Demo — Original Hackathon Build",
       "originalHackathonGithub": "GitHub — Original Hackathon Build",
-      "liveTranslation": "Live translation"
+      "liveTranslation": "Live translation",
+      "demoStore": "Demo — Store",
+      "githubStore": "GitHub — Store",
+      "demoLanding": "Demo — Landing Page",
+      "githubLanding": "GitHub — Landing Page"
     },
     "star": {
       "situation": "Situation",

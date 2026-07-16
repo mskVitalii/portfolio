@@ -438,6 +438,8 @@
     "metaDescription": "Инженерные кейсы с реальными бизнес-метриками — фильтрация по категории и режиму просмотра.",
     "subtitle": "Кейсы из реальной инженерной практики. Переключите режим просмотра для разных перспектив.",
     "allProjects": "Все проекты",
+    "nextProjectLabel": "Следующий проект",
+    "backToAllProjects": "Ко всем проектам",
     "sectionWork": "Коммерческие проекты",
     "sectionHackathons": "Хакатоны",
     "sectionFreelance": "Фриланс-проекты",
@@ -482,7 +484,11 @@
       "githubReranker": "GitHub — реранкер",
       "originalHackathonDemo": "Демо — оригинальная хакатон-версия",
       "originalHackathonGithub": "GitHub — оригинальная хакатон-версия",
-      "liveTranslation": "Опубликованный перевод"
+      "liveTranslation": "Опубликованный перевод",
+      "demoStore": "Демо — магазин",
+      "githubStore": "GitHub — магазин",
+      "demoLanding": "Демо — лендинг",
+      "githubLanding": "GitHub — лендинг"
     },
     "star": {
       "situation": "Ситуация",

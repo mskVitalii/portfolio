@@ -8,7 +8,8 @@ import { X, Building2 } from "lucide-react";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectCompanyBundle } from "./ProjectCompanyBundle";
 import { useViewMode } from "@/store/viewMode";
-import type { Project, ProjectCategory } from "@/data/projects";
+import { periodEndKey, type Project, type ProjectCategory } from "@/data/projects";
+import { COMPANY_BUNDLES } from "@/data/companies";
 
 const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = [
   { id: "work", category: "work", titleKey: "sectionWork" },
@@ -19,29 +20,7 @@ const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = 
 
 // Companies with several conceptually-linked projects read better as a single
 // expandable bundle than as separate cards scattered across the work grid.
-const BUNDLE_COMPANIES = [
-  "Infineon Technologies AG",
-  "OZON Tech",
-  "onlineTours",
-  "egsha",
-  "WeDo.agency",
-  "dunlimited",
-  "Yohan Loshop (own studio)",
-];
-
-// Sort key from a project's *end* date ("MM/YYYY [– MM/YYYY|present]") so
-// recently-finished (or ongoing) work surfaces first — a project that ran
-// 2018-2023 reads as more recent than one that started later but wrapped
-// earlier, which a start-date sort would get backwards.
-function periodEndKey(period: string): number {
-  const parts = period.split(/\s*[–—-]\s*/);
-  const endToken = (parts[1] ?? parts[0]).trim();
-  if (endToken.toLowerCase() === "present") return Infinity;
-  const match = endToken.match(/(\d{1,2})\/(\d{4})/);
-  if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
-  const year = endToken.match(/\d{4}/);
-  return year ? parseInt(year[0], 10) * 12 : 0;
-}
+const BUNDLE_COMPANIES = COMPANY_BUNDLES.map((b) => b.name);
 
 // Rough, ordering-only currency normalization — good enough to rank a €480K/yr
 // corporate saving above a ₽15,000 freelance gig, not a financial calculation.

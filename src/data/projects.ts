@@ -1,4 +1,5 @@
 import type { LocalizedText } from "@/lib/localized";
+import { COMPANY_BUNDLES, getCompanyBundle } from "./companies";
 
 export type ProjectStatus = "active" | "archived" | "deprecated";
 export type ProjectCategory = "work" | "education" | "hackathon" | "personal" | "freelance";
@@ -997,126 +998,52 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    slug: "trustore-landing",
-    title: {
-      en: "TruStore Landing Page",
-      de: "TruStore-Landingpage",
-      ru: "Лендинг TruStore",
-    },
-    period: "03/2021",
-    status: "archived",
-    category: "freelance",
-    tagline: {
-      en: "Landing page for a Facebook-account resale business",
-      de: "Landingpage für einen Wiederverkaufsdienst für Facebook-Konten",
-      ru: "Лендинг для бизнеса по перепродаже Facebook-аккаунтов",
-    },
-    description: {
-      hr: {
-        en: "Built a landing page for a friend's small resale business, working from another freelancer's design.",
-        de: "Landingpage für das kleine Wiederverkaufsgeschäft eines Freundes gebaut, nach dem Design eines anderen Freelancers.",
-        ru: "Собрал лендинг для небольшого перепродажного бизнеса друга по дизайну другого фрилансера.",
-      },
-      business: {
-        en: "Two-week freelance landing-page build, earning ₽10,000.",
-        de: "Zweiwöchiger Freelance-Auftrag für eine Landingpage, Honorar 10.000 ₽.",
-        ru: "Двухнедельный фриланс-проект по лендингу, доход ₽10 000.",
-      },
-      tech: {
-        en: "Vanilla JavaScript, with a deliberately playful, brand-appropriate UI touch — a custom GTA V-style cursor.",
-        de: "Reines JavaScript, mit einem bewusst verspielten, markengerechten UI-Detail — ein individueller Cursor im GTA-V-Stil.",
-        ru: "Чистый JavaScript, с намеренно игривой деталью в стиле бренда — кастомный курсор в стиле GTA V.",
-      },
-    },
-    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽10,000" }],
-    stack: ["JavaScript"],
-    links: [{ labelKey: "github", url: "https://github.com/mskKote/TruStore" }],
-    images: ["/images/projects/trustore-landing/gta-cursor.png"],
-  },
-  {
     slug: "mining-skins-store",
     title: {
-      en: "Skins-for-Mining Store",
-      de: "Skins-für-Mining-Shop",
-      ru: "Магазин скинов за майнинг",
+      en: "Skins-for-Mining Store & Landing Page",
+      de: "Skins-für-Mining-Shop & Landingpage",
+      ru: "Магазин и лендинг скинов за майнинг",
     },
-    period: "03/2021",
+    period: "03/2021 – 06/2021",
     status: "archived",
     category: "freelance",
     tagline: {
-      en: "Solo freelance build: a rewards store + mining-activity dashboard for crypto miners",
-      de: "Solo-Freelance-Projekt: Prämien-Shop + Mining-Aktivitäts-Dashboard für Krypto-Miner",
-      ru: "Соло-фриланс-проект: магазин наград + дашборд активности майнинга для крипто-майнеров",
+      en: "Solo freelance build for a crypto-mining rewards platform: a skins store, mining-activity dashboard, and follow-on marketing landing page",
+      de: "Solo-Freelance-Projekt für eine Krypto-Mining-Prämienplattform: Skins-Shop, Mining-Aktivitäts-Dashboard und eine Folge-Landingpage",
+      ru: "Соло-фриланс-проект платформы наград за майнинг: магазин скинов, дашборд майнинг-активности и лендинг для продвижения",
     },
     description: {
       hr: {
-        en: "First freelance project taken on solo, without a team — the actual skins store itself plus a dashboard tracking each user's mining activity, and a marketing page for the mining-rewards product.",
-        de: "Erstes Freelance-Projekt solo ohne Team — der eigentliche Skins-Shop selbst plus ein Dashboard zur Verfolgung der Mining-Aktivität jedes Nutzers und eine Marketing-Seite für das Mining-Prämien-Produkt.",
-        ru: "Первый фриланс-проект, взятый в одиночку, без команды — сам магазин скинов плюс дашборд отслеживания майнинг-активности каждого пользователя и маркетинговая страница продукта наград за майнинг.",
+        en: "First freelance project taken on solo, without a team — the skins store itself plus a dashboard tracking each user's mining activity, and a marketing page for the mining-rewards product. A follow-on landing page came a few weeks later, built with a small ad-hoc team.",
+        de: "Erstes Freelance-Projekt solo ohne Team — der eigentliche Skins-Shop selbst plus ein Dashboard zur Verfolgung der Mining-Aktivität jedes Nutzers und eine Marketing-Seite für das Mining-Prämien-Produkt. Einige Wochen später folgte eine eigene Landingpage, gebaut mit einem kleinen Ad-hoc-Team.",
+        ru: "Первый фриланс-проект, взятый в одиночку, без команды — сам магазин скинов плюс дашборд отслеживания майнинг-активности каждого пользователя и маркетинговая страница продукта наград за майнинг. Через несколько недель добавился отдельный лендинг, собранный с небольшой ситуативной командой.",
       },
       business: {
-        en: "Referred in after a difficult prior engagement; delivered in 3 weeks instead of the usual months. Also designed the project's visual identity himself — the client liked it enough to pay an extra €50 on top for it — and paid 50% above the quoted rate overall out of satisfaction.",
-        de: "Über eine Empfehlung nach einem schwierigen vorherigen Projekt gewonnen; in 3 Wochen statt der üblichen Monate geliefert. Auch die visuelle Identität des Projekts selbst entworfen — dem Kunden gefiel sie so gut, dass er dafür zusätzlich 50 € extra zahlte — und insgesamt 50 % über dem vereinbarten Satz aus Zufriedenheit gezahlt.",
-        ru: "Пришёл по рекомендации после сложного предыдущего проекта; сдал за 3 недели вместо обычных месяцев. Также сам придумал визуальную айдентику проекта — клиенту она понравилась настолько, что он доплатил за неё ещё €50 сверху — и в целом заплатил на 50% больше оговорённой ставки от удовлетворения работой.",
+        en: "Referred in after a difficult prior engagement; delivered the store in 3 weeks instead of the usual months. Also designed the project's visual identity himself — the client liked it enough to pay an extra €50 on top for it — and paid 50% above the quoted rate overall out of satisfaction. The client came back for a second engagement: a landing page built on the same premise — most people have no idea how to start mining cryptocurrency, but plenty are willing to lend their idle computing power in exchange for something tangible, in this case CS:GO skins — earning another ₽15,000.",
+        de: "Über eine Empfehlung nach einem schwierigen vorherigen Projekt gewonnen; den Shop in 3 Wochen statt der üblichen Monate geliefert. Auch die visuelle Identität des Projekts selbst entworfen — dem Kunden gefiel sie so gut, dass er dafür zusätzlich 50 € extra zahlte — und insgesamt 50 % über dem vereinbarten Satz aus Zufriedenheit gezahlt. Der Kunde kam für ein zweites Projekt zurück: eine Landingpage nach derselben Prämisse — die meisten Menschen wissen nicht, wie man mit dem Mining von Kryptowährung anfängt, aber viele sind bereit, ihre ungenutzte Rechenleistung gegen etwas Greifbares zu verleihen, in diesem Fall CS:GO-Skins — und brachte weitere 15.000 ₽ Honorar.",
+        ru: "Пришёл по рекомендации после сложного предыдущего проекта; сдал магазин за 3 недели вместо обычных месяцев. Также сам придумал визуальную айдентику проекта — клиенту она понравилась настолько, что он доплатил за неё ещё €50 сверху — и в целом заплатил на 50% больше оговорённой ставки от удовлетворения работой. Клиент вернулся со вторым проектом — лендингом на той же идее: большинство людей не понимают, как начать майнить криптовалюту, но многие готовы одолжить простаивающие вычислительные мощности в обмен на что-то осязаемое, в данном случае скины CS:GO — принеся ещё ₽15 000 дохода.",
       },
       tech: {
-        en: "Built with GatsbyJS.",
-        de: "Mit GatsbyJS gebaut.",
-        ru: "Собран на GatsbyJS.",
+        en: "Both built with GatsbyJS. The landing page's animation-heavy design ultimately made it noticeably laggy — a lesson in budgeting a performance pass for heavy scroll animations.",
+        de: "Beide mit GatsbyJS gebaut. Das animationslastige Design der Landingpage machte sie letztlich spürbar träge — eine Lektion, für aufwendige Scroll-Animationen einen Performance-Durchgang einzuplanen.",
+        ru: "Оба проекта собраны на GatsbyJS. Из-за обилия анимаций лендинг в итоге заметно тормозил — урок о необходимости закладывать время на оптимизацию производительности при тяжёлых скролл-анимациях.",
       },
     },
-    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽15,000" }],
+    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽30,000" }],
     stack: ["Gatsby"],
     links: [
-      { labelKey: "demo", url: "https://skinmainers.vercel.app/about" },
-      { labelKey: "github", url: "https://github.com/mskKote/ac_for_vs" },
+      { labelKey: "demoStore", url: "https://skinmainers.vercel.app/about" },
+      { labelKey: "githubStore", url: "https://github.com/mskKote/ac_for_vs" },
+      { labelKey: "demoLanding", url: "https://skin-miners.web.app/" },
+      { labelKey: "githubLanding", url: "https://github.com/kolbak/Skin-Miners" },
     ],
     images: [
       "/images/projects/mining-skins-store/store-screenshot-1.png",
       "/images/projects/mining-skins-store/store-screenshot-2.png",
       "/images/projects/mining-skins-store/gallery-1.jpeg",
       "/images/projects/mining-skins-store/gallery-2.jpeg",
+      "/images/projects/mining-skins-landing/homepage.png",
     ],
-  },
-  {
-    slug: "mining-skins-landing",
-    title: {
-      en: "Skins-for-Mining Landing Page",
-      de: "Skins-für-Mining-Landingpage",
-      ru: "Лендинг скинов за майнинг",
-    },
-    period: "04/2021 – 06/2021",
-    status: "archived",
-    category: "freelance",
-    tagline: {
-      en: "Turning idle compute into CS:GO skins for people who don't know how to mine",
-      de: "Ungenutzte Rechenleistung gegen CS:GO-Skins — für Leute, die nicht wissen, wie man mined",
-      ru: "Простаивающие мощности в обмен на скины CS:GO — для тех, кто не умеет майнить",
-    },
-    description: {
-      hr: {
-        en: "Built a dedicated marketing landing page as a follow-on to the Skins-for-Mining store, working with a small ad-hoc team.",
-        de: "Eigene Marketing-Landingpage als Folgeprojekt des Skins-für-Mining-Shops gebaut, mit einem kleinen Ad-hoc-Team.",
-        ru: "Собрал отдельный маркетинговый лендинг как продолжение магазина скинов за майнинг, с небольшой ситуативной командой.",
-      },
-      business: {
-        en: "The whole product's premise: most people have no idea how to start mining cryptocurrency, but plenty are willing to lend their idle computing power in exchange for something tangible — in this case, CS:GO skins. Second engagement for the same client, earning another ₽15,000.",
-        de: "Die Prämisse des gesamten Produkts: Die meisten Menschen wissen nicht, wie man mit dem Mining von Kryptowährung anfängt, aber viele sind bereit, ihre ungenutzte Rechenleistung gegen etwas Greifbares zu verleihen — in diesem Fall CS:GO-Skins. Zweites Projekt für denselben Kunden, weitere 15.000 ₽ Honorar.",
-        ru: "Суть всего продукта: большинство людей не понимают, как начать майнить криптовалюту, но многие готовы одолжить простаивающие вычислительные мощности в обмен на что-то осязаемое — в данном случае скины CS:GO. Второй проект для того же клиента, ещё ₽15 000 дохода.",
-      },
-      tech: {
-        en: "Built with GatsbyJS; the animation-heavy design ultimately made the page noticeably laggy — a lesson in budgeting a performance pass for heavy scroll animations.",
-        de: "Mit GatsbyJS gebaut; das animationslastige Design machte die Seite letztlich spürbar träge — eine Lektion, für aufwendige Scroll-Animationen einen Performance-Durchgang einzuplanen.",
-        ru: "Собран на GatsbyJS; из-за обилия анимаций страница в итоге заметно тормозила — урок о необходимости закладывать время на оптимизацию производительности при тяжёлых скролл-анимациях.",
-      },
-    },
-    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽15,000" }],
-    stack: ["Gatsby"],
-    links: [
-      { labelKey: "demo", url: "https://skin-miners.web.app/" },
-      { labelKey: "github", url: "https://github.com/kolbak/Skin-Miners" },
-    ],
-    images: ["/images/projects/mining-skins-landing/homepage.png"],
   },
   {
     slug: "typography-order-form",
@@ -1927,4 +1854,116 @@ export function getProject(slug: string): Project | undefined {
 
 export function getFeaturedProjects(): Project[] {
   return PROJECTS.filter((p) => p.featured);
+}
+
+// Sort key from a project's *end* date ("MM/YYYY [– MM/YYYY|present]") so
+// recently-finished (or ongoing) work surfaces first — a project that ran
+// 2018-2023 reads as more recent than one that started later but wrapped
+// earlier, which a start-date sort would get backwards. Shared by the
+// /projects listing, the company bundle page, and next-project navigation.
+export function periodEndKey(period: string): number {
+  const parts = period.split(/\s*[–—-]\s*/);
+  const endToken = (parts[1] ?? parts[0]).trim();
+  if (endToken.toLowerCase() === "present") return Infinity;
+  const match = endToken.match(/(\d{1,2})\/(\d{4})/);
+  if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
+  const year = endToken.match(/\d{4}/);
+  return year ? parseInt(year[0], 10) * 12 : 0;
+}
+
+type ProjectStop =
+  | { kind: "project"; project: Project }
+  | { kind: "bundle"; bundleSlug: string; projects: Project[] };
+
+const NAV_CATEGORIES: ProjectCategory[] = ["work", "hackathon", "freelance", "personal"];
+
+// The canonical, mode-independent browsing order used for "next project"
+// navigation: fixed category order, each sorted by end date descending, with
+// work-category projects for a bundled company collapsed into one stop (they
+// share a single page). This mirrors the default (non-business-lens) grid
+// order without chasing the listing's live filter/sort state.
+function buildProjectStops(): ProjectStop[] {
+  const stops: ProjectStop[] = [];
+
+  for (const category of NAV_CATEGORIES) {
+    const categoryProjects = PROJECTS.filter((p) => p.category === category);
+
+    if (category !== "work") {
+      const sorted = [...categoryProjects].sort((a, b) => periodEndKey(b.period) - periodEndKey(a.period));
+      stops.push(...sorted.map((project): ProjectStop => ({ kind: "project", project })));
+      continue;
+    }
+
+    const byBundleSlug = new Map<string, Project[]>();
+    const singles: Project[] = [];
+    for (const p of categoryProjects) {
+      const bundle = p.company ? getCompanyBundle(p.company) : undefined;
+      if (!bundle) {
+        singles.push(p);
+        continue;
+      }
+      if (!byBundleSlug.has(bundle.slug)) byBundleSlug.set(bundle.slug, []);
+      byBundleSlug.get(bundle.slug)!.push(p);
+    }
+
+    const entries = [
+      ...singles.map((project) => ({
+        sortKey: periodEndKey(project.period),
+        stop: { kind: "project", project } as ProjectStop,
+      })),
+      ...[...byBundleSlug.entries()].map(([bundleSlug, ps]) => {
+        const sorted = [...ps].sort((a, b) => periodEndKey(b.period) - periodEndKey(a.period));
+        return {
+          sortKey: periodEndKey(sorted[0].period),
+          stop: { kind: "bundle", bundleSlug, projects: sorted } as ProjectStop,
+        };
+      }),
+    ];
+    entries.sort((a, b) => b.sortKey - a.sortKey);
+    stops.push(...entries.map((e) => e.stop));
+  }
+
+  return stops;
+}
+
+export interface NextProjectTarget {
+  href: string;
+  title: LocalizedText;
+}
+
+function firstOfStop(stop: ProjectStop): NextProjectTarget {
+  if (stop.kind === "project") {
+    return { href: `/projects/${stop.project.slug}`, title: stop.project.title };
+  }
+  const first = stop.projects[0];
+  return { href: `/projects/company/${stop.bundleSlug}#${first.slug}`, title: first.title };
+}
+
+/** Where "next project" should take a reader who just finished `slug` — the
+ * next project within the same company bundle if there is one, otherwise the
+ * first project of the next stop in the canonical order, or `null` if `slug`
+ * is the last stop overall. */
+export function getNextProject(slug: string): NextProjectTarget | null {
+  const stops = buildProjectStops();
+
+  for (let i = 0; i < stops.length; i++) {
+    const stop = stops[i];
+
+    if (stop.kind === "project") {
+      if (stop.project.slug !== slug) continue;
+      const next = stops[i + 1];
+      return next ? firstOfStop(next) : null;
+    }
+
+    const idx = stop.projects.findIndex((p) => p.slug === slug);
+    if (idx === -1) continue;
+    if (idx < stop.projects.length - 1) {
+      const next = stop.projects[idx + 1];
+      return { href: `/projects/company/${stop.bundleSlug}#${next.slug}`, title: next.title };
+    }
+    const next = stops[i + 1];
+    return next ? firstOfStop(next) : null;
+  }
+
+  return null;
 }

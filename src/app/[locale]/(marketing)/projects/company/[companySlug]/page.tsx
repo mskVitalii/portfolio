@@ -7,25 +7,14 @@ import { ArrowLeft, Building2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
+import { PROJECTS, EDUCATION_PROJECTS, periodEndKey } from "@/data/projects";
 import { COMPANY_BUNDLES, getCompanyBundleBySlug } from "@/data/companies";
 import { CompanyBlurb } from "@/components/projects/CompanyBlurb";
 import { CompanyCredit } from "@/components/projects/CompanyCredit";
 import { ProjectDetailSection } from "@/components/projects/ProjectDetailSection";
+import { NextProjectLink } from "@/components/projects/NextProjectLink";
 import { localize } from "@/lib/localized";
 import { routing } from "@/i18n/routing";
-
-// Same "MM/YYYY" end-date comparison used across the projects section, kept
-// local since each usage only needs a simple descending sort.
-function periodEndKey(period: string): number {
-  const parts = period.split(/\s*[–—-]\s*/);
-  const endToken = (parts[1] ?? parts[0]).trim();
-  if (endToken.toLowerCase() === "present") return Infinity;
-  const match = endToken.match(/(\d{1,2})\/(\d{4})/);
-  if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
-  const year = endToken.match(/\d{4}/);
-  return year ? parseInt(year[0], 10) * 12 : 0;
-}
 
 function getCompanyProjects(companyName: string) {
   return [...PROJECTS, ...EDUCATION_PROJECTS]
@@ -124,6 +113,7 @@ export default async function CompanyProjectsPage({
           <ProjectDetailSection project={project} locale={locale} titleAs="h2" />
         </div>
       ))}
+      <NextProjectLink slug={projects[projects.length - 1].slug} locale={locale} />
     </main>
   );
 }

@@ -438,6 +438,8 @@
     "metaDescription": "Engineering-Fallstudien mit realen Geschäftskennzahlen — filterbar nach Kategorie und Zielgruppe.",
     "subtitle": "Fallstudien aus echten Engineering-Projekten. Zielgruppen-Modus wechseln für andere Perspektive.",
     "allProjects": "Alle Projekte",
+    "nextProjectLabel": "Nächstes Projekt",
+    "backToAllProjects": "Zurück zu allen Projekten",
     "sectionWork": "Kommerzielle Projekte",
     "sectionHackathons": "Hackathons",
     "sectionFreelance": "Freelance-Projekte",
@@ -482,7 +484,11 @@
       "githubReranker": "GitHub — Reranker",
       "originalHackathonDemo": "Demo — ursprünglicher Hackathon-Build",
       "originalHackathonGithub": "GitHub — ursprünglicher Hackathon-Build",
-      "liveTranslation": "Live-Übersetzung"
+      "liveTranslation": "Live-Übersetzung",
+      "demoStore": "Demo — Shop",
+      "githubStore": "GitHub — Shop",
+      "demoLanding": "Demo — Landingpage",
+      "githubLanding": "GitHub — Landingpage"
     },
     "star": {
       "situation": "Situation",

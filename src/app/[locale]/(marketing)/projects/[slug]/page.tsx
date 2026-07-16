@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { getProject, PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
 import { getCompanyBundle } from "@/data/companies";
 import { ProjectDetailSection } from "@/components/projects/ProjectDetailSection";
+import { NextProjectLink } from "@/components/projects/NextProjectLink";
 import { localize } from "@/lib/localized";
 import { routing } from "@/i18n/routing";
 
@@ -103,6 +104,7 @@ export default async function ProjectDetailPage({
       </Link>
 
       <ProjectDetailSection project={project} locale={locale} />
+      <NextProjectLink slug={project.slug} locale={locale} />
     </main>
   );
 }

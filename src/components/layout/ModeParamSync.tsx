@@ -44,7 +44,10 @@ export function ModeParamSync() {
       lastSyncedFromUrl.current = mode;
       const params = new URLSearchParams(searchParams);
       params.set("mode", mode);
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      // usePathname() never includes the hash — read it straight off the
+      // browser so an in-page anchor (e.g. a "next project" deep link into a
+      // company bundle page) survives this rewrite instead of being dropped.
+      router.replace(`${pathname}?${params.toString()}${window.location.hash}`, { scroll: false });
     }
   }, [mode, pathname, searchParams, router, setMode]);
 
