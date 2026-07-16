@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import { ModeAware } from "@/components/tri-mode/ModeAware";
 import { StarStory, StarSituation, StarTask, StarAction, StarResult } from "@/components/projects/StarStory";
+import { ProjectFaq, ProjectFaqItem } from "@/components/projects/ProjectFaq";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -10,6 +11,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     StarTask,
     StarAction,
     StarResult,
+    ProjectFaq,
+    ProjectFaqItem,
     h1: ({ children }) => (
       <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>
     ),

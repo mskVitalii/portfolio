@@ -201,6 +201,13 @@
   100% { transform: translateX(200%); }
 }
 
+/* Hold-to-cancel vibration feedback */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px) rotate(-3deg); }
+  75% { transform: translateX(2px) rotate(3deg); }
+}
+
 /* Shiki dual-theme syntax highlighting */
 code[data-theme*=" "],
 code[data-theme*=" "] span {

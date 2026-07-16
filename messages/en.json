@@ -531,6 +531,40 @@
       "legendUp": "Price up",
       "legendDown": "Price down"
     },
+    "scalingSim": {
+      "title": "Why the point-update service was the real bet",
+      "description": "The barcode scanners themselves weren't the hard part — routing them through a shared service instead of wiring each one into a single app was. Drag the slider to see why that choice matters as load grows.",
+      "usersLabel": "Concurrent users",
+      "verticalLabel": "Vertical (1 machine)",
+      "horizontalLabel": "Horizontal (N machines)",
+      "tier": {
+        "small": "Small VM",
+        "medium": "Medium VM",
+        "large": "Large VM",
+        "xl": "Bare-metal XL",
+        "super": "Supercomputer-tier"
+      },
+      "verticalImpossible": "No single machine exists at this scale",
+      "nodesTemplate": "{count, plural, one {# commodity node} other {# commodity nodes}}",
+      "ratioTemplate": "At this load, horizontal scaling costs {ratio}× less than the single machine that would be needed to match it.",
+      "ratioImpossible": "At this load, no single machine can do the job at all — only horizontal scaling works.",
+      "ratioNone": "At this load, vertical and horizontal cost about the same — the gap only opens up as load grows.",
+      "strategicNote": "That's the real strategic payoff of this project: the old setup wired each barcode scanner directly into one legacy app, so shipping a new interface would have meant buying new scanner hardware. Routing scans through a shared point-update service decoupled the two — new terminals and app interfaces plug into the same backend, which scales out with commodity nodes instead of needing an ever-bigger central server."
+    },
+    "cancelGame": {
+      "title": "Catch the cancellation before it ships",
+      "description": "Every box travels a 24-hour pre-shipping window. Some get flagged for cancellation mid-transit — press and hold one for a second to catch it before it hits the wall. Miss it, and it ships anyway.",
+      "legend": "€8 shipping + €35 goods = €43 lost on every flagged box that reaches the wall — illustrative numbers, not real ones.",
+      "caughtLabel": "Caught by hand",
+      "lostTemplate": "{count, plural, one {# box} other {# boxes}} shipped before you caught them",
+      "aiCatchesLabel": "Caught by the AI",
+      "aiSavedLabel": "Saved by the AI",
+      "deployLabel": "Deploy the AI",
+      "aiActiveLabel": "AI is watching",
+      "resetLabel": "Reset",
+      "holdAria": "Hold to cancel this order before it ships",
+      "strategicNote": "This is the everleakproof edge case from the real project: once a lingerie order ships, it's non-returnable, so the only cancellation window is before dispatch. A human has to notice a flagged order, decide, and click in time — the support bot reacted the instant a cancellation came in, catching a window a person only sometimes makes."
+    },
     "pseoSim": {
       "title": "How the programmatic-SEO trick actually scales",
       "description": "Every supported language paired with every other language became its own landing page — drag the slider to see why 60 languages turns into thousands of pages, then pick one to see exactly which pages it generates.",

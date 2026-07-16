@@ -531,6 +531,40 @@
       "legendUp": "Kurs steigt",
       "legendDown": "Kurs fällt"
     },
+    "scalingSim": {
+      "title": "Warum der Point-Update-Service die eigentliche Wette war",
+      "description": "Die Barcode-Scanner selbst waren nicht die Herausforderung — sie über einen gemeinsamen Service statt fest verdrahtet mit einer einzigen App laufen zu lassen, war es. Zieh den Regler, um zu sehen, warum diese Entscheidung mit wachsender Last zählt.",
+      "usersLabel": "Gleichzeitige Nutzer",
+      "verticalLabel": "Vertikal (1 Maschine)",
+      "horizontalLabel": "Horizontal (N Maschinen)",
+      "tier": {
+        "small": "Kleine VM",
+        "medium": "Mittlere VM",
+        "large": "Große VM",
+        "xl": "Bare-Metal XL",
+        "super": "Supercomputer-Klasse"
+      },
+      "verticalImpossible": "In dieser Größenordnung gibt es keine einzelne Maschine",
+      "nodesTemplate": "{count} Standard-Knoten",
+      "ratioTemplate": "Bei dieser Last kostet horizontale Skalierung {ratio}× weniger als die einzelne Maschine, die dafür nötig wäre.",
+      "ratioImpossible": "Bei dieser Last schafft es keine einzelne Maschine mehr — nur horizontale Skalierung funktioniert noch.",
+      "ratioNone": "Bei dieser Last kosten vertikal und horizontal etwa gleich viel — der Unterschied wächst erst mit steigender Last.",
+      "strategicNote": "Das war der eigentliche strategische Gewinn dieses Projekts: Vorher war jeder Barcode-Scanner fest mit einer einzigen Legacy-App verdrahtet, sodass eine neue Oberfläche neue Scanner-Hardware bedeutet hätte. Scans über einen gemeinsamen Point-Update-Service zu leiten entkoppelte beides — neue Terminals und App-Oberflächen docken am selben Backend an, das mit Standard-Knoten horizontal wächst, statt einen immer größeren zentralen Server zu brauchen."
+    },
+    "cancelGame": {
+      "title": "Fang die Stornierung ab, bevor sie verschickt wird",
+      "description": "Jede Box durchläuft ein 24-Stunden-Fenster vor dem Versand. Manche werden unterwegs als storniert markiert — halte eine Sekunde lang gedrückt, um sie vor der Wand abzufangen. Verpasst du sie, wird trotzdem verschickt.",
+      "legend": "8 € Versand + 35 € Ware = 43 € Verlust pro markierter Box, die die Wand erreicht — illustrative, keine echten Zahlen.",
+      "caughtLabel": "Von Hand abgefangen",
+      "lostTemplate": "{count, plural, one {# Box wurde} other {# Boxen wurden}} verschickt, bevor du sie abfangen konntest",
+      "aiCatchesLabel": "Von der KI abgefangen",
+      "aiSavedLabel": "Von der KI gespart",
+      "deployLabel": "KI einsetzen",
+      "aiActiveLabel": "KI ist im Einsatz",
+      "resetLabel": "Zurücksetzen",
+      "holdAria": "Gedrückt halten, um diese Bestellung vor dem Versand zu stornieren",
+      "strategicNote": "Das ist der everleakproof-Sonderfall aus dem echten Projekt: Ist eine Dessous-Bestellung erst verschickt, ist sie nicht mehr rückgabefähig — das einzige Stornofenster liegt vor dem Versand. Ein Mensch muss eine markierte Bestellung bemerken, entscheiden und rechtzeitig klicken — der Support-Bot reagierte in dem Moment, in dem eine Stornierung einging, und traf ein Fenster, das ein Mensch nur manchmal trifft."
+    },
     "pseoSim": {
       "title": "So skaliert der programmatische SEO-Trick wirklich",
       "description": "Jede unterstützte Sprache, gepaart mit jeder anderen Sprache, wurde zu einer eigenen Landingpage — den Regler ziehen, um zu sehen, warum aus 60 Sprachen Tausende Seiten werden, dann eine auswählen, um genau zu sehen, welche Seiten sie erzeugt.",

@@ -44,14 +44,23 @@ Built embedded firmware for license-plate recognition and occupancy counting run
 
 ### Frequently asked
 
-**What was the hardest part of this project?**
+<ProjectFaq>
+<ProjectFaqItem q="What was the hardest part of this project?">
+
 Bridging the embedded and web worlds cleanly. Writing C for resource-constrained cameras and then wiring that into a React dashboard meant designing a strict protocol boundary — MQTT was chosen over HTTP polling to keep end-to-end latency under 500ms.
 
-**How did you handle hardware failures in production?**
+</ProjectFaqItem>
+<ProjectFaqItem q="How did you handle hardware failures in production?">
+
 Graceful degradation: if a camera goes offline, the system doesn't show stale data — it marks that zone as "unknown" so the dashboard reflects real uncertainty instead of quietly lying to drivers.
 
-**What would you do differently?**
+</ProjectFaqItem>
+<ProjectFaqItem q="What would you do differently?">
+
 Define the MQTT topic schema as a formal, versioned contract from day one. It grew organically instead and became inconsistent across camera types.
+
+</ProjectFaqItem>
+</ProjectFaq>
 
 </ModeAware>
 

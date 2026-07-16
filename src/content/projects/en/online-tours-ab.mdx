@@ -40,14 +40,23 @@ The highest-impact experiment — redesigning the tour listing page's price disp
 
 ### Frequently asked
 
-**What was the hardest part of this project?**
+<ProjectFaq>
+<ProjectFaqItem q="What was the hardest part of this project?">
+
 Avoiding assignment flicker. Client-side A/B logic shows the control version for a frame before the test variant loads — moving assignment to the server so the correct variant is baked into the initial HTML fixed that, but required rethinking how the Rails and React layers talked to each other.
 
-**How did you measure success?**
+</ProjectFaqItem>
+<ProjectFaqItem q="How did you measure success?">
+
 Primary booking conversion rate, tracked per variant over a fixed 4-week window before any test was called.
 
-**What would you do differently?**
+</ProjectFaqItem>
+<ProjectFaqItem q="What would you do differently?">
+
 Move experiment configuration out of the Rails codebase and into a dedicated feature-flag service, so the product team could start and stop tests without an engineering deploy.
+
+</ProjectFaqItem>
+</ProjectFaq>
 
 </ModeAware>
 

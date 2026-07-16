@@ -42,14 +42,23 @@ Built a Go microservice backed by ElasticSearch and Kafka, replacing the SQL que
 
 ### Frequently asked
 
-**What was the hardest part of this project?**
+<ProjectFaq>
+<ProjectFaqItem q="What was the hardest part of this project?">
+
 Handling Russian transliteration — staff type the same SKU as "БОЛТ М8" or "bolt m8" interchangeably. Getting ElasticSearch's analyzer to match both directions without a flood of false positives took a lot of iteration on real query logs.
 
-**Why not just optimize the existing SQL query?**
+</ProjectFaqItem>
+<ProjectFaqItem q="Why not just optimize the existing SQL query?">
+
 At 200M rows, a `LIKE` query was already on the optimized path — there was no query-tuning fix left. The storage engine itself was the wrong tool for fuzzy text search at that scale.
 
-**What would you do differently?**
+</ProjectFaqItem>
+<ProjectFaqItem q="What would you do differently?">
+
 Define the cache-invalidation contract up front. It was tied entirely to Kafka events, which caused a cache-miss storm after batch product updates — a short TTL as a backstop would have caught that from day one.
+
+</ProjectFaqItem>
+</ProjectFaq>
 
 </ModeAware>
 

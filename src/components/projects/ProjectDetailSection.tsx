@@ -15,6 +15,8 @@ import { ProjectDescription } from "./ProjectDescription";
 import { AdBidderDemo } from "./AdBidderDemo";
 import { IpoSimulator } from "./IpoSimulator";
 import { PseoLanguageGrid } from "./PseoLanguageGrid";
+import { ScalingSimulator } from "./ScalingSimulator";
+import { CancelGame } from "./CancelGame";
 import type { Project } from "@/data/projects";
 
 /** Full case-study block for one project — title through MDX write-up. Reused
@@ -112,6 +114,12 @@ export async function ProjectDetailSection({
 
       {/* Interactive demo for the programmatic-SEO language-pair mechanic */}
       {project.slug === "wedo-ai-video-dubbing" && <PseoLanguageGrid />}
+
+      {/* Interactive demo for the vertical vs. horizontal scaling cost curve */}
+      {project.slug === "ozon-barcode-scanner" && <ScalingSimulator />}
+
+      {/* Interactive demo for the everleakproof pre-shipping cancellation window */}
+      {project.slug === "wedo-shopify-ai-support" && <CancelGame />}
 
       {/* Stack */}
       <div className="flex flex-wrap gap-2 mb-6">

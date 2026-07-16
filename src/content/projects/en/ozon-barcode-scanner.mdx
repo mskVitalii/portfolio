@@ -18,36 +18,50 @@ impact:
 <StarStory>
 <StarSituation>
 
-OZON's returns zone — where customer-returned items get logged back into inventory — ran on manual data entry. It was the slowest, most error-prone step in the warehouse workflow, and a hard cap on how fast a fulfilment centre could process returns as order volume grew.
+OZON's returns zone ran on manual data entry, and the barcode scanners already on the floor were wired directly into a single legacy application — so retiring that app for a new interface would have meant buying a whole new batch of scanner hardware just to keep scanning working.
 
 </StarSituation>
 <StarTask>
 
-Automate that at the point of scan, without taking any of the returns-zone terminals offline for a rollout, and without disrupting the team already working the floor.
+Automate returns processing at the point of scan, and do it without locking the next interface migration — or any future one — to another hardware refresh.
 
 </StarTask>
 <StarAction>
 
-Integrated USB barcode scanners at each returns-zone terminal with a C# service pushing scan events over WebSockets into a PostgreSQL-backed order-update pipeline. Because terminals were spread across many physical stations, the rollout used a central config service that pushed updates to each terminal individually rather than one all-or-nothing deploy.
+Built a C# point-update service that scanners talk to over WebSockets, instead of wiring them into any one app directly. Terminals push scan events into a PostgreSQL-backed order pipeline through that shared service, so any app or interface can plug into the same backend — new terminals, and new UIs, scale out horizontally instead of each needing its own dedicated scanner integration.
 
 </StarAction>
 <StarResult>
 
-€86,000/year saved in manual labour, and the returns zone stopped being the workflow's bottleneck — a strategic fix, not just a one-off cost cut, since return volume kept growing after launch.
+€86,000/year saved in manual labour, the returns zone stopped being the workflow's bottleneck, and the next interface migration shipped without buying a single new scanner — the decoupling paid for itself again.
 
 </StarResult>
 </StarStory>
 
 ### Frequently asked
 
-**What was the hardest part of this project?**
+<ProjectFaq>
+<ProjectFaqItem q="Why not just wire the scanners into the new app directly?">
+
+That's exactly what the old setup did, and it's what made the previous interface migration expensive — the scanners were locked to one app, so a new one meant new hardware. Routing scans through a shared service instead means any future interface just plugs into the same backend.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="What was the hardest part of this project?">
+
 Rolling out and updating the scanner agent across dozens of physically distributed terminals without a shared deploy window — a bad update at one terminal couldn't be allowed to jam that station's queue for everyone else.
 
-**Why was this needed specifically in the returns zone?**
+</ProjectFaqItem>
+<ProjectFaqItem q="Why was this needed specifically in the returns zone?">
+
 Returns were the most manual, least instrumented part of the warehouse workflow, so it had the highest return on automation of anywhere in the building.
 
-**What would you do differently?**
+</ProjectFaqItem>
+<ProjectFaqItem q="What would you do differently?">
+
 Add per-terminal health checks to the rollout pipeline itself, so a mis-updated terminal would be caught automatically instead of waiting for a picker to report it.
+
+</ProjectFaqItem>
+</ProjectFaq>
 
 </ModeAware>
 
@@ -55,12 +69,12 @@ Add per-terminal health checks to the rollout pipeline itself, so a mis-updated 
 
 ## Context
 
-The returns zone was OZON's slowest warehouse workflow — clerks manually logged every returned item into the order system by hand, which capped how fast a fulfilment centre could process returns as volume grew. The goal was to automate that at the point of scan, not review it after the fact.
+The returns zone was OZON's slowest warehouse workflow — clerks manually logged every returned item into the order system by hand, which capped how fast a fulfilment centre could process returns as volume grew. The existing scanners were also wired directly into a single legacy app, which had made the previous interface migration expensive: retiring that app meant buying new scanner hardware for whatever replaced it. The goal was to automate at the point of scan, and stop tying scanner hardware to any one app in the process.
 
 ## What was built
 
 - **C# service** integrating USB barcode scanner hardware at returns-zone terminals.
-- **Real-time point-update service** pushing scan events over WebSockets into a PostgreSQL-backed order pipeline.
+- **Real-time point-update service** pushing scan events over WebSockets into a PostgreSQL-backed order pipeline — a shared backend any app or interface can plug into, instead of scanners being wired to one app directly.
 - Also rewrote a **Mattermost bot** that monitors warehouse errors, porting it from Python to C# for consistency with the rest of the stack.
 
 </ModeAware>
@@ -88,6 +102,8 @@ Returns-zone terminals (many, physically distributed)
 ## Technical decisions
 
 **Why WebSockets over REST polling?** Scan events needed to land in the order system within milliseconds of a physical scan — polling would add latency and load for no benefit at this volume.
+
+**Why route through a shared service instead of wiring scanners to the app?** The previous setup did exactly that, and it meant every app-level change risked a hardware refresh. A shared point-update service decouples the two: the app side can change or add new interfaces, and scale out with more terminals, without touching scanner integration at all.
 
 **Why point-updates instead of a single deploy?** Terminals were spread across the returns-zone floor and couldn't all go offline at once during a rollout. A central config service pushed agent and config updates to each terminal individually, so a rollout never stalled the whole zone.
 

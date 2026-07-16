@@ -242,12 +242,7 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K/yr" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
-    images: [
-      "/images/projects/ozon-tech/office-54th-floor.png",
-      "/images/projects/ozon-tech/first-day-suit.png",
-      "/images/projects/ozon-tech/halloween-1.png",
-      "/images/projects/ozon-tech/halloween-2.png",
-    ],
+    images: ["/images/projects/ozon-tech/office-54th-floor.png"],
   },
 
   // ─── egsha ───────────────────────────────────────────────────────────────
