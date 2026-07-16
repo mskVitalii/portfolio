@@ -1,14 +1,18 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
-import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Calendar, Building2, AlertCircle, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { localize } from "@/lib/localized";
 import { useMDXComponents } from "../../../mdx-components";
 import { getPageContent, getPageSlugs } from "@/lib/content";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
+import { ProjectImageGallery } from "./ProjectImageGallery";
+import { ProjectDescription } from "./ProjectDescription";
+import { AdBidderDemo } from "./AdBidderDemo";
 import type { Project } from "@/data/projects";
 
 /** Full case-study block for one project — title through MDX write-up. Reused
@@ -23,6 +27,7 @@ export async function ProjectDetailSection({
   locale: string;
   titleAs?: "h1" | "h2";
 }) {
+  const t = await getTranslations({ locale, namespace: "Projects" });
   let mdxContent: React.ReactNode = null;
   const slugs = getPageSlugs("projects", locale);
 
@@ -53,13 +58,13 @@ export async function ProjectDetailSection({
       <header className="mb-10">
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <ProjectStatusBadge status={project.status} />
-          <Badge variant="outline" className="text-xs capitalize">
-            {project.category}
+          <Badge variant="outline" className="text-xs">
+            {t(`categories.${project.category}` as "categories.work")}
           </Badge>
         </div>
 
-        <Title className="text-4xl font-bold mb-3">{project.title}</Title>
-        <p className="text-xl text-muted-foreground mb-6">{project.tagline}</p>
+        <Title className="text-4xl font-bold mb-3">{localize(project.title, locale)}</Title>
+        <p className="text-xl text-muted-foreground mb-6">{localize(project.tagline, locale)}</p>
 
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
           {project.company && (
@@ -77,7 +82,7 @@ export async function ProjectDetailSection({
         {project.statusNote && project.status !== "active" && (
           <div className="mt-4 flex items-start gap-2 text-sm text-muted-foreground bg-muted/50 rounded-lg px-4 py-3">
             <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
-            <span>{project.statusNote}</span>
+            <span>{localize(project.statusNote, locale)}</span>
           </div>
         )}
       </header>
@@ -86,13 +91,19 @@ export async function ProjectDetailSection({
       {project.impact && project.impact.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10 p-6 rounded-xl bg-muted/30 border">
           {project.impact.map((item) => (
-            <div key={item.label} className="text-center">
+            <div key={item.label.en} className="text-center">
               <div className="text-3xl font-bold text-primary">{item.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{item.label}</div>
+              <div className="text-sm text-muted-foreground mt-1">{localize(item.label, locale)}</div>
             </div>
           ))}
         </div>
       )}
+
+      {/* Mode-aware description (STAR cards for HR mode when available) */}
+      <ProjectDescription project={project} />
+
+      {/* Interactive demo for the ad-bidding mechanic */}
+      {project.slug === "wedo-ecommerce-bidder" && <AdBidderDemo />}
 
       {/* Stack */}
       <div className="flex flex-wrap gap-2 mb-6">
@@ -114,7 +125,7 @@ export async function ProjectDetailSection({
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
             >
-              {link.label}
+              {t(`linkLabels.${link.labelKey}` as "linkLabels.demo")}
               <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
             </a>
           ))}
@@ -123,25 +134,23 @@ export async function ProjectDetailSection({
 
       {/* Image gallery */}
       {project.images && project.images.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10">
-          {project.images.map((src) => (
-            <div key={src} className="relative aspect-video rounded-lg overflow-hidden border bg-muted">
-              <Image src={src} alt={project.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 33vw" />
-            </div>
-          ))}
-        </div>
+        <ProjectImageGallery
+          images={project.images}
+          alt={localize(project.title, locale)}
+          strings={{
+            zoomAria: t("galleryZoomAria"),
+            closeAria: t("galleryCloseAria"),
+            prevAria: t("galleryPrevAria"),
+            nextAria: t("galleryNextAria"),
+          }}
+        />
       )}
 
       {/* MDX body */}
-      {mdxContent ? (
+      {mdxContent && (
         <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-code:text-sm">
           {mdxContent}
         </article>
-      ) : (
-        <div className="text-muted-foreground text-center py-16 border border-dashed rounded-xl">
-          <p className="font-medium mb-2">Detailed write-up coming soon</p>
-          <p className="text-sm">The overview is above; the full case study is being written.</p>
-        </div>
       )}
     </div>
   );

@@ -1,37 +1,71 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { X, Building2 } from "lucide-react";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectCompanyBundle } from "./ProjectCompanyBundle";
+import { useViewMode } from "@/store/viewMode";
 import type { Project, ProjectCategory } from "@/data/projects";
 
 const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = [
   { id: "work", category: "work", titleKey: "sectionWork" },
   { id: "hackathons", category: "hackathon", titleKey: "sectionHackathons" },
+  { id: "freelance", category: "freelance", titleKey: "sectionFreelance" },
   { id: "personal", category: "personal", titleKey: "sectionPersonal" },
 ];
 
 // Companies with several conceptually-linked projects read better as a single
 // expandable bundle than as separate cards scattered across the work grid.
-const BUNDLE_COMPANIES = ["Infineon Technologies AG", "OZON Tech", "onlineTours", "egsha", "WeDo.agency", "dunlimited"];
+const BUNDLE_COMPANIES = [
+  "Infineon Technologies AG",
+  "OZON Tech",
+  "onlineTours",
+  "egsha",
+  "WeDo.agency",
+  "dunlimited",
+  "Yohan Loshop (own studio)",
+];
 
-// Sort key from a project's start date ("MM/YYYY [– MM/YYYY|present]") so the
-// most recent — and presumably most relevant — work surfaces first.
-function periodStartKey(period: string): number {
-  const start = period.split(/\s*[–—-]\s*/)[0].trim();
-  const match = start.match(/(\d{1,2})\/(\d{4})/);
+// Sort key from a project's *end* date ("MM/YYYY [– MM/YYYY|present]") so
+// recently-finished (or ongoing) work surfaces first — a project that ran
+// 2018-2023 reads as more recent than one that started later but wrapped
+// earlier, which a start-date sort would get backwards.
+function periodEndKey(period: string): number {
+  const parts = period.split(/\s*[–—-]\s*/);
+  const endToken = (parts[1] ?? parts[0]).trim();
+  if (endToken.toLowerCase() === "present") return Infinity;
+  const match = endToken.match(/(\d{1,2})\/(\d{4})/);
   if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
-  const year = start.match(/\d{4}/);
+  const year = endToken.match(/\d{4}/);
   return year ? parseInt(year[0], 10) * 12 : 0;
 }
 
+// Rough, ordering-only currency normalization — good enough to rank a €480K/yr
+// corporate saving above a ₽15,000 freelance gig, not a financial calculation.
+const CURRENCY_TO_EUR: Record<string, number> = { "€": 1, "$": 0.9, "₽": 1 / 90 };
+
+// The "business" lens sorts by financial outcome rather than by date. Only the
+// first impact metric that looks monetary counts — percentages, counts, and
+// timings ("11.63%", "8,000 users", "<5 sec") aren't comparable to revenue,
+// so projects without a monetary headline metric simply sort last.
+function profitScore(project: Project): number {
+  const value = project.impact?.[0]?.value;
+  if (!value) return 0;
+  const match = value.match(/^([€$₽])\s?([\d,.]+)\s?(K|M)?/i);
+  if (!match) return 0;
+  const [, currency, rawNumber, suffix] = match;
+  const number = parseFloat(rawNumber.replace(/,/g, ""));
+  if (Number.isNaN(number)) return 0;
+  const multiplier = suffix?.toUpperCase() === "M" ? 1_000_000 : suffix?.toUpperCase() === "K" ? 1_000 : 1;
+  return number * multiplier * (CURRENCY_TO_EUR[currency] ?? 0);
+}
+
 type WorkEntry =
-  | { kind: "project"; sortKey: number; project: Project }
-  | { kind: "bundle"; sortKey: number; company: string; projects: Project[] };
+  | { kind: "project"; sortKey: number; profitKey: number; project: Project }
+  | { kind: "bundle"; sortKey: number; profitKey: number; company: string; projects: Project[] };
 
 function buildWorkEntries(workProjects: Project[]): WorkEntry[] {
   const byCompany = new Map<string, Project[]>();
@@ -49,16 +83,29 @@ function buildWorkEntries(workProjects: Project[]): WorkEntry[] {
   const entries: WorkEntry[] = [
     ...singles.map((project): WorkEntry => ({
       kind: "project",
-      sortKey: periodStartKey(project.period),
+      sortKey: periodEndKey(project.period),
+      profitKey: profitScore(project),
       project,
     })),
     ...[...byCompany.entries()].map(([company, ps]): WorkEntry => {
-      const sorted = [...ps].sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period));
-      return { kind: "bundle", sortKey: periodStartKey(sorted[0].period), company, projects: sorted };
+      const sorted = [...ps].sort((a, b) => periodEndKey(b.period) - periodEndKey(a.period));
+      return {
+        kind: "bundle",
+        sortKey: periodEndKey(sorted[0].period),
+        profitKey: Math.max(...sorted.map(profitScore)),
+        company,
+        projects: sorted,
+      };
     }),
   ];
 
-  return entries.sort((a, b) => b.sortKey - a.sortKey);
+  return entries;
+}
+
+function sortEntries(entries: WorkEntry[], businessMode: boolean): WorkEntry[] {
+  return [...entries].sort((a, b) =>
+    businessMode ? b.profitKey - a.profitKey || b.sortKey - a.sortKey : b.sortKey - a.sortKey
+  );
 }
 
 export function ProjectsFilter({ projects }: { projects: Project[] }) {
@@ -66,6 +113,18 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const companyFilter = searchParams.get("company");
+  const { mode } = useViewMode();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const businessMode = mounted && mode === "business";
+  // Hackathon entries carry no business/economic outcome — noise for the
+  // Business lens, so hide that section entirely once we know the real mode.
+  const hideHackathons = businessMode;
+  // The Business lens cares about paid engagements, not unpaid side projects —
+  // show Freelance (which all earned real revenue) instead of Personal there.
+  const hidePersonal = businessMode;
 
   // The commercial-work section is the only one with a meaningful `company`
   // field, so a company deep-link (from the Impact Dashboard / brand cloud)
@@ -76,20 +135,27 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
     }
   }, [companyFilter]);
 
-  const workProjects = projects
-    .filter(
-      (p) =>
-        p.category === "work" &&
-        (!companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
-    )
-    .sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period));
-  const workEntries = buildWorkEntries(workProjects);
+  const workProjects = projects.filter(
+    (p) =>
+      p.category === "work" &&
+      (!companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
+  );
+  const workEntries = sortEntries(buildWorkEntries(workProjects), businessMode);
 
-  const otherSections = SECTIONS.filter((s) => s.id !== "work").map((s) => ({
+  const otherSections = SECTIONS.filter(
+    (s) =>
+      s.id !== "work" &&
+      !(hideHackathons && s.id === "hackathons") &&
+      !(hidePersonal && s.id === "personal")
+  ).map((s) => ({
     ...s,
     projects: projects
       .filter((p) => p.category === s.category)
-      .sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period)),
+      .sort((a, b) =>
+        businessMode
+          ? profitScore(b) - profitScore(a) || periodEndKey(b.period) - periodEndKey(a.period)
+          : periodEndKey(b.period) - periodEndKey(a.period)
+      ),
   })).filter((s) => s.projects.length > 0);
 
   const navSections = [

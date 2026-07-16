@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { getProject, PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
 import { getCompanyBundle } from "@/data/companies";
 import { ProjectDetailSection } from "@/components/projects/ProjectDetailSection";
+import { localize } from "@/lib/localized";
 import { routing } from "@/i18n/routing";
 
 export async function generateMetadata({
@@ -23,18 +24,21 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: "Common" });
   const siteName = t("siteName");
+  const title = localize(project.title, locale);
+  const tagline = localize(project.tagline, locale);
+  const description = localize(project.description.business, locale);
   const ogUrl = buildOgImageUrl(locale, {
-    title: project.title,
-    subtitle: project.tagline,
+    title,
+    subtitle: tagline,
     metric: project.impact?.[0]?.value,
   });
 
   return {
-    title: project.title,
-    description: project.description.business,
+    title,
+    description,
     openGraph: {
-      title: `${project.title} | ${siteName}`,
-      description: project.description.business,
+      title: `${title} | ${siteName}`,
+      description,
       type: "website",
       siteName,
       images: [{ url: ogUrl, width: 1200, height: 630 }],
@@ -42,8 +46,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} | ${siteName}`,
-      description: project.description.business,
+      title: `${title} | ${siteName}`,
+      description,
       images: [ogUrl],
     },
     alternates: buildAlternates(locale, `/projects/${slug}`),
@@ -70,6 +74,8 @@ export default async function ProjectDetailPage({
   const project = getProject(slug);
   if (!project) notFound();
 
+  const t = await getTranslations({ locale, namespace: "Projects" });
+
   // Companies with several conceptually-linked projects now live on one
   // merged case-study page — old standalone slugs redirect to their anchor
   // there instead of duplicating the content.
@@ -82,7 +88,7 @@ export default async function ProjectDetailPage({
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [
     { name: tNav("home"), path: "" },
     { name: tNav("projects"), path: "/projects" },
-    { name: project.title, path: `/projects/${slug}` },
+    { name: localize(project.title, locale), path: `/projects/${slug}` },
   ]);
 
   return (
@@ -93,7 +99,7 @@ export default async function ProjectDetailPage({
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "mb-8 -ml-2")}
       >
         <ArrowLeft className="h-4 w-4 mr-1.5" />
-        All projects
+        {t("allProjects")}
       </Link>
 
       <ProjectDetailSection project={project} locale={locale} />

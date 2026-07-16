@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { FileDown, Award, ChevronRight, CheckCircle2, ExternalLink, GraduationCap } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { localize } from "@/lib/localized";
 import { Certificates } from "@/components/education/Certificates";
 
 // ─── HSE Logo SVG ──────────────────────────────────────────────────────────────
@@ -565,11 +566,12 @@ const TUC_GROUPS: { key: string; credits: number; projectSlugs: string[] }[] = [
 const TUC_THESIS_SLUG = "master-thesis-semantic-search";
 
 function githubLink(project: Project): string | undefined {
-  return project.links?.find((l) => l.label.toLowerCase().includes("github"))?.url;
+  return project.links?.find((l) => l.labelKey.toLowerCase().includes("github"))?.url;
 }
 
 function MiniProjectCard({ project, c, headingFont }: { project: Project; c: Colors; headingFont: string }) {
   const t = useTranslations("EducationPage");
+  const locale = useLocale();
   const gh = githubLink(project);
   return (
     <div
@@ -582,7 +584,7 @@ function MiniProjectCard({ project, c, headingFont }: { project: Project; c: Col
           className="font-semibold text-sm leading-snug hover:underline"
           style={{ color: c.headingColor, fontFamily: headingFont }}
         >
-          {project.title}
+          {localize(project.title, locale)}
         </Link>
         {gh && (
           <a
@@ -598,7 +600,7 @@ function MiniProjectCard({ project, c, headingFont }: { project: Project; c: Col
           </a>
         )}
       </div>
-      <p className="text-xs leading-relaxed" style={{ color: c.bodyColor }}>{project.tagline}</p>
+      <p className="text-xs leading-relaxed" style={{ color: c.bodyColor }}>{localize(project.tagline, locale)}</p>
       <div className="flex items-center justify-between gap-2 mt-auto">
         <div className="flex flex-wrap gap-1">
           {project.stack.slice(0, 3).map((s) => (
@@ -627,6 +629,8 @@ function ThesisSpotlight({
   bodyFont: string;
 }) {
   const t = useTranslations("EducationPage");
+  const tProjects = useTranslations("Projects");
+  const locale = useLocale();
   const inProgress = project.status === "active";
   return (
     <div
@@ -651,13 +655,13 @@ function ThesisSpotlight({
         )}
       </div>
       <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ color: c.headingColor, fontFamily: headingFont }}>
-        {project.title}
+        {localize(project.title, locale)}
       </h3>
       <p className="text-sm leading-relaxed mb-4" style={{ color: c.bodyColor, maxWidth: "680px" }}>
-        {project.description.business}
+        {localize(project.description.business, locale)}
       </p>
       {project.statusNote && (
-        <p className="text-xs italic mb-4" style={{ color: c.muted }}>{project.statusNote}</p>
+        <p className="text-xs italic mb-4" style={{ color: c.muted }}>{localize(project.statusNote, locale)}</p>
       )}
       <div className="flex flex-wrap gap-2 mb-5">
         {project.stack.map((s) => (
@@ -683,7 +687,7 @@ function ThesisSpotlight({
             className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border transition-colors"
             style={{ borderColor: c.primary, color: c.primary }}
           >
-            {link.label}
+            {tProjects(`linkLabels.${link.labelKey}` as "linkLabels.demo")}
             <ExternalLink className="w-3 h-3" />
           </a>
         ))}

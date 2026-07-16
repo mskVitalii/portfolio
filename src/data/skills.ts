@@ -70,7 +70,7 @@ export const SKILLS: Skill[] = [
     category: "frontend",
     years: 5,
     level: "expert",
-    projects: ["infineon-parking-guidance", "online-tours-ab", "ncahoots-admin-panel", "flyboots-store", "bot-iot-smart-home"],
+    projects: ["infineon-parking-guidance", "online-tours-ab", "ncahoots-admin-panel", "flyboots-store"],
     description: "Hooks, RSC, complex state management, performance optimization",
   },
   {
@@ -88,7 +88,7 @@ export const SKILLS: Skill[] = [
     category: "frontend",
     years: 3,
     level: "expert",
-    projects: ["wedo-ai-video-dubbing", "wedo-ai-music-generator"],
+    projects: ["wedo-ai-video-dubbing", "audioland-musicgen"],
     description: "App Router, SSG/SSR/ISR, middleware, i18n",
   },
   {
@@ -202,7 +202,7 @@ export const SKILLS: Skill[] = [
     category: "ai",
     years: 2,
     level: "proficient",
-    projects: ["wedo-shopify-ai-support", "wedo-ai-video-dubbing", "wedo-ai-music-generator"],
+    projects: ["wedo-shopify-ai-support", "wedo-ai-video-dubbing", "audioland-musicgen"],
     description: "Prompt engineering, GPT-3/4 APIs, RAG patterns",
   },
   {

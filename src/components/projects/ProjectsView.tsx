@@ -5,6 +5,7 @@ import { LayoutGrid, AlignLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ProjectsFilter } from "./ProjectsFilter";
 import { ProjectsTimeline } from "./ProjectsTimeline";
+import { useAchievementsStore } from "@/store/achievements";
 import type { Project } from "@/data/projects";
 
 type View = "grid" | "timeline";
@@ -17,6 +18,12 @@ interface Props {
 export function ProjectsView({ projects, allProjects }: Props) {
   const t = useTranslations("Projects");
   const [view, setView] = useState<View>("grid");
+  const unlockAchievement = useAchievementsStore((s) => s.unlock);
+
+  const showTimeline = () => {
+    setView("timeline");
+    unlockAchievement("viewTimeline");
+  };
 
   return (
     <div>
@@ -35,7 +42,7 @@ export function ProjectsView({ projects, allProjects }: Props) {
             {t("viewList")}
           </button>
           <button
-            onClick={() => setView("timeline")}
+            onClick={showTimeline}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium transition-colors ${
               view === "timeline"
                 ? "bg-background text-foreground shadow-sm"

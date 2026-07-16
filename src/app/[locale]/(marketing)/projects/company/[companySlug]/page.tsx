@@ -10,23 +10,27 @@ import { cn } from "@/lib/utils";
 import { PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
 import { COMPANY_BUNDLES, getCompanyBundleBySlug } from "@/data/companies";
 import { CompanyBlurb } from "@/components/projects/CompanyBlurb";
+import { CompanyCredit } from "@/components/projects/CompanyCredit";
 import { ProjectDetailSection } from "@/components/projects/ProjectDetailSection";
+import { localize } from "@/lib/localized";
 import { routing } from "@/i18n/routing";
 
-// Same "MM/YYYY" start-date comparison used across the projects section, kept
+// Same "MM/YYYY" end-date comparison used across the projects section, kept
 // local since each usage only needs a simple descending sort.
-function periodStartKey(period: string): number {
-  const start = period.split(/\s*[–—-]\s*/)[0].trim();
-  const match = start.match(/(\d{1,2})\/(\d{4})/);
+function periodEndKey(period: string): number {
+  const parts = period.split(/\s*[–—-]\s*/);
+  const endToken = (parts[1] ?? parts[0]).trim();
+  if (endToken.toLowerCase() === "present") return Infinity;
+  const match = endToken.match(/(\d{1,2})\/(\d{4})/);
   if (match) return parseInt(match[2], 10) * 12 + parseInt(match[1], 10);
-  const year = start.match(/\d{4}/);
+  const year = endToken.match(/\d{4}/);
   return year ? parseInt(year[0], 10) * 12 : 0;
 }
 
 function getCompanyProjects(companyName: string) {
   return [...PROJECTS, ...EDUCATION_PROJECTS]
     .filter((p) => p.company === companyName)
-    .sort((a, b) => periodStartKey(b.period) - periodStartKey(a.period));
+    .sort((a, b) => periodEndKey(b.period) - periodEndKey(a.period));
 }
 
 export async function generateMetadata({
@@ -40,14 +44,15 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: "Common" });
   const siteName = t("siteName");
-  const ogUrl = buildOgImageUrl(locale, { title: bundle.name, subtitle: bundle.blurb.business });
+  const description = localize(bundle.blurb.business, locale);
+  const ogUrl = buildOgImageUrl(locale, { title: bundle.name, subtitle: description });
 
   return {
     title: bundle.name,
-    description: bundle.blurb.business,
+    description,
     openGraph: {
       title: `${bundle.name} | ${siteName}`,
-      description: bundle.blurb.business,
+      description,
       type: "website",
       siteName,
       images: [{ url: ogUrl, width: 1200, height: 630 }],
@@ -56,7 +61,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: `${bundle.name} | ${siteName}`,
-      description: bundle.blurb.business,
+      description,
       images: [ogUrl],
     },
     alternates: buildAlternates(locale, `/projects/company/${companySlug}`),
@@ -85,6 +90,7 @@ export default async function CompanyProjectsPage({
   const projects = getCompanyProjects(bundle.name);
   if (projects.length === 0) notFound();
 
+  const t = await getTranslations({ locale, namespace: "Projects" });
   const tNav = await getTranslations({ locale, namespace: "Nav" });
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [
     { name: tNav("home"), path: "" },
@@ -100,7 +106,7 @@ export default async function CompanyProjectsPage({
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "mb-8 -ml-2")}
       >
         <ArrowLeft className="h-4 w-4 mr-1.5" />
-        All projects
+        {t("allProjects")}
       </Link>
 
       <header className="mb-12">
@@ -108,7 +114,8 @@ export default async function CompanyProjectsPage({
           <Building2 className="h-6 w-6 text-primary" />
           <h1 className="text-4xl font-bold">{bundle.name}</h1>
         </div>
-        <CompanyBlurb blurb={bundle.blurb} />
+        <CompanyBlurb blurb={bundle.blurb} className="mb-4" />
+        {bundle.credit && <CompanyCredit credit={bundle.credit} />}
       </header>
 
       {projects.map((project, i) => (

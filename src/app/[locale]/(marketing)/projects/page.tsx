@@ -4,6 +4,7 @@ import { routing } from "@/i18n/routing";
 import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
 import { PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
 import { ProjectsView } from "@/components/projects/ProjectsView";
+import { ProjectsFAQ } from "@/components/projects/ProjectsFAQ";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export function generateStaticParams() {
@@ -47,6 +48,10 @@ export default async function ProjectsPage({
           projects={PROJECTS}
           allProjects={[...PROJECTS, ...EDUCATION_PROJECTS]}
         />
+
+      <div className="mt-20 pt-12 border-t">
+        <ProjectsFAQ />
+      </div>
     </main>
   );
 }

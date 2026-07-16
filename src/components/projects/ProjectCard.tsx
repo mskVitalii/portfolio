@@ -2,22 +2,24 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useTranslations, useLocale } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { useViewMode } from "@/store/viewMode";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
+import { localize } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
+  const t = useTranslations("Projects");
+  const locale = useLocale();
   const [mounted, setMounted] = useState(false);
   const { mode } = useViewMode();
 
   useEffect(() => setMounted(true), []);
 
-  const description = mounted
-    ? project.description[mode]
-    : project.description.business;
+  const description = localize(mounted ? project.description[mode] : project.description.business, locale);
 
   return (
     <motion.div
@@ -32,15 +34,15 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex flex-wrap items-center gap-2">
             <ProjectStatusBadge status={project.status} />
-            <Badge variant="outline" className="text-xs capitalize">
-              {project.category}
+            <Badge variant="outline" className="text-xs">
+              {t(`categories.${project.category}` as "categories.work")}
             </Badge>
           </div>
           <span className="text-xs text-muted-foreground shrink-0">{project.period}</span>
         </div>
 
         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
-          {project.title}
+          {localize(project.title, locale)}
         </h3>
 
         {project.company && (
@@ -54,9 +56,9 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
         {project.impact && project.impact.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-4">
             {project.impact.map((item) => (
-              <div key={item.label} className="text-center">
+              <div key={item.label.en} className="text-center">
                 <div className="text-lg font-bold text-primary">{item.value}</div>
-                <div className="text-xs text-muted-foreground">{item.label}</div>
+                <div className="text-xs text-muted-foreground">{localize(item.label, locale)}</div>
               </div>
             ))}
           </div>

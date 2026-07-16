@@ -435,10 +435,9 @@
     "metaDescription": "Engineering case studies with real business metrics — filterable by category and audience mode.",
     "subtitle": "Case studies from real engineering work. Switch the audience mode to see each project from a different perspective.",
     "allProjects": "All projects",
-    "comingSoon": "Detailed write-up coming soon",
-    "comingSoonSub": "The overview is above; the full case study is being written.",
     "sectionWork": "Commercial Work",
     "sectionHackathons": "Hackathons",
+    "sectionFreelance": "Freelance Projects",
     "sectionPersonal": "Personal Projects",
     "companyLabel": "Company:",
     "clearCompanyFilter": "Clear company filter",
@@ -446,7 +445,112 @@
     "noProjectsYet": "No projects in this category yet.",
     "viewList": "List",
     "viewTimeline": "Timeline",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "galleryZoomAria": "View full size",
+    "galleryCloseAria": "Close",
+    "galleryPrevAria": "Previous image",
+    "galleryNextAria": "Next image",
+    "timelineNow": "now",
+    "timelinePresent": "present",
+    "categories": {
+      "work": "Work",
+      "education": "Education",
+      "hackathon": "Hackathon",
+      "personal": "Personal",
+      "freelance": "Freelance"
+    },
+    "deprecatedBadge": "Deprecated",
+    "linkLabels": {
+      "demo": "Demo",
+      "github": "GitHub",
+      "store": "Store",
+      "liveDemo": "Live demo",
+      "liveDemoAdmin": "Live demo — Admin",
+      "liveSite": "Live site",
+      "adminPanel": "Admin panel",
+      "eventPage": "Event page",
+      "competition": "Competition",
+      "demoVideo": "Demo video",
+      "firebaseExtension": "Firebase Extension",
+      "githubBackend": "GitHub — Backend",
+      "githubFrontend": "GitHub — Frontend",
+      "githubAdmin": "GitHub — Admin",
+      "githubEmbedder": "GitHub — Embedder",
+      "githubReranker": "GitHub — Reranker",
+      "originalHackathonDemo": "Demo — Original Hackathon Build",
+      "originalHackathonGithub": "GitHub — Original Hackathon Build",
+      "liveTranslation": "Live translation"
+    },
+    "star": {
+      "situation": "Situation",
+      "task": "Task",
+      "action": "Action",
+      "result": "Result"
+    },
+    "adBidder": {
+      "title": "Try the bidding logic",
+      "description": "Drag the slider to set a price-per-view bid for a $100 product, and see how it plays out over 100 views.",
+      "priceLabel": "Product price",
+      "bidLabel": "Bid per view",
+      "costLabel": "Cost for 100 views",
+      "payoutLabel": "Margin left after 100 views",
+      "statusHealthy": "Healthy range — priced to be seen without burning the budget.",
+      "statusLoss": "Losing money — 100 views already cost more than the product itself.",
+      "statusInvisible": "Too low to rank — barely shown, so the spend produces no payoff either.",
+      "rankLabel": "Approximate search rank",
+      "rankTop": "Top of results",
+      "rankBottom": "Bottom of results"
+    },
+    "creditHeading": "Built together with",
+    "creditLinkedIn": "View on LinkedIn",
+    "faqSectionTitle": "Questions about these case studies",
+    "faqSearchPlaceholder": "Search questions…",
+    "faqNoResults": "No questions match your search.",
+    "faqHrHeading": "Reading these case studies",
+    "faqBusinessHeading": "Reading the numbers",
+    "faqTechHeading": "Reading the stack",
+    "faqHr": [
+      {
+        "q": "What do 'Archived' and 'Deprecated' actually mean here?",
+        "a": "Archived means the engagement ended — the work shipped and is usually still running, just without further involvement from me. Deprecated means the project itself was shelved or superseded."
+      },
+      {
+        "q": "Why do several projects live on one company page?",
+        "a": "Companies with more than one related engagement — Infineon, OZON, onlineTours, egsha, WeDo.agency, dunlimited, Yohan Loshop — get a single merged case-study page instead of scattering the same employer across separate cards."
+      },
+      {
+        "q": "Is any of this verifiable?",
+        "a": "Where possible — live demos, GitHub repos, and public listings are linked directly on each project page. The rest matches the CV."
+      }
+    ],
+    "faqBusiness": [
+      {
+        "q": "How are the revenue and savings figures sourced?",
+        "a": "They're the actual figures from each engagement — either directly reported by the client or measured against a known baseline (e.g. a replaced vendor contract). Business mode sorts projects by these figures rather than by date."
+      },
+      {
+        "q": "Are these systems still in production?",
+        "a": "Several are — OZON's barcode scanner service and Infineon's Parking Guidance System are both still running today. Status badges on each page indicate whether an engagement is active, archived, or deprecated."
+      },
+      {
+        "q": "Why do freelance projects show revenue in rubles?",
+        "a": "Most early freelance work was priced and paid in RUB during university years in Russia; later engagements (Infineon, egsha, dunlimited) are priced in EUR."
+      }
+    ],
+    "faqTech": [
+      {
+        "q": "Is there a deeper technical write-up anywhere?",
+        "a": "Select projects have a full MDX case study below the summary; the rest currently show only the structured overview, with more write-ups being added over time."
+      },
+      {
+        "q": "Where can I see the full stack breakdown?",
+        "a": "The Skills page has an interactive graph linking every technology to the projects that used it."
+      },
+      {
+        "q": "Why does the stack range from embedded C to Next.js?",
+        "a": "Real breadth, not padding — Infineon's Parking Guidance System runs on-device in C on PSoC Edge chips, while most client and personal projects are full-stack TypeScript/React work."
+      }
+    ]
   },
   "SkillsPage": {
     "title": "Skills",
@@ -458,7 +562,8 @@
     "matcherSummary": "{matched} of {total} skills matched",
     "matcherEmpty": "Paste some text above to see which skills match.",
     "switchModeTitle": "See how it's built",
-    "switchModeBody": "Interactive architecture diagrams are available in Business or Tech mode."
+    "switchModeBody": "Interactive architecture diagrams are available in Business or Tech mode.",
+    "usedIn": "Used in"
   },
   "EducationPage": {
     "title": "Education",
@@ -668,6 +773,10 @@
     "cvDownload": {
       "title": "Paper Trail",
       "description": "Download the CV."
+    },
+    "viewTimeline": {
+      "title": "Time Traveler",
+      "description": "Switch to the Timeline view on the Projects page."
     },
     "completionist": {
       "title": "Platinum",

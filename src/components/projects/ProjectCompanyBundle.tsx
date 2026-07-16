@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Building2, ChevronDown, ArrowRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ import { ProjectStatusBadge } from "./ProjectStatusBadge";
 import { ModeAware } from "@/components/tri-mode/ModeAware";
 import { CompanyBlurb } from "./CompanyBlurb";
 import { getCompanyBundle } from "@/data/companies";
+import { localize } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 // Same "MM/YYYY" comparison approach as ProjectsFilter's periodStartKey, kept
@@ -37,7 +38,8 @@ function formatPeriodRange(projects: Project[]): string {
 
 export function ProjectCompanyBundle({ company, projects }: { company: string; projects: Project[] }) {
   const t = useTranslations("Projects");
-  const [expanded, setExpanded] = useState(false);
+  const locale = useLocale();
+  const [expanded, setExpanded] = useState(true);
 
   const stack = Array.from(new Set(projects.flatMap((p) => p.stack))).slice(0, 6);
   const bundle = getCompanyBundle(company);
@@ -102,13 +104,19 @@ export function ProjectCompanyBundle({ company, projects }: { company: string; p
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <span className="font-medium group-hover:text-primary transition-colors">
-                        {project.title}
+                        {localize(project.title, locale)}
                       </span>
                       <ProjectStatusBadge status={project.status} />
                     </div>
-                    <p className="text-sm text-muted-foreground truncate">{project.tagline}</p>
+                    <p className="text-sm text-muted-foreground truncate">{localize(project.tagline, locale)}</p>
                   </div>
-                  <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex items-center gap-4 shrink-0">
+                    {project.impact && project.impact.length > 0 && (
+                      <div className="hidden sm:flex flex-col items-end leading-tight">
+                        <span className="text-sm font-bold text-primary">{project.impact[0].value}</span>
+                        <span className="text-[10px] text-muted-foreground whitespace-nowrap">{localize(project.impact[0].label, locale)}</span>
+                      </div>
+                    )}
                     <span className="text-xs text-muted-foreground hidden sm:inline">{project.period}</span>
                     <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>

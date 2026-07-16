@@ -2,8 +2,9 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useViewMode } from "@/store/viewMode";
+import { localize } from "@/lib/localized";
 import {
   ReactFlow,
   Background,
@@ -427,6 +428,7 @@ interface Cert {
 
 function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?: Cert[] }) {
   const t = useTranslations("SkillsPage");
+  const locale = useLocale();
   const { mode } = useViewMode();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [certsOpen, setCertsOpen] = useState(true);
@@ -501,12 +503,12 @@ function GraphSection({ graph, certs }: { graph: (typeof GRAPHS)[number]; certs?
       {relatedProjects.length > 0 && (
         <div className={cn("px-6 py-4", certs && certs.length > 0 && "border-b")}>
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
-            Used in
+            {t("usedIn")}
           </p>
           <div className="flex flex-wrap gap-2">
             {relatedProjects.map((p) => (
               <Badge key={p.slug} variant="secondary">
-                {p.title}
+                {localize(p.title, locale)}
               </Badge>
             ))}
           </div>

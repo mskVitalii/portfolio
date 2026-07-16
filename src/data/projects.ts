@@ -1,114 +1,246 @@
+import type { LocalizedText } from "@/lib/localized";
+
 export type ProjectStatus = "active" | "archived" | "deprecated";
-export type ProjectCategory = "work" | "education" | "hackathon" | "personal";
+export type ProjectCategory = "work" | "education" | "hackathon" | "personal" | "freelance";
 
 export interface ProjectImpact {
-  label: string;
+  label: LocalizedText;
   value: string;
+}
+
+export interface ProjectLink {
+  /** Key into messages.Projects.linkLabels */
+  labelKey: string;
+  url: string;
 }
 
 export interface Project {
   slug: string;
-  title: string;
+  title: LocalizedText;
   company?: string;
   period: string;
   status: ProjectStatus;
-  statusNote?: string;
+  statusNote?: LocalizedText;
   category: ProjectCategory;
-  tagline: string;
+  tagline: LocalizedText;
   description: {
-    hr: string;
-    business: string;
-    tech: string;
+    hr: LocalizedText;
+    business: LocalizedText;
+    tech: LocalizedText;
+  };
+  /** Optional structured Situation/Task/Action/Result breakdown, rendered instead
+   * of a wall of text in HR mode when a project's story fits the format well. */
+  star?: {
+    situation: LocalizedText;
+    task: LocalizedText;
+    action: LocalizedText;
+    result: LocalizedText;
   };
   impact?: ProjectImpact[];
   stack: string[];
   featured?: boolean;
   /** Public paths (e.g. "/images/projects/<slug>/foo.png") to screenshots/photos for this project. */
   images?: string[];
-  links?: { label: string; url: string }[];
+  links?: ProjectLink[];
 }
 
 export const PROJECTS: Project[] = [
   // ─── Infineon Technologies AG (09/2024 – present) ──────────────────────────
   {
     slug: "infineon-parking-guidance",
-    title: "Parking Guidance System",
+    title: {
+      en: "Parking Guidance System",
+      de: "Parkleitsystem",
+      ru: "Система навигации по парковке",
+    },
     company: "Infineon Technologies AG",
     period: "09/2024 – present",
     status: "active",
     category: "work",
-    tagline: "Saves €480K/year vs. market alternatives",
+    tagline: {
+      en: "In-house system replacing a commercial vendor, running on Infineon's own PSoC Edge chips",
+      de: "Eigenentwicklung statt Fremdanbieter — läuft auf Infineons eigenen PSoC-Edge-Chips",
+      ru: "Собственная система вместо стороннего поставщика — работает на чипах PSoC Edge самой Infineon",
+    },
     featured: true,
     description: {
-      hr: "Full-Stack Developer building a brand-new Parking Guidance System from the ground up — backend, frontend, and the embedded computer vision that powers it. Part of a cross-functional team at Infineon's Dresden campus.",
-      business:
-        "Replaced a commercial parking guidance vendor with an in-house system, saving €480,000/year compared to market alternatives. Powers a barrier control application used by 8,000 users, including 3,000 monthly active users.",
-      tech: "Embedded Computer Vision model running on-device in C. Python for backend services, C# for supporting services, JS/TS + React for the frontend.",
+      hr: {
+        en: "Full-Stack Developer building a brand-new Parking Guidance System from the ground up — backend, frontend, and the embedded computer vision that powers it. Part of a cross-functional team at Infineon's Dresden campus.",
+        de: "Full-Stack-Entwickler für ein komplett neues Parkleitsystem — von Backend über Frontend bis zur eingebetteten Computer-Vision-Lösung. Teil eines funktionsübergreifenden Teams am Infineon-Standort Dresden.",
+        ru: "Full-stack разработчик, создающий с нуля новую систему навигации по парковке — бэкенд, фронтенд и embedded компьютерное зрение. Часть кросс-функциональной команды на площадке Infineon в Дрездене.",
+      },
+      business: {
+        en: "Replaced a commercial parking guidance vendor with an in-house system, saving €480,000/year compared to market alternatives. Powers a barrier control application used by 8,000 users, including 3,000 monthly active users.",
+        de: "Kommerziellen Parkleitsystem-Anbieter durch eine Eigenentwicklung ersetzt und dadurch 480.000 €/Jahr gegenüber Marktalternativen eingespart. Treibt eine Schrankensteuerung mit 8.000 Nutzern an, davon 3.000 monatlich aktiv.",
+        ru: "Заменили коммерческого поставщика системы навигации собственной разработкой, что сэкономило €480 000 в год по сравнению с рыночными альтернативами. Система управляет шлагбаумами и используется 8 000 пользователями, из них 3 000 — ежемесячно активные.",
+      },
+      tech: {
+        en: "It was important to ship a solution that runs directly on Infineon's own PSoC Edge chips — embedded computer vision on-device in C, rather than relying on cloud inference. Python for backend services, C# for supporting services, JS/TS + React for the frontend.",
+        de: "Wichtig war eine Lösung, die direkt auf Infineons eigenen PSoC-Edge-Chips läuft — eingebettete Computer Vision in C auf dem Gerät statt Cloud-Inferenz. Python für Backend-Services, C# für unterstützende Dienste, JS/TS + React für das Frontend.",
+        ru: "Было важно реализовать решение, работающее прямо на собственных чипах PSoC Edge компании Infineon — embedded компьютерное зрение на устройстве на C, а не инференс в облаке. Python для бэкенд-сервисов, C# для вспомогательных сервисов, JS/TS + React для фронтенда.",
+      },
     },
     impact: [
-      { label: "Annual savings", value: "€480K" },
-      { label: "Users", value: "8,000" },
-      { label: "Monthly active", value: "3,000" },
+      { label: { en: "Annual savings", de: "Jährliche Einsparung", ru: "Экономия в год" }, value: "€480K" },
+      { label: { en: "Users", de: "Nutzer", ru: "Пользователей" }, value: "8,000" },
+      { label: { en: "Monthly active", de: "Monatlich aktiv", ru: "Активных в месяц" }, value: "3,000" },
     ],
-    stack: ["Python", "C#", "C", "JS/TS", "React", "Computer Vision"],
+    stack: ["Python", "C#", "C", "JS/TS", "React", "Computer Vision", "PSoC Edge"],
+  },
+  {
+    slug: "infineon-thingkathon",
+    title: {
+      en: "Thin[gk]athon — Distributed AI for Predictive Maintenance",
+      de: "Thin[gk]athon — Verteilte KI für vorausschauende Wartung",
+      ru: "Thin[gk]athon — распределённый AI для предиктивного обслуживания",
+    },
+    company: "Infineon Technologies AG",
+    period: "06/2026",
+    status: "archived",
+    category: "work",
+    tagline: {
+      en: "3-day company hackathon — won 1st place with an on-device predictive-maintenance system",
+      de: "3-tägiger interner Hackathon — 1. Platz mit einem On-Device-System für vorausschauende Wartung",
+      ru: "3-дневный корпоративный хакатон — 1-е место с системой предиктивного обслуживания на устройстве",
+    },
+    description: {
+      hr: {
+        en: "Represented Infineon in a 3-day internal hackathon on distributed AI for predictive maintenance, building an on-device conveyor-line fault-detection system with a small team — won 1st place.",
+        de: "Infineon bei einem 3-tägigen internen Hackathon zu verteilter KI für vorausschauende Wartung vertreten — mit einem kleinen Team ein On-Device-Fehlererkennungssystem für Förderbänder gebaut und den 1. Platz gewonnen.",
+        ru: "Представлял Infineon на 3-дневном внутреннем хакатоне по распределённому AI для предиктивного обслуживания — с небольшой командой построили систему обнаружения неисправностей конвейерных линий прямо на устройстве и заняли 1-е место.",
+      },
+      business: {
+        en: "Built a predictive-maintenance system for factory conveyor lines that detects faults directly on-device and improves over time via a retraining loop — addressing the real bottleneck at manufacturing scale: not a lack of sensor data, but the ability to act on it locally. Won 1st place; the €1,000 charity prize was donated to an anti-cyberbullying foundation.",
+        de: "System zur vorausschauenden Wartung für Förderbänder in der Fabrik gebaut, das Fehler direkt auf dem Gerät erkennt und sich durch eine Retraining-Schleife stetig verbessert — löst den eigentlichen Engpass in der Fertigung: nicht fehlende Sensordaten, sondern die Fähigkeit, lokal darauf zu reagieren. 1. Platz gewonnen; das Spendenpreisgeld von 1.000 € ging an eine Stiftung gegen Cybermobbing.",
+        ru: "Построили систему предиктивного обслуживания для заводских конвейерных линий, которая обнаруживает неисправности прямо на устройстве и со временем улучшается через цикл переобучения — решая реальное узкое место на производстве: не нехватку данных с датчиков, а способность действовать на их основе локально. Заняли 1-е место; благотворительный приз в €1000 передали фонду против кибербуллинга.",
+      },
+      tech: {
+        en: "PSoC Edge for on-device sensing and inference, detecting anomalies in sound and vibration from the conveyor line. Built an incremental-learning loop: the device flags anomalies locally and reports them upstream, models get retrained centrally, and updated weights are pushed back down via a downlink update. Also explored computer vision as a positioning signal, precisely measuring the gap between conveyor rollers.",
+        de: "PSoC Edge für Sensorik und Inferenz auf dem Gerät, zur Erkennung von Anomalien in Geräusch und Vibration des Förderbands. Eine Schleife für inkrementelles Lernen gebaut: Das Gerät markiert Anomalien lokal und meldet sie weiter, Modelle werden zentral neu trainiert, aktualisierte Gewichte werden per Downlink zurückgespielt. Zusätzlich Computer Vision als Positionssignal untersucht, um den Abstand zwischen Förderbandrollen präzise zu messen.",
+        ru: "PSoC Edge для сенсорики и инференса прямо на устройстве, обнаружение аномалий в звуке и вибрации конвейерной линии. Построен цикл инкрементального обучения: устройство локально помечает аномалии и передаёт их наверх, модели переобучаются централизованно, а обновлённые веса возвращаются обратно через downlink-обновление. Также исследовали компьютерное зрение как сигнал позиционирования — точное измерение зазора между роликами конвейера.",
+      },
+    },
+    impact: [
+      { label: { en: "Result", de: "Ergebnis", ru: "Результат" }, value: "1st place" },
+      { label: { en: "Charity prize", de: "Spendenpreis", ru: "Благотворительный приз" }, value: "€1,000" },
+    ],
+    stack: ["PSoC Edge", "Embedded Systems", "Computer Vision", "Machine Learning"],
+    links: [{ labelKey: "eventPage", url: "https://www.eventbrite.de/e/thingkathon-distributed-ai-for-predictive-maintenance-tickets-1986900174909" }],
   },
 
   // ─── onlineTours (08/2023 – 07/2024) ────────────────────────────────────────
   {
     slug: "online-tours-ab",
-    title: "A/B Testing & UI Platform",
+    title: {
+      en: "A/B Testing & UI Platform",
+      de: "A/B-Testing- & UI-Plattform",
+      ru: "Платформа A/B-тестирования и UI",
+    },
     company: "onlineTours",
     period: "08/2023 – 07/2024",
     status: "archived",
     category: "work",
-    tagline: "11.63% uplift in key business metrics via experimentation",
-    description: {
-      hr: "Full-Stack Developer building A/B testing infrastructure and a React component library at a travel aggregator for tours & hotels.",
-      business:
-        "Developed business logic for A/B testing in SEO and UX that increased key metrics by 11.63%. Built new UI components in production since November 2023, replacing legacy screens.",
-      tech: "Server-side A/B flag logic in Ruby on Rails 7 with Redis-based caching. Legacy UI maintained in React + Redux. New component library built with React, TypeScript, Tailwind CSS and Jotai, documented in Storybook and deployed via GitLab CI/CD on Docker & Kubernetes.",
+    tagline: {
+      en: "New component library shipped to production, replacing legacy screens one at a time",
+      de: "Neue Komponentenbibliothek in Produktion — Legacy-Screens Stück für Stück abgelöst",
+      ru: "Новая библиотека компонентов в проде — legacy-экраны заменялись один за другим",
     },
-    impact: [{ label: "Metric uplift", value: "11.63%" }],
+    description: {
+      hr: {
+        en: "Full-Stack Developer building A/B testing infrastructure and a React component library at a travel aggregator for tours & hotels.",
+        de: "Full-Stack-Entwickler für A/B-Testing-Infrastruktur und eine React-Komponentenbibliothek bei einem Reise-Aggregator für Touren & Hotels.",
+        ru: "Full-stack разработчик A/B-тестирования и библиотеки React-компонентов в турагрегаторе туров и отелей.",
+      },
+      business: {
+        en: "Developed business logic for A/B testing in SEO and UX that increased key metrics by 11.63%. Built new UI components in production since November 2023, replacing legacy screens.",
+        de: "Business-Logik für A/B-Tests in SEO und UX entwickelt, die zentrale Kennzahlen um 11,63 % steigerte. Seit November 2023 neue UI-Komponenten in Produktion gebaut und Legacy-Screens abgelöst.",
+        ru: "Разработал бизнес-логику A/B-тестирования в SEO и UX, которая подняла ключевые метрики на 11,63%. С ноября 2023 года новые UI-компоненты выкатывались в прод, заменяя устаревшие экраны.",
+      },
+      tech: {
+        en: "Server-side A/B flag logic in Ruby on Rails 7 with Redis-based caching. Legacy UI maintained in React + Redux. New component library built with React, TypeScript, Tailwind CSS and Jotai, documented in Storybook and deployed via GitLab CI/CD on Docker & Kubernetes.",
+        de: "Serverseitige A/B-Flag-Logik in Ruby on Rails 7 mit Redis-Caching. Legacy-UI in React + Redux gepflegt. Neue Komponentenbibliothek mit React, TypeScript, Tailwind CSS und Jotai gebaut, in Storybook dokumentiert und via GitLab CI/CD auf Docker & Kubernetes deployt.",
+        ru: "Серверная логика A/B-флагов на Ruby on Rails 7 с кешированием на Redis. Legacy UI поддерживался на React + Redux. Новая библиотека компонентов на React, TypeScript, Tailwind CSS и Jotai, задокументирована в Storybook, деплой через GitLab CI/CD на Docker и Kubernetes.",
+      },
+    },
+    impact: [{ label: { en: "Metric uplift", de: "Kennzahl-Steigerung", ru: "Прирост метрики" }, value: "11.63%" }],
     stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook", "GitLab CI/CD"],
   },
 
   // ─── OZON Tech (07/2021 – 07/2023) — "Contribution to 2 projects" ─────────
   {
     slug: "ozon-warehouse-search",
-    title: "Warehouse Search Engine",
+    title: {
+      en: "Warehouse Search Engine",
+      de: "Lager-Suchmaschine",
+      ru: "Поисковый движок склада",
+    },
     company: "OZON Tech",
     period: "07/2021 – 07/2023",
     status: "archived",
     category: "work",
-    tagline: "200M warehouse items searchable in under 5 seconds",
+    tagline: {
+      en: "200M warehouse items searchable in under 5 seconds",
+      de: "200 Mio. Lagerartikel in unter 5 Sekunden durchsuchbar",
+      ru: "200 млн товаров на складе — поиск быстрее 5 секунд",
+    },
     featured: true,
     description: {
-      hr: "Backend Developer on the warehouse search team at OZON — one of Russia's largest e-commerce platforms.",
-      business:
-        "Enabled warehouse staff to search across 200 million items in under 5 seconds, speeding up order picking at scale.",
-      tech: "Go microservice with ElasticSearch full-text search, Kafka-based entity retrieval, unit and load tests with mocked values. Observability via Prometheus & Grafana, query tracing with Jaeger. Deployed on Docker & Kubernetes with Redis caching.",
+      hr: {
+        en: "Backend Developer on the warehouse search team at OZON — one of Russia's largest e-commerce platforms.",
+        de: "Backend-Entwickler im Warehouse-Search-Team bei OZON — einer der größten E-Commerce-Plattformen Russlands.",
+        ru: "Backend-разработчик в команде поиска склада в OZON — одной из крупнейших e-commerce платформ России.",
+      },
+      business: {
+        en: "Enabled warehouse staff to search across 200 million items in under 5 seconds, speeding up order picking at scale.",
+        de: "Ermöglichte dem Lagerpersonal, 200 Millionen Artikel in unter 5 Sekunden zu durchsuchen, und beschleunigte so das Kommissionieren im großen Maßstab.",
+        ru: "Дали складскому персоналу возможность искать среди 200 миллионов товаров быстрее чем за 5 секунд, ускорив сборку заказов в масштабе.",
+      },
+      tech: {
+        en: "Go microservice with ElasticSearch full-text search, Kafka-based entity retrieval, unit and load tests with mocked values. Observability via Prometheus & Grafana, query tracing with Jaeger. Deployed on Docker & Kubernetes with Redis caching.",
+        de: "Go-Microservice mit ElasticSearch-Volltextsuche, Kafka-basiertem Entity-Retrieval, Unit- und Lasttests mit gemockten Werten. Observability via Prometheus & Grafana, Query-Tracing mit Jaeger. Deployment auf Docker & Kubernetes mit Redis-Caching.",
+        ru: "Go-микросервис с полнотекстовым поиском ElasticSearch, получением сущностей через Kafka, unit- и нагрузочными тестами на моках. Observability через Prometheus и Grafana, трейсинг запросов через Jaeger. Деплой на Docker и Kubernetes с кешированием Redis.",
+      },
     },
     impact: [
-      { label: "Items indexed", value: "200M" },
-      { label: "Search latency", value: "<5 sec" },
+      { label: { en: "Items indexed", de: "Indexierte Artikel", ru: "Товаров в индексе" }, value: "200M" },
+      { label: { en: "Search latency", de: "Such-Latenz", ru: "Задержка поиска" }, value: "<5 sec" },
     ],
     stack: ["Go", "ElasticSearch", "Kafka", "Redis", "Prometheus", "Grafana", "Jaeger", "Docker", "Kubernetes"],
   },
   {
     slug: "ozon-barcode-scanner",
-    title: "Barcode Scanner Integration",
+    title: {
+      en: "Barcode Scanner Integration",
+      de: "Barcode-Scanner-Integration",
+      ru: "Интеграция сканера штрихкодов",
+    },
     company: "OZON Tech",
     period: "07/2021 – 07/2023",
     status: "archived",
     category: "work",
-    tagline: "€86K/year saved by replacing manual scanning workflows",
-    description: {
-      hr: "Backend Developer building the point-update service behind OZON's warehouse barcode scanners, deployed to speed up the returns processing zone.",
-      business:
-        "Integrated barcode scanner hardware with a real-time point-update service in OZON's returns zone, cutting manual data-entry — saving €86,000/year while giving warehouse ops a scalable foundation for return-processing throughput as order volume grew. Still in use today.",
-      tech: "C# integration of barcode scanner hardware over WebSockets, with a PostgreSQL-backed point-update service rolled out across many distributed returns-zone terminals. Also rewrote a Mattermost bot that monitors warehouse errors from Python to C#.",
+    tagline: {
+      en: "€86K/year saved by replacing manual scanning workflows",
+      de: "86.000 €/Jahr eingespart durch Ablösung manueller Scan-Workflows",
+      ru: "€86К в год экономии за счёт отказа от ручного сканирования",
     },
-    impact: [{ label: "Cost savings", value: "€86K/yr" }],
+    description: {
+      hr: {
+        en: "Backend Developer building the point-update service behind OZON's warehouse barcode scanners, deployed to speed up the returns processing zone.",
+        de: "Backend-Entwickler für den Point-Update-Service hinter OZONs Lager-Barcode-Scannern, ausgerollt zur Beschleunigung der Retourenbearbeitung.",
+        ru: "Backend-разработчик сервиса point-update для складских сканеров штрихкодов OZON, развёрнутого для ускорения зоны обработки возвратов.",
+      },
+      business: {
+        en: "Integrated barcode scanner hardware with a real-time point-update service in OZON's returns zone, cutting manual data-entry — saving €86,000/year while giving warehouse ops a scalable foundation for return-processing throughput as order volume grew. Still in use today.",
+        de: "Barcode-Scanner-Hardware mit einem Echtzeit-Point-Update-Service in OZONs Retourenzone integriert und manuelle Dateneingabe reduziert — spart 86.000 €/Jahr und gibt dem Lagerbetrieb eine skalierbare Grundlage für steigenden Retourendurchsatz. Bis heute im Einsatz.",
+        ru: "Интегрировали оборудование сканеров штрихкодов с сервисом point-update в реальном времени в зоне возвратов OZON, сократив ручной ввод данных — экономия €86 000 в год и масштабируемая основа для роста пропускной способности обработки возвратов. До сих пор в эксплуатации.",
+      },
+      tech: {
+        en: "C# integration of barcode scanner hardware over WebSockets, with a PostgreSQL-backed point-update service rolled out across many distributed returns-zone terminals. Also rewrote a Mattermost bot that monitors warehouse errors from Python to C#.",
+        de: "C#-Integration der Barcode-Scanner-Hardware über WebSockets, mit einem PostgreSQL-basierten Point-Update-Service auf vielen verteilten Terminals in der Retourenzone. Zusätzlich einen Mattermost-Bot zur Überwachung von Lagerfehlern von Python nach C# umgeschrieben.",
+        ru: "Интеграция оборудования сканеров штрихкодов на C# через WebSockets, сервис point-update на PostgreSQL, развёрнутый на множестве распределённых терминалов зоны возвратов. Также переписал Mattermost-бота для мониторинга складских ошибок с Python на C#.",
+      },
+    },
+    impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K/yr" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
     images: [
       "/images/projects/ozon-tech/office-54th-floor.png",
@@ -118,263 +250,571 @@ export const PROJECTS: Project[] = [
     ],
   },
 
-  // ─── WeDo.agency (05/2020 – 06/2021) — "9 startups and projects" ──────────
+  // ─── egsha ───────────────────────────────────────────────────────────────
   {
     slug: "wedo-ecommerce-bidder",
-    title: "E-Commerce Ad Bidder",
+    title: {
+      en: "E-Commerce Ad Bidder",
+      de: "E-Commerce-Anzeigenbieter",
+      ru: "Автоматический байдер рекламы для e-commerce",
+    },
     company: "egsha",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
+    statusNote: {
+      en: "Agency pivoted; product was client-owned and handed off.",
+      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
+      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
+    },
     category: "work",
-    tagline: "Saves the client €52,000/year in ad spend",
+    tagline: {
+      en: "Saves the client €52,000/year in ad spend — priced via TDD-built pure functions",
+      de: "Spart dem Kunden 52.000 €/Jahr Werbebudget — Preisbildung über TDD-entwickelte reine Funktionen",
+      ru: "Экономит клиенту €52 000 в год на рекламе — цена считается чистыми функциями, разработанными по TDD",
+    },
     featured: true,
     description: {
-      hr: "Full-Stack Developer building an automated ad-price optimizer for an e-commerce client.",
-      business: "Automated advertisement price optimization, saving the client €52,000/year versus manual management.",
-      tech: "Python service for e-commerce ad bidding and price optimization.",
+      hr: {
+        en: "Full-Stack Developer building an automated ad-price optimizer for an e-commerce client.",
+        de: "Full-Stack-Entwickler für einen automatisierten Anzeigenpreis-Optimierer für einen E-Commerce-Kunden.",
+        ru: "Full-stack разработчик автоматического оптимизатора цены рекламы для e-commerce клиента.",
+      },
+      business: {
+        en: "On the marketplace, a seller pays per view of their product card: bid higher and the card climbs to the top of search results, bid lower and it sinks to the bottom. For a $100 product, a $10-per-view bid burns the campaign into a loss after just 10 views before it earns anything back — but too low a bid means the product barely gets seen at all, so the ad spend produces no payoff either way. The right bid weighs all of this against current stock levels, the marketplace's mandatory Personalized-Offers system (funded by the store itself), and historical performance data. Automating that pricing decision saved the client €52,000/year versus manual management.",
+        de: "Im Marketplace zahlt ein Verkäufer pro Ansicht seiner Produktkarte: Ein höheres Gebot bringt die Karte an die Spitze der Suchergebnisse, ein niedrigeres lässt sie nach unten rutschen. Bei einem 100-$-Produkt treibt ein Gebot von 10 $ pro Ansicht die Kampagne schon nach 10 Ansichten ins Minus, bevor sie sich rentiert — ein zu niedriges Gebot bedeutet aber, dass das Produkt kaum gesehen wird und das Werbebudget ebenfalls wirkungslos verpufft. Das richtige Gebot berücksichtigt Lagerbestand, das obligatorische, vom Shop finanzierte Personalisierte-Angebote-System des Marktplatzes und historische Performance-Daten. Diese Preisentscheidung zu automatisieren sparte dem Kunden 52.000 €/Jahr gegenüber manueller Steuerung.",
+        ru: "На маркетплейсе продавец платит за каждый показ карточки товара: чем выше ставка, тем выше карточка в выдаче, чем ниже — тем ближе к концу списка. Для товара за $100 ставка $10 за показ уводит кампанию в минус уже после 10 показов, толком не окупившись — но слишком низкая ставка означает, что товар почти никто не увидит, и деньги на рекламу тоже уходят впустую. Правильная ставка учитывает остатки на складе, обязательную для магазина Систему Персональных Предложений маркетплейса и исторические данные. Автоматизация этого решения сэкономила клиенту €52 000 в год по сравнению с ручным управлением.",
+      },
+      tech: {
+        en: "Python service for e-commerce ad bidding and price optimization, developed test-first (TDD) with pure functions — guaranteeing the correct bid is set at the correct moment in time, without side effects that would make the pricing logic hard to trust.",
+        de: "Python-Service für E-Commerce-Anzeigenbietung und Preisoptimierung, testgetrieben (TDD) mit reinen Funktionen entwickelt — garantiert, dass zur richtigen Zeit das richtige Gebot gesetzt wird, ohne Seiteneffekte, die die Preislogik unzuverlässig machen würden.",
+        ru: "Python-сервис для автоматических ставок и оптимизации цены рекламы в e-commerce, разработанный по TDD с чистыми функциями — это гарантирует, что нужная ставка выставляется в нужный момент времени, без побочных эффектов, которые сделали бы логику ценообразования ненадёжной.",
+      },
     },
-    impact: [{ label: "Ad savings", value: "€52K/yr" }],
-    stack: ["Python"],
+    impact: [{ label: { en: "Ad savings", de: "Werbe-Einsparung", ru: "Экономия на рекламе" }, value: "€52K/yr" }],
+    stack: ["Python", "TDD"],
   },
   {
+    slug: "flyboots-store",
+    title: {
+      en: "FlyBoots — Cross-Border Resale Store",
+      de: "FlyBoots — Grenzüberschreitender Wiederverkaufsshop",
+      ru: "FlyBoots — трансграничный магазин перепродажи",
+    },
+    company: "egsha",
+    period: "01/2023 – 02/2023",
+    status: "archived",
+    statusNote: {
+      en: "Delivered for launch; friend's business, no further engagement afterward.",
+      de: "Zum Launch geliefert; Geschäft eines Freundes, danach kein weiteres Engagement.",
+      ru: "Сдали к запуску; бизнес друга, дальнейшего сотрудничества не было.",
+    },
+    category: "work",
+    tagline: {
+      en: "Classic cross-border resale: sourced via Poizon in China, margin from price delta and traffic cost",
+      de: "Klassischer grenzüberschreitender Wiederverkauf: Einkauf über Poizon in China, Marge aus Preisdifferenz und Traffic-Kosten",
+      ru: "Классический трансграничный ресейл: закупка через Poizon в Китае, маржа на разнице цен и стоимости трафика",
+    },
+    description: {
+      hr: {
+        en: "Built an e-commerce store for a friend's clothing-resale business, sourcing inventory from the Chinese marketplace Poizon. Introduced a lightweight Scrum process partway through to resolve team conflict, and owned payments, shipping integrations, state management, CMS and the static build.",
+        de: "E-Commerce-Shop für das Wiederverkaufsgeschäft eines Freundes gebaut, Warenbeschaffung über den chinesischen Marktplatz Poizon. Mitten im Projekt einen leichtgewichtigen Scrum-Prozess eingeführt, um Teamkonflikte zu lösen, und Zahlungen, Versand-Integrationen, State-Management, CMS und den statischen Build verantwortet.",
+        ru: "Построили e-commerce магазин для бизнеса друга по перепродаже одежды, товар закупался на китайском маркетплейсе Poizon. В середине проекта ввёл лёгкий Scrum-процесс для разрешения конфликта в команде, отвечал за платежи, интеграции доставки, стейт-менеджмент, CMS и статическую сборку.",
+      },
+      business: {
+        en: "A classic cross-border resale play: bought in China through Poizon, shipped across the border, margin coming from the price delta between markets and shifting with traffic cost. 3 weeks, 3–4 people working full-time, to launch in time for the client's target date — a direct test of front-end skills retained during a 6-month backend internship at OZON, which held up.",
+        de: "Ein klassischer grenzüberschreitender Wiederverkauf: Einkauf in China über Poizon, Versand über die Grenze, Marge aus der Preisdifferenz zwischen den Märkten, abhängig von den Traffic-Kosten. 3 Wochen, 3–4 Personen in Vollzeit, um pünktlich zum Zieltermin des Kunden zu launchen — ein direkter Test der Frontend-Fähigkeiten aus einem 6-monatigen Backend-Praktikum bei OZON, der sich bewährte.",
+        ru: "Классический трансграничный ресейл: закупка в Китае через Poizon, доставка через границу, маржа — на разнице цен между рынками и зависит от стоимости трафика. 3 недели, 3–4 человека на полной занятости, чтобы успеть к дате запуска клиента — прямая проверка фронтенд-навыков, оставшихся после 6-месячной backend-стажировки в OZON, и они подтвердились.",
+      },
+      tech: {
+        en: "Next.js (started on a beta release, which caused early SSR/SSG confusion) with Redux Toolkit, GraphQL, and DatoCMS. Integrated CDEK and BoxBerry for shipping and PayAnyWay for payments. Yandex.Metrica for real-time user behavior tracking.",
+        de: "Next.js (auf einer Beta-Version gestartet, was anfangs zu SSR/SSG-Verwirrung führte) mit Redux Toolkit, GraphQL und DatoCMS. CDEK und BoxBerry für den Versand sowie PayAnyWay für Zahlungen integriert. Yandex.Metrica für Echtzeit-Nutzerverhaltens-Tracking.",
+        ru: "Next.js (стартовали на бета-версии, что поначалу вызывало путаницу с SSR/SSG) с Redux Toolkit, GraphQL и DatoCMS. Интегрированы CDEK и BoxBerry для доставки, PayAnyWay для платежей. Яндекс.Метрика для отслеживания поведения пользователей в реальном времени.",
+      },
+    },
+    impact: [{ label: { en: "Delivery", de: "Lieferzeit", ru: "Срок сдачи" }, value: "3 weeks" }],
+    stack: ["Next.js", "GraphQL", "Redux", "DatoCMS"],
+    links: [{ labelKey: "store", url: "https://flyboot.vercel.app/" }],
+  },
+  {
+    slug: "phone-repair-resale",
+    title: {
+      en: "iPhone Repair & Resale",
+      de: "iPhone-Reparatur & Wiederverkauf",
+      ru: "Ремонт и перепродажа iPhone",
+    },
+    company: "egsha",
+    period: "01/2018 – 03/2018",
+    status: "archived",
+    statusNote: {
+      en: "Small resale venture, wound down after a bad parts order.",
+      de: "Kleines Wiederverkaufs-Unternehmen, nach einer fehlerhaften Ersatzteilbestellung eingestellt.",
+      ru: "Небольшой перепродажный бизнес, свёрнут после неудачной партии запчастей.",
+    },
+    category: "work",
+    tagline: {
+      en: "First attempt at business — refurbished and resold phones bought broken off Avito",
+      de: "Erster Geschäftsversuch — defekte Handys von Avito gekauft, repariert und weiterverkauft",
+      ru: "Первая попытка в бизнес — покупка сломанных телефонов с Avito, ремонт и перепродажа",
+    },
+    description: {
+      hr: {
+        en: "Ran a small iPhone refurbishment and resale business with a school friend — handled sourcing and inventory while a partner handled repairs and sales.",
+        de: "Kleines iPhone-Aufarbeitungs- und Wiederverkaufsgeschäft mit einem Schulfreund geführt — Beschaffung und Bestand übernommen, während ein Partner Reparaturen und Verkauf verantwortete.",
+        ru: "Вёл небольшой бизнес по восстановлению и перепродаже iPhone со школьным другом — отвечал за закупку и склад, партнёр занимался ремонтом и продажами.",
+      },
+      business: {
+        en: "The first real attempt at business: bought broken phones off Avito classifieds, repaired them with parts from the radio market, and resold them — 3 units sold before a bad parts order from China ended the venture at a loss. It stopped making sense fast, as phones became progressively less disassemblable and original replacement boards became impossible to source. First hands-on lesson in inventory risk and in paying for clicks rather than impressions on paid ads.",
+        de: "Der erste echte Geschäftsversuch: defekte Handys über Avito-Kleinanzeigen gekauft, mit Teilen vom Elektronikmarkt repariert und weiterverkauft — 3 Stück verkauft, bevor eine fehlerhafte Ersatzteillieferung aus China das Unternehmen mit Verlust beendete. Es verlor schnell an Sinn, da Telefone zunehmend schwerer zu zerlegen waren und originale Ersatzplatinen unmöglich zu beschaffen wurden. Erste praktische Lektion in Bestandsrisiko und darin, für Klicks statt Impressionen bei bezahlter Werbung zu zahlen.",
+        ru: "Первая настоящая попытка бизнеса: покупали сломанные телефоны с досок объявлений Avito, чинили их запчастями с радиорынка и перепродавали — продали 3 штуки, пока неудачная партия запчастей из Китая не закончила предприятие с убытком. Затея быстро потеряла смысл, потому что телефоны становились всё менее разборными, а покупать оригинальные платы стало невозможно. Первый практический урок про риски товарных остатков и про оплату за клики, а не за показы в платной рекламе.",
+      },
+      tech: {
+        en: "No software — inventory and parts tracked in a spreadsheet.",
+        de: "Keine Software — Bestand und Ersatzteile in einer Tabelle erfasst.",
+        ru: "Без софта — склад и запчасти вели в таблице.",
+      },
+    },
+    impact: [{ label: { en: "Units sold", de: "Verkaufte Einheiten", ru: "Продано штук" }, value: "3" }],
+    stack: ["Excel"],
+  },
+
+  // ─── WeDo.agency (05/2020 – 06/2021) ───────────────────────────────────────
+  {
     slug: "wedo-shopify-ai-support",
-    title: "AI Support for Shopify Stores",
+    title: {
+      en: "AI Support for Shopify Stores",
+      de: "KI-Support für Shopify-Shops",
+      ru: "AI-поддержка для магазинов Shopify",
+    },
     company: "dunlimited",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "Handles 660 customer support tickets a month across 5 shops",
-    description: {
-      hr: "Full-Stack Developer building an AI-powered customer support tool for Shopify merchants.",
-      business: "AI customer support system deployed across 5 Shopify shops, handling 660 tickets monthly.",
-      tech: "AI-assisted support automation integrated with the Shopify platform.",
+    statusNote: {
+      en: "Agency pivoted; product was client-owned and handed off.",
+      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
+      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
     },
-    impact: [{ label: "Tickets handled", value: "660/mo" }],
-    stack: ["Python", "Shopify", "AI"],
+    category: "work",
+    tagline: {
+      en: "Handles 660 customer support tickets a month across 5 shops, built on Gorgias",
+      de: "Bearbeitet 660 Support-Tickets im Monat über 5 Shops hinweg — aufgebaut auf Gorgias",
+      ru: "Обрабатывает 660 обращений в месяц в 5 магазинах — построено на базе Gorgias",
+    },
+    description: {
+      hr: {
+        en: "Full-Stack Developer building an AI-powered customer support tool for Shopify merchants, on top of the Gorgias support platform.",
+        de: "Full-Stack-Entwickler für ein KI-gestütztes Support-Tool für Shopify-Händler, aufbauend auf der Gorgias-Support-Plattform.",
+        ru: "Full-stack разработчик AI-инструмента поддержки для продавцов Shopify, построенного поверх платформы Gorgias.",
+      },
+      business: {
+        en: "The economics of the project rest on making support fully or partially automated — the AI drafts a reply and, where confidence is high enough, sends it directly; otherwise a human only has to approve the AI's draft rather than write one from scratch. The AI itself filters spam, and analyzes incoming tickets against Shopify order context to fill in response templates; when it can't, it escalates to a human via a Telegram bot message instead of guessing. A guardrail layer stops it from over-promising or sending anything that could commit the store to something it can't deliver — protection against the AI's own mistakes, backed by tests written during development. One store, everleakproof (lingerie), added a sharp edge case: such goods are non-returnable once shipped, so the only valid return window is before dispatch — the bot's instant response time meant a far better chance of catching that window, saving on logistics, discount promo codes for replacements, and making customers happier. Deployed across 5 Shopify shops, handling 660 tickets monthly.",
+        de: "Die Wirtschaftlichkeit des Projekts beruht darauf, den Support vollständig oder teilweise zu automatisieren — die KI entwirft eine Antwort und verschickt sie bei ausreichender Sicherheit direkt; andernfalls muss ein Mensch nur den KI-Entwurf freigeben, statt selbst zu schreiben. Die KI filtert selbst Spam und gleicht eingehende Tickets mit dem Shopify-Bestellkontext ab, um Antwortvorlagen zu füllen; kann sie das nicht, eskaliert sie statt zu raten per Telegram-Bot-Nachricht an einen Menschen. Eine Guardrail-Schicht verhindert Überversprechen oder Zusagen, die der Shop nicht einhalten kann — Schutz vor eigenen Fehlern der KI, abgesichert durch während der Entwicklung geschriebene Tests. Ein Shop, everleakproof (Dessous), brachte einen scharfen Sonderfall: Solche Ware ist nach Versand nicht rückgabefähig, das einzige gültige Rückgabefenster liegt also vor dem Versand — die sofortige Reaktionszeit des Bots erhöhte die Chance, dieses Fenster zu erwischen, deutlich, und sparte Logistikkosten sowie Rabattcodes für Ersatzlieferungen und machte Kunden zufriedener. Im Einsatz bei 5 Shopify-Shops, 660 Tickets im Monat.",
+        ru: "Экономика проекта строится на том, чтобы сделать поддержку полностью или частично автоматизированной — нейросеть готовит черновик ответа и при достаточной уверенности отправляет его сама; иначе человеку остаётся только одобрить черновик, а не писать с нуля. Нейросеть сама фильтрует спам и анализирует входящие обращения в контексте заказа Shopify, заполняя шаблоны ответов; если не может — эскалирует человеку сообщением в Telegram-бота, а не гадает. Гардрейл не даёт пообещать лишнего или отправить то, что магазин не сможет выполнить — защита от ошибок самой нейросети, подкреплённая тестами, написанными в процессе разработки. Один из магазинов, everleakproof (нижнее бельё), добавил особый случай: такой товар не подлежит возврату после отправки, поэтому единственное окно для возврата — до отправки; мгновенная реакция бота сильно повышала шанс успеть в это окно, экономя на логистике и промокодах на скидку при замене, и делая клиентов счастливее. Развёрнуто в 5 магазинах Shopify, 660 обращений в месяц.",
+      },
+      tech: {
+        en: "AI-assisted support automation built on the Gorgias support platform and integrated with the Shopify API for order/product context. Spam classification, template-filling, guardrail checks against over-promising, and a Telegram-bot escalation path for low-confidence cases — covered by tests written during development.",
+        de: "KI-gestützte Support-Automatisierung auf der Gorgias-Support-Plattform, integriert mit der Shopify-API für Bestell-/Produktkontext. Spam-Klassifikation, Vorlagen-Befüllung, Guardrail-Prüfungen gegen Überversprechen und ein Telegram-Bot-Eskalationspfad für unsichere Fälle — abgedeckt durch während der Entwicklung geschriebene Tests.",
+        ru: "AI-автоматизация поддержки на платформе Gorgias, интегрированная с API Shopify для контекста заказов/товаров. Классификация спама, заполнение шаблонов, гардрейл-проверки против чрезмерных обещаний и эскалация через Telegram-бота для случаев с низкой уверенностью — покрыто тестами, написанными в процессе разработки.",
+      },
+    },
+    impact: [{ label: { en: "Tickets handled", de: "Bearbeitete Tickets", ru: "Обработано обращений" }, value: "660/mo" }],
+    stack: ["Python", "Shopify", "Gorgias", "AI", "Telegram Bot API"],
   },
   {
     slug: "dunlimited-triplewhale-integration",
-    title: "TripleWhale Integration",
+    title: {
+      en: "TripleWhale Integration",
+      de: "TripleWhale-Integration",
+      ru: "Интеграция с TripleWhale",
+    },
     company: "dunlimited",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
+    statusNote: {
+      en: "Agency pivoted; product was client-owned and handed off.",
+      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
+      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
+    },
     category: "work",
-    tagline: "Synced Shopify order & ad-spend data into TripleWhale for attribution reporting",
+    tagline: {
+      en: "A straightforward sync: Shopify shipping costs pushed into TripleWhale for attribution reporting",
+      de: "Eine unkomplizierte Synchronisierung: Shopify-Versandkosten für das Attribution-Reporting an TripleWhale übertragen",
+      ru: "Простая синхронизация: стоимость доставки из Shopify передаётся в TripleWhale для атрибуции",
+    },
     description: {
-      hr: "Full-Stack Developer building a data-sync pipeline between a Shopify store and TripleWhale, a Shopify attribution & analytics platform.",
-      business: "Automated a pipeline pushing order and ad-spend data into TripleWhale, giving the client accurate marketing attribution reporting without manual data entry.",
-      tech: "Python service syncing Shopify order and ad-spend data into TripleWhale via its API.",
+      hr: {
+        en: "Full-Stack Developer building a data-sync pipeline between a Shopify store and TripleWhale, a Shopify attribution & analytics platform.",
+        de: "Full-Stack-Entwickler für eine Daten-Sync-Pipeline zwischen einem Shopify-Shop und TripleWhale, einer Attribution- & Analytics-Plattform für Shopify.",
+        ru: "Full-stack разработчик пайплайна синхронизации данных между магазином Shopify и TripleWhale — платформой атрибуции и аналитики для Shopify.",
+      },
+      business: {
+        en: "A fairly banal but necessary integration: synced Shipping Costs from the Shopify order logistics system into TripleWhale, giving the client accurate marketing attribution reporting without manual data entry.",
+        de: "Eine ziemlich banale, aber notwendige Integration: Versandkosten aus dem Shopify-Bestell-Logistiksystem an TripleWhale synchronisiert und dem Kunden so präzises Marketing-Attribution-Reporting ohne manuelle Dateneingabe ermöglicht.",
+        ru: "Довольно банальная, но нужная интеграция: синхронизация Shipping Costs из логистической системы заказов Shopify в TripleWhale — точная маркетинговая атрибуция для клиента без ручного ввода данных.",
+      },
+      tech: {
+        en: "Python service syncing Shopify order and ad-spend data into TripleWhale via its API.",
+        de: "Python-Service, der Shopify-Bestell- und Werbeausgabendaten über die API an TripleWhale synchronisiert.",
+        ru: "Python-сервис, синхронизирующий данные заказов Shopify и рекламных расходов в TripleWhale через его API.",
+      },
     },
     stack: ["Python", "Shopify", "TripleWhale"],
   },
   {
-    slug: "wedo-ai-video-dubbing",
-    title: "AI Video Translation & Dubbing",
-    company: "WeDo.agency",
+    slug: "wedo-telegram-bots",
+    title: {
+      en: "AI-Character Telegram Bots",
+      de: "Telegram-Bots mit KI-Charakteren",
+      ru: "Telegram-боты с AI-персонажами",
+    },
+    company: "dunlimited",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "Programmatic SEO brought the first 150 users",
-    description: {
-      hr: "Full-Stack Developer building an AI video translation & dubbing tool, paired with a programmatic SEO site to acquire early users.",
-      business: "AI-powered video translation and dubbing product. Programmatic SEO pages on Next.js targeting search results brought its first 150 users.",
-      tech: "Python backend for AI video translation/dubbing, programmatic SEO pages built with Next.js, Google Analytics on the frontend, translated video files stored on Google Cloud Storage.",
+    statusNote: {
+      en: "Shut down — Telegram cost-per-lead grew too high to sustain.",
+      de: "Eingestellt — Cost-per-Lead auf Telegram wurde zu hoch, um tragfähig zu bleiben.",
+      ru: "Закрыт — стоимость лида в Telegram стала слишком высокой.",
     },
-    impact: [{ label: "First users", value: "150" }],
-    stack: ["Python", "Next.js", "AI", "Google Analytics", "Google Cloud Storage"],
-  },
-  {
-    slug: "wedo-ai-music-generator",
-    title: "AI Music Generation ChatGPT Plugin",
-    company: "WeDo.agency",
-    period: "05/2020 – 06/2021",
-    status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
     category: "work",
-    tagline: "Generates a music track in under a minute",
-    description: {
-      hr: "Full-Stack Developer shipping an AI music generation plugin for ChatGPT, including its deployment pipeline.",
-      business: "AI music generation plugin for ChatGPT that generates a full track within one minute.",
-      tech: "AI app deployed with Next.js and Firebase; generated tracks stored in Minio object storage.",
+    tagline: {
+      en: "Sold access to scripted AI characters — a psychologist bot that made users cry, and a fortune-teller taught to lie convincingly",
+      de: "Verkauften Zugang zu skriptierten KI-Charakteren — ein Psychologen-Bot, bei dem Nutzer weinten, und ein Wahrsager, der überzeugend lügen lernte",
+      ru: "Продавали доступ к AI-персонажам по сценарию — бот-психолог доводил пользователей до слёз, а бот-предсказатель научился правдоподобно врать",
     },
-    stack: ["Next.js", "Firebase", "Minio", "AI"],
-  },
-  {
-    slug: "wedo-gatsby-building-company",
-    title: "Construction Company Website",
-    company: "WeDo.agency",
-    period: "05/2020 – 06/2021",
-    status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "Blog & landing page showcasing 17 building projects",
     description: {
-      hr: "Full-Stack Developer building a marketing site for a construction company client.",
-      business: "Blog and landing page for a building company, showcasing a portfolio of 17 completed objects.",
-      tech: "Static site built with GatsbyJS and GraphQL.",
+      hr: {
+        en: "Full-Stack Developer building 3 Telegram bots end-to-end, including architecture, monitoring, and the deployment pipeline.",
+        de: "Full-Stack-Entwickler für 3 Telegram-Bots end-to-end — inklusive Architektur, Monitoring und Deployment-Pipeline.",
+        ru: "Full-stack разработчик 3 Telegram-ботов от начала до конца — архитектура, мониторинг, деплой-пайплайн.",
+      },
+      business: {
+        en: "The point of these bots was selling popular AI-character services with a well-thought-out scenario — for example, a psychologist. Telegram business accounts can be automated by pointing a bot at incoming messages; we also wired in Whisper so the bot could accept voice messages, which mattered for a psychologist persona — users cried while talking to it. On the astrology bot, we taught ChatGPT to convincingly and plausibly 'lie' about numbers and facts, producing deliberately foggy but specific-sounding phrasing that let users fill in their own meaning — vague enough to always feel relevant, concrete enough to correlate with real events. Generated graphics and video kept the experience entertaining on top of that. The project ultimately closed because the cost per lead on Telegram grew too high to sustain. Shipped 3 bots with a CI/CD pipeline fast enough to publish new versions within 10 seconds of a push.",
+        de: "Der Sinn dieser Bots war der Verkauf beliebter KI-Charakter-Dienste mit durchdachtem Szenario — zum Beispiel ein Psychologe. Telegram-Business-Accounts lassen sich automatisieren, indem ein Bot eingehende Nachrichten beantwortet; zusätzlich wurde Whisper eingebunden, damit der Bot Sprachnachrichten annehmen konnte — wichtig für die Psychologen-Persona, bei der Nutzer im Gespräch weinten. Beim Astrologie-Bot brachten wir ChatGPT bei, überzeugend und plausibel über Zahlen und Fakten zu 'lügen' und bewusst vage, aber konkret klingende Formulierungen zu erzeugen, die Nutzer selbst mit Bedeutung füllten — vage genug, um immer relevant zu wirken, konkret genug, um mit echten Ereignissen zu korrelieren. Generierte Grafiken und Videos hielten das Erlebnis zusätzlich unterhaltsam. Das Projekt schloss letztlich, weil der Cost-per-Lead auf Telegram zu hoch wurde, um tragfähig zu bleiben. 3 Bots mit einer CI/CD-Pipeline ausgeliefert, die neue Versionen innerhalb von 10 Sekunden nach einem Push veröffentlichte.",
+        ru: "Смысл этих ботов был в продаже популярных услуг AI-персонажей с продуманным сценарием — например, психолога. Бизнес-аккаунты в Telegram можно автоматизировать, поставив бота отвечать на сообщения; также внедрили Whisper, чтобы бот принимал голосовые сообщения — это было важно для образа психолога, пользователи плакали при общении с ним. В боте с астрологией научили ChatGPT правдоподобно и убедительно 'врать' о цифрах и фактах, выдавая намеренно туманные, но достаточно конкретные фразы, которые пользователь додумывал сам — расплывчатые настолько, чтобы всегда казаться в тему, и конкретные настолько, чтобы соотноситься с реальными событиями. Сгенерированная графика и видео дополнительно развлекали пользователя. В итоге проект закрылся из-за слишком высокой стоимости лида в Telegram. Выпустили 3 бота с CI/CD-пайплайном, который публиковал новую версию в течение 10 секунд после пуша.",
+      },
+      tech: {
+        en: "Python (aiogram) bots backed by PostgreSQL, with Whisper wired in for voice-message transcription. Self-hosted CI/CD via a GitHub Actions self-hosted runner, deploying to the team's own server with Docker layer caching for ~10s deploys. Images stored in Minio (S3-compatible), Redis for auth tokens and user state.",
+        de: "Python-Bots (aiogram) mit PostgreSQL im Hintergrund, Whisper für die Transkription von Sprachnachrichten eingebunden. Selbst gehostetes CI/CD über einen GitHub-Actions-Self-Hosted-Runner, Deployment auf den eigenen Server des Teams mit Docker-Layer-Caching für ~10-Sekunden-Deploys. Bilder in Minio (S3-kompatibel), Redis für Auth-Tokens und Nutzerstatus.",
+        ru: "Боты на Python (aiogram) с PostgreSQL, подключён Whisper для транскрибации голосовых сообщений. Self-hosted CI/CD через self-hosted раннер GitHub Actions, деплой на собственный сервер команды с кешированием слоёв Docker для деплоя за ~10 секунд. Изображения в Minio (S3-совместимое хранилище), Redis для токенов авторизации и состояния пользователя.",
+      },
     },
-    stack: ["GatsbyJS", "GraphQL"],
-  },
-  {
-    slug: "wedo-typography-shop",
-    title: "Typography E-Commerce Site",
-    company: "WeDo.agency",
-    period: "05/2020 – 06/2021",
-    status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "4 customization options on every print order",
-    description: {
-      hr: "Full-Stack Developer building an e-commerce storefront for a typography/print client.",
-      business: "E-commerce site for a typography business, offering 4 order customization options per product.",
-      tech: "Frontend built with Redux, backed by Firebase.",
-    },
-    stack: ["Redux", "Firebase"],
+    impact: [{ label: { en: "Deploy time", de: "Deploy-Zeit", ru: "Время деплоя" }, value: "<10 sec" }],
+    stack: ["Python", "aiogram", "Whisper", "PostgreSQL", "Docker", "GitHub Actions", "Minio", "Redis"],
   },
   {
     slug: "wedo-employee-activity-tracker",
-    title: "Employee Activity Tracking Tool",
+    title: {
+      en: "Employee Activity Tracking Tool",
+      de: "Tool zur Mitarbeiteraktivitäts-Verfolgung",
+      ru: "Инструмент учёта активности сотрудников",
+    },
     company: "WeDo.agency",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "9 tracking options for employee activity",
-    description: {
-      hr: "Full-Stack Developer building an internal tool to monitor employee activity.",
-      business: "Internal program to control and report on employee activity, with 9 configurable tracking options.",
-      tech: "Built with Angular.",
+    statusNote: {
+      en: "Agency pivoted; product was client-owned and handed off.",
+      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
+      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
     },
+    category: "freelance",
+    tagline: {
+      en: "9 tracking options for employee activity",
+      de: "9 Tracking-Optionen für Mitarbeiteraktivität",
+      ru: "9 опций отслеживания активности сотрудников",
+    },
+    description: {
+      hr: {
+        en: "Full-Stack Developer building an internal tool to monitor employee activity.",
+        de: "Full-Stack-Entwickler für ein internes Tool zur Überwachung der Mitarbeiteraktivität.",
+        ru: "Full-stack разработчик внутреннего инструмента мониторинга активности сотрудников.",
+      },
+      business: {
+        en: "Internal program to control and report on employee activity, with 9 configurable tracking options. One of many small, parallel client engagements run through WeDo.agency rather than a single product — from AI-powered tools to e-commerce storefronts to internal ops dashboards.",
+        de: "Internes Programm zur Kontrolle und zum Reporting von Mitarbeiteraktivität mit 9 konfigurierbaren Tracking-Optionen. Eines von vielen kleinen, parallel laufenden Kundenprojekten über WeDo.agency statt eines einzelnen Produkts — von KI-Tools über E-Commerce-Shops bis zu internen Ops-Dashboards.",
+        ru: "Внутренняя программа контроля и отчётности по активности сотрудников с 9 настраиваемыми опциями отслеживания. Один из многих небольших параллельных клиентских проектов через WeDo.agency, а не единый продукт — от AI-инструментов до e-commerce витрин и внутренних дашбордов.",
+      },
+      tech: {
+        en: "Built with Angular.",
+        de: "Mit Angular gebaut.",
+        ru: "Разработан на Angular.",
+      },
+    },
+    impact: [{ label: { en: "Tracking options", de: "Tracking-Optionen", ru: "Опций отслеживания" }, value: "9" }],
     stack: ["Angular"],
   },
   {
     slug: "wedo-horsium-game",
-    title: "Horsium Online Game",
+    title: {
+      en: "Horsium — Horse-Breeding Simulator",
+      de: "Horsium — Pferdezucht-Simulator",
+      ru: "Horsium — симулятор коневодства",
+    },
     company: "WeDo.agency",
     period: "05/2020 – 06/2021",
-    status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "Backend for an online multiplayer game",
+    status: "active",
+    statusNote: {
+      en: "Still in active development.",
+      de: "Befindet sich weiterhin in aktiver Entwicklung.",
+      ru: "Всё ещё в активной разработке.",
+    },
+    category: "freelance",
+    tagline: {
+      en: "Realistic horse genetics, built by equestrian fans for equestrian fans",
+      de: "Realistische Pferdegenetik — von Pferdesportfans für Pferdesportfans gebaut",
+      ru: "Реалистичная генетика лошадей — от фанатов конного спорта для фанатов конного спорта",
+    },
     description: {
-      hr: "Full-Stack Developer building the backend for Horsium, an online game.",
-      business: "Backend infrastructure for Horsium, an online game product.",
-      tech: "Backend built with NestJS and MongoDB.",
+      hr: {
+        en: "Full-Stack Developer building the backend for Horsium, an online horse-breeding simulator conceived and driven by a team of equestrian enthusiasts, for equestrian enthusiasts.",
+        de: "Full-Stack-Entwickler für das Backend von Horsium, einem Online-Pferdezucht-Simulator, konzipiert und getrieben von einem Team aus Pferdesport-Enthusiasten, für Pferdesport-Enthusiasten.",
+        ru: "Full-stack разработчик бэкенда Horsium — онлайн-симулятора разведения лошадей, придуманного и развиваемого командой фанатов конного спорта для таких же фанатов.",
+      },
+      business: {
+        en: "An online horse-breeding simulator recreating realistic horse genetics: horses are bred according to inherited traits, and that breeding lays down each horse's potential — the same way it works in real equestrian breeding. Still an active, ongoing build rather than a finished product.",
+        de: "Ein Online-Pferdezucht-Simulator mit realistischer Pferdegenetik: Pferde werden nach vererbten Merkmalen gezüchtet, und diese Zucht legt das Potenzial jedes Pferdes fest — genau wie in der echten Pferdezucht. Noch immer aktiv in Entwicklung, kein fertiges Produkt.",
+        ru: "Онлайн-симулятор разведения лошадей с реалистичной генетикой: лошади разводятся согласно наследуемым признакам, и это разведение закладывает потенциал каждой лошади — точно так же, как в реальном коневодстве. Проект всё ещё активно разрабатывается, а не завершён.",
+      },
+      tech: {
+        en: "Backend built with NestJS and MongoDB.",
+        de: "Backend mit NestJS und MongoDB gebaut.",
+        ru: "Бэкенд на NestJS и MongoDB.",
+      },
     },
     stack: ["NestJS", "MongoDB"],
   },
+
+  // ─── WeDo.agency — Speechki.com ventures ────────────────────────────────
   {
-    slug: "wedo-telegram-bots",
-    title: "TG ботов",
-    company: "dunlimited",
+    slug: "audioland-musicgen",
+    title: {
+      en: "Audioland — AI Music Generation Plugin",
+      de: "Audioland — KI-Musikgenerierungs-Plugin",
+      ru: "Audioland — плагин генерации музыки на AI",
+    },
+    company: "WeDo.agency",
+    period: "07/2023 – 10/2023",
+    status: "archived",
+    statusNote: {
+      en: "Shut down by OpenAI's plugin monetization policy, not by the product itself.",
+      de: "Nicht am Produkt gescheitert, sondern an OpenAIs Monetarisierungsrichtlinie für Plugins.",
+      ru: "Закрыт не из-за продукта, а из-за политики монетизации плагинов OpenAI.",
+    },
+    category: "work",
+    tagline: {
+      en: "Startup bet to take speechki.com public on the Cyprus exchange — killed by OpenAI's plugin monetization ban",
+      de: "Startup-Wette, speechki.com an die Zypern-Börse zu bringen — gescheitert an OpenAIs Plugin-Monetarisierungsverbot",
+      ru: "Ставка на вывод speechki.com на Кипрскую биржу — сорвана запретом OpenAI на монетизацию плагинов",
+    },
+    description: {
+      hr: {
+        en: "Full-Stack Developer shipping Audioland, an AI music-generation plugin for ChatGPT, including its deployment pipeline and autoscaling queue.",
+        de: "Full-Stack-Entwickler für Audioland, ein KI-Musikgenerierungs-Plugin für ChatGPT, inklusive Deployment-Pipeline und Auto-Scaling-Queue.",
+        ru: "Full-stack разработчик Audioland — плагина генерации музыки для ChatGPT, включая пайплайн деплоя и авто-масштабируемую очередь.",
+      },
+      business: {
+        en: "Audioland (and its sibling project, Dubbing) existed to take speechki.com public on the Cyprus stock exchange — the plan required demonstrating real profit from speechki.com's neural-network products. The startup didn't make it, not for lack of product, but because of OpenAI's plugin monetization policy: plugins could not be monetized before, during, or after operation — meaning not at all. A track generates in under a minute.",
+        de: "Audioland (und das Schwesterprojekt Dubbing) existierten, um speechki.com an die Börse Zypern zu bringen — der Plan erforderte den Nachweis echten Gewinns aus speechki.coms KI-Produkten. Das Startup scheiterte nicht am Produkt, sondern an OpenAIs Monetarisierungsrichtlinie für Plugins: Plugins durften weder vor, während noch nach dem Betrieb monetarisiert werden — also gar nicht. Ein Musikstück wird in unter einer Minute generiert.",
+        ru: "Audioland (и родственный проект Dubbing) существовали ради вывода speechki.com на Кипрскую фондовую биржу — план требовал показать реальную прибыль на нейросетевых продуктах speechki.com. Стартап не взлетел не из-за продукта, а из-за политики монетизации плагинов OpenAI: плагины нельзя было монетизировать ни до, ни во время, ни после эксплуатации ботов — то есть никак. Трек генерируется меньше чем за минуту.",
+      },
+      tech: {
+        en: "AI app deployed with Next.js and Firebase; generated tracks stored in Minio object storage. Generation requests go through a queue administered by an algorithm that spins up AWS machines on demand — that's what makes the pipeline scale.",
+        de: "KI-App mit Next.js und Firebase deployt; generierte Titel in Minio-Objektspeicher abgelegt. Generierungsanfragen laufen über eine Warteschlange, die von einem Algorithmus verwaltet wird, der bei Bedarf AWS-Maschinen hochfährt — das macht die Pipeline skalierbar.",
+        ru: "AI-приложение развёрнуто на Next.js и Firebase; сгенерированные треки хранятся в Minio. Запросы на генерацию идут через очередь, которой управляет алгоритм, поднимающий машины на AWS по мере необходимости — именно это обеспечивает масштабируемость пайплайна.",
+      },
+    },
+    impact: [{ label: { en: "Generation time", de: "Generierungszeit", ru: "Время генерации" }, value: "<1 min" }],
+    stack: ["Next.js", "Firebase", "Minio", "AWS", "AI"],
+  },
+  {
+    slug: "wedo-ai-video-dubbing",
+    title: {
+      en: "Dubbing — AI Video Translation & Dubbing",
+      de: "Dubbing — KI-Videoübersetzung & -Synchronisation",
+      ru: "Dubbing — AI-перевод и озвучка видео",
+    },
+    company: "WeDo.agency",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: "Agency pivoted; product was client-owned and handed off.",
-    category: "work",
-    tagline: "3 bots deploying to production in under 10 seconds",
-    description: {
-      hr: "Full-Stack Developer building 3 Telegram bots end-to-end, including architecture, monitoring, and the deployment pipeline.",
-      business: "Shipped 3 Telegram bots with a CI/CD pipeline fast enough to publish new versions within 10 seconds of a push.",
-      tech: "Python (aiogram) bots backed by PostgreSQL. GitHub Actions CI/CD pipeline with Docker layer caching for ~10s deploys. Images stored in Minio (S3-compatible), Redis for auth tokens and user state.",
+    statusNote: {
+      en: "Agency pivoted; product was client-owned and handed off.",
+      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
+      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
     },
-    impact: [{ label: "Deploy time", value: "<10 sec" }],
-    stack: ["Python", "PostgreSQL", "Docker", "GitHub Actions", "Minio", "Redis"],
+    category: "work",
+    tagline: {
+      en: "60 languages, programmatically generated into 60×59 landing pages — the SEO trick that brought the first 150 users",
+      de: "60 Sprachen, programmatisch zu 60×59 Landingpages kombiniert — der SEO-Trick, der die ersten 150 Nutzer brachte",
+      ru: "60 языков, программно превращённых в 60×59 лендингов — SEO-трюк, который принёс первых 150 пользователей",
+    },
+    description: {
+      hr: {
+        en: "Full-Stack Developer who found a zero-budget distribution channel for an early-stage AI dubbing product — a programmatic-SEO push across 60 languages that brought its first 150 users.",
+        de: "Full-Stack-Entwickler, der für ein KI-Dubbing-Produkt im Frühstadium einen budgetfreien Vertriebskanal fand — eine programmatische SEO-Kampagne über 60 Sprachen, die die ersten 150 Nutzer brachte.",
+        ru: "Full-stack разработчик, нашедший бесплатный канал привлечения для AI-продукта озвучки видео на раннем этапе — программную SEO-кампанию на 60 языков, принёсшую первых 150 пользователей.",
+      },
+      business: {
+        en: "Programmatic SEO pages on Next.js targeting 60×59 language-pair search results brought the product's first 150 users at effectively zero acquisition cost — a scrappy alternative to paid marketing for an early-stage product with no budget.",
+        de: "Programmatische SEO-Seiten auf Next.js für 60×59 Sprachpaar-Suchergebnisse brachten dem Produkt die ersten 150 Nutzer bei praktisch null Akquisitionskosten — eine pragmatische Alternative zu bezahltem Marketing für ein Frühphasenprodukt ohne Budget.",
+        ru: "Программные SEO-страницы на Next.js под 60×59 языковых пар в поиске принесли продукту первых 150 пользователей практически без затрат на привлечение — находчивая альтернатива платному маркетингу для продукта на раннем этапе без бюджета.",
+      },
+      tech: {
+        en: "Python backend for AI video translation/dubbing, programmatic SEO pages built with Next.js covering 60 languages (60×59 landing-page combinations), Google Analytics on the frontend, translated video files stored on Google Cloud Storage.",
+        de: "Python-Backend für KI-Videoübersetzung/-Synchronisation, programmatische SEO-Seiten mit Next.js für 60 Sprachen (60×59 Landingpage-Kombinationen), Google Analytics im Frontend, übersetzte Videodateien in Google Cloud Storage gespeichert.",
+        ru: "Python-бэкенд для AI-перевода и озвучки видео, программные SEO-страницы на Next.js на 60 языков (60×59 комбинаций лендингов), Google Analytics на фронтенде, переведённые видеофайлы хранятся в Google Cloud Storage.",
+      },
+    },
+    star: {
+      situation: {
+        en: "An early-stage AI dubbing product needed its first users, with no marketing budget to acquire them.",
+        de: "Ein KI-Dubbing-Produkt im Frühstadium brauchte seine ersten Nutzer — ohne Marketingbudget, um sie zu gewinnen.",
+        ru: "AI-продукту озвучки видео на раннем этапе нужны были первые пользователи — без бюджета на их привлечение.",
+      },
+      task: {
+        en: "Find a distribution channel that could beat competitors to narrow, high-intent search queries before they did.",
+        de: "Einen Vertriebskanal finden, der Wettbewerbern bei engen, kaufbereiten Suchanfragen zuvorkommt.",
+        ru: "Найти канал привлечения, который опередит конкурентов по узким, целевым поисковым запросам.",
+      },
+      action: {
+        en: "Built a translator covering 60 languages, then programmatically generated 60×59 (=3,540) language-pair landing pages targeting long-tail search terms — an SEO footprint no competitor had built yet.",
+        de: "Einen Übersetzer für 60 Sprachen gebaut und dann programmatisch 60×59 (=3.540) Sprachpaar-Landingpages für Long-Tail-Suchbegriffe erzeugt — einen SEO-Fußabdruck, den noch kein Wettbewerber hatte.",
+        ru: "Построили переводчик на 60 языков, затем программно сгенерировали 60×59 (=3540) лендингов для языковых пар под длинный хвост поисковых запросов — SEO-охват, которого ни у одного конкурента ещё не было.",
+      },
+      result: {
+        en: "The first 150 users arrived through this channel alone — among them a priest translating his own sermons, attempts to translate football shorts, and a stream of emails from university AI researchers who'd stumbled onto the tool.",
+        de: "Allein über diesen Kanal kamen die ersten 150 Nutzer — darunter ein Priester, der seine eigenen Predigten übersetzte, Versuche, Fußball-Shorts zu übersetzen, und eine Reihe von E-Mails von KI-Forschern an Universitäten, die auf das Tool gestoßen waren.",
+        ru: "Первые 150 пользователей пришли именно через этот канал — среди них священник, переводивший собственные проповеди, попытки перевести футбольные шортсы и поток писем от университетских исследователей AI, случайно наткнувшихся на инструмент.",
+      },
+    },
+    impact: [
+      { label: { en: "First users", de: "Erste Nutzer", ru: "Первых пользователей" }, value: "150" },
+      { label: { en: "Languages", de: "Sprachen", ru: "Языков" }, value: "60" },
+      { label: { en: "Programmatic landing pages", de: "Programmatische Landingpages", ru: "Программных лендингов" }, value: "60×59" },
+    ],
+    stack: ["Python", "Next.js", "AI", "Google Analytics", "Google Cloud Storage"],
   },
 
   // ─── Personal, freelance & academic projects (2018 – 2023) ────────────────
-  // Sourced from a personal project journal kept since school. Most were
-  // built with a rotating cast of university friends; kept here for a full
-  // picture of how the professional skillset was built.
-  {
-    slug: "phone-repair-resale",
-    title: "iPhone Repair & Resale",
-    company: "egsha",
-    period: "01/2018 – 03/2018",
-    status: "archived",
-    statusNote: "Small resale venture, wound down after a bad parts order.",
-    category: "work",
-    tagline: "First small business — refurbished and resold used iPhones",
-    description: {
-      hr: "Ran a small iPhone refurbishment and resale business with a school friend — handled sourcing and inventory while a partner handled repairs and sales.",
-      business: "Bought, repaired, and resold used iPhones via classifieds; sold 3 units before a bad parts order from China ended the venture at a loss. First hands-on lesson in inventory risk and in paying for clicks rather than impressions on paid ads.",
-      tech: "No software — inventory and parts tracked in a spreadsheet.",
-    },
-    stack: ["Excel"],
-    images: ["/images/projects/phone-repair-resale/vk-ad-campaign.png"],
-  },
   {
     slug: "combots-marketplace",
-    title: "Combots — Bot Freelance Marketplace",
+    title: {
+      en: "Combots — Bot Freelance Marketplace",
+      de: "Combots — Freelance-Marktplatz für Bots",
+      ru: "Combots — фриланс-биржа разработчиков ботов",
+    },
     period: "07/2019 – 08/2019",
     status: "archived",
-    statusNote: "Shelved — no requirements, no go-to-market plan.",
+    statusNote: {
+      en: "Shelved — no requirements, no go-to-market plan.",
+      de: "Auf Eis gelegt — keine Anforderungen, kein Go-to-Market-Plan.",
+      ru: "Заморожен — не было ни требований, ни плана выхода на рынок.",
+    },
     category: "personal",
-    tagline: "Early, pre-university attempt at a marketplace for bot developers",
+    tagline: {
+      en: "Early, pre-university attempt at a marketplace for bot developers",
+      de: "Früher Vor-Uni-Versuch eines Marktplatzes für Bot-Entwickler",
+      ru: "Ранняя, ещё до университета, попытка сделать биржу для разработчиков ботов",
+    },
     description: {
-      hr: "Pre-university side project attempting a marketplace connecting people with Telegram-bot freelancers, built with no prior front-end or market experience.",
-      business: "A 'labor exchange' concept for bot development — no requirements doc and no go-to-market plan, shelved once momentum ran out ahead of final school exams.",
-      tech: "Frontend prototype in vanilla JavaScript.",
+      hr: {
+        en: "Pre-university side project attempting a marketplace connecting people with Telegram-bot freelancers, built with no prior front-end or market experience.",
+        de: "Vor-Uni-Nebenprojekt, das einen Marktplatz zur Vermittlung von Telegram-Bot-Freelancern versuchte — ohne vorherige Frontend- oder Markterfahrung gebaut.",
+        ru: "Побочный проект до университета — попытка сделать биржу, соединяющую людей с фрилансерами-разработчиками Telegram-ботов, без опыта во фронтенде и рынке.",
+      },
+      business: {
+        en: "A 'labor exchange' concept for bot development — no requirements doc and no go-to-market plan, shelved once momentum ran out ahead of final school exams.",
+        de: "Ein 'Jobbörsen'-Konzept für Bot-Entwicklung — kein Anforderungsdokument, kein Go-to-Market-Plan, auf Eis gelegt, als vor den Abschlussprüfungen die Luft raus war.",
+        ru: "Концепция 'биржи труда' для разработки ботов — без документа требований и без плана выхода на рынок, заморожена, когда энергия иссякла перед выпускными экзаменами.",
+      },
+      tech: {
+        en: "Frontend prototype in vanilla JavaScript.",
+        de: "Frontend-Prototyp in reinem JavaScript.",
+        ru: "Прототип фронтенда на чистом JavaScript.",
+      },
     },
     stack: ["JavaScript"],
-    links: [{ label: "GitHub", url: "https://github.com/mskKote/ComBots" }],
+    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/ComBots" }],
   },
   {
     slug: "domclick-ad-generator",
-    title: "DomClick Ad-Feed Generator",
+    title: {
+      en: "DomClick Ad-Feed Generator",
+      de: "DomClick-Anzeigen-Feed-Generator",
+      ru: "Генератор рекламных фидов DomClick",
+    },
     period: "07/2020",
     status: "deprecated",
-    statusNote: "Prototype only — never reached a real client.",
+    statusNote: {
+      en: "Prototype only — never reached a real client.",
+      de: "Nur ein Prototyp — nie bei einem echten Kunden angekommen.",
+      ru: "Только прототип — так и не дошёл до реального клиента.",
+    },
     category: "personal",
-    tagline: "Prototype form generating real-estate ad XML feeds for 3 platforms",
+    tagline: {
+      en: "Prototype form generating real-estate ad XML feeds for 3 platforms",
+      de: "Prototyp-Formular zur Erzeugung von XML-Anzeigenfeeds für Immobilien auf 3 Plattformen",
+      ru: "Прототип формы, генерирующей XML-фиды объявлений недвижимости для 3 площадок",
+    },
     description: {
-      hr: "Built a one-week prototype with a friend, inspired by his father's real-estate advertising business.",
-      business: "A form that generated XML listings for real-estate ad platforms (Yandex, Avito, Cian). Never reached a real client — an established competitor already existed in the space, and there was no clear path to market with a student-built prototype.",
-      tech: "Static form built in vanilla JavaScript, hosted on GitHub Pages.",
+      hr: {
+        en: "Built a one-week prototype with a friend, inspired by his father's real-estate advertising business.",
+        de: "Einwöchigen Prototyp mit einem Freund gebaut, inspiriert vom Immobilien-Werbegeschäft seines Vaters.",
+        ru: "Собрал недельный прототип с другом, вдохновлённый бизнесом по рекламе недвижимости его отца.",
+      },
+      business: {
+        en: "A form that generated XML listings for real-estate ad platforms (Yandex, Avito, Cian). Never reached a real client — an established competitor already existed in the space, and there was no clear path to market with a student-built prototype.",
+        de: "Ein Formular, das XML-Anzeigen für Immobilienplattformen (Yandex, Avito, Cian) generierte. Nie bei einem echten Kunden angekommen — es gab bereits einen etablierten Wettbewerber, und ein von Studenten gebauter Prototyp hatte keinen klaren Weg auf den Markt.",
+        ru: "Форма, генерирующая XML-объявления для площадок недвижимости (Яндекс, Avito, Циан). Так и не дошла до реального клиента — в нише уже был устоявшийся конкурент, и у студенческого прототипа не было понятного пути на рынок.",
+      },
+      tech: {
+        en: "Static form built in vanilla JavaScript, hosted on GitHub Pages.",
+        de: "Statisches Formular in reinem JavaScript, gehostet auf GitHub Pages.",
+        ru: "Статическая форма на чистом JavaScript, размещена на GitHub Pages.",
+      },
     },
     stack: ["JavaScript"],
     links: [
-      { label: "Demo", url: "https://mskkote.github.io/domClick/" },
-      { label: "GitHub", url: "https://github.com/mskKote/domClick" },
+      { labelKey: "demo", url: "https://mskvitalii.github.io/domClick/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/domClick" },
     ],
     images: ["/images/projects/domclick-ad-generator/ad-form-screenshot.png"],
   },
   {
-    slug: "parallax-comic-hackathon",
-    title: "Parallax Comic Hackathon",
-    period: "07/2020",
-    status: "archived",
-    category: "hackathon",
-    tagline: "First hackathon build: a parallax-scrolling comic page",
-    description: {
-      hr: "Built a parallax-scrolling comic-book page for his first hackathon — the visually most distinctive entry in the room, though it didn't place.",
-      business: "No prize, but the concept was strong enough to revisit two years later as the full Effects project.",
-      tech: "Vanilla JS with parallax.js scroll effects.",
-    },
-    stack: ["JavaScript"],
-    links: [
-      { label: "Demo", url: "https://mskkote.github.io/Scott-Pilgrim-Parallax/" },
-      { label: "GitHub", url: "https://github.com/mskKote/Scott-Pilgrim-Parallax" },
-    ],
-  },
-  {
     slug: "neural-network-visualizer",
-    title: "Neural Network Training Visualizer",
+    title: {
+      en: "Neural Network Training Visualizer",
+      de: "Visualizer für neuronales Netz-Training",
+      ru: "Визуализатор обучения нейросети",
+    },
     period: "07/2020 – 09/2020",
     status: "archived",
-    category: "personal",
-    tagline: "Client freelance project — front-end for a TensorFlow training visualizer",
-    description: {
-      hr: "Built the front-end for a client's thesis project, visualizing neural-network training in real time while the training itself ran on the client's own server.",
-      business: "First Agile-run freelance engagement, earning ₽7,000. Stayed on good terms with the client — two years later, referred a friend to him for follow-on front-end work.",
-      tech: "JavaScript frontend rendering live TensorFlow training data streamed from the client's backend; Trello for kanban tracking.",
+    category: "freelance",
+    tagline: {
+      en: "Purely academic visualization, built for a university acquaintance's thesis",
+      de: "Rein akademische Visualisierung, gebaut für die Abschlussarbeit eines Uni-Bekannten",
+      ru: "Чисто академическая визуализация, сделанная для дипломной работы знакомого по университету",
     },
-    impact: [{ label: "Revenue", value: "₽7,000" }],
+    description: {
+      hr: {
+        en: "Built the front-end for a university acquaintance's thesis project, visualizing neural-network training in real time while the training itself ran on the client's own server.",
+        de: "Frontend für die Abschlussarbeit eines Uni-Bekannten gebaut — visualisierte das Training eines neuronalen Netzes in Echtzeit, während das Training selbst auf dem eigenen Server des Auftraggebers lief.",
+        ru: "Собрал фронтенд для дипломного проекта знакомого по университету — визуализация обучения нейросети в реальном времени, пока само обучение шло на сервере заказчика.",
+      },
+      business: {
+        en: "A purely academic engagement for a university acquaintance's thesis, run as his first Agile-style freelance work and earning ₽7,000. Stayed on good terms with the client — two years later, referred a friend to him for follow-on front-end work.",
+        de: "Ein rein akademisches Projekt für die Abschlussarbeit eines Uni-Bekannten, als erste Agile-artige Freelance-Arbeit durchgeführt und mit 7.000 ₽ vergütet. Der Kontakt blieb gut — zwei Jahre später wurde ihm ein Freund für weitere Frontend-Arbeit empfohlen.",
+        ru: "Чисто академический проект для дипломной работы знакомого по университету, первый фриланс-опыт в agile-формате, заработок ₽7 000. Сохранились хорошие отношения с заказчиком — через два года порекомендовал ему друга для дальнейшей фронтенд-работы.",
+      },
+      tech: {
+        en: "JavaScript frontend rendering live TensorFlow training data streamed from the client's backend; Trello for kanban tracking.",
+        de: "JavaScript-Frontend, das live TensorFlow-Trainingsdaten vom Backend des Auftraggebers streamte; Trello für Kanban-Tracking.",
+        ru: "JavaScript-фронтенд, отрисовывающий данные обучения TensorFlow в реальном времени, стримящиеся с бэкенда заказчика; Trello для канбан-трекинга.",
+      },
+    },
+    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽7,000" }],
     stack: ["JavaScript", "TensorFlow"],
-    links: [{ label: "GitHub", url: "https://github.com/mskKote/WebFaceNN" }],
+    links: [
+      { labelKey: "demo", url: "https://mskvitalii.github.io/WebFaceNN/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/WebFaceNN" },
+    ],
     images: [
       "/images/projects/neural-network-visualizer/app-screenshot.png",
       "/images/projects/neural-network-visualizer/math-visualization.png",
@@ -383,19 +823,47 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "universal-insight-dashboard",
-    title: "Universal Insight — Ops Dashboard",
+    title: {
+      en: "Universal Insight — Ops Dashboard",
+      de: "Universal Insight — Ops-Dashboard",
+      ru: "Universal Insight — операционный дашборд",
+    },
     period: "08/2020 – 05/2021",
     status: "archived",
-    statusNote: "Front-end delivered in full; the product itself was never sold and payment was never completed.",
-    category: "personal",
-    tagline: "Angular ops dashboard for an internal workforce tool — scope grew 14x mid-flight",
-    description: {
-      hr: "Led front-end delivery (and, in practice, day-to-day team coordination) on an internal operations dashboard, learning Angular from scratch mid-project.",
-      business: "Engagement scaled from an initial ₽7,000 quote to a ₽100,000 scope, but stalled for months on unclear requirements, disorganized client communication, and a stalled backend partner. The front-end shipped complete and bug-free, but the client never sold the finished product and the engagement ended without full payment — a formative lesson in getting a written scope and contract before starting work.",
-      tech: "Angular frontend with RxJS, complex dashboard layouts and charting, integrated against a partner-built backend. Juggled three separate UI libraries (Nebular, Bootstrap, Material) accumulated over the project's life.",
+    statusNote: {
+      en: "Front-end delivered in full; the product itself was never sold and payment was never completed.",
+      de: "Frontend vollständig geliefert; das Produkt selbst wurde nie verkauft, die Zahlung nie abgeschlossen.",
+      ru: "Фронтенд сдан полностью; сам продукт так и не продан, оплата не завершена.",
     },
-    impact: [{ label: "Scope growth", value: "₽7K → ₽100K" }],
+    category: "personal",
+    tagline: {
+      en: "Angular ops dashboard for an internal workforce tool — scope grew 14x mid-flight",
+      de: "Angular-Ops-Dashboard für ein internes Workforce-Tool — Umfang wuchs während der Arbeit um das 14-Fache",
+      ru: "Операционный дашборд на Angular для внутреннего HR-инструмента — скоуп вырос в 14 раз по ходу проекта",
+    },
+    description: {
+      hr: {
+        en: "Led front-end delivery (and, in practice, day-to-day team coordination) on an internal operations dashboard, learning Angular from scratch mid-project.",
+        de: "Frontend-Lieferung geleitet (und in der Praxis auch die tägliche Teamkoordination) für ein internes Operations-Dashboard, dabei Angular während des Projekts von Grund auf gelernt.",
+        ru: "Руководил сдачей фронтенда (а на практике и ежедневной координацией команды) для внутреннего операционного дашборда, изучая Angular с нуля прямо по ходу проекта.",
+      },
+      business: {
+        en: "Engagement scaled from an initial ₽7,000 quote to a ₽100,000 scope, but stalled for months on unclear requirements, disorganized client communication, and a stalled backend partner. The front-end shipped complete and bug-free, but the client never sold the finished product and the engagement ended without full payment — a formative lesson in getting a written scope and contract before starting work.",
+        de: "Das Projekt wuchs von einem ursprünglichen Angebot über 7.000 ₽ auf einen Umfang von 100.000 ₽, stockte aber monatelang wegen unklarer Anforderungen, unorganisierter Kundenkommunikation und eines ins Stocken geratenen Backend-Partners. Das Frontend wurde vollständig und fehlerfrei geliefert, doch der Kunde verkaufte das fertige Produkt nie, und das Projekt endete ohne vollständige Bezahlung — eine prägende Lektion, vor Arbeitsbeginn einen schriftlichen Scope und Vertrag einzuholen.",
+        ru: "Проект вырос с изначальной сметы в ₽7 000 до скоупа в ₽100 000, но месяцами буксовал из-за неясных требований, неорганизованной коммуникации с клиентом и застрявшего бэкенд-партнёра. Фронтенд был сдан полностью и без багов, но клиент так и не продал готовый продукт, и проект завершился без полной оплаты — важный урок о необходимости письменного скоупа и договора до начала работы.",
+      },
+      tech: {
+        en: "Angular frontend with RxJS, complex dashboard layouts and charting, integrated against a partner-built backend. Juggled three separate UI libraries (Nebular, Bootstrap, Material) accumulated over the project's life.",
+        de: "Angular-Frontend mit RxJS, komplexen Dashboard-Layouts und Charting, integriert mit einem vom Partner gebauten Backend. Drei verschiedene UI-Bibliotheken (Nebular, Bootstrap, Material) jonglierten, die sich über die Projektlaufzeit ansammelten.",
+        ru: "Фронтенд на Angular с RxJS, сложные дашборд-раскладки и графики, интеграция с бэкендом от партнёра. Приходилось жонглировать тремя разными UI-библиотеками (Nebular, Bootstrap, Material), накопившимися за время проекта.",
+      },
+    },
+    impact: [{ label: { en: "Scope growth", de: "Umfangswachstum", ru: "Рост скоупа" }, value: "₽7K → ₽100K" }],
     stack: ["Angular", "RxJS"],
+    links: [
+      { labelKey: "demo", url: "https://universalinsight.vercel.app/pages/dashboard" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/universal_insight" },
+    ],
     images: [
       "/images/projects/universal-insight-dashboard/dashboard-overview.png",
       "/images/projects/universal-insight-dashboard/charts-view.png",
@@ -407,19 +875,42 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "subway-battery-monitor",
-    title: "Subway Battery Monitoring Dashboard",
+    title: {
+      en: "Subway Battery Monitoring Dashboard",
+      de: "U-Bahn-Batterieüberwachungs-Dashboard",
+      ru: "Дашборд мониторинга батарей метро",
+    },
     period: "09/2020 – 11/2020",
     status: "archived",
-    category: "personal",
-    tagline: "Real-time dashboard monitoring subway battery telemetry",
-    description: {
-      hr: "Built the front-end dashboard for a subway battery-monitoring system, visualizing live voltage, temperature and current readings for an operations team.",
-      business: "Delivered a real-time operator dashboard for a paying client as part of a 4-person freelance team, earning ₽30,000. Missed the original deadline after the charting library couldn't handle real-time updates and had to be swapped mid-project.",
-      tech: "Angular dashboard consuming live sensor telemetry sent over cellular from battery units on subway rolling stock.",
+    category: "freelance",
+    tagline: {
+      en: "Admin panel for a tender: live telemetry and rebalancing across 30 subway batteries",
+      de: "Admin-Panel für eine Ausschreibung: Live-Telemetrie und Rebalancing für 30 U-Bahn-Batterien",
+      ru: "Админка для тендера: телеметрия в реальном времени и перебалансировка для 30 батарей метро",
     },
-    impact: [{ label: "Revenue", value: "₽30,000" }],
+    description: {
+      hr: {
+        en: "Built the front-end admin panel for a subway battery-monitoring system, as part of a team bidding on a subway battery-supply tender — visualizing live voltage, temperature and current readings, and exposing a rebalancing trigger, for an operations team overseeing 30 battery units.",
+        de: "Frontend-Admin-Panel für ein U-Bahn-Batterieüberwachungssystem gebaut, als Teil eines Teams bei einer Ausschreibung für U-Bahn-Batterielieferung — mit Live-Anzeige von Spannung, Temperatur und Strom sowie einem Rebalancing-Trigger für ein Betriebsteam, das 30 Batterieeinheiten überwacht.",
+        ru: "Собрал фронтенд админки для системы мониторинга батарей метро в составе команды, участвовавшей в тендере на поставку батарей для метро — визуализация напряжения, температуры и тока в реальном времени плюс кнопка запуска перебалансировки для команды, следящей за 30 батареями.",
+      },
+      business: {
+        en: "Delivered as part of a bid on a subway battery-supply tender; my part was the admin panel — tracking each of 30 individual battery units' readings and giving operators the ability to trigger a rebalancing pass. Built as a 4-person freelance team, earning ₽30,000. Missed the original deadline after the charting library couldn't handle real-time updates and had to be swapped mid-project.",
+        de: "Geliefert im Rahmen eines Angebots für eine U-Bahn-Batterielieferungs-Ausschreibung; mein Teil war das Admin-Panel — Verfolgung der Messwerte jeder der 30 einzelnen Batterieeinheiten und die Möglichkeit für Betreiber, einen Rebalancing-Durchlauf auszulösen. Als 4-köpfiges Freelance-Team gebaut, Honorar 30.000 ₽. Ursprüngliche Frist verpasst, nachdem die Charting-Bibliothek Echtzeit-Updates nicht bewältigen konnte und mitten im Projekt ausgetauscht werden musste.",
+        ru: "Сдано в рамках участия в тендере на поставку батарей для метро; моя часть — админка: отслеживание показателей каждой из 30 батарей и возможность для операторов запустить перебалансировку. Собрано командой из 4 фрилансеров, доход ₽30 000. Не успели к изначальному дедлайну, потому что библиотека графиков не справилась с обновлениями в реальном времени и её пришлось менять по ходу проекта.",
+      },
+      tech: {
+        en: "Angular dashboard consuming live sensor telemetry sent over cellular from battery units on subway rolling stock, with a rebalancing action wired to a backend command endpoint.",
+        de: "Angular-Dashboard, das Live-Sensortelemetrie empfängt, die per Mobilfunk von Batterieeinheiten in U-Bahn-Wagen gesendet wird, mit einer Rebalancing-Aktion, die an einen Backend-Kommando-Endpunkt angebunden ist.",
+        ru: "Дашборд на Angular, принимающий телеметрию датчиков в реальном времени, передаваемую по сотовой сети от батарей на подвижном составе метро, с действием перебалансировки, подключённым к командному эндпоинту бэкенда.",
+      },
+    },
+    impact: [
+      { label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽30,000" },
+      { label: { en: "Batteries monitored", de: "Überwachte Batterien", ru: "Батарей под контролем" }, value: "30" },
+    ],
     stack: ["Angular"],
-    links: [{ label: "Demo", url: "https://mew2-ultra.web.app/" }],
+    links: [{ labelKey: "demo", url: "https://mew2-ultra.web.app/" }],
     images: [
       "/images/projects/subway-battery-monitor/dashboard-overview.png",
       "/images/projects/subway-battery-monitor/final-photo-1.jpeg",
@@ -429,18 +920,38 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "amc-makeathon-2020",
-    title: "AMC Makeathon 2020",
+    title: {
+      en: "AMC Makeathon 2020",
+      de: "AMC Makeathon 2020",
+      ru: "AMC Makeathon 2020",
+    },
     period: "10/2020",
     status: "archived",
     category: "hackathon",
-    tagline: "University hackathon entry — backend built overnight",
+    tagline: {
+      en: "University hackathon entry — backend built overnight",
+      de: "Uni-Hackathon-Beitrag — Backend über Nacht gebaut",
+      ru: "Заявка на университетском хакатоне — бэкенд собран за ночь",
+    },
     description: {
-      hr: "Paired up to build the backend for a hackathon entry, solving a tricky Unicode serialization bug overnight; lost to the eventual winning team.",
-      business: "No placement, but a clear early lesson: at a hackathon, the pitch and the idea matter more than the code.",
-      tech: "C# backend, reusing patterns from the FassonAPI coursework.",
+      hr: {
+        en: "Paired up to build the backend for a hackathon entry, solving a tricky Unicode serialization bug overnight; lost to the eventual winning team.",
+        de: "Zu zweit das Backend für einen Hackathon-Beitrag gebaut, über Nacht einen kniffligen Unicode-Serialisierungsfehler gelöst; gegen das spätere Siegerteam verloren.",
+        ru: "В паре собрали бэкенд для заявки на хакатоне, за ночь решили коварный баг с Unicode-сериализацией; проиграли команде, ставшей победителем.",
+      },
+      business: {
+        en: "No placement, but a clear early lesson: at a hackathon, the pitch and the idea matter more than the code.",
+        de: "Keine Platzierung, aber eine klare frühe Lektion: Bei einem Hackathon zählen Pitch und Idee mehr als der Code.",
+        ru: "Без призового места, но с чётким ранним уроком: на хакатоне питч и идея важнее кода.",
+      },
+      tech: {
+        en: "C# backend, reusing patterns from the FassonAPI coursework.",
+        de: "C#-Backend, unter Wiederverwendung von Mustern aus der FassonAPI-Kursarbeit.",
+        ru: "Бэкенд на C#, с переиспользованием паттернов из курсовой FassonAPI.",
+      },
     },
     stack: ["C#"],
-    links: [{ label: "GitHub", url: "https://github.com/mskKote/AMC-Makeathon-2020" }],
+    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/AMC-Makeathon-2020" }],
     images: [
       "/images/projects/amc-makeathon-2020/project-screenshot.png",
       "/images/projects/amc-makeathon-2020/presentation-notes.png",
@@ -448,21 +959,45 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "ncahoots-admin-panel",
-    title: "NCahoots — Gifting Startup Admin Panel",
+    title: {
+      en: "NCahoots — Gifting Startup Admin Panel",
+      de: "NCahoots — Admin-Panel für ein Geschenke-Startup",
+      ru: "NCahoots — админка для стартапа по подаркам",
+    },
     period: "11/2020 – 08/2021",
     status: "archived",
-    category: "personal",
-    tagline: "Led an 8-month freelance engagement for a Silicon Valley gifting startup",
+    category: "freelance",
+    tagline: {
+      en: "Led an 8-month freelance engagement for a Silicon Valley gifting startup",
+      de: "Leitete ein 8-monatiges Freelance-Projekt für ein Geschenke-Startup aus dem Silicon Valley",
+      ru: "Руководил 8-месячным фриланс-проектом для стартапа по подаркам из Кремниевой долины",
+    },
     description: {
-      hr: "Led front-end delivery of an admin panel for NCahoots, a Silicon Valley gifting startup, coordinating a small remote team and migrating the stack from Angular to React mid-engagement.",
-      business: "An 8-month freelance engagement with a highly professional, always-available client — the clearest, best-run client relationship of his student freelance years, earning ₽70,789 with zero payment or communication issues.",
-      tech: "React frontend (migrated from an initial Angular build). Discord for team comms, Postman for API contracts, a GitLab Kanban board for tracking.",
+      hr: {
+        en: "Led front-end delivery of an admin panel for NCahoots, a Silicon Valley gifting startup, coordinating a small remote team and migrating the stack from Angular to React mid-engagement.",
+        de: "Leitete die Frontend-Lieferung eines Admin-Panels für NCahoots, ein Geschenke-Startup aus dem Silicon Valley, koordinierte ein kleines Remote-Team und migrierte den Stack mitten im Projekt von Angular zu React.",
+        ru: "Руководил сдачей фронтенда админки для NCahoots — стартапа по подаркам из Кремниевой долины, координировал небольшую удалённую команду и мигрировал стек с Angular на React прямо по ходу проекта.",
+      },
+      business: {
+        en: "An 8-month freelance engagement worth roughly $1,000 (₽70,789) with a highly professional, always-available client — the clearest, best-run client relationship of his student freelance years, with zero payment or communication issues.",
+        de: "Ein 8-monatiges Freelance-Projekt im Wert von rund 1.000 $ (70.789 ₽) mit einem sehr professionellen, jederzeit erreichbaren Kunden — die klarste, am besten geführte Kundenbeziehung seiner Freelance-Jahre als Student, ohne jegliche Zahlungs- oder Kommunikationsprobleme.",
+        ru: "8-месячный фриланс-проект стоимостью около $1000 (₽70 789) с очень профессиональным, всегда на связи клиентом — самые чёткие и хорошо выстроенные отношения с клиентом за все студенческие годы фриланса, без единой проблемы с оплатой или коммуникацией.",
+      },
+      tech: {
+        en: "React frontend (migrated from an initial Angular build). Discord for team comms, Postman for API contracts, a GitLab Kanban board for tracking.",
+        de: "React-Frontend (migriert von einer anfänglichen Angular-Version). Discord für Team-Kommunikation, Postman für API-Verträge, ein GitLab-Kanban-Board für das Tracking.",
+        ru: "Фронтенд на React (мигрировано с изначальной версии на Angular). Discord для командной коммуникации, Postman для API-контрактов, канбан-доска GitLab для трекинга.",
+      },
     },
     impact: [
-      { label: "Revenue", value: "₽70,789" },
-      { label: "Duration", value: "8 months" },
+      { label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽70,789" },
+      { label: { en: "Duration", de: "Dauer", ru: "Длительность" }, value: "8 months" },
     ],
     stack: ["React", "Angular"],
+    links: [
+      { labelKey: "demo", url: "https://admin-silicon-valley.vercel.app" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/admin_silicon_valley" },
+    ],
     images: [
       "/images/projects/ncahoots-admin-panel/sample-data-1.jpeg",
       "/images/projects/ncahoots-admin-panel/sample-data-2.jpeg",
@@ -470,38 +1005,78 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "trustore-landing",
-    title: "TruStore Landing Page",
+    title: {
+      en: "TruStore Landing Page",
+      de: "TruStore-Landingpage",
+      ru: "Лендинг TruStore",
+    },
     period: "03/2021",
     status: "archived",
-    category: "personal",
-    tagline: "Landing page for a Facebook-account resale business",
-    description: {
-      hr: "Built a landing page for a friend's small resale business, working from another freelancer's design.",
-      business: "Two-week freelance landing-page build, earning ₽10,000.",
-      tech: "Vanilla JavaScript, with a deliberately playful, brand-appropriate UI touch — a custom GTA V-style cursor.",
+    category: "freelance",
+    tagline: {
+      en: "Landing page for a Facebook-account resale business",
+      de: "Landingpage für einen Wiederverkaufsdienst für Facebook-Konten",
+      ru: "Лендинг для бизнеса по перепродаже Facebook-аккаунтов",
     },
-    impact: [{ label: "Revenue", value: "₽10,000" }],
+    description: {
+      hr: {
+        en: "Built a landing page for a friend's small resale business, working from another freelancer's design.",
+        de: "Landingpage für das kleine Wiederverkaufsgeschäft eines Freundes gebaut, nach dem Design eines anderen Freelancers.",
+        ru: "Собрал лендинг для небольшого перепродажного бизнеса друга по дизайну другого фрилансера.",
+      },
+      business: {
+        en: "Two-week freelance landing-page build, earning ₽10,000.",
+        de: "Zweiwöchiger Freelance-Auftrag für eine Landingpage, Honorar 10.000 ₽.",
+        ru: "Двухнедельный фриланс-проект по лендингу, доход ₽10 000.",
+      },
+      tech: {
+        en: "Vanilla JavaScript, with a deliberately playful, brand-appropriate UI touch — a custom GTA V-style cursor.",
+        de: "Reines JavaScript, mit einem bewusst verspielten, markengerechten UI-Detail — ein individueller Cursor im GTA-V-Stil.",
+        ru: "Чистый JavaScript, с намеренно игривой деталью в стиле бренда — кастомный курсор в стиле GTA V.",
+      },
+    },
+    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽10,000" }],
     stack: ["JavaScript"],
-    links: [{ label: "GitHub", url: "https://github.com/mskKote/TruStore" }],
+    links: [{ labelKey: "github", url: "https://github.com/mskKote/TruStore" }],
     images: ["/images/projects/trustore-landing/gta-cursor.png"],
   },
   {
     slug: "mining-skins-store",
-    title: "Skins-for-Mining Store",
+    title: {
+      en: "Skins-for-Mining Store",
+      de: "Skins-für-Mining-Shop",
+      ru: "Магазин скинов за майнинг",
+    },
     period: "03/2021",
     status: "archived",
-    category: "personal",
-    tagline: "Solo freelance build: a rewards store + dashboard for crypto miners",
-    description: {
-      hr: "First freelance project taken on solo, without a team — a skins store, miner dashboard, and marketing page for a mining-rewards product.",
-      business: "Referred in after a difficult prior engagement; delivered in 3 weeks instead of the usual months, and the client paid 50% above the quoted rate out of satisfaction.",
-      tech: "Built with GatsbyJS.",
+    category: "freelance",
+    tagline: {
+      en: "Solo freelance build: a rewards store + mining-activity dashboard for crypto miners",
+      de: "Solo-Freelance-Projekt: Prämien-Shop + Mining-Aktivitäts-Dashboard für Krypto-Miner",
+      ru: "Соло-фриланс-проект: магазин наград + дашборд активности майнинга для крипто-майнеров",
     },
-    impact: [{ label: "Revenue", value: "₽15,000" }],
+    description: {
+      hr: {
+        en: "First freelance project taken on solo, without a team — the actual skins store itself plus a dashboard tracking each user's mining activity, and a marketing page for the mining-rewards product.",
+        de: "Erstes Freelance-Projekt solo ohne Team — der eigentliche Skins-Shop selbst plus ein Dashboard zur Verfolgung der Mining-Aktivität jedes Nutzers und eine Marketing-Seite für das Mining-Prämien-Produkt.",
+        ru: "Первый фриланс-проект, взятый в одиночку, без команды — сам магазин скинов плюс дашборд отслеживания майнинг-активности каждого пользователя и маркетинговая страница продукта наград за майнинг.",
+      },
+      business: {
+        en: "Referred in after a difficult prior engagement; delivered in 3 weeks instead of the usual months. Also designed the project's visual identity himself — the client liked it enough to pay an extra €50 on top for it — and paid 50% above the quoted rate overall out of satisfaction.",
+        de: "Über eine Empfehlung nach einem schwierigen vorherigen Projekt gewonnen; in 3 Wochen statt der üblichen Monate geliefert. Auch die visuelle Identität des Projekts selbst entworfen — dem Kunden gefiel sie so gut, dass er dafür zusätzlich 50 € extra zahlte — und insgesamt 50 % über dem vereinbarten Satz aus Zufriedenheit gezahlt.",
+        ru: "Пришёл по рекомендации после сложного предыдущего проекта; сдал за 3 недели вместо обычных месяцев. Также сам придумал визуальную айдентику проекта — клиенту она понравилась настолько, что он доплатил за неё ещё €50 сверху — и в целом заплатил на 50% больше оговорённой ставки от удовлетворения работой.",
+      },
+      tech: {
+        en: "Built with GatsbyJS.",
+        de: "Mit GatsbyJS gebaut.",
+        ru: "Собран на GatsbyJS.",
+      },
+    },
+    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽15,000" }],
     stack: ["Gatsby"],
     links: [
-      { label: "Demo", url: "https://skinmainers.vercel.app/about" },
-      { label: "GitHub", url: "https://github.com/mskKote/ac_for_vs" },
+      { labelKey: "demo", url: "https://skinmainers.vercel.app/about" },
+      { labelKey: "github", url: "https://github.com/mskKote/ac_for_vs" },
     ],
     images: [
       "/images/projects/mining-skins-store/store-screenshot-1.png",
@@ -512,192 +1087,376 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "mining-skins-landing",
-    title: "Skins-for-Mining Landing Page",
+    title: {
+      en: "Skins-for-Mining Landing Page",
+      de: "Skins-für-Mining-Landingpage",
+      ru: "Лендинг скинов за майнинг",
+    },
     period: "04/2021 – 06/2021",
     status: "archived",
-    category: "personal",
-    tagline: "Follow-on landing page for the same mining-rewards product",
-    description: {
-      hr: "Built a dedicated marketing landing page as a follow-on to the Skins-for-Mining store, working with a small ad-hoc team.",
-      business: "Second engagement for the same client, earning another ₽15,000.",
-      tech: "Built with GatsbyJS; the animation-heavy design ultimately made the page noticeably laggy — a lesson in budgeting a performance pass for heavy scroll animations.",
+    category: "freelance",
+    tagline: {
+      en: "Turning idle compute into CS:GO skins for people who don't know how to mine",
+      de: "Ungenutzte Rechenleistung gegen CS:GO-Skins — für Leute, die nicht wissen, wie man mined",
+      ru: "Простаивающие мощности в обмен на скины CS:GO — для тех, кто не умеет майнить",
     },
-    impact: [{ label: "Revenue", value: "₽15,000" }],
+    description: {
+      hr: {
+        en: "Built a dedicated marketing landing page as a follow-on to the Skins-for-Mining store, working with a small ad-hoc team.",
+        de: "Eigene Marketing-Landingpage als Folgeprojekt des Skins-für-Mining-Shops gebaut, mit einem kleinen Ad-hoc-Team.",
+        ru: "Собрал отдельный маркетинговый лендинг как продолжение магазина скинов за майнинг, с небольшой ситуативной командой.",
+      },
+      business: {
+        en: "The whole product's premise: most people have no idea how to start mining cryptocurrency, but plenty are willing to lend their idle computing power in exchange for something tangible — in this case, CS:GO skins. Second engagement for the same client, earning another ₽15,000.",
+        de: "Die Prämisse des gesamten Produkts: Die meisten Menschen wissen nicht, wie man mit dem Mining von Kryptowährung anfängt, aber viele sind bereit, ihre ungenutzte Rechenleistung gegen etwas Greifbares zu verleihen — in diesem Fall CS:GO-Skins. Zweites Projekt für denselben Kunden, weitere 15.000 ₽ Honorar.",
+        ru: "Суть всего продукта: большинство людей не понимают, как начать майнить криптовалюту, но многие готовы одолжить простаивающие вычислительные мощности в обмен на что-то осязаемое — в данном случае скины CS:GO. Второй проект для того же клиента, ещё ₽15 000 дохода.",
+      },
+      tech: {
+        en: "Built with GatsbyJS; the animation-heavy design ultimately made the page noticeably laggy — a lesson in budgeting a performance pass for heavy scroll animations.",
+        de: "Mit GatsbyJS gebaut; das animationslastige Design machte die Seite letztlich spürbar träge — eine Lektion, für aufwendige Scroll-Animationen einen Performance-Durchgang einzuplanen.",
+        ru: "Собран на GatsbyJS; из-за обилия анимаций страница в итоге заметно тормозила — урок о необходимости закладывать время на оптимизацию производительности при тяжёлых скролл-анимациях.",
+      },
+    },
+    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽15,000" }],
     stack: ["Gatsby"],
     links: [
-      { label: "Demo", url: "https://skin-miners.web.app/" },
-      { label: "GitHub", url: "https://github.com/kolbak/Skin-Miners" },
+      { labelKey: "demo", url: "https://skin-miners.web.app/" },
+      { labelKey: "github", url: "https://github.com/kolbak/Skin-Miners" },
     ],
+    images: ["/images/projects/mining-skins-landing/homepage.png"],
   },
   {
     slug: "typography-order-form",
-    title: "Typography Order Form",
+    title: {
+      en: "Typography Order Form",
+      de: "Bestellformular für die Druckerei",
+      ru: "Форма заказа для типографии",
+    },
     period: "08/2021",
     status: "archived",
     company: "Yohan Loshop (own studio)",
-    category: "personal",
-    tagline: "First project of a 3-person studio he co-founded — a print-order form",
+    category: "work",
+    tagline: {
+      en: "First project of a 3-person studio he co-founded — a print-order form",
+      de: "Erstes Projekt eines von ihm mitgegründeten 3-köpfigen Studios — ein Druck-Bestellformular",
+      ru: "Первый проект студии из 3 человек, которую он сооснова́л — форма заказа для печати",
+    },
     description: {
-      hr: "Co-founded a small 3-person dev studio and built its first client project: an order form for a print shop running an idle industrial printer.",
-      business: "Zero-revenue proof-of-concept project that kicked off the studio, which went on to take larger paid work (see Legion).",
-      tech: "Built with GatsbyJS.",
+      hr: {
+        en: "Co-founded a small 3-person dev studio and built its first client project: an order form for a print shop running an idle industrial printer.",
+        de: "Kleines 3-köpfiges Dev-Studio mitgegründet und dessen erstes Kundenprojekt gebaut: ein Bestellformular für eine Druckerei mit ungenutztem Industriedrucker.",
+        ru: "Сооснова́л небольшую студию разработки из 3 человек и собрал её первый клиентский проект: форму заказа для типографии с простаивающим промышленным принтером.",
+      },
+      business: {
+        en: "Zero-revenue proof-of-concept project that kicked off the studio, which went on to take larger paid work (see Legion).",
+        de: "Proof-of-Concept-Projekt ohne Umsatz, das das Studio anschob, das später größere bezahlte Aufträge übernahm (siehe Legion).",
+        ru: "Проект-доказательство концепции без дохода, с которого стартовала студия, позже взявшая более крупные оплачиваемые заказы (см. Legion).",
+      },
+      tech: {
+        en: "Built with GatsbyJS.",
+        de: "Mit GatsbyJS gebaut.",
+        ru: "Собран на GatsbyJS.",
+      },
     },
     stack: ["Gatsby"],
-    links: [{ label: "Demo", url: "https://typography.gatsbyjs.io/" }],
+    links: [{ labelKey: "demo", url: "https://typography.gatsbyjs.io/" }],
     images: ["/images/projects/typography-order-form/order-form.png"],
   },
   {
-    slug: "spanish-verbs",
-    title: "Spanish Verb Trainer",
-    period: "09/2021 – 10/2021",
-    status: "deprecated",
-    statusNote: "Built for a specific person; never actually used.",
-    category: "personal",
-    tagline: "A learning tool for Spanish verbs, built for his father",
-    description: {
-      hr: "Built a small app to help his father learn Spanish verb conjugations.",
-      business: "Timing and design didn't land with the intended user, and the app went unused — a lesson in validating a solution with the actual user before building it.",
-      tech: "Built with Next.js.",
-    },
-    stack: ["Next.js"],
-    links: [{ label: "Demo", url: "https://spanish-verbs-sigma.vercel.app/" }],
-  },
-  {
     slug: "legion-corporate-site",
-    title: "Legion — Construction Company Portal",
+    title: {
+      en: "Legion — Construction Company Portal",
+      de: "Legion — Portal für ein Bauunternehmen",
+      ru: "Legion — портал для строительной компании",
+    },
     period: "10/2021 – 05/2022",
     status: "archived",
-    statusNote: "Engagement ended after the client's side lost confidence in delivery speed.",
-    company: "Yohan Loshop (own studio)",
-    category: "personal",
-    tagline: "Corporate portal for a construction firm — his studio's first paid contract",
-    description: {
-      hr: "Ran engineering on his 3-person studio's largest client engagement: a corporate portal for a construction company, working through several rounds of design and requirements changes.",
-      business: "Earned ₽25,000 across a 7-month engagement. The clearest lesson from running his own studio: without a written scope of work, an unclear or absent client point of contact turns page-by-page waterfall delivery into open-ended scope creep — and without steady revenue, a 3-person team can't compete with what full-time junior roles pay in the same city.",
-      tech: "Built with GatsbyJS, after evaluating and discarding several headless CMS options (Contentful, CosmicJS, DatoCMS) before settling on one.",
+    statusNote: {
+      en: "Engagement ended after the client's side lost confidence in delivery speed.",
+      de: "Projekt endete, nachdem der Kunde das Vertrauen in die Liefergeschwindigkeit verlor.",
+      ru: "Проект завершился, когда клиент потерял уверенность в скорости поставки.",
     },
-    impact: [{ label: "Revenue", value: "₽25,000" }],
+    company: "Yohan Loshop (own studio)",
+    category: "work",
+    tagline: {
+      en: "Corporate portal for a construction firm — his studio's first paid contract",
+      de: "Firmenportal für ein Bauunternehmen — der erste bezahlte Auftrag seines Studios",
+      ru: "Корпоративный портал для строительной компании — первый оплачиваемый контракт студии",
+    },
+    description: {
+      hr: {
+        en: "Ran engineering on his 3-person studio's largest client engagement: a corporate portal for a construction company, working through several rounds of design and requirements changes.",
+        de: "Verantwortete die technische Umsetzung des größten Kundenprojekts seines 3-köpfigen Studios: ein Firmenportal für ein Bauunternehmen, mit mehreren Runden an Design- und Anforderungsänderungen.",
+        ru: "Отвечал за инженерную часть крупнейшего клиентского проекта студии из 3 человек: корпоративный портал для строительной компании, с несколькими раундами изменений дизайна и требований.",
+      },
+      business: {
+        en: "Earned ₽25,000 across a 7-month engagement. The clearest lesson from running his own studio: without a written scope of work, an unclear or absent client point of contact turns page-by-page waterfall delivery into open-ended scope creep — and without steady revenue, a 3-person team can't compete with what full-time junior roles pay in the same city.",
+        de: "25.000 ₽ Honorar über ein 7-monatiges Projekt. Die klarste Lektion aus dem eigenen Studio: Ohne schriftlichen Leistungsumfang verwandelt ein unklarer oder fehlender Ansprechpartner beim Kunden seitenweise Wasserfall-Lieferung in endlosen Scope-Creep — und ohne stetigen Umsatz kann ein 3-köpfiges Team nicht mit dem mithalten, was Junior-Vollzeitstellen in derselben Stadt zahlen.",
+        ru: "Заработок ₽25 000 за 7-месячный проект. Самый чёткий урок из ведения собственной студии: без письменного описания скоупа неясный или отсутствующий контакт со стороны клиента превращает постраничную водопадную поставку в бесконечное расползание скоупа — а без стабильного дохода команда из 3 человек не может конкурировать с зарплатой джуниор-позиций на полной занятости в том же городе.",
+      },
+      tech: {
+        en: "Built with GatsbyJS, after evaluating and discarding several headless CMS options (Contentful, CosmicJS, DatoCMS) before settling on one.",
+        de: "Mit GatsbyJS gebaut, nachdem mehrere Headless-CMS-Optionen (Contentful, CosmicJS, DatoCMS) evaluiert und verworfen wurden, bevor man sich für eine entschied.",
+        ru: "Собран на GatsbyJS, после оценки и отсева нескольких headless CMS (Contentful, CosmicJS, DatoCMS), прежде чем остановились на одном.",
+      },
+    },
+    impact: [{ label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽25,000" }],
     stack: ["Gatsby"],
     links: [
-      { label: "Demo", url: "https://legionmain80175.gatsbyjs.io/projects/odintsovo" },
-      { label: "GitHub", url: "https://github.com/mskKote/Legion" },
+      { labelKey: "demo", url: "https://legion-ecru.vercel.app/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/Legion" },
     ],
+    images: ["/images/projects/legion-corporate-site/homepage.png"],
   },
   {
     slug: "dancin-party-site",
-    title: "Danc'in — Party Website",
+    title: {
+      en: "Danc'in — Party Website",
+      de: "Danc'in — Party-Website",
+      ru: "Danc'in — сайт вечеринки",
+    },
     period: "11/2021 – 12/2021",
     status: "archived",
-    statusNote: "Overkill for the event it was built for — turnout was low regardless.",
+    statusNote: {
+      en: "Overkill for the event it was built for — turnout was low regardless.",
+      de: "Überdimensioniert für den Anlass, für den es gebaut wurde — die Teilnehmerzahl blieb trotzdem niedrig.",
+      ru: "Слишком много для мероприятия, ради которого сделан — явка всё равно была низкой.",
+    },
     category: "personal",
-    tagline: "A party website built for his sister's event",
+    tagline: {
+      en: "A party website built for his sister's event",
+      de: "Eine Party-Website für die Veranstaltung seiner Schwester",
+      ru: "Сайт вечеринки, сделанный для мероприятия сестры",
+    },
     description: {
-      hr: "Built a website for his sister's party after she talked him into it — an excuse to learn GatsbyJS.",
-      business: "No commercial goal; the site was more elaborate than the small event actually needed.",
-      tech: "Built with GatsbyJS — in hindsight, plain HTML/CSS would have been the better fit for the scope.",
+      hr: {
+        en: "Built a website for his sister's party after she talked him into it — an excuse to learn GatsbyJS.",
+        de: "Website für die Party seiner Schwester gebaut, nachdem sie ihn überredet hatte — ein Vorwand, um GatsbyJS zu lernen.",
+        ru: "Собрал сайт для вечеринки сестры после того, как она его уговорила — повод изучить GatsbyJS.",
+      },
+      business: {
+        en: "No commercial goal; the site was more elaborate than the small event actually needed.",
+        de: "Kein kommerzielles Ziel; die Seite war aufwendiger, als die kleine Veranstaltung eigentlich brauchte.",
+        ru: "Без коммерческой цели; сайт получился сложнее, чем реально требовалось для небольшого мероприятия.",
+      },
+      tech: {
+        en: "Built with GatsbyJS — in hindsight, plain HTML/CSS would have been the better fit for the scope.",
+        de: "Mit GatsbyJS gebaut — rückblickend wäre reines HTML/CSS für den Umfang die bessere Wahl gewesen.",
+        ru: "Собран на GatsbyJS — задним числом простой HTML/CSS подошёл бы для такого объёма лучше.",
+      },
     },
     stack: ["Gatsby"],
     links: [
-      { label: "Demo", url: "https://party30770.gatsbyjs.io/" },
-      { label: "GitHub", url: "https://github.com/mskKote/party" },
+      { labelKey: "demo", url: "https://party-ashy-sigma.vercel.app" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/party" },
     ],
-  },
-  {
-    slug: "bot-iot-smart-home",
-    title: "Smart Home via Telegram",
-    period: "12/2021",
-    status: "archived",
-    category: "personal",
-    tagline: "Commissioned two classmates to build a Telegram-controlled smart-home rig",
-    description: {
-      hr: "Acted as the client for once — commissioned two classmates to build a smart-home control system over Telegram, sourcing the physical board from a third student.",
-      business: "Paid a small fee for 1–2 days of contracted work; the scope wasn't finished in time, so the deliverable fell short of the grade he was aiming for. A useful experience in being on the other side of a client relationship.",
-      tech: "React frontend, physical IoT board integration.",
-    },
-    stack: ["React"],
-    images: [
-      "/images/projects/bot-iot-smart-home/hardware-board.png",
-      "/images/projects/bot-iot-smart-home/setup-1.png",
-      "/images/projects/bot-iot-smart-home/setup-2.png",
-    ],
+    images: ["/images/projects/dancin-party-site/homepage.png"],
   },
   {
     slug: "linear-adaptive-typography",
-    title: "Linear Adaptive — Fluid Typography",
+    title: {
+      en: "Linear Adaptive — Fluid Typography",
+      de: "Linear Adaptive — fließende Typografie",
+      ru: "Linear Adaptive — плавная типографика",
+    },
     period: "02/2022",
     status: "archived",
     category: "personal",
-    tagline: "Fluid, CSS-variable-driven responsive typography toolkit",
+    tagline: {
+      en: "Fluid, CSS-variable-driven responsive typography toolkit",
+      de: "Fließendes, CSS-variablen-gesteuertes Toolkit für responsive Typografie",
+      ru: "Инструментарий плавной адаптивной типографики на CSS-переменных",
+    },
     description: {
-      hr: "Built a small toolkit for fluid typography using CSS custom properties, aimed at speeding up responsive design handoff from Figma.",
-      business: "Used directly on the Legion project; no separate commercial outcome.",
-      tech: "Built with Next.js and CSS custom properties.",
+      hr: {
+        en: "Built a small toolkit for fluid typography using CSS custom properties, aimed at speeding up responsive design handoff from Figma.",
+        de: "Kleines Toolkit für fließende Typografie mit CSS Custom Properties gebaut, um die Übergabe von responsivem Design aus Figma zu beschleunigen.",
+        ru: "Собрал небольшой инструментарий плавной типографики на CSS custom properties, чтобы ускорить передачу адаптивного дизайна из Figma.",
+      },
+      business: {
+        en: "Used directly on the Legion project; no separate commercial outcome.",
+        de: "Direkt im Legion-Projekt eingesetzt; kein separates kommerzielles Ergebnis.",
+        ru: "Использован напрямую в проекте Legion; отдельного коммерческого результата не было.",
+      },
+      tech: {
+        en: "Built with Next.js and CSS custom properties.",
+        de: "Mit Next.js und CSS Custom Properties gebaut.",
+        ru: "Собран на Next.js и CSS custom properties.",
+      },
     },
     stack: ["Next.js"],
-    links: [{ label: "Demo", url: "https://linear-adaptive.vercel.app/" }],
+    links: [
+      { labelKey: "demo", url: "https://linear-adaptive.vercel.app/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/linear-adaptive" },
+    ],
+    images: ["/images/projects/linear-adaptive-typography/homepage.png"],
   },
   {
     slug: "sign-app",
-    title: "Sign-App — Signature Drawing Tool",
+    title: {
+      en: "Sign-App — Signature Drawing Tool",
+      de: "Sign-App — Werkzeug zum Zeichnen von Unterschriften",
+      ru: "Sign-App — инструмент для рисования подписи",
+    },
     period: "03/2022",
     status: "archived",
     category: "personal",
-    tagline: "A one-day build for drawing and saving a signature",
+    tagline: {
+      en: "A one-day build for drawing and saving a signature",
+      de: "Ein Ein-Tages-Projekt zum Zeichnen und Speichern einer Unterschrift",
+      ru: "Проект на один день для рисования и сохранения подписи",
+    },
     description: {
-      hr: "Built a small tool for drawing a signature by hand and exporting it — a one-day, one-project sprint.",
-      business: "Used repeatedly by himself and friends since — a small but genuinely useful pet tool.",
-      tech: "Built with Next.js.",
+      hr: {
+        en: "Built a small tool for drawing a signature by hand and exporting it — a one-day, one-project sprint.",
+        de: "Kleines Tool zum handschriftlichen Zeichnen und Exportieren einer Unterschrift gebaut — ein Ein-Tages-Sprint.",
+        ru: "Собрал небольшой инструмент для рисования подписи от руки и её экспорта — спринт на один день.",
+      },
+      business: {
+        en: "Used repeatedly by himself and friends since — a small but genuinely useful pet tool.",
+        de: "Seitdem wiederholt von ihm selbst und Freunden genutzt — ein kleines, aber wirklich nützliches Pet-Tool.",
+        ru: "С тех пор регулярно используется им самим и друзьями — маленький, но по-настоящему полезный pet-инструмент.",
+      },
+      tech: {
+        en: "Built with Next.js.",
+        de: "Mit Next.js gebaut.",
+        ru: "Собран на Next.js.",
+      },
     },
     stack: ["Next.js"],
-    links: [{ label: "Demo", url: "https://sign-app-mu.vercel.app/" }],
+    links: [
+      { labelKey: "demo", url: "https://sign-app-mu.vercel.app/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/Sign-app" },
+    ],
+    images: ["/images/projects/sign-app/homepage.png"],
   },
   {
     slug: "effects-parallax-editor",
-    title: "Effects — Parallax Comic Editor",
+    title: {
+      en: "Effects — Parallax Comic Editor",
+      de: "Effects — Parallax-Comic-Editor",
+      ru: "Effects — редактор параллакс-комиксов",
+    },
     period: "03/2022 – 05/2022",
     status: "archived",
-    statusNote: "Led a 4-person student team; marketing outreach to artists didn't convert.",
+    statusNote: {
+      en: "Grew out of a parallax-scrolling comic page built at his first hackathon in 07/2020, which didn't place but proved the concept. Led a 4-person student team on the full editor two years later; marketing outreach to artists didn't convert.",
+      de: "Entstand aus einer Parallax-Scroll-Comicseite, die er bei seinem ersten Hackathon im 07/2020 baute — ohne Platzierung, aber mit belegtem Konzept. Zwei Jahre später ein 4-köpfiges Studententeam für den vollständigen Editor geleitet; Marketing-Outreach an Künstler konvertierte nicht.",
+      ru: "Вырос из параллакс-скролл-страницы комикса, сделанной на первом хакатоне в 07/2020 — без призового места, но с доказанной концепцией. Через два года руководил командой из 4 студентов над полноценным редактором; маркетинговый охват художников не сконвертировался.",
+    },
     category: "hackathon",
-    tagline: "Editor turning 2D art into gyroscope-driven 2.5D parallax content",
+    tagline: {
+      en: "Editor turning 2D art into gyroscope-driven 2.5D parallax content — grew out of a 2020 hackathon prototype",
+      de: "Editor, der 2D-Kunst in gyroskop-gesteuerten 2,5D-Parallax-Content verwandelt — entstanden aus einem Hackathon-Prototyp von 2020",
+      ru: "Редактор, превращающий 2D-иллюстрации в 2.5D параллакс-контент на гироскопе — вырос из прототипа хакатона 2020 года",
+    },
     description: {
-      hr: "Led a 4-person university-course team building an editor that converts 2D illustrations into gyroscope- and scroll-driven 2.5D parallax content — a concept revisited from his first hackathon two years earlier.",
-      business: "First real attempt at marketing: reached out to digital artists and communities directly. Interest was polite but shallow — no artist adopted the tool, a clear lesson that cold outreach without an existing audience rarely converts.",
-      tech: "Built with Next.js and FaunaDB.",
+      hr: {
+        en: "Led a 4-person university-course team building an editor that converts 2D illustrations into gyroscope- and scroll-driven 2.5D parallax content — grown from a parallax-scrolling comic page he first built at a hackathon two years earlier, the visually most distinctive entry in the room though it didn't place at the time.",
+        de: "Leitete ein 4-köpfiges Universitätskurs-Team beim Bau eines Editors, der 2D-Illustrationen in gyroskop- und scroll-gesteuerten 2,5D-Parallax-Content verwandelt — gewachsen aus einer Parallax-Scroll-Comicseite, die er zwei Jahre zuvor bei einem Hackathon baute, dem visuell auffälligsten Beitrag im Raum, obwohl er damals nicht platziert war.",
+        ru: "Руководил командой из 4 студентов в рамках университетского курса над редактором, превращающим 2D-иллюстрации в 2.5D параллакс-контент, управляемый гироскопом и скроллом — вырос из параллакс-страницы комикса, впервые собранной на хакатоне двумя годами ранее, визуально самой заметной заявки в зале, хотя тогда она не заняла призового места.",
+      },
+      business: {
+        en: "First real attempt at marketing: reached out to digital artists and communities directly. Interest was polite but shallow — no artist adopted the tool, a clear lesson that cold outreach without an existing audience rarely converts.",
+        de: "Erster echter Marketing-Versuch: direkte Ansprache digitaler Künstler und Communities. Das Interesse war höflich, aber oberflächlich — kein Künstler übernahm das Tool, eine klare Lektion, dass Kaltakquise ohne bestehendes Publikum selten konvertiert.",
+        ru: "Первая настоящая попытка маркетинга: прямое обращение к digital-художникам и сообществам. Интерес был вежливым, но поверхностным — ни один художник не начал пользоваться инструментом, чёткий урок о том, что холодный охват без существующей аудитории редко конвертируется.",
+      },
+      tech: {
+        en: "Built with Next.js and FaunaDB. The original 2020 hackathon prototype was vanilla JS with parallax.js scroll effects — this rebuilt the concept as a proper editor rather than a one-off page.",
+        de: "Mit Next.js und FaunaDB gebaut. Der ursprüngliche Hackathon-Prototyp von 2020 war reines JS mit parallax.js-Scroll-Effekten — dies baute das Konzept als vollwertigen Editor statt als Einmal-Seite neu auf.",
+        ru: "Собран на Next.js и FaunaDB. Изначальный прототип с хакатона 2020 года был на чистом JS с эффектами скролла parallax.js — этот проект пересобрал концепцию как полноценный редактор, а не одноразовую страницу.",
+      },
     },
     stack: ["Next.js", "FaunaDB"],
-    links: [{ label: "Demo", url: "https://effects.vercel.app/" }],
+    links: [
+      { labelKey: "demo", url: "https://effects.vercel.app/en/1/1/editor" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/effects" },
+      { labelKey: "originalHackathonDemo", url: "https://mskvitalii.github.io/Scott-Pilgrim-Parallax/" },
+      { labelKey: "originalHackathonGithub", url: "https://github.com/mskVitalii/Scott-Pilgrim-Parallax" },
+    ],
+    images: [
+      "/images/projects/effects-parallax-editor/editor.png",
+      "/images/projects/effects-parallax-editor/original-hackathon-build.png",
+    ],
   },
   {
-    slug: "flyboots-store",
-    title: "FlyBoots — Cross-Border Resale Store",
-    company: "egsha",
-    period: "01/2023 – 02/2023",
-    status: "archived",
-    statusNote: "Delivered for launch; friend's business, no further engagement afterward.",
-    category: "work",
-    tagline: "E-commerce store for a friend's Poizon cross-border resale business",
-    description: {
-      hr: "Built an e-commerce store for a friend's clothing-resale business, sourcing inventory from the Chinese marketplace Poizon. Introduced a lightweight Scrum process partway through to resolve team conflict, and owned payments, shipping integrations, state management, CMS and the static build.",
-      business: "3 weeks, 3–4 people working full-time, to launch in time for the client's target date — a direct test of front-end skills retained during a 6-month backend internship at OZON, which held up.",
-      tech: "Next.js (started on a beta release, which caused early SSR/SSG confusion) with Redux Toolkit, GraphQL, and DatoCMS. Integrated CDEK and BoxBerry for shipping and PayAnyWay for payments. Yandex.Metrica for real-time user behavior tracking.",
+    slug: "firebase-slack-auth-extension",
+    title: {
+      en: "New-User Slack Notifier — Firebase Extension",
+      de: "Neuer-Nutzer-Slack-Benachrichtiger — Firebase-Erweiterung",
+      ru: "Slack-уведомления о новых пользователях — расширение Firebase",
     },
-    stack: ["Next.js", "GraphQL", "Redux", "DatoCMS"],
-    links: [{ label: "Store", url: "https://www.flyboots.store/" }],
+    period: "09/2024 – present",
+    status: "active",
+    category: "personal",
+    tagline: {
+      en: "Firebase Extension installed in 90 projects — Slack alerts on every new signup",
+      de: "Firebase-Erweiterung in 90 Projekten installiert — Slack-Benachrichtigungen bei jeder neuen Registrierung",
+      ru: "Расширение Firebase, установленное в 90 проектах — уведомления в Slack при каждой новой регистрации",
+    },
+    description: {
+      hr: {
+        en: "Built and published a Firebase Extension that posts a Slack message whenever a new user signs up, configurable with just a Slack webhook and message template — installed in 90 Firebase projects via the official Extensions marketplace.",
+        de: "Firebase-Erweiterung gebaut und veröffentlicht, die bei jeder neuen Nutzerregistrierung eine Slack-Nachricht postet, konfigurierbar über nur einen Slack-Webhook und eine Nachrichtenvorlage — installiert in 90 Firebase-Projekten über den offiziellen Extensions-Marktplatz.",
+        ru: "Собрал и опубликовал расширение Firebase, отправляющее сообщение в Slack при каждой новой регистрации пользователя, настраиваемое всего через Slack-вебхук и шаблон сообщения — установлено в 90 проектах Firebase через официальный маркетплейс расширений.",
+      },
+      business: {
+        en: "A zero-maintenance, install-and-configure Firebase Extension solving a common need — real-time visibility into new signups — adopted by 90 separate projects through Firebase's official extensions marketplace, extensions.dev.",
+        de: "Eine wartungsfreie, sofort einsatzbereite Firebase-Erweiterung, die ein häufiges Bedürfnis löst — Echtzeit-Sichtbarkeit neuer Registrierungen — übernommen von 90 verschiedenen Projekten über Firebases offiziellen Extensions-Marktplatz extensions.dev.",
+        ru: "Firebase-расширение без обслуживания, работающее сразу после установки и настройки, решает частую потребность — видимость новых регистраций в реальном времени — используется в 90 отдельных проектах через официальный маркетплейс расширений Firebase extensions.dev.",
+      },
+      tech: {
+        en: "TypeScript Cloud Function triggered on Firebase Auth user-creation events, packaged and published as a Firebase Extension with a configurable Slack Webhook URL and message template.",
+        de: "TypeScript-Cloud-Function, ausgelöst durch Firebase-Auth-Nutzererstellungs-Events, verpackt und veröffentlicht als Firebase-Erweiterung mit konfigurierbarer Slack-Webhook-URL und Nachrichtenvorlage.",
+        ru: "Cloud Function на TypeScript, срабатывающая на события создания пользователя в Firebase Auth, упакована и опубликована как расширение Firebase с настраиваемым Slack Webhook URL и шаблоном сообщения.",
+      },
+    },
+    impact: [{ label: { en: "Installs", de: "Installationen", ru: "Установок" }, value: "90" }],
+    stack: ["TypeScript", "Firebase", "Cloud Functions", "Slack API"],
+    links: [
+      { labelKey: "firebaseExtension", url: "https://extensions.dev/extensions/mskvitalii/auth-send-message-to-slack" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/auth-send-message-to-slack" },
+    ],
+    images: ["/images/projects/firebase-slack-auth-extension/listing.png"],
   },
   {
-    slug: "audioland-musicgen",
-    title: "Audioland — AI Music Generation Plugin",
-    company: "WeDo.agency",
-    period: "07/2023 – 10/2023",
-    status: "archived",
-    category: "work",
-    tagline: "Startup attempt during his Master's: an AI music-generation ChatGPT plugin",
-    description: {
-      hr: "Explored a startup idea during his Master's studies in Chemnitz: an AI plugin for generating music from a ChatGPT prompt.",
-      business: "Independent startup attempt, not part of coursework or employment.",
-      tech: "Built with Next.js.",
+    slug: "semki-staffbase-hackathon",
+    title: {
+      en: "Semki — Intelligent Communication Platform with AI-Powered User Matching",
+      de: "Semki — intelligente Kommunikationsplattform mit KI-gestütztem Nutzer-Matching",
+      ru: "Semki — платформа коммуникации с AI-подбором сотрудников",
     },
-    stack: ["Next.js"],
+    period: "10/2025 – 11/2025",
+    status: "archived",
+    category: "hackathon",
+    tagline: {
+      en: "RAG-powered employee search that helps enterprises connect departments and find the right people fast",
+      de: "RAG-gestützte Mitarbeitersuche, die Unternehmen hilft, Abteilungen zu vernetzen und schnell die richtigen Personen zu finden",
+      ru: "RAG-поиск сотрудников, помогающий предприятиям связывать отделы и быстро находить нужных людей",
+    },
+    description: {
+      hr: {
+        en: "Built Semki for Staffbase's 'Code the Future' AI Challenge — an AI-powered employee-search platform that helps large organizations connect departments and find the right people fast.",
+        de: "Semki für Staffbases 'Code the Future' AI Challenge gebaut — eine KI-gestützte Mitarbeitersuch-Plattform, die großen Organisationen hilft, Abteilungen zu vernetzen und schnell die richtigen Personen zu finden.",
+        ru: "Собрал Semki для AI-хакатона Staffbase 'Code the Future' — платформу поиска сотрудников на AI, помогающую крупным организациям связывать отделы и быстро находить нужных людей.",
+      },
+      business: {
+        en: "Large enterprises struggle to find the right person across siloed departments. Semki uses AI-powered semantic search over employee profiles to surface relevant colleagues instantly, cutting the time spent hunting for the right contact in a big organization.",
+        de: "Große Unternehmen tun sich schwer, über isolierte Abteilungen hinweg die richtige Person zu finden. Semki nutzt KI-gestützte semantische Suche über Mitarbeiterprofile, um relevante Kollegen sofort sichtbar zu machen und den Zeitaufwand für die Suche nach dem richtigen Kontakt in einer großen Organisation zu reduzieren.",
+        ru: "Крупным компаниям сложно найти нужного человека среди изолированных отделов. Semki использует семантический AI-поиск по профилям сотрудников, чтобы мгновенно находить релевантных коллег, сокращая время на поиск нужного контакта в большой организации.",
+      },
+      tech: {
+        en: "Go backend (Gin) with MongoDB, Qdrant for vector search, Redis caching, and the OpenAI API for embeddings and RAG-style retrieval over employee profiles. React 19 + TypeScript frontend with Mantine UI, Zustand and TanStack Query. Full observability stack (Prometheus, Grafana, Loki, Jaeger) deployed on Kubernetes.",
+        de: "Go-Backend (Gin) mit MongoDB, Qdrant für Vektorsuche, Redis-Caching und der OpenAI-API für Embeddings und RAG-artiges Retrieval über Mitarbeiterprofile. React-19- + TypeScript-Frontend mit Mantine UI, Zustand und TanStack Query. Vollständiger Observability-Stack (Prometheus, Grafana, Loki, Jaeger), deployt auf Kubernetes.",
+        ru: "Бэкенд на Go (Gin) с MongoDB, Qdrant для векторного поиска, кеширование Redis и OpenAI API для эмбеддингов и RAG-поиска по профилям сотрудников. Фронтенд на React 19 + TypeScript с Mantine UI, Zustand и TanStack Query. Полный стек observability (Prometheus, Grafana, Loki, Jaeger) на Kubernetes.",
+      },
+    },
+    stack: ["Go", "React", "TypeScript", "MongoDB", "Qdrant", "OpenAI API", "Kubernetes"],
+    links: [
+      { labelKey: "competition", url: "https://staffbase.com/ai-challenge" },
+      { labelKey: "demoVideo", url: "https://www.youtube.com/watch?v=4vvkE5uHvkU" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/Semki" },
+    ],
   },
 ];
 
@@ -705,20 +1464,43 @@ export const EDUCATION_PROJECTS: Project[] = [
   // ─── Higher School of Economics — Bachelor's in Software Engineering ──────
   {
     slug: "fassonapi-coursework",
-    title: "FassonAPI — Biometric Web Auth",
+    title: {
+      en: "FassonAPI — Biometric Web Auth",
+      de: "FassonAPI — Biometrische Web-Authentifizierung",
+      ru: "FassonAPI — биометрическая веб-аутентификация",
+    },
     company: "Higher School of Economics",
     period: "10/2019 – 04/2020",
     status: "archived",
     category: "education",
-    tagline: "Award-winning first-year coursework: FaceID-style web authentication",
-    description: {
-      hr: "First-year university coursework proposing biometric, FaceID-style authentication for websites, developed with an academic advisor.",
-      business: "Coursework project later recognized among HSE's best student projects — notified of the award two years after submission.",
-      tech: "Backend explored in C#. The C# refresher gained here paid off directly: it's what let him walk into the OZON backend internship interview with confidence.",
+    tagline: {
+      en: "Award-winning first-year coursework: FaceID-style web authentication",
+      de: "Preisgekrönte Erstsemester-Kursarbeit: webbasierte Authentifizierung im FaceID-Stil",
+      ru: "Отмеченная наградой курсовая первого курса: веб-аутентификация в стиле FaceID",
     },
-    impact: [{ label: "Recognition", value: "HSE Best Projects" }],
+    description: {
+      hr: {
+        en: "First-year university coursework proposing biometric, FaceID-style authentication for websites, developed with an academic advisor.",
+        de: "Erstsemester-Kursarbeit, die biometrische, FaceID-artige Authentifizierung für Websites vorschlug, entwickelt mit einem akademischen Betreuer.",
+        ru: "Курсовая работа первого курса, предлагающая биометрическую аутентификацию для сайтов в стиле FaceID, разработана с научным руководителем.",
+      },
+      business: {
+        en: "Coursework project later recognized among HSE's best student projects — notified of the award two years after submission.",
+        de: "Kursprojekt, das später zu den besten Studierendenprojekten der HSE zählte — die Auszeichnung wurde zwei Jahre nach Abgabe mitgeteilt.",
+        ru: "Курсовой проект, позже признанный одним из лучших студенческих проектов НИУ ВШЭ — о награде сообщили спустя два года после сдачи.",
+      },
+      tech: {
+        en: "Backend explored in C#. The C# refresher gained here paid off directly: it's what let him walk into the OZON backend internship interview with confidence.",
+        de: "Backend in C# erkundet. Die hier aufgefrischten C#-Kenntnisse zahlten sich direkt aus: Sie gaben ihm die Sicherheit für das Vorstellungsgespräch zum Backend-Praktikum bei OZON.",
+        ru: "Бэкенд исследовался на C#. Освежённые здесь знания C# напрямую окупились: именно они позволили уверенно пройти собеседование на бэкенд-стажировку в OZON.",
+      },
+    },
+    impact: [{ label: { en: "Recognition", de: "Auszeichnung", ru: "Признание" }, value: "HSE Best Projects" }],
     stack: ["C#"],
-    links: [{ label: "GitHub", url: "https://github.com/mskVitalii/FassonAPI" }],
+    links: [
+      { labelKey: "demo", url: "https://fassonapi.azurewebsites.net/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/FassonAPI" },
+    ],
     images: [
       "/images/projects/fassonapi-coursework/architecture-scheme.png",
       "/images/projects/fassonapi-coursework/late-night-coding.png",
@@ -728,19 +1510,39 @@ export const EDUCATION_PROJECTS: Project[] = [
   },
   {
     slug: "cyberphys-color-robot",
-    title: "Color-Sensing Sound Robot",
+    title: {
+      en: "Color-Sensing Sound Robot",
+      de: "Farberkennender Klangroboter",
+      ru: "Робот, распознающий цвет по звуку",
+    },
     company: "Higher School of Economics",
     period: "04/2020 – 05/2020",
     status: "archived",
     category: "education",
-    tagline: "Arduino robot that identifies 12 colors and responds with sound",
+    tagline: {
+      en: "Arduino robot that identifies 12 colors and responds with sound",
+      de: "Arduino-Roboter, der 12 Farben erkennt und mit Klang reagiert",
+      ru: "Arduino-робот, распознающий 12 цветов и отвечающий звуком",
+    },
     description: {
-      hr: "Built a color-sensing robot with a course partner — wrote the detection algorithm while she handled the electronics build and enclosure.",
-      business: "Academic hardware project; no commercial output, but a first real exposure to embedded debugging.",
-      tech: "Arduino/C++ firmware reading a color sensor and mapping 12 detected colors to distinct audio tones.",
+      hr: {
+        en: "Built a color-sensing robot with a course partner — wrote the detection algorithm while she handled the electronics build and enclosure.",
+        de: "Farberkennenden Roboter mit einem Kurspartner gebaut — Erkennungsalgorithmus geschrieben, während sie Elektronikaufbau und Gehäuse übernahm.",
+        ru: "Собрал робота, распознающего цвет, вместе с напарницей по курсу — писал алгоритм распознавания, пока она занималась электроникой и корпусом.",
+      },
+      business: {
+        en: "Academic hardware project; no commercial output, but a first real exposure to embedded debugging.",
+        de: "Akademisches Hardware-Projekt; kein kommerzieller Output, aber erste echte Erfahrung mit Embedded-Debugging.",
+        ru: "Академический hardware-проект без коммерческого результата, но с первым настоящим опытом отладки embedded-систем.",
+      },
+      tech: {
+        en: "Arduino/C++ firmware reading a color sensor and mapping 12 detected colors to distinct audio tones.",
+        de: "Arduino-/C++-Firmware, die einen Farbsensor ausliest und 12 erkannte Farben auf unterschiedliche Audiotöne abbildet.",
+        ru: "Прошивка на Arduino/C++, считывающая датчик цвета и сопоставляющая 12 распознанных цветов с разными звуковыми тонами.",
+      },
     },
     stack: ["C++", "Arduino"],
-    links: [{ label: "GitHub", url: "https://github.com/mskKote/Arduino-Color-Sound/commits/master" }],
+    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/Arduino-Color-Sound" }],
     images: [
       "/images/projects/cyberphys-color-robot/robot-build-1.png",
       "/images/projects/cyberphys-color-robot/robot-build-2.png",
@@ -749,171 +1551,379 @@ export const EDUCATION_PROJECTS: Project[] = [
   },
   {
     slug: "tango-streaming-coursework",
-    title: "Tango — Streaming App Coursework",
+    title: {
+      en: "Tango — Streaming App Coursework",
+      de: "Tango — Kursarbeit zu einer Streaming-App",
+      ru: "Tango — курсовая по стриминговому приложению",
+    },
     company: "Higher School of Economics",
     period: "11/2020 – 05/2021",
     status: "archived",
-    statusNote: "Prototype, social features too raw to pursue further.",
+    statusNote: {
+      en: "Prototype, social features too raw to pursue further.",
+      de: "Prototyp, Social-Features noch zu unausgereift für eine Weiterführung.",
+      ru: "Прототип, социальные функции оказались слишком сырыми для продолжения.",
+    },
     category: "education",
-    tagline: "Coursework prototype: a Netflix-style streaming app",
+    tagline: {
+      en: "Coursework prototype: a Netflix-style streaming app",
+      de: "Kursarbeits-Prototyp: eine Streaming-App im Netflix-Stil",
+      ru: "Прототип для курсовой: стриминговое приложение в стиле Netflix",
+    },
     description: {
-      hr: "Built the backend for a coursework project alongside an iOS-focused partner, learning Java Spring Boot along the way.",
-      business: "Prototype shared informally with a filmmaking student for feedback — social features weren't developed enough to take further.",
-      tech: "Backend in Java Spring Boot, later revisited in Go. Frontend admin panel in JavaScript.",
+      hr: {
+        en: "Built the backend for a coursework project alongside an iOS-focused partner, learning Java Spring Boot along the way.",
+        de: "Backend für ein Kursprojekt zusammen mit einem auf iOS fokussierten Partner gebaut, dabei Java Spring Boot gelernt.",
+        ru: "Собрал бэкенд для курсового проекта вместе с напарником, специализирующимся на iOS, попутно изучая Java Spring Boot.",
+      },
+      business: {
+        en: "Prototype shared informally with a filmmaking student for feedback — social features weren't developed enough to take further.",
+        de: "Prototyp informell mit einem Film-Studenten für Feedback geteilt — Social-Features waren nicht ausgereift genug für eine Weiterführung.",
+        ru: "Прототип неформально показывали студенту-кинематографисту для обратной связи — социальные функции были недостаточно проработаны для продолжения.",
+      },
+      tech: {
+        en: "Backend in Java Spring Boot, later revisited in Go. Frontend admin panel in JavaScript.",
+        de: "Backend in Java Spring Boot, später in Go überarbeitet. Frontend-Admin-Panel in JavaScript.",
+        ru: "Бэкенд на Java Spring Boot, позже пересмотрен на Go. Админка на JavaScript.",
+      },
     },
     stack: ["Java", "Go", "Spring Boot", "JavaScript"],
-    links: [{ label: "GitHub", url: "https://github.com/mskVitalii/Tango-server" }],
+    links: [
+      { labelKey: "githubBackend", url: "https://github.com/mskVitalii/Tango-server" },
+      { labelKey: "githubAdmin", url: "https://github.com/mskVitalii/Tango_admin" },
+      { labelKey: "liveDemoAdmin", url: "https://tango-admin-rho.vercel.app" },
+    ],
   },
   {
     slug: "checkpoint-coursework",
-    title: "Checkpoint — Security Checkpoint App",
+    title: {
+      en: "Checkpoint — Security Checkpoint App",
+      de: "Checkpoint — App für Sicherheitskontrollpunkte",
+      ru: "Checkpoint — приложение для КПП",
+    },
     company: "Higher School of Economics",
     period: "03/2021 – 04/2021",
     status: "archived",
     category: "education",
-    tagline: "Coursework backend for a security-checkpoint management app",
+    tagline: {
+      en: "Coursework backend for a security-checkpoint management app",
+      de: "Kursarbeits-Backend für eine App zur Verwaltung von Sicherheitskontrollpunkten",
+      ru: "Курсовой бэкенд для приложения управления контрольно-пропускными пунктами",
+    },
     description: {
-      hr: "Built the backend for a course partner's mobile app (React Native) supporting security checkpoints at sites like malls and gated communities.",
-      business: "Academic coursework; extra hands-on experience with Spring Boot.",
-      tech: "Backend in Java Spring Boot.",
+      hr: {
+        en: "Built the backend for a course partner's mobile app (React Native) supporting security checkpoints at sites like malls and gated communities.",
+        de: "Backend für die mobile App (React Native) eines Kurspartners gebaut, die Sicherheitskontrollpunkte etwa in Einkaufszentren und geschlossenen Wohnanlagen unterstützt.",
+        ru: "Собрал бэкенд для мобильного приложения (React Native) напарника по курсу, поддерживающего контрольно-пропускные пункты в торговых центрах и закрытых посёлках.",
+      },
+      business: {
+        en: "Academic coursework; extra hands-on experience with Spring Boot.",
+        de: "Akademische Kursarbeit; zusätzliche praktische Erfahrung mit Spring Boot.",
+        ru: "Академическая курсовая; дополнительный практический опыт со Spring Boot.",
+      },
+      tech: {
+        en: "Backend in Java Spring Boot.",
+        de: "Backend in Java Spring Boot.",
+        ru: "Бэкенд на Java Spring Boot.",
+      },
     },
     stack: ["Java", "Spring Boot"],
   },
   {
     slug: "lightning-diagram-editor",
-    title: "Lightning — ER Diagram Editor",
+    title: {
+      en: "Lightning — ER Diagram Editor",
+      de: "Lightning — ER-Diagramm-Editor",
+      ru: "Lightning — редактор ER-диаграмм",
+    },
     company: "Higher School of Economics",
     period: "04/2022",
     status: "deprecated",
-    statusNote: "Rough prototype — the zero-code ambition outran the execution.",
+    statusNote: {
+      en: "Rough prototype — the zero-code ambition outran the execution.",
+      de: "Grober Prototyp — die Zero-Code-Ambition übertraf die Umsetzung.",
+      ru: "Черновой прототип — амбиция zero-code опередила реализацию.",
+    },
     category: "education",
-    tagline: "3rd-semester coursework attempt at a zero-code backend/server generator",
+    tagline: {
+      en: "3rd-semester coursework attempt at a zero-code backend/server generator",
+      de: "Versuch im 3. Semester, einen Zero-Code-Backend-/Server-Generator zu bauen",
+      ru: "Попытка курсовой 3-го семестра сделать zero-code генератор бэкенда/сервера",
+    },
     description: {
-      hr: "Coursework attempt at a zero-code tool for scaffolding a server from a visual model — landed as a rough ER-diagram editor rather than the original ambition.",
-      business: "No commercial outcome, but it crystallized a lasting interest in low-code tooling and, later, AI-assisted development as ways to close the gap between an idea and a working service.",
-      tech: "Built with Next.js.",
+      hr: {
+        en: "Coursework attempt at a zero-code tool for scaffolding a server from a visual model — landed as a rough ER-diagram editor rather than the original ambition.",
+        de: "Kursarbeits-Versuch eines Zero-Code-Tools, das aus einem visuellen Modell ein Server-Grundgerüst erzeugt — endete als grober ER-Diagramm-Editor statt der ursprünglichen Ambition.",
+        ru: "Курсовая попытка сделать zero-code инструмент для генерации сервера из визуальной модели — в итоге получился черновой редактор ER-диаграмм вместо изначальной амбиции.",
+      },
+      business: {
+        en: "No commercial outcome, but it crystallized a lasting interest in low-code tooling and, later, AI-assisted development as ways to close the gap between an idea and a working service.",
+        de: "Kein kommerzielles Ergebnis, aber es festigte ein bleibendes Interesse an Low-Code-Tools und später an KI-gestützter Entwicklung als Wege, die Lücke zwischen einer Idee und einem funktionierenden Service zu schließen.",
+        ru: "Без коммерческого результата, но именно тогда выкристаллизовался устойчивый интерес к low-code инструментам, а позже — к AI-ассистированной разработке как способу сократить путь от идеи до работающего сервиса.",
+      },
+      tech: {
+        en: "Built with Next.js.",
+        de: "Mit Next.js gebaut.",
+        ru: "Собран на Next.js.",
+      },
     },
     stack: ["Next.js"],
-    links: [{ label: "GitHub", url: "https://github.com/mskKote/lightning" }],
+    links: [
+      { labelKey: "demo", url: "https://lightning-sand.vercel.app" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/lightning" },
+    ],
+    images: ["/images/projects/lightning-diagram-editor/editor.png"],
   },
   {
     slug: "react-redux-docs-translation",
-    title: "React Redux Docs — Russian Translation",
+    title: {
+      en: "React Redux Docs — Russian Translation",
+      de: "React-Redux-Dokumentation — russische Übersetzung",
+      ru: "Документация React Redux — перевод на русский",
+    },
     company: "Higher School of Economics",
     period: "07/2022 – 09/2022",
     status: "archived",
-    statusNote: "Translation stalled after the library's maintainers didn't respond to update requests.",
+    statusNote: {
+      en: "Translation stalled after the library's maintainers didn't respond to update requests.",
+      de: "Übersetzung stagnierte, nachdem die Maintainer der Bibliothek nicht auf Aktualisierungsanfragen reagierten.",
+      ru: "Перевод остановился после того, как мейнтейнеры библиотеки не ответили на запросы обновления.",
+    },
     category: "education",
-    tagline: "University practicum: official Russian translation of the React Redux docs",
+    tagline: {
+      en: "University practicum: official Russian translation of the React Redux docs",
+      de: "Universitätspraktikum: offizielle russische Übersetzung der React-Redux-Dokumentation",
+      ru: "Университетская практика: официальный русский перевод документации React Redux",
+    },
     description: {
-      hr: "Completed an official university practicum translating the React Redux documentation into Russian, credited under a faculty practicum supervisor.",
-      business: "Published to a js.org subdomain reserved for vetted JS-ecosystem resources; covered in a Habr article on the translation process. Reader feedback on Habr was mixed, and the translation was never kept in sync after the maintainers didn't respond to a webhook/update request — useful firsthand exposure to the maintenance cost of open-source contributions.",
-      tech: "Documentation translation and static site publishing.",
+      hr: {
+        en: "Completed an official university practicum translating the React Redux documentation into Russian, credited under a faculty practicum supervisor.",
+        de: "Offizielles Universitätspraktikum absolviert, in dem die React-Redux-Dokumentation ins Russische übersetzt wurde, betreut von einem Fakultätsdozenten.",
+        ru: "Прошёл официальную университетскую практику по переводу документации React Redux на русский язык, под руководством преподавателя-куратора.",
+      },
+      business: {
+        en: "Published to a js.org subdomain reserved for vetted JS-ecosystem resources; covered in a Habr article on the translation process. Reader feedback on Habr was mixed, and the translation was never kept in sync after the maintainers didn't respond to a webhook/update request — useful firsthand exposure to the maintenance cost of open-source contributions.",
+        de: "Veröffentlicht auf einer js.org-Subdomain für geprüfte JS-Ökosystem-Ressourcen; in einem Habr-Artikel über den Übersetzungsprozess behandelt. Das Leserfeedback auf Habr war gemischt, und die Übersetzung blieb nie synchron, nachdem die Maintainer nicht auf eine Webhook-/Update-Anfrage reagierten — eine nützliche direkte Erfahrung der Wartungskosten von Open-Source-Beiträgen.",
+        ru: "Опубликовано на поддомене js.org, зарезервированном для проверенных ресурсов JS-экосистемы; освещено в статье на Хабре о процессе перевода. Отзывы читателей на Хабре были смешанными, а перевод так и не поддерживался в актуальном состоянии после того, как мейнтейнеры не ответили на запрос через webhook — полезный первый опыт того, чего стоит поддержка open-source вклада.",
+      },
+      tech: {
+        en: "Documentation translation and static site publishing.",
+        de: "Dokumentationsübersetzung und Veröffentlichung einer statischen Website.",
+        ru: "Перевод документации и публикация статического сайта.",
+      },
     },
     stack: ["Documentation"],
-    links: [{ label: "Live translation", url: "https://ru.react-redux.js.org/" }],
+    links: [
+      { labelKey: "liveTranslation", url: "https://ru.react-redux.js.org/" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/react-redux-ru" },
+    ],
     images: ["/images/projects/react-redux-docs-translation/habr-feedback-stats.png"],
   },
   {
     slug: "news-aggregator-thesis",
-    title: "Prospero — News Aggregator (Bachelor's Thesis)",
+    title: {
+      en: "Prospero — News Aggregator (Bachelor's Thesis)",
+      de: "Prospero — News-Aggregator (Bachelorarbeit)",
+      ru: "Prospero — агрегатор новостей (бакалаврская работа)",
+    },
     company: "Higher School of Economics",
     period: "03/2023 – 06/2023",
     status: "archived",
     category: "education",
-    tagline: "Bachelor's thesis: a fully instrumented news-aggregation platform",
+    tagline: {
+      en: "Bachelor's thesis: a fully instrumented news-aggregation platform",
+      de: "Bachelorarbeit: eine vollständig instrumentierte News-Aggregations-Plattform",
+      ru: "Бакалаврская работа: полностью инструментированная платформа агрегации новостей",
+    },
     featured: true,
     description: {
-      hr: "Bachelor's thesis project — a news aggregator built and shipped in roughly a month of focused work, backed by a real production-style setup, with a companion admin panel for content moderation.",
-      business: "Scoped the idea into epics and stories in Jira, sized by complexity and time, with lower-priority ideas parked in a Notion backlog as a single source of documentation truth.",
-      tech: "Go backend (his first project in the language) with ElasticSearch, PostgreSQL and a Next.js/React/Redux Toolkit/RTK Query frontend deployed on Vercel, plus a separate admin panel. Full observability stack: logs in ELK, tracing in Jaeger, metrics in Prometheus/Grafana, and Yandex.Metrica for traffic. CI/CD auto-deployed to a rented Docker host on every merged PR.",
+      hr: {
+        en: "Bachelor's thesis project — a news aggregator built and shipped in roughly a month of focused work, backed by a real production-style setup, with a companion admin panel for content moderation.",
+        de: "Bachelorarbeitsprojekt — ein News-Aggregator, gebaut und ausgeliefert in rund einem Monat fokussierter Arbeit, mit einem echten produktionsnahen Setup und einem begleitenden Admin-Panel für die Inhaltsmoderation.",
+        ru: "Проект бакалаврской работы — агрегатор новостей, собранный и выпущенный примерно за месяц сфокусированной работы, с настоящей production-инфраструктурой и админкой для модерации контента.",
+      },
+      business: {
+        en: "Scoped the idea into epics and stories in Jira, sized by complexity and time, with lower-priority ideas parked in a Notion backlog as a single source of documentation truth.",
+        de: "Idee in Jira in Epics und Stories aufgeteilt, nach Komplexität und Zeit geschätzt, weniger priorisierte Ideen in einem Notion-Backlog als einzige Dokumentationsquelle geparkt.",
+        ru: "Разбил идею на эпики и стори в Jira, оценённые по сложности и времени, менее приоритетные идеи хранились в бэклоге Notion как единый источник документации.",
+      },
+      tech: {
+        en: "Go backend (his first project in the language) with ElasticSearch, PostgreSQL and a Next.js/React/Redux Toolkit/RTK Query frontend deployed on Vercel, plus a separate admin panel. Full observability stack: logs in ELK, tracing in Jaeger, metrics in Prometheus/Grafana, and Yandex.Metrica for traffic. CI/CD auto-deployed to a rented Docker host on every merged PR.",
+        de: "Go-Backend (sein erstes Projekt in dieser Sprache) mit ElasticSearch, PostgreSQL und einem auf Vercel deployten Next.js/React/Redux-Toolkit/RTK-Query-Frontend, plus separatem Admin-Panel. Vollständiger Observability-Stack: Logs in ELK, Tracing in Jaeger, Metriken in Prometheus/Grafana und Yandex.Metrica für Traffic. CI/CD deployte bei jedem gemergten PR automatisch auf einen gemieteten Docker-Host.",
+        ru: "Бэкенд на Go (первый проект на этом языке) с ElasticSearch, PostgreSQL и фронтендом на Next.js/React/Redux Toolkit/RTK Query, развёрнутым на Vercel, плюс отдельная админка. Полный стек observability: логи в ELK, трейсинг в Jaeger, метрики в Prometheus/Grafana и Яндекс.Метрика для трафика. CI/CD автоматически деплоил на арендованный Docker-хост при каждом слитом PR.",
+      },
     },
-    impact: [{ label: "Thesis grade", value: "B+" }],
+    impact: [{ label: { en: "Thesis grade", de: "Abschlussnote", ru: "Оценка за диплом" }, value: "B+" }],
     stack: ["Go", "ElasticSearch", "PostgreSQL", "Next.js", "React", "Redux Toolkit", "Docker", "Prometheus", "Grafana", "Jaeger", "ELK"],
     links: [
-      { label: "Live site", url: "https://prospero-frontend.vercel.app/" },
-      { label: "Admin panel", url: "https://prospero-adminka.vercel.app/" },
-      { label: "GitHub — Frontend", url: "https://github.com/mskVitalii/prospero_frontend" },
-      { label: "GitHub — Backend", url: "https://github.com/mskVitalii/prospero_backend" },
-      { label: "GitHub — Admin", url: "https://github.com/mskVitalii/prospero_adminka" },
+      { labelKey: "liveSite", url: "https://prospero-frontend.vercel.app/" },
+      { labelKey: "adminPanel", url: "https://prospero-adminka.vercel.app/" },
+      { labelKey: "githubFrontend", url: "https://github.com/mskVitalii/prospero_frontend" },
+      { labelKey: "githubBackend", url: "https://github.com/mskVitalii/prospero_backend" },
+      { labelKey: "githubAdmin", url: "https://github.com/mskVitalii/prospero_adminka" },
     ],
   },
 
   // ─── Chemnitz University of Technology — Master's in Web Engineering ──────
   {
     slug: "chemnitz-map-assignment",
-    title: "Chemnitz Map — Project Assignment",
+    title: {
+      en: "Chemnitz Map — Project Assignment",
+      de: "Chemnitz Map — Projektaufgabe",
+      ru: "Chemnitz Map — проектное задание",
+    },
     company: "Chemnitz University of Technology",
     period: "11/2023 – 01/2024",
     status: "archived",
     category: "education",
-    tagline: "1st-semester project assignment: an interactive campus/city map",
+    tagline: {
+      en: "1st-semester project assignment: an interactive campus/city map",
+      de: "Projektaufgabe im 1. Semester: eine interaktive Campus-/Stadtkarte",
+      ru: "Проектное задание 1-го семестра: интерактивная карта кампуса/города",
+    },
     description: {
-      hr: "First-semester project assignment at TU Chemnitz building an interactive map application.",
-      business: "Academic assignment; no commercial output.",
-      tech: "Built with TypeScript.",
+      hr: {
+        en: "First-semester project assignment at TU Chemnitz building an interactive map application.",
+        de: "Projektaufgabe im ersten Semester an der TU Chemnitz zum Bau einer interaktiven Kartenanwendung.",
+        ru: "Проектное задание первого семестра в TU Chemnitz по разработке интерактивного картографического приложения.",
+      },
+      business: {
+        en: "Academic assignment; no commercial output.",
+        de: "Akademische Aufgabe; kein kommerzieller Output.",
+        ru: "Академическое задание, без коммерческого результата.",
+      },
+      tech: {
+        en: "Built with TypeScript.",
+        de: "Mit TypeScript gebaut.",
+        ru: "Собрано на TypeScript.",
+      },
     },
     stack: ["TypeScript"],
-    links: [{ label: "GitHub", url: "https://github.com/mskVitalii/chemnitz_map" }],
+    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/chemnitz_map" }],
   },
   {
     slug: "swe-low-code-sql",
-    title: "SWE — Low-Code SQL Builder",
+    title: {
+      en: "SWE — Low-Code SQL Builder",
+      de: "SWE — Low-Code-SQL-Baukasten",
+      ru: "SWE — low-code конструктор SQL",
+    },
     company: "Chemnitz University of Technology",
     period: "04/2024 – 07/2024",
     status: "archived",
     category: "education",
-    tagline: "Seminar Web Engineering coursework: a low-code app for building SQL queries",
+    tagline: {
+      en: "Seminar Web Engineering coursework: a low-code app for building SQL queries",
+      de: "Kursarbeit im Seminar Web Engineering: eine Low-Code-App zum Erstellen von SQL-Abfragen",
+      ru: "Курсовая по семинару Web Engineering: low-code приложение для построения SQL-запросов",
+    },
     description: {
-      hr: "Coursework for the Seminar Web Engineering module — a low-code tool that lets non-technical users compose SQL queries visually.",
-      business: "Academic coursework demonstrating low-code/no-code tooling concepts, a recurring interest since the earlier Lightning project at HSE.",
-      tech: "Built with TypeScript, deployed on Vercel.",
+      hr: {
+        en: "Coursework for the Seminar Web Engineering module — a low-code tool that lets non-technical users compose SQL queries visually.",
+        de: "Kursarbeit für das Modul Seminar Web Engineering — ein Low-Code-Tool, das nicht-technischen Nutzern erlaubt, SQL-Abfragen visuell zu erstellen.",
+        ru: "Курсовая по модулю Seminar Web Engineering — low-code инструмент, позволяющий нетехническим пользователям визуально составлять SQL-запросы.",
+      },
+      business: {
+        en: "Academic coursework demonstrating low-code/no-code tooling concepts, a recurring interest since the earlier Lightning project at HSE.",
+        de: "Akademische Kursarbeit, die Low-Code-/No-Code-Konzepte demonstriert — ein wiederkehrendes Interesse seit dem früheren Lightning-Projekt an der HSE.",
+        ru: "Академическая курсовая, демонстрирующая концепции low-code/no-code — устойчивый интерес ещё со времён проекта Lightning в НИУ ВШЭ.",
+      },
+      tech: {
+        en: "Built with TypeScript, deployed on Vercel.",
+        de: "Mit TypeScript gebaut, auf Vercel deployt.",
+        ru: "Собрано на TypeScript, развёрнуто на Vercel.",
+      },
     },
     stack: ["TypeScript"],
     links: [
-      { label: "Live demo", url: "https://swe-eight.vercel.app" },
-      { label: "GitHub", url: "https://github.com/mskVitalii/SWE" },
+      { labelKey: "liveDemo", url: "https://swe-eight.vercel.app" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/SWE" },
     ],
+    images: ["/images/projects/swe-low-code-sql/homepage.png"],
   },
   {
     slug: "sse-software-service-engineering",
-    title: "SSE — Software Service Engineering Coursework",
+    title: {
+      en: "SSE — Software Service Engineering Coursework",
+      de: "SSE — Kursarbeit Software Service Engineering",
+      ru: "SSE — курсовая по Software Service Engineering",
+    },
     company: "Chemnitz University of Technology",
     period: "10/2024 – 01/2025",
     status: "archived",
     category: "education",
-    tagline: "Software Service Engineering module coursework",
+    tagline: {
+      en: "Software Service Engineering module coursework",
+      de: "Kursarbeit für das Modul Software Service Engineering",
+      ru: "Курсовая по модулю Software Service Engineering",
+    },
     description: {
-      hr: "Coursework for the Software Service Engineering module, covering service-oriented design and implementation.",
-      business: "Academic coursework; no commercial output.",
-      tech: "Built with C# / .NET.",
+      hr: {
+        en: "Coursework for the Software Service Engineering module, covering service-oriented design and implementation.",
+        de: "Kursarbeit für das Modul Software Service Engineering, mit Fokus auf serviceorientiertem Design und Implementierung.",
+        ru: "Курсовая по модулю Software Service Engineering, охватывающая сервис-ориентированное проектирование и реализацию.",
+      },
+      business: {
+        en: "Academic coursework; no commercial output.",
+        de: "Akademische Kursarbeit; kein kommerzieller Output.",
+        ru: "Академическая курсовая, без коммерческого результата.",
+      },
+      tech: {
+        en: "Built with C# / .NET.",
+        de: "Mit C# / .NET gebaut.",
+        ru: "Собрано на C# / .NET.",
+      },
     },
     stack: ["C#", ".NET"],
-    links: [{ label: "GitHub", url: "https://github.com/mskVitalii/SSE" }],
+    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/SSE" }],
   },
   {
     slug: "master-thesis-semantic-search",
-    title: "Semantic Search Across Government Open Data — Master's Thesis",
+    title: {
+      en: "Semantic Search Across Government Open Data — Master's Thesis",
+      de: "Semantische Suche über offene Verwaltungsdaten — Masterarbeit",
+      ru: "Семантический поиск по открытым государственным данным — магистерская работа",
+    },
     company: "Chemnitz University of Technology",
     period: "03/2025 – present",
     status: "active",
-    statusNote: "In progress — the Master-Arbeit is not yet submitted (85 of 120 ECTS completed per the latest transcript).",
+    statusNote: {
+      en: "In progress — the Master-Arbeit is not yet submitted (85 of 120 ECTS completed per the latest transcript).",
+      de: "In Arbeit — die Masterarbeit ist noch nicht eingereicht (85 von 120 ECTS laut aktuellem Notenspiegel).",
+      ru: "В процессе — магистерская работа ещё не сдана (85 из 120 ECTS по последней выписке).",
+    },
     category: "education",
-    tagline: "Master's thesis (in progress): a semantic search engine for government open data, built as 4 cooperating microservices",
+    tagline: {
+      en: "Master's thesis (in progress): a semantic search engine for government open data, built as 4 cooperating microservices",
+      de: "Masterarbeit (in Arbeit): eine semantische Suchmaschine für offene Verwaltungsdaten, aufgebaut als 4 zusammenarbeitende Microservices",
+      ru: "Магистерская работа (в процессе): семантический поисковый движок по открытым государственным данным на 4 взаимодействующих микросервисах",
+    },
     featured: true,
     description: {
-      hr: "Master's thesis at TU Chemnitz, currently in progress — designing and building a semantic search engine over government open data, split into four independently deployable services: frontend, backend/API, an embedding service, and a reranker.",
-      business: "A production-style thesis project demonstrating a full semantic-search pipeline — from raw open-data ingestion through embedding, retrieval, and reranking to a natural-language search UI.",
-      tech: "Go backend/API, Python services for embedding and reranking (the reranker being the thesis's core research contribution), and a TypeScript/React frontend — 4 separate repositories reflecting a real microservice architecture.",
+      hr: {
+        en: "Master's thesis at TU Chemnitz, currently in progress — designing and building a semantic search engine over government open data, split into four independently deployable services: frontend, backend/API, an embedding service, and a reranker.",
+        de: "Masterarbeit an der TU Chemnitz, derzeit in Arbeit — Entwurf und Bau einer semantischen Suchmaschine über offene Verwaltungsdaten, aufgeteilt in vier unabhängig deploybare Services: Frontend, Backend/API, einen Embedding-Service und einen Reranker.",
+        ru: "Магистерская работа в TU Chemnitz, в процессе — проектирование и разработка семантического поискового движка по открытым государственным данным, разделённого на четыре независимо разворачиваемых сервиса: фронтенд, бэкенд/API, сервис эмбеддингов и реранкер.",
+      },
+      business: {
+        en: "A production-style thesis project demonstrating a full semantic-search pipeline — from raw open-data ingestion through embedding, retrieval, and reranking to a natural-language search UI.",
+        de: "Ein produktionsnahes Abschlussprojekt, das eine vollständige Semantic-Search-Pipeline demonstriert — von der Aufnahme roher offener Daten über Embedding, Retrieval und Reranking bis zu einer Suchoberfläche in natürlicher Sprache.",
+        ru: "Дипломный проект в стиле production, демонстрирующий полный пайплайн семантического поиска — от приёма сырых открытых данных через эмбеддинг, ретрив и реранкинг до поискового интерфейса на естественном языке.",
+      },
+      tech: {
+        en: "Go backend/API, Python services for embedding and reranking (the reranker being the thesis's core research contribution), and a TypeScript/React frontend — 4 separate repositories reflecting a real microservice architecture.",
+        de: "Go-Backend/-API, Python-Services für Embedding und Reranking (der Reranker ist der zentrale Forschungsbeitrag der Arbeit) und ein TypeScript/React-Frontend — 4 separate Repositories, die eine echte Microservice-Architektur abbilden.",
+        ru: "Бэкенд/API на Go, Python-сервисы для эмбеддинга и реранкинга (реранкер — основной исследовательский вклад работы), фронтенд на TypeScript/React — 4 отдельных репозитория, отражающих реальную микросервисную архитектуру.",
+      },
     },
-    impact: [{ label: "Services", value: "4" }],
+    impact: [{ label: { en: "Services", de: "Services", ru: "Сервисов" }, value: "4" }],
     stack: ["Go", "Python", "TypeScript", "Machine Learning"],
     links: [
-      { label: "Demo video", url: "https://www.youtube.com/watch?v=qp12kmON7A0" },
-      { label: "GitHub — Frontend", url: "https://github.com/mskVitalii/semantically-open-data-frontend" },
-      { label: "GitHub — Backend", url: "https://github.com/mskVitalii/semantically-open-data-backend" },
-      { label: "GitHub — Embedder", url: "https://github.com/mskVitalii/semantically-open-data-embedder" },
-      { label: "GitHub — Reranker", url: "https://github.com/mskVitalii/semantically-open-data-reranker" },
+      { labelKey: "demoVideo", url: "https://www.youtube.com/watch?v=qp12kmON7A0" },
+      { labelKey: "githubFrontend", url: "https://github.com/mskVitalii/semantically-open-data-frontend" },
+      { labelKey: "githubBackend", url: "https://github.com/mskVitalii/semantically-open-data-backend" },
+      { labelKey: "githubEmbedder", url: "https://github.com/mskVitalii/semantically-open-data-embedder" },
+      { labelKey: "githubReranker", url: "https://github.com/mskVitalii/semantically-open-data-reranker" },
     ],
   },
 ];

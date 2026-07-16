@@ -16,6 +16,7 @@ import {
   Dices,
   Target,
   Crown,
+  Milestone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -36,6 +37,7 @@ export type AchievementId =
   | "skillsMatch"
   | "contactClick"
   | "cvDownload"
+  | "viewTimeline"
   | "completionist";
 
 export interface AchievementDef {
@@ -60,6 +62,7 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "skillsMatch", icon: Target },
   { id: "contactClick", icon: Send },
   { id: "cvDownload", icon: FileDown },
+  { id: "viewTimeline", icon: Milestone },
   { id: "completionist", icon: Crown },
 ];
 

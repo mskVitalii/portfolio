@@ -27,6 +27,7 @@ const SOCIAL_LINKS: {
 
 export function Hero() {
   const t = useTranslations("Hero");
+  const tCommon = useTranslations("Common");
 
   return (
     <section className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center text-center px-4 py-16 relative">
@@ -37,7 +38,7 @@ export function Hero() {
         className="max-w-3xl w-full"
       >
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-          Vitalii Popov
+          {tCommon("siteName")}
         </h1>
 
         <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium">
