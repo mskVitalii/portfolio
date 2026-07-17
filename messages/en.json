@@ -588,55 +588,7 @@
       ]
     },
     "creditHeading": "Built together with",
-    "creditLinkedIn": "View on LinkedIn",
-    "faqSectionTitle": "Questions about these case studies",
-    "faqSearchPlaceholder": "Search questions…",
-    "faqNoResults": "No questions match your search.",
-    "faqHrHeading": "Reading these case studies",
-    "faqBusinessHeading": "Reading the numbers",
-    "faqTechHeading": "Reading the stack",
-    "faqHr": [
-      {
-        "q": "What do 'Archived' and 'Deprecated' actually mean here?",
-        "a": "Archived means the engagement ended — the work shipped and is usually still running, just without further involvement from me. Deprecated means the project itself was shelved or superseded."
-      },
-      {
-        "q": "Why do several projects live on one company page?",
-        "a": "Companies with more than one related engagement — Infineon, OZON, onlineTours, egsha, WeDo.agency, dunlimited, Yohan Loshop — get a single merged case-study page instead of scattering the same employer across separate cards."
-      },
-      {
-        "q": "Is any of this verifiable?",
-        "a": "Where possible — live demos, GitHub repos, and public listings are linked directly on each project page. The rest matches the CV."
-      }
-    ],
-    "faqBusiness": [
-      {
-        "q": "How are the revenue and savings figures sourced?",
-        "a": "They're the actual figures from each engagement — either directly reported by the client or measured against a known baseline (e.g. a replaced vendor contract). Business mode sorts projects by these figures rather than by date."
-      },
-      {
-        "q": "Are these systems still in production?",
-        "a": "Several are — OZON's barcode scanner service and Infineon's Parking Guidance System are both still running today. Status badges on each page indicate whether an engagement is active, archived, or deprecated."
-      },
-      {
-        "q": "Why do freelance projects show revenue in rubles?",
-        "a": "Most early freelance work was priced and paid in RUB during university years in Russia; later engagements (Infineon, egsha, dunlimited) are priced in EUR."
-      }
-    ],
-    "faqTech": [
-      {
-        "q": "Is there a deeper technical write-up anywhere?",
-        "a": "Select projects have a full MDX case study below the summary; the rest currently show only the structured overview, with more write-ups being added over time."
-      },
-      {
-        "q": "Where can I see the full stack breakdown?",
-        "a": "The Skills page has an interactive graph linking every technology to the projects that used it."
-      },
-      {
-        "q": "Why does the stack range from embedded C to Next.js?",
-        "a": "Real breadth, not padding — Infineon's Parking Guidance System runs on-device in C on PSoC Edge chips, while most client and personal projects are full-stack TypeScript/React work."
-      }
-    ]
+    "creditLinkedIn": "View on LinkedIn"
   },
   "SkillsPage": {
     "title": "Skills",

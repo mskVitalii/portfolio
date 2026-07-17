@@ -588,55 +588,7 @@
       ]
     },
     "creditHeading": "Gemeinsam entwickelt mit",
-    "creditLinkedIn": "Auf LinkedIn ansehen",
-    "faqSectionTitle": "Fragen zu diesen Fallstudien",
-    "faqSearchPlaceholder": "Fragen durchsuchen…",
-    "faqNoResults": "Keine Fragen gefunden.",
-    "faqHrHeading": "Diese Fallstudien richtig lesen",
-    "faqBusinessHeading": "Die Zahlen richtig lesen",
-    "faqTechHeading": "Den Stack richtig lesen",
-    "faqHr": [
-      {
-        "q": "Was bedeuten 'Archiviert' und 'Veraltet' hier genau?",
-        "a": "Archiviert bedeutet, das Projekt ist abgeschlossen — die Arbeit wurde ausgeliefert und läuft meist weiter, nur ohne weitere Beteiligung von mir. Veraltet bedeutet, das Projekt selbst wurde eingestellt oder abgelöst."
-      },
-      {
-        "q": "Warum liegen mehrere Projekte auf einer Unternehmensseite?",
-        "a": "Unternehmen mit mehr als einem zusammenhängenden Projekt — Infineon, OZON, onlineTours, egsha, WeDo.agency, dunlimited, Yohan Loshop — bekommen eine einzige zusammengeführte Fallstudienseite, statt denselben Arbeitgeber über mehrere Karten zu verteilen."
-      },
-      {
-        "q": "Lässt sich das alles überprüfen?",
-        "a": "Wo möglich — Live-Demos, GitHub-Repos und öffentliche Einträge sind direkt auf jeder Projektseite verlinkt. Der Rest stimmt mit dem Lebenslauf überein."
-      }
-    ],
-    "faqBusiness": [
-      {
-        "q": "Woher stammen die Umsatz- und Einsparungszahlen?",
-        "a": "Es sind die tatsächlichen Zahlen aus dem jeweiligen Projekt — entweder direkt vom Kunden berichtet oder gegen eine bekannte Basislinie gemessen (z. B. einen abgelösten Anbietervertrag). Der Business-Modus sortiert Projekte nach diesen Zahlen statt nach Datum."
-      },
-      {
-        "q": "Laufen diese Systeme noch in Produktion?",
-        "a": "Einige schon — OZONs Barcode-Scanner-Service und Infineons Parkleitsystem laufen beide bis heute. Status-Badges auf jeder Seite zeigen, ob ein Projekt aktiv, archiviert oder veraltet ist."
-      },
-      {
-        "q": "Warum zeigen Freelance-Projekte Umsatz in Rubel?",
-        "a": "Frühe Freelance-Arbeit während des Studiums in Russland wurde meist in RUB bepreist und bezahlt; spätere Projekte (Infineon, egsha, dunlimited) laufen in EUR."
-      }
-    ],
-    "faqTech": [
-      {
-        "q": "Gibt es irgendwo eine tiefere technische Beschreibung?",
-        "a": "Ausgewählte Projekte haben unterhalb der Übersicht eine vollständige MDX-Fallstudie; der Rest zeigt aktuell nur die strukturierte Übersicht, weitere Berichte kommen nach und nach hinzu."
-      },
-      {
-        "q": "Wo sehe ich die vollständige Stack-Aufschlüsselung?",
-        "a": "Die Skills-Seite hat einen interaktiven Graphen, der jede Technologie mit den Projekten verknüpft, in denen sie eingesetzt wurde."
-      },
-      {
-        "q": "Warum reicht der Stack von eingebettetem C bis Next.js?",
-        "a": "Echte Bandbreite, kein Aufblähen — Infineons Parkleitsystem läuft direkt auf dem Gerät in C auf PSoC-Edge-Chips, während die meisten Kunden- und persönlichen Projekte Full-Stack-TypeScript/React-Arbeit sind."
-      }
-    ]
+    "creditLinkedIn": "Auf LinkedIn ansehen"
   },
   "SkillsPage": {
     "title": "Fähigkeiten",
