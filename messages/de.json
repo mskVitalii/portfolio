@@ -587,6 +587,29 @@
         "Litauisch", "Lettisch", "Estnisch", "Isländisch", "Swahili", "Amharisch", "Zulu", "Afrikaans", "Katalanisch", "Baskisch"
       ]
     },
+    "railScan": {
+      "title": "Fahrt entlang der Schiene",
+      "description": "Eine simulierte Inspektionskapsel scannt ein laufendes Förderband nach eingebauten Fehlern — derselbe Erkennungs- und Meldeloop, den das echte Gerät auf dem PSoC Edge ausführt.",
+      "defectsLabel": "Erkannte Fehler",
+      "distanceLabel": "Band gescannt",
+      "statusLabel": "Status",
+      "statusScanning": "Scannt",
+      "statusPaused": "Pausiert",
+      "legendNominal": "Unauffällig",
+      "legendWear": "Verschleiß gemeldet",
+      "legendFault": "Fehler bestätigt",
+      "zone": {
+        "seamTear": "Nahtriss",
+        "surfaceWear": "Oberflächenverschleiß",
+        "foreignObject": "Fremdkörper"
+      },
+      "speedLabel": "Geschwindigkeit",
+      "playLabel": "Abspielen",
+      "pauseLabel": "Pause",
+      "resetLabel": "Zurücksetzen",
+      "trackAria": "Animierte Simulation einer Inspektionskapsel, die auf Schienen über ein Förderband fährt und drei eingebaute Fehler meldet",
+      "strategicNote": "Das echte Gerät führt diese Schleife direkt auf dem Chip aus — Anomalien in Geräusch und Vibration werden lokal erkannt, statt Rohdaten in die Cloud zu streamen."
+    },
     "creditHeading": "Gemeinsam entwickelt mit",
     "creditLinkedIn": "Auf LinkedIn ansehen"
   },

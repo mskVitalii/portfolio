@@ -17,6 +17,7 @@ import { IpoSimulator } from "./IpoSimulator";
 import { PseoLanguageGrid } from "./PseoLanguageGrid";
 import { ScalingSimulator } from "./ScalingSimulator";
 import { CancelGame } from "./CancelGame";
+import { RailScanDemo } from "./RailScanDemo";
 import type { Project } from "@/data/projects";
 
 /** Full case-study block for one project — title through MDX write-up. Reused
@@ -120,6 +121,9 @@ export async function ProjectDetailSection({
 
       {/* Interactive demo for the everleakproof pre-shipping cancellation window */}
       {project.slug === "wedo-shopify-ai-support" && <CancelGame />}
+
+      {/* Interactive demo for the Thin[gk]athon on-device fault detection loop */}
+      {project.slug === "infineon-thingkathon" && <RailScanDemo />}
 
       {/* Stack */}
       <div className="flex flex-wrap gap-2 mb-6">

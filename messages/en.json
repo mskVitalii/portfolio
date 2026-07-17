@@ -587,6 +587,29 @@
         "Lithuanian", "Latvian", "Estonian", "Icelandic", "Swahili", "Amharic", "Zulu", "Afrikaans", "Catalan", "Basque"
       ]
     },
+    "railScan": {
+      "title": "Ride along the rail",
+      "description": "A simulated inspection pod scans a moving belt for seeded faults — the same detect-and-flag loop the real device runs on PSoC Edge.",
+      "defectsLabel": "Defects flagged",
+      "distanceLabel": "Belt scanned",
+      "statusLabel": "Status",
+      "statusScanning": "Scanning",
+      "statusPaused": "Paused",
+      "legendNominal": "Nominal",
+      "legendWear": "Wear flagged",
+      "legendFault": "Fault confirmed",
+      "zone": {
+        "seamTear": "Seam tear",
+        "surfaceWear": "Surface wear",
+        "foreignObject": "Foreign object"
+      },
+      "speedLabel": "Speed",
+      "playLabel": "Play",
+      "pauseLabel": "Pause",
+      "resetLabel": "Reset",
+      "trackAria": "Animated simulation of an inspection pod riding rails above a conveyor belt, flagging three seeded faults",
+      "strategicNote": "The real device runs this loop on-chip — flagging anomalies in sound and vibration locally instead of streaming raw sensor data to the cloud."
+    },
     "creditHeading": "Built together with",
     "creditLinkedIn": "View on LinkedIn"
   },
