@@ -5,6 +5,9 @@ import Image from "next/image";
 import { ZoomIn, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { SHIMMER_BLUR_DATA_URL, GALLERY_PRELOAD_COUNT } from "@/lib/imagePlaceholder";
+
+const LIGHTBOX_SIZES = "96vw";
 
 const FULLSCREEN_DIALOG_CLASS =
   "inset-0 h-dvh w-dvw max-w-none translate-x-0 translate-y-0 place-items-center rounded-none border-none p-0 shadow-none ring-0 sm:max-w-none";
@@ -59,6 +62,8 @@ export function ProjectImageGallery({
               src={src}
               alt={alt}
               fill
+              placeholder="blur"
+              blurDataURL={SHIMMER_BLUR_DATA_URL}
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 50vw, 33vw"
             />
@@ -69,8 +74,23 @@ export function ProjectImageGallery({
         ))}
       </div>
 
+      {/* Preload the lightbox-resolution variant of the first few photos — same
+          `sizes` as the lightbox Image below, so the browser fetches and caches
+          the exact same `_next/image` URL ahead of time instead of on first open. */}
+      <div aria-hidden className="sr-only">
+        {images.slice(0, GALLERY_PRELOAD_COUNT).map((src) => (
+          <Image key={src} src={src} alt="" width={1} height={1} sizes={LIGHTBOX_SIZES} priority />
+        ))}
+      </div>
+
       <Dialog open={zoomIndex !== null} onOpenChange={(open) => !open && setZoomIndex(null)}>
-        <DialogContent showCloseButton={false} className={cn(FULLSCREEN_DIALOG_CLASS, "bg-black")}>
+        <DialogContent
+          showCloseButton={false}
+          className={cn(FULLSCREEN_DIALOG_CLASS, "bg-black")}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setZoomIndex(null);
+          }}
+        >
           <DialogTitle className="sr-only">{alt}</DialogTitle>
           {zoomIndex !== null && (
             <div className="relative flex h-[92dvh] w-[96dvw] max-w-5xl items-center justify-center">
@@ -79,8 +99,10 @@ export function ProjectImageGallery({
                 src={images[zoomIndex]}
                 alt={alt}
                 fill
+                placeholder="blur"
+                blurDataURL={SHIMMER_BLUR_DATA_URL}
                 className="object-contain"
-                sizes="96vw"
+                sizes={LIGHTBOX_SIZES}
                 priority
               />
 

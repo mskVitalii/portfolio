@@ -74,7 +74,7 @@ async function PersonJsonLd({ locale }: { locale: string }) {
     givenName: "Vitalii",
     familyName: "Popov",
     url: `${BASE_URL}/${locale}`,
-    image: `${BASE_URL}/og-default.png`,
+    image: `${BASE_URL}/images/about/avatar/vitalii.jpg`,
     jobTitle: t("role"),
     description,
     email: "mailto:msk.vitaly@gmail.com",
@@ -92,6 +92,8 @@ async function PersonJsonLd({ locale }: { locale: string }) {
       "https://linkedin.com/in/mskvitalii",
       "https://github.com/mskvitalii",
       "https://t.me/mskvitalii",
+      "https://medium.com/@msk.vitalii",
+      "https://habr.com/ru/users/mskVitalii/",
     ],
     worksFor: [
       { "@type": "Organization", name: "Infineon Technologies AG" },

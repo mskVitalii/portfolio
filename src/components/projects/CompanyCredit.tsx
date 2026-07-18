@@ -18,7 +18,7 @@ export function CompanyCredit({ credit, className }: { credit: CompanyCreditData
           {t("creditHeading")}
         </p>
         <p className="text-sm font-medium">
-          {credit.name}
+          {localize(credit.name, locale)}
           <span className="text-muted-foreground font-normal"> — {localize(credit.role, locale)}</span>
         </p>
         <p className="text-sm text-muted-foreground mt-1">{localize(credit.note, locale)}</p>

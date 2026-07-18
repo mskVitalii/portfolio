@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd, buildWebPageJsonLd } from "@/lib/seo";
 import { ExternalLink } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 
@@ -31,11 +31,19 @@ export default async function RecommendationsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("RecommendationsPage");
   const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "recommendations", "/recommendations");
+  const webPageJsonLd = buildWebPageJsonLd({
+    locale,
+    path: "/recommendations",
+    name: t("metaTitle"),
+    description: t("metaDescription"),
+  });
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-3xl">
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={webPageJsonLd} />
       <div className="mb-12">
         <h1 className="text-4xl font-bold mb-4">Recommendations</h1>
         <p className="text-muted-foreground text-lg">

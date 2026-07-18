@@ -1,38 +1,45 @@
 # Vitalii Popov — Full-Stack Engineer
 
-> Personal portfolio, CV, and engineering case studies for Vitalii Popov — full-stack engineer specialising in distributed systems and AI. Based in Chemnitz, Germany. Open to Berlin and EU/UK/US/UAE roles.
+> Personal portfolio, CV, and engineering case studies for Vitalii Popov — a full-stack engineer specializing in distributed systems and AI. Lives in Berlin, Germany. Open to roles across Germany, the EU, UK, US, UAE, Canada, Singapore, Japan, South Korea, and Australia.
 
 ## About
 
 Vitalii Popov is a full-stack engineer with 5+ years of experience building systems that create measurable business value across e-commerce, mobility, and AI domains.
 
-**Current role:** Full-Stack Developer at Infineon Technologies AG (2024–present)
-**Education:** M.Sc. Web Engineering, Chemnitz University of Technology (in progress); B.Sc. Applied Mathematics, NRU HSE Moscow
+**Current role:** Full-Stack Developer at Infineon Technologies AG (09/2024–present)
+**Education:** M.Sc. Web Engineering, Chemnitz University of Technology (in progress); B.Sc. Software Engineering, Higher School of Economics, Moscow
 
 ## Key Achievements
 
-- Replaced a €480K/year commercial parking guidance vendor with an in-house system at Infineon (8,000 users, 3,000 MAU)
-- Built warehouse search for 200M+ items in under 5 seconds at OZON Tech
-- Delivered 13 startup projects at WeDo.agency
-- Published technical articles with 5,000+ views
+- Replaced a €480K/year commercial parking guidance vendor with an in-house system at Infineon (8,000 users, 3,000 monthly active)
+- Built a Go microservice searching 200M+ warehouse items in under 5 seconds at OZON Tech
+- Saved €86K with a C# barcode-scanner integration at OZON Tech
+- Increased key SEO/UX metrics by 11.63% at onlineTours through A/B testing
+- Shipped 9 client products at WeDo.agency, from AI tools to e-commerce platforms
+- Technical articles with 5,000+ combined views across Habr, Dev.to, and Medium
 
 ## Core Stack
 
-Backend: Python, C#, Go, Node.js
-Frontend: React, TypeScript, Next.js
-Infrastructure: Docker, Kubernetes, Helm, GitHub CI/CD
-AI/ML: RAG pipelines, Qdrant, LangChain, Ollama, MCP, Hugging Face, Embedding models
-Databases: PostgreSQL, Redis, Elasticsearch, ClickHouse
+Backend: Go, Python, C#, Node.js, Ruby on Rails
+Frontend: React, TypeScript, Next.js, Tailwind CSS
+Infrastructure: Docker, Kubernetes, Helm, GitHub Actions, Docker Registry
+AI/ML: RAG, Qdrant, Embedding Models, LangChain, Ollama, MCP Server, Context Engineering, Hugging Face, Claude Code, GitHub Copilot
+Data: PostgreSQL, Redis, Elasticsearch, Kafka
 
 ## Pages
 
-- [Home](https://vitalii-popov.dev/en/) — Hero, impact metrics, geo availability
-- [Projects](https://vitalii-popov.dev/en/projects) — Engineering case studies with business metrics
-- [Skills](https://vitalii-popov.dev/en/skills) — Interactive skill map with architecture diagrams
-- [About](https://vitalii-popov.dev/en/about) — Career timeline, bio, interests
-- [Education](https://vitalii-popov.dev/en/education) — TU Chemnitz M.Sc. + NRU HSE B.Sc.
-- [Contact](https://vitalii-popov.dev/en/contact) — Contact form and social links
-- [CV](https://vitalii-popov.dev/cv/vitalii-popov-cv.pdf) — Downloadable PDF CV
+- [Home](https://vitaliipopov.dev/en/): Hero, impact metrics, geo availability
+- [Projects](https://vitaliipopov.dev/en/projects): Engineering case studies with business metrics
+- [Skills](https://vitaliipopov.dev/en/skills): Interactive skill map with architecture diagrams
+- [About](https://vitaliipopov.dev/en/about): Bio, languages, interests
+- [Education](https://vitaliipopov.dev/en/education): TU Chemnitz M.Sc. and HSE B.Sc. coursework
+- [Recommendations](https://vitaliipopov.dev/en/recommendations): References and testimonials
+- [Hire me](https://vitaliipopov.dev/en/hire-me): Availability, FAQ, and contact links
+- [Achievements](https://vitaliipopov.dev/en/achievements): Certifications and milestones
+- [Business card](https://vitaliipopov.dev/en/card): QR-code digital business card
+- [CV](https://vitaliipopov.dev/cv/vitalii-popov-cv.pdf): Downloadable PDF resume
+
+All pages are also available in German (`/de/`) and Russian (`/ru/`).
 
 ## Contact
 
@@ -40,8 +47,10 @@ Email: msk.vitaly@gmail.com
 LinkedIn: https://linkedin.com/in/mskvitalii
 GitHub: https://github.com/mskvitalii
 Telegram: https://t.me/mskvitalii
+Medium: https://medium.com/@msk.vitalii
+Habr: https://habr.com/ru/users/mskVitalii/
 
 ## Availability
 
-Open to: Full-time engineering roles, freelance/contract work, technical collaboration
-Locations: Germany (preferred), EU, UK, US, UAE, Canada, Singapore, Australia (remote/relocation)
+Open to: full-time engineering roles, freelance/contract work, technical collaboration
+Locations: Germany (preferred), EU, UK, US, UAE, Canada, Singapore, Japan, South Korea, Australia — remote-first works too

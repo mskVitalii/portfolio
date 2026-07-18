@@ -1,0 +1,123 @@
+---
+title: "Barcode-Scanner-Integration"
+company: "OZON Tech"
+period: "2021 – 2023"
+status: "archived"
+category: "work"
+tagline: "86.000 €/Jahr gespart durch Ablösung manueller Scan-Workflows"
+stack: ["C#", "WebSockets", "PostgreSQL"]
+impact:
+  - label: "Kosteneinsparung"
+    value: "86.000 €/Jahr"
+---
+
+<ModeAware modes="hr">
+
+## Die Geschichte, kurz
+
+<StarStory>
+<StarSituation>
+
+OZONs Retourenzone lief auf manueller Dateneingabe, und die Barcode-Scanner auf der Fläche waren direkt mit einer einzigen Legacy-Anwendung verdrahtet — eine Ablösung dieser App für eine neue Oberfläche hätte bedeutet, einen ganzen neuen Satz Scanner-Hardware zu kaufen, nur um das Scannen am Laufen zu halten.
+
+</StarSituation>
+<StarTask>
+
+Die Retourenbearbeitung am Scan-Punkt automatisieren, ohne die nächste Oberflächen-Migration — oder jede zukünftige — an eine weitere Hardware-Erneuerung zu binden.
+
+</StarTask>
+<StarAction>
+
+Einen C#-Point-Update-Service gebaut, mit dem Scanner über WebSockets kommunizieren, statt sie direkt mit einer einzelnen App zu verdrahten. Terminals schicken Scan-Ereignisse über diesen gemeinsamen Service in eine PostgreSQL-basierte Bestell-Pipeline, sodass jede App oder Oberfläche an dasselbe Backend andocken kann — neue Terminals und neue UIs skalieren horizontal, statt jeweils eine eigene dedizierte Scanner-Integration zu benötigen.
+
+</StarAction>
+<StarResult>
+
+86.000 €/Jahr an manueller Arbeit gespart, die Retourenzone hörte auf, der Flaschenhals des Workflows zu sein, und die nächste Oberflächen-Migration ging live, ohne einen einzigen neuen Scanner zu kaufen — die Entkopplung zahlte sich erneut aus.
+
+</StarResult>
+</StarStory>
+
+### Häufig gefragt
+
+<ProjectFaq>
+<ProjectFaqItem q="Warum nicht die Scanner einfach direkt mit der neuen App verdrahten?">
+
+Genau das tat der alte Aufbau, und das machte die vorherige Oberflächen-Migration teuer — die Scanner waren an eine App gebunden, also bedeutete eine neue App neue Hardware. Scans stattdessen über einen gemeinsamen Service zu routen bedeutet, dass jede zukünftige Oberfläche einfach an dasselbe Backend andockt.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was war der schwierigste Teil dieses Projekts?">
+
+Den Scanner-Agenten über Dutzende physisch verteilte Terminals hinweg auszurollen und zu aktualisieren, ohne ein gemeinsames Deployment-Fenster — ein fehlerhaftes Update an einem Terminal durfte nicht die Warteschlange dieser Station für alle anderen blockieren.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Warum war das speziell in der Retourenzone nötig?">
+
+Retouren waren der manuellste, am wenigsten instrumentierte Teil des Lager-Workflows, hatten also den höchsten Return-on-Automation im gesamten Gebäude.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was würdest du anders machen?">
+
+Pro-Terminal-Health-Checks direkt in die Rollout-Pipeline einbauen, damit ein fehlerhaft aktualisiertes Terminal automatisch erkannt wird, statt darauf zu warten, dass ein Kommissionierer es meldet.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Kontext
+
+Die Retourenzone war OZONs langsamster Lager-Workflow — Mitarbeiter erfassten jeden zurückgesendeten Artikel manuell im Bestellsystem, was begrenzte, wie schnell ein Fulfillment-Center Retouren bei wachsendem Volumen verarbeiten konnte. Die vorhandenen Scanner waren zudem direkt mit einer einzigen Legacy-App verdrahtet, was die vorherige Oberflächen-Migration teuer gemacht hatte: die Ablösung dieser App bedeutete neue Scanner-Hardware für den Ersatz zu kaufen. Ziel war es, am Scan-Punkt zu automatisieren und dabei aufzuhören, Scanner-Hardware an eine einzelne App zu binden.
+
+## Was gebaut wurde
+
+- **C#-Service**, der USB-Barcode-Scanner-Hardware an Terminals der Retourenzone integriert.
+- **Echtzeit-Point-Update-Service**, der Scan-Ereignisse über WebSockets in eine PostgreSQL-basierte Bestell-Pipeline schickt — ein gemeinsames Backend, an das jede App oder Oberfläche andocken kann, statt Scanner direkt an eine App zu verdrahten.
+- Zusätzlich einen **Mattermost-Bot** neu geschrieben, der Lagerfehler überwacht, von Python nach C# portiert für Konsistenz mit dem Rest des Stacks.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architektur
+
+```
+Terminals der Retourenzone (viele, physisch verteilt)
+
+  Terminal 1  ──USB──┐
+  Terminal 2  ──USB──┼──►  C#-Scanner-Agent  ──WebSocket──►  Point-Update-Service  ──►  PostgreSQL  ──►  Bestellungen
+  Terminal N  ──USB──┘                                              ▲
+                                                                     │ gezielter Push
+                                                          Zentraler Config-Service
+                                                        (Agent-/Config-Updates pro
+                                                         Terminal, kein gemeinsames
+                                                         Deployment)
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technische Entscheidungen
+
+**Warum WebSockets statt REST-Polling?** Scan-Ereignisse mussten innerhalb von Millisekunden nach einem physischen Scan im Bestellsystem ankommen — Polling hätte bei diesem Volumen nur Latenz und Last ohne Nutzen hinzugefügt.
+
+**Warum über einen gemeinsamen Service routen statt Scanner an die App zu verdrahten?** Genau das tat der vorherige Aufbau, und jede App-seitige Änderung riskierte eine Hardware-Erneuerung. Ein gemeinsamer Point-Update-Service entkoppelt beides: die App-Seite kann sich ändern oder neue Oberflächen hinzufügen und mit mehr Terminals skalieren, ohne die Scanner-Integration überhaupt anzufassen.
+
+**Warum Point-Updates statt eines einzelnen Deployments?** Terminals waren über die Retourenzone verteilt und konnten nicht alle gleichzeitig während eines Rollouts offline gehen. Ein zentraler Config-Service schickte Agent- und Konfigurations-Updates einzeln an jedes Terminal, sodass ein Rollout nie die ganze Zone blockierte.
+
+## Herausforderungen
+
+Updates über viele unabhängig laufende Terminal-Agenten hinweg zu koordinieren, ohne ein gemeinsames Deployment-Fenster. Eine fehlerhafte Agent-Version an einem Terminal musste auf die Warteschlange dieses Terminals begrenzt bleiben, statt in den Rest der Zone überzugreifen.
+
+## Observability
+
+Denselben Prometheus/Grafana-Stack wie der Warehouse-Search-Service wiederverwendet. Scan-Durchsatz und Fehlerrate pro Terminal waren die wichtigsten Dashboards, um ein sich falsch verhaltendes Terminal zu erkennen, bevor es bei Retouren in Rückstand geriet.
+
+## Was ich anders machen würde
+
+Automatisierte Pro-Terminal-Health-Checks direkt in die Rollout-Pipeline einbauen, damit ein fehlerhaftes Update sofort auffällt, statt darauf zu warten, dass ein Kommissionierer eine hängende Warteschlange bemerkt.
+
+</ModeAware>

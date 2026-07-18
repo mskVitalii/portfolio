@@ -1,0 +1,124 @@
+---
+title: "Parkleitsystem"
+company: "Infineon Technologies AG"
+period: "2024 – heute"
+status: "active"
+category: "work"
+tagline: "Spart 480.000 €/Jahr gegenüber Marktalternativen"
+stack: ["Python", "C#", "C", "React", "TypeScript", "Computer Vision", "Docker", "WebSockets"]
+impact:
+  - label: "Jährliche Einsparung"
+    value: "480.000 €"
+  - label: "Nutzer"
+    value: "8.000"
+  - label: "Monatlich aktiv"
+    value: "3.000"
+---
+
+<ModeAware modes="hr">
+
+## Die Geschichte, kurz
+
+<StarStory>
+<StarSituation>
+
+Der Infineon-Campus in Dresden hat Hunderte Parkplätze über mehrere Bereiche verteilt. Das Unternehmen holte Angebote von kommerziellen Parkleitsystem-Anbietern ein — das beste Angebot lag bei 480.000 €/Jahr an Lizenz- und Wartungsgebühren.
+
+</StarSituation>
+<StarTask>
+
+Eine Eigenentwicklung bauen — von der Hardware bis zum Dashboard — für einen Bruchteil dieser laufenden Kosten.
+
+</StarTask>
+<StarAction>
+
+Eingebettete Firmware für Kennzeichenerkennung und Belegungszählung gebaut, die direkt auf IP-Kameras läuft, dazu Python-Backend-Services zur Aggregation der Zonenbelegung, eine C#-Geräteverwaltungsschicht und ein React-Dashboard für Echtzeit-Sichtbarkeit.
+
+</StarAction>
+<StarResult>
+
+480.000 €/Jahr gespart gegenüber dem Anbieterangebot. Das Schrankensteuerungs-Subsystem bedient jetzt eigenständig 8.000 registrierte Nutzer, davon 3.000 monatlich aktiv.
+
+</StarResult>
+</StarStory>
+
+### Häufig gefragt
+
+<ProjectFaq>
+<ProjectFaqItem q="Was war der schwierigste Teil dieses Projekts?">
+
+Die embedded- und die Web-Welt sauber zu verbinden. C für ressourcenbeschränkte Kameras zu schreiben und das dann an ein React-Dashboard anzubinden, erforderte eine strikte Protokollgrenze — MQTT wurde statt HTTP-Polling gewählt, um die Ende-zu-Ende-Latenz unter 500 ms zu halten.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Wie wurden Hardwareausfälle im Produktivbetrieb gehandhabt?">
+
+Graceful Degradation: Fällt eine Kamera aus, zeigt das System keine veralteten Daten an — die Zone wird als „unbekannt" markiert, sodass das Dashboard echte Unsicherheit widerspiegelt, statt Fahrer still zu belügen.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was würdest du anders machen?">
+
+Das MQTT-Topic-Schema von Anfang an als formalen, versionierten Vertrag definieren. Stattdessen wuchs es organisch und wurde über die Kameratypen hinweg inkonsistent.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Kontext
+
+Der Infineon-Campus in Dresden hat Hunderte Parkplätze über mehrere Bereiche verteilt. Vor diesem Projekt holte das Unternehmen Angebote von kommerziellen Parkleitsystem-Anbietern ein — das beste Angebot lag bei **480.000 €/Jahr** an Lizenz- und Wartungsgebühren.
+
+Die Alternative: Eigenentwicklung.
+
+## Was gebaut wurde
+
+Ein vollständiges Parkleitsystem, von der Hardware bis zum Dashboard:
+
+- **Eingebettete Firmware** in C auf IP-Kameras — führt ANPR (automatische Kennzeichenerkennung) und Belegungszählung durch, ohne Videostreams über das Netzwerk zu senden.
+- **Python-Microservices** aggregieren die Zonenbelegung, übernehmen die Authentifizierung und stellen die REST-/WebSocket-API bereit.
+- **C#-Geräteverwaltungsschicht** übernimmt Kamera-Provisionierung, Firmware-Updates und Health-Monitoring.
+- **React + TypeScript Dashboard** gibt Sicherheitspersonal und Fahrern eine Echtzeit-Karte der verfügbaren Plätze.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architektur
+
+```
+┌──────────────────┐     MQTT      ┌────────────────────┐
+│  IP-Kamera (C)    │ ────────────► │  Python-Backend     │
+│  ANPR + Zählung   │               │  (Event-Prozessor)  │
+└──────────────────┘               └────────┬───────────┘
+                                            │ WebSocket
+                                   ┌────────▼───────────┐
+                                   │  React-Dashboard    │
+                                   │  (Echtzeit-Karte)   │
+                                   └────────────────────┘
+```
+
+Die Kameras führen die Erkennung lokal aus (Edge Computing) — nur Belegungsereignisse werden über das Netzwerk gesendet, kein Video. Das hält die Bandbreite niedrig und vermeidet DSGVO-Probleme durch zentrale Videospeicherung.
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Herausforderungen
+
+**Die embedded + Web Brücke.** C für ressourcenbeschränkte Kameras zu schreiben und das dann an eine React-SPA anzubinden, erforderte eine saubere Protokollgrenze. MQTT wurde statt HTTP-Polling gewählt, um die Latenz unter 500 ms zu halten.
+
+**Graceful Degradation.** Fällt eine Kamera aus, zeigt das System keine veralteten Daten an — die Zone wird als „unbekannt" markiert, und das Dashboard spiegelt Unsicherheit wider, statt zu lügen.
+
+**Mandantenfähige Konfiguration.** Verschiedene Parkplätze haben unterschiedliche Layouts. Ein Configuration-as-Data-Ansatz bedeutet, dass ein neuer Parkplatz eine JSON-Datei ist, keine Codeänderung.
+
+## Ergebnis
+
+Das System ging auf dem Campus live. **480.000 €/Jahr gespart** gegenüber dem Anbieterangebot. Das eigenständig hinzugefügte Schrankensteuerungs-Subsystem bedient **8.000 registrierte Nutzer** mit **3.000 monatlich aktiv**.
+
+## Was ich anders machen würde
+
+Die MQTT-Topic-Struktur wuchs organisch und wurde über die Kameratypen hinweg inkonsistent. Ich würde das Topic-Schema von Anfang an als formalen Vertrag definieren und versionieren.
+
+</ModeAware>

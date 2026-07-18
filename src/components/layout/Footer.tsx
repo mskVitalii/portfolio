@@ -61,7 +61,7 @@ export function Footer() {
           </div>
 
           {/* Navigation */}
-          <div>
+          <nav aria-label={t("navHeading")}>
             <p className="font-semibold text-sm mb-3">{t("navHeading")}</p>
             <ul className="space-y-2">
               {navLinks.slice(0, 3).map(({ href, label }) => (
@@ -75,9 +75,9 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
+          <nav aria-label={t("navHeading")}>
             <p className="font-semibold text-sm mb-3">&nbsp;</p>
             <ul className="space-y-2">
               {navLinks.slice(3).map(({ href, label }) => (
@@ -91,7 +91,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         </div>
 
         <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">

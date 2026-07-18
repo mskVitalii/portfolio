@@ -8,10 +8,12 @@ import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui
 import { TinderDeck, type TinderPhoto, type TinderStrings } from "@/components/about/TinderDeck";
 import { useAchievementsStore } from "@/store/achievements";
 import { cn } from "@/lib/utils";
+import { SHIMMER_BLUR_DATA_URL, GALLERY_PRELOAD_COUNT } from "@/lib/imagePlaceholder";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 const VISITED_FILL = "#FD267A";
 const ACTIVE_FILL = "#C4145A";
+const LIGHTBOX_SIZES = "100vw";
 
 const FULLSCREEN_DIALOG_CLASS =
   "inset-0 h-dvh w-dvw max-w-none translate-x-0 translate-y-0 place-items-center rounded-none border-none p-0 shadow-none ring-0 sm:max-w-none";
@@ -237,6 +239,8 @@ export function AboutGalleryClient({
                 alt={photo.caption || altFallback}
                 width={photo.width}
                 height={photo.height}
+                placeholder="blur"
+                blurDataURL={SHIMMER_BLUR_DATA_URL}
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                 className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
@@ -249,6 +253,25 @@ export function AboutGalleryClient({
                 <ZoomIn className="h-4 w-4" />
               </div>
             </button>
+          ))}
+        </div>
+
+        {/* Preload the lightbox-resolution variant of the first few visible photos
+            — same `sizes`/dimensions as the lightbox Image below, so the browser
+            fetches and caches the exact same `_next/image` URL ahead of time
+            instead of on first open. Recomputes when the country filter changes,
+            since that changes which photos are "first". */}
+        <div aria-hidden className="sr-only">
+          {visibleGridPhotos.slice(0, GALLERY_PRELOAD_COUNT).map((photo) => (
+            <Image
+              key={photo.id}
+              src={photo.src}
+              alt=""
+              width={photo.width}
+              height={photo.height}
+              sizes={LIGHTBOX_SIZES}
+              priority
+            />
           ))}
         </div>
       </div>
@@ -272,7 +295,13 @@ export function AboutGalleryClient({
       )}
 
       <Dialog open={zoomPhoto !== null} onOpenChange={(open) => !open && setZoomIndex(null)}>
-        <DialogContent showCloseButton={false} className={cn(FULLSCREEN_DIALOG_CLASS, "bg-black")}>
+        <DialogContent
+          showCloseButton={false}
+          className={cn(FULLSCREEN_DIALOG_CLASS, "bg-black")}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setZoomIndex(null);
+          }}
+        >
           <DialogTitle className="sr-only">{zoomPhoto?.caption || altFallback}</DialogTitle>
           {zoomPhoto && (
             <div className="relative flex max-h-[100dvh] max-w-[100dvw] items-center justify-center">
@@ -282,7 +311,9 @@ export function AboutGalleryClient({
                 alt={zoomPhoto.caption || altFallback}
                 width={zoomPhoto.width}
                 height={zoomPhoto.height}
-                sizes="100vw"
+                placeholder="blur"
+                blurDataURL={SHIMMER_BLUR_DATA_URL}
+                sizes={LIGHTBOX_SIZES}
                 className="max-h-[92dvh] max-w-[96dvw] object-contain"
                 priority
               />

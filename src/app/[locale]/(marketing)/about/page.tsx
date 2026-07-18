@@ -8,7 +8,7 @@ import { ChessStats } from "@/components/about/ChessStats";
 import { LeetCodeStats } from "@/components/about/LeetCodeStats";
 import { AboutGallery } from "@/components/about/AboutGallery";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd, buildWebPageJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const WRITING_LINKS = {
@@ -57,10 +57,17 @@ export default async function AboutPage({
   const [bio4Before, bio4After] = t("bio4").split("%%LINKS%%");
   const [bio2Before, bio2Between, bio2After] = t("bio2").split(/%%HOME%%|%%PROJECTS%%/);
   const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "about", "/about");
+  const webPageJsonLd = buildWebPageJsonLd({
+    locale,
+    path: "/about",
+    name: t("title"),
+    description: t("metaDescription"),
+  });
 
   return (
     <main className="container mx-auto px-4 py-16 max-w-4xl">
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={webPageJsonLd} />
       {/* Bio */}
       <section className="mb-16">
         <div className="grid md:grid-cols-3 gap-8">

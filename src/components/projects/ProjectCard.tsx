@@ -8,7 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { useViewMode } from "@/store/viewMode";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
-import { localize } from "@/lib/localized";
+import { localize, formatImpactValue } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
@@ -57,7 +57,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
           <div className="flex flex-wrap gap-3 mb-4">
             {project.impact.map((item) => (
               <div key={item.label.en} className="text-center">
-                <div className="text-lg font-bold text-primary">{item.value}</div>
+                <div className="text-lg font-bold text-primary">{formatImpactValue(item.value, locale)}</div>
                 <div className="text-xs text-muted-foreground">{localize(item.label, locale)}</div>
               </div>
             ))}

@@ -1,0 +1,121 @@
+---
+title: "Lager-Suchmaschine"
+company: "OZON Tech"
+period: "2021 – 2023"
+status: "archived"
+category: "work"
+tagline: "200 Mio. Lagerartikel in unter 5 Sekunden durchsuchbar"
+stack: ["Go", "ElasticSearch", "Kafka", "Redis", "PostgreSQL", "Docker", "Kubernetes", "Prometheus", "Grafana"]
+impact:
+  - label: "Indexierte Artikel"
+    value: "200 Mio."
+  - label: "Such-Latenz"
+    value: "<5 Sek."
+---
+
+<ModeAware modes="hr">
+
+## Die Geschichte, kurz
+
+<StarStory>
+<StarSituation>
+
+OZONs Lagermitarbeiter durchsuchten eine 200-Millionen-Zeilen-PostgreSQL-Tabelle mit einer einfachen `LIKE`-Abfrage. In diesem Maßstab war das unbrauchbar geworden — Mitarbeiter verloren allein beim Finden eines Artikels Zeit, ohne zu sehen, wo ein Paket gewesen war.
+
+</StarSituation>
+<StarTask>
+
+Sie durch eine Suche ersetzen, die schnell genug für Echtzeit-Lagerarbeit ist, und dem Personal Einblick in die vollständige Bewegungshistorie eines Artikels geben — nicht nur den aktuellen Standort.
+
+</StarTask>
+<StarAction>
+
+Einen Go-Microservice gebaut, der auf ElasticSearch und Kafka basiert und die SQL-Abfrage durch echte Volltext- und Fuzzy-Suche ersetzt — inklusive eines eigenen Analyzers für Mitarbeiter, die SKUs sowohl in Kyrillisch als auch in lateinischer Schrift eintippen.
+
+</StarAction>
+<StarResult>
+
+200 Mio. Artikel in unter 5 Sekunden durchsuchbar. Lagermitarbeiter können die vollständige Bewegungshistorie eines Artikels nachverfolgen statt nur seinen letzten bekannten Standort, sodass Pakete zwischen Fulfillment-Centern nicht mehr verloren gehen.
+
+</StarResult>
+</StarStory>
+
+### Häufig gefragt
+
+<ProjectFaq>
+<ProjectFaqItem q="Was war der schwierigste Teil dieses Projekts?">
+
+Der Umgang mit russischer Transliteration — Mitarbeiter tippen dieselbe SKU wechselweise als „БОЛТ М8" oder „bolt m8". ElasticSearchs Analyzer dazu zu bringen, beide Richtungen zu matchen, ohne eine Flut falscher Treffer zu erzeugen, erforderte viel Iteration anhand echter Such-Logs.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Warum nicht einfach die bestehende SQL-Abfrage optimieren?">
+
+Bei 200 Mio. Zeilen war eine `LIKE`-Abfrage bereits auf dem optimierten Pfad — es gab keine Query-Tuning-Lösung mehr. Die Storage-Engine selbst war das falsche Werkzeug für Fuzzy-Textsuche in diesem Maßstab.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was würdest du anders machen?">
+
+Den Cache-Invalidierungs-Vertrag von Anfang an definieren. Er war komplett an Kafka-Events gebunden, was nach Batch-Produktupdates einen Cache-Miss-Sturm verursachte — ein kurzer TTL als Absicherung hätte das von Tag eins an abgefangen.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Kontext
+
+OZON ist eine der größten E-Commerce-Plattformen Russlands — vergleichbar mit Amazon-Größenordnung für Osteuropa. Das Warehouse-Operations-Team verwaltet Bestände über mehrere Fulfillment-Center hinweg. Wenn ein Mitarbeiter einen Artikel unter 200 Mio. SKUs finden muss, hat jede Sekunde Such-Latenz direkte operative Kosten.
+
+Die bestehende Suche war eine SQL-LIKE-Abfrage auf einer PostgreSQL-Tabelle. Bei 200 Mio. Zeilen war sie unbrauchbar.
+
+Das Tool ist für Lagermitarbeiter auf der Fläche gebaut: über das reine Finden eines Artikels hinaus lässt es sie die vollständige Bewegungshistorie eines Pakets aufrufen, sodass nichts spurlos zwischen Fulfillment-Centern verloren geht oder hängen bleibt.
+
+## Was gebaut wurde
+
+Ein Go-Microservice mit Volltext- und Fuzzy-Suche über den Lagerkatalog:
+
+- **ElasticSearch** als Such-Backend mit eigenen Analyzern für russische Transliteration und partielles SKU-Matching.
+- **Kafka-Consumer**, der Produktkatalog-Updates in Echtzeit einliest — der Suchindex bleibt aktuell, ohne zu pollen.
+- **Redis** für Hot-Path-Caching der 10.000 meistgesuchten SKUs, senkt die P95-Latenz von ~800 ms auf ~40 ms bei häufigen Abfragen.
+- **REST-API**, die von der Lagerverwaltungs-Webanwendung genutzt wird.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architektur
+
+```
+Produktkatalog  ──Kafka──►  Go-Such-Service  ──REST──►  WMS-Frontend
+   (Updates)                  │                              (React)
+                              ├──► ElasticSearch
+                              └──► Redis (Cache)
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technische Entscheidungen
+
+**Warum Go?** Hohe Nebenläufigkeit, geringer Speicherbedarf, Single-Binary-Deployment. Der Such-Service bewältigt Lastspitzen gleichzeitiger Lagerterminals, ohne eine große Instanz zu benötigen.
+
+**Warum ElasticSearch statt Postgres-Volltextsuche?** ES bietet Fuzzy-Matching, phonetische Analyse für russische Transliteration und horizontales Sharding für den 200-Mio.-Dokumente-Korpus. Postgres FTS lag in diesem Maßstab bei 8–10 Sekunden.
+
+**Warum Kafka statt DB-Polling?** Entkoppelt Katalog-Updates von Index-Aktualisierungen. Lagersuchen liefern nie länger als ~2 Sekunden nach einer Produktänderung veraltete Daten.
+
+## Herausforderungen
+
+Der schwierigste Teil war das **Problem der russischen Transliteration**: Lagermitarbeiter tippen SKU-Namen sowohl kyrillisch als auch lateinisch ein (z. B. „БОЛТ М8" und „bolt m8"). Einen eigenen ElasticSearch-Analyzer zu bauen, der beide Richtungen handhabt, ohne zu viele falsche Treffer zurückzugeben, erforderte viel Iteration anhand von Test-Queries.
+
+## Observability
+
+Prometheus-Metriken, von Grafana abgegriffen. Wichtigste Dashboards: Query-Latenz P50/P95/P99, Cache-Trefferquote, Kafka-Consumer-Lag, Indexgröße über die Zeit.
+
+## Was ich anders machen würde
+
+Die Cache-Invalidierungslogik war an Kafka-Events gebunden, was nach einem Batch-Produktupdate einen Cache-Miss-Sturm verursachte. Ich würde einen kurzen TTL als Sicherheitsnetz hinzufügen, selbst wenn explizite Invalidierung vorhanden ist.
+
+</ModeAware>

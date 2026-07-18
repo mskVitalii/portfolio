@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata, buildNavBreadcrumbJsonLd } from "@/lib/seo";
+import { buildPageMetadata, buildNavBreadcrumbJsonLd, buildWebPageJsonLd } from "@/lib/seo";
 import { BusinessCard } from "@/components/card/BusinessCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 
@@ -31,11 +31,19 @@ export default async function CardPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("CardPage");
   const breadcrumbJsonLd = await buildNavBreadcrumbJsonLd(locale, "card", "/card");
+  const webPageJsonLd = buildWebPageJsonLd({
+    locale,
+    path: "/card",
+    name: t("title"),
+    description: t("metaDescription"),
+  });
 
   return (
     <>
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={webPageJsonLd} />
       <BusinessCard />
     </>
   );

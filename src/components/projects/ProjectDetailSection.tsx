@@ -6,7 +6,7 @@ import { Calendar, Building2, AlertCircle, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { localize } from "@/lib/localized";
+import { localize, formatImpactValue } from "@/lib/localized";
 import { useMDXComponents } from "../../../mdx-components";
 import { getPageContent, getPageSlugs } from "@/lib/content";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
@@ -61,7 +61,7 @@ export async function ProjectDetailSection({
   }
 
   return (
-    <div>
+    <article>
       {/* Header */}
       <header className="mb-10">
         <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -99,7 +99,7 @@ export async function ProjectDetailSection({
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10 p-6 rounded-xl bg-muted/30 border">
           {project.impact.map((item) => (
             <div key={item.label.en} className="text-center">
-              <div className="text-3xl font-bold text-primary">{item.value}</div>
+              <div className="text-3xl font-bold text-primary">{formatImpactValue(item.value, locale)}</div>
               <div className="text-sm text-muted-foreground mt-1">{localize(item.label, locale)}</div>
             </div>
           ))}
@@ -184,12 +184,15 @@ export async function ProjectDetailSection({
         />
       )}
 
-      {/* MDX body */}
+      {/* MDX body — deep technical write-up (Context, Technical decisions, Challenges,
+          Observability, etc.) isn't meaningful to a business audience */}
       {mdxContent && (
-        <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-code:text-sm">
-          {mdxContent}
-        </article>
+        <ModeAware modes={["hr", "tech"]}>
+          <div className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-semibold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-code:text-sm">
+            {mdxContent}
+          </div>
+        </ModeAware>
       )}
-    </div>
+    </article>
   );
 }

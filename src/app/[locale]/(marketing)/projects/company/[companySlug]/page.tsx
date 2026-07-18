@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { buildAlternates, buildOpenGraphLocale, buildBreadcrumbJsonLd, buildOgImageUrl } from "@/lib/seo";
+import {
+  buildAlternates,
+  buildOpenGraphLocale,
+  buildBreadcrumbJsonLd,
+  buildOgImageUrl,
+  buildWebPageJsonLd,
+  buildProjectJsonLd,
+  classifyProjectLinks,
+  BASE_URL,
+} from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ArrowLeft, Building2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -81,15 +90,23 @@ export default async function CompanyProjectsPage({
 
   const t = await getTranslations({ locale, namespace: "Projects" });
   const tNav = await getTranslations({ locale, namespace: "Nav" });
+  const bundleDescription = localize(bundle.blurb.business, locale);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [
     { name: tNav("home"), path: "" },
     { name: tNav("projects"), path: "/projects" },
     { name: bundle.name, path: `/projects/company/${companySlug}` },
   ]);
+  const webPageJsonLd = buildWebPageJsonLd({
+    locale,
+    path: `/projects/company/${companySlug}`,
+    name: bundle.name,
+    description: bundleDescription,
+  });
 
   return (
     <main className="container mx-auto px-4 py-12 max-w-4xl">
       <JsonLd data={breadcrumbJsonLd} />
+      <JsonLd data={webPageJsonLd} />
       <Link
         href="/projects"
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "mb-8 -ml-2")}
@@ -107,12 +124,26 @@ export default async function CompanyProjectsPage({
         {bundle.credit && <CompanyCredit credit={bundle.credit} />}
       </header>
 
-      {projects.map((project, i) => (
-        <div key={project.slug} id={project.slug} className="scroll-mt-20">
-          {i > 0 && <hr className="border-border my-12" />}
-          <ProjectDetailSection project={project} locale={locale} titleAs="h2" />
-        </div>
-      ))}
+      {projects.map((project, i) => {
+        const { demoUrl, relatedUrls } = classifyProjectLinks(project.links);
+        const projectJsonLd = buildProjectJsonLd({
+          locale,
+          path: `/projects/company/${companySlug}#${project.slug}`,
+          name: localize(project.title, locale),
+          description: localize(project.description.business, locale),
+          image: project.images?.[0] ? `${BASE_URL}${project.images[0]}` : undefined,
+          keywords: project.stack,
+          demoUrl,
+          relatedUrls,
+        });
+        return (
+          <div key={project.slug} id={project.slug} className="scroll-mt-20">
+            <JsonLd data={projectJsonLd} />
+            {i > 0 && <hr className="border-border my-12" />}
+            <ProjectDetailSection project={project} locale={locale} titleAs="h2" />
+          </div>
+        );
+      })}
       <NextProjectLink slug={projects[projects.length - 1].slug} locale={locale} />
     </main>
   );

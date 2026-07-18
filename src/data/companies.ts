@@ -1,7 +1,7 @@
 import type { LocalizedText } from "@/lib/localized";
 
 export interface CompanyCredit {
-  name: string;
+  name: LocalizedText;
   role: LocalizedText;
   note: LocalizedText;
   linkedinUrl: string;
@@ -32,9 +32,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "Один из крупнейших производителей чипов в Европе, работающий на рынках автомобилестроения, промышленности и IoT. Реализовать решение, работающее прямо на собственных чипах компании PSoC Edge — а не полагаться на облачный инференс — здесь было так же важно, как и сам дизайн системы.",
       },
       business: {
-        en: "A publicly listed German semiconductor manufacturer, one of Europe's largest. This work replaced a commercial vendor system with an in-house solution to cut recurring costs.",
-        de: "Ein börsennotierter deutscher Halbleiterhersteller, einer der größten Europas. Diese Arbeit ersetzte ein kommerzielles Anbietersystem durch eine Eigenentwicklung, um laufende Kosten zu senken.",
-        ru: "Публичный немецкий производитель полупроводников, один из крупнейших в Европе. Эта работа заменила коммерческую систему стороннего поставщика собственной разработкой ради снижения регулярных затрат.",
+        en: "A German semiconductor manufacturer, the largest in Europe.",
+        de: "Ein deutscher Halbleiterhersteller, der größte Europas.",
+        ru: "Немецкий производитель полупроводников, крупнейший в Европе.",
       },
       tech: {
         en: "Enterprise engineering environment at a large semiconductor manufacturer, spanning embedded computer vision running directly on Infineon's own PSoC Edge chips, backend services, and production frontend tooling.",
@@ -53,9 +53,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "OZON — одна из крупнейших e-commerce платформ России, масштаба Amazon для Восточной Европы, с тысячами инженеров в складской логистике, поиске и логистике.",
       },
       business: {
-        en: "OZON is one of Russia's largest e-commerce platforms — think Amazon scale for Eastern Europe — with a business model built on reselling logistics capacity and monetizing seller placement across the platform, rather than holding inventory itself. Its warehouse operations team manages inventory across multiple fulfilment centres, where every second of search latency across 200M SKUs has a direct operational cost.",
-        de: "OZON ist eine der größten E-Commerce-Plattformen Russlands — vergleichbar mit Amazon-Größenordnung für Osteuropa — mit einem Geschäftsmodell, das auf dem Weiterverkauf von Logistikkapazität und der Monetarisierung von Verkäuferplatzierungen basiert, statt eigenen Warenbestand zu halten. Das Warehouse-Operations-Team verwaltet Bestände über mehrere Fulfillment-Zentren hinweg, wo jede Sekunde Such-Latenz bei 200 Mio. SKUs direkte operative Kosten verursacht.",
-        ru: "OZON — одна из крупнейших e-commerce платформ России, масштаба Amazon для Восточной Европы, с бизнес-моделью, построенной на перепродаже логистических мощностей и монетизации размещения продавцов на платформе, а не на собственных товарных запасах. Команда складских операций управляет запасами на нескольких фулфилмент-центрах, где каждая секунда задержки поиска среди 200 млн SKU напрямую влияет на операционные издержки.",
+        en: "Russia's largest marketplace, Amazon-scale for Eastern Europe. The business model is built on reselling logistics capacity and monetizing seller placement across the platform.",
+        de: "Russlands größter Marktplatz, Amazon-Größenordnung für Osteuropa. Das Geschäftsmodell basiert auf dem Weiterverkauf von Logistikkapazität und der Monetarisierung von Verkäuferplatzierungen auf der Plattform.",
+        ru: "Крупнейший маркетплейс в России, масштаба Amazon для Восточной Европы. Бизнес-модель построена на перепродаже логистических мощностей и монетизации размещения продавцов на платформе.",
       },
       tech: {
         en: "Large-scale distributed backend serving one of Russia's largest online marketplaces (Amazon-scale for Eastern Europe) — high-throughput search, warehouse logistics, and fulfillment systems operating at national scale.",
@@ -69,9 +69,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
     slug: "onlinetours",
     blurb: {
       hr: {
-        en: "onlineTours is a remote-first travel aggregator for tours & hotels, running experimentation-driven product development across SEO and UX.",
-        de: "onlineTours ist ein Remote-first-Reiseaggregator für Touren & Hotels, mit experimentgetriebener Produktentwicklung in SEO und UX.",
-        ru: "onlineTours — remote-first турагрегатор туров и отелей, ведущий продуктовую разработку через эксперименты в SEO и UX.",
+        en: "onlineTours is a remote-first travel aggregator for tours & hotels, running experimentation-driven product development across SEO and UX. The team worked in Scrum.",
+        de: "onlineTours ist ein Remote-first-Reiseaggregator für Touren & Hotels, mit experimentgetriebener Produktentwicklung in SEO und UX. Die Arbeit erfolgte nach Scrum.",
+        ru: "onlineTours — remote-first турагрегатор туров и отелей, ведущий продуктовую разработку через эксперименты в SEO и UX. Работа велась по Scrum.",
       },
       business: {
         en: "onlineTours doesn't hold its own tour inventory — it resells traffic by aggregating tour & hotel offers from partner suppliers, and monetizes through partner placement across the platform. Every SEO and UX change ships behind an A/B test to protect and grow booking conversion across that aggregated inventory.",
@@ -85,7 +85,7 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
       },
     },
     credit: {
-      name: "Pavel Rosikhin",
+      name: { en: "Pavel Rosikhin", de: "Pavel Rosikhin", ru: "Павел Росихин" },
       role: {
         en: "Product Manager, onlineTours",
         de: "Product Manager, onlineTours",
@@ -109,9 +109,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "egsha — небольшой бизнес друга по продаже ковров, клиент, для которого за годы было сделано несколько разовых e-commerce проектов: от раннего перепродажного бизнеса iPhone до трансграничного магазина одежды.",
       },
       business: {
-        en: "A friend's small carpet-trading business, and the client behind several small, hands-on e-commerce engagements built around it over the years — an automated ad-price optimizer, a first short-lived iPhone resale venture, and later a cross-border clothing resale store sourcing inventory from the Chinese marketplace Poizon.",
-        de: "Das kleine Teppichhandelsgeschäft eines Freundes und der Kunde hinter mehreren über die Jahre gebauten, hands-on E-Commerce-Projekten — ein automatisierter Anzeigenpreis-Optimierer, ein erstes kurzlebiges iPhone-Wiederverkaufsgeschäft und später ein grenzüberschreitender Bekleidungs-Wiederverkaufsshop mit Wareneinkauf über den chinesischen Marktplatz Poizon.",
-        ru: "Небольшой бизнес друга по продаже ковров и клиент, для которого за годы было сделано несколько небольших e-commerce проектов: автоматический оптимизатор цены рекламы, первый недолгий бизнес по перепродаже iPhone, а позже трансграничный магазин одежды с закупкой на китайском маркетплейсе Poizon.",
+        en: "A small computer-carpet-trading business, and the client behind several small, hands-on e-commerce engagements built around it over the years — an automated ad-price optimizer, a first short-lived iPhone resale venture, and later a cross-border clothing resale store sourcing inventory from the Chinese marketplace Poizon.",
+        de: "Ein kleines Handelsgeschäft für Computer-Teppiche, und der Kunde hinter mehreren über die Jahre gebauten, hands-on E-Commerce-Projekten — ein automatisierter Anzeigenpreis-Optimierer, ein erstes kurzlebiges iPhone-Wiederverkaufsgeschäft und später ein grenzüberschreitender Bekleidungs-Wiederverkaufsshop mit Wareneinkauf über den chinesischen Marktplatz Poizon.",
+        ru: "Небольшой бизнес по продаже компьютерных ковров и клиент, для которого за годы было сделано несколько небольших e-commerce проектов: автоматический оптимизатор цены рекламы, первый недолгий бизнес по перепродаже iPhone, а позже трансграничный магазин одежды с закупкой на китайском маркетплейсе Poizon.",
       },
       tech: {
         en: "Lightweight commerce builds spanning a TDD-built Python pricing service, spreadsheet-tracked inventory in the earliest venture, and a full Next.js storefront with payments and shipping integrations in the later one.",
@@ -120,7 +120,7 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
       },
     },
     credit: {
-      name: "Georgiy Sinokhchyan",
+      name: { en: "Georgiy Sinokhchyan", de: "Georgiy Sinokhchyan", ru: "Георгий Синохчян" },
       role: {
         en: "Founder, egsha",
         de: "Gründer, egsha",
@@ -165,9 +165,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "dunlimited — маркетинговое агентство №1 в Сингапуре вместе с портфелем собственных брендов — заказчик в рамках сотрудничества через WeDo.agency.",
       },
       business: {
-        en: "Singapore's top-ranked marketing agency and its family of owned brands. A client engagement delivered through WeDo.agency, spanning an AI-powered Shopify support system, a TripleWhale attribution integration, and a production Telegram bot suite with its own monitoring and deployment pipeline.",
-        de: "Die führende Marketingagentur Singapurs und ihre eigenen Marken. Ein über WeDo.agency abgewickeltes Kundenprojekt, das ein KI-gestütztes Shopify-Support-System, eine TripleWhale-Attribution-Integration und eine produktive Telegram-Bot-Suite mit eigenem Monitoring und Deployment-Pipeline umfasste.",
-        ru: "Ведущее маркетинговое агентство Сингапура и его собственные бренды. Клиентский проект через WeDo.agency, включивший AI-систему поддержки для Shopify, интеграцию атрибуции с TripleWhale и продакшен-набор Telegram-ботов с собственным мониторингом и пайплайном деплоя.",
+        en: "Singapore's top-ranked marketing agency and its family of owned product brands.",
+        de: "Die führende Marketingagentur Singapurs und ihre eigenen Produktmarken.",
+        ru: "Ведущее маркетинговое агентство Сингапура и его собственные товарные бренды.",
       },
       tech: {
         en: "Python service work spanning a Gorgias-based Shopify AI support integration, a TripleWhale attribution sync, and a suite of Telegram bots (aiogram + PostgreSQL + Whisper) with CI/CD to a self-hosted GitHub Actions runner, Minio image storage, and Redis for auth tokens and state.",
@@ -186,9 +186,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "Yohan Loshop — небольшая студия заказной разработки, сооснованная с друзьями — команда из 3 человек, бравшая оплачиваемые клиентские проекты помимо основной работы.",
       },
       business: {
-        en: "A 3-person bespoke-development studio he co-founded with friends, taking on client projects on a work-for-hire basis — from a first zero-revenue proof of concept to a paid 7-month corporate-portal engagement.",
-        de: "Ein von ihm mit Freunden mitgegründetes 3-köpfiges Studio für Individualentwicklung, das Kundenprojekte auf Werkvertragsbasis übernahm — von einem ersten umsatzlosen Proof of Concept bis zu einem bezahlten 7-monatigen Firmenportal-Projekt.",
-        ru: "Студия заказной разработки из 3 человек, сооснованная с друзьями, бравшая клиентские проекты на условиях работы по найму — от первого proof of concept без дохода до оплачиваемого 7-месячного проекта корпоративного портала.",
+        en: "A bespoke-development studio he co-founded with friends, taking on client projects on a work-for-hire basis.",
+        de: "Ein von ihm mit Freunden mitgegründetes Studio für Individualentwicklung, das Kundenprojekte auf Werkvertragsbasis übernahm.",
+        ru: "Студия заказной разработки, сооснованная с друзьями, бравшая клиентские проекты на условиях работы по найму.",
       },
       tech: {
         en: "GatsbyJS-based client sites, evaluating and integrating headless CMS options (Contentful, CosmicJS, DatoCMS) as client requirements grew.",

@@ -11,7 +11,7 @@ import { ProjectStatusBadge } from "./ProjectStatusBadge";
 import { ModeAware } from "@/components/tri-mode/ModeAware";
 import { CompanyBlurb } from "./CompanyBlurb";
 import { getCompanyBundle } from "@/data/companies";
-import { localize } from "@/lib/localized";
+import { localize, formatImpactValue } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 // Same "MM/YYYY" comparison approach as ProjectsFilter's periodStartKey, kept
@@ -113,7 +113,7 @@ export function ProjectCompanyBundle({ company, projects }: { company: string; p
                   <div className="flex items-center gap-4 shrink-0">
                     {project.impact && project.impact.length > 0 && (
                       <div className="hidden sm:flex flex-col items-end leading-tight">
-                        <span className="text-sm font-bold text-primary">{project.impact[0].value}</span>
+                        <span className="text-sm font-bold text-primary">{formatImpactValue(project.impact[0].value, locale)}</span>
                         <span className="text-[10px] text-muted-foreground whitespace-nowrap">{localize(project.impact[0].label, locale)}</span>
                       </div>
                     )}

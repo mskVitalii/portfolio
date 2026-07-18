@@ -40,15 +40,6 @@ export const IMPACT_METRICS: ImpactMetric[] = [
     modeHighlight: ["business", "hr"],
   },
   {
-    end: 200,
-    suffix: "M",
-    labelKey: "itemsIndexed",
-    descriptionKey: "itemsIndexedDesc",
-    company: "OZON Tech",
-    projectHref: "/projects",
-    modeHighlight: ["tech"],
-  },
-  {
     end: 11.63,
     suffix: "%",
     decimals: 2,

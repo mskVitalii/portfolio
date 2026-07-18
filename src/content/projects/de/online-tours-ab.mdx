@@ -1,0 +1,95 @@
+---
+title: "A/B-Testing & UI-Plattform"
+company: "onlineTours"
+period: "2023 – 2024"
+status: "archived"
+category: "work"
+tagline: "11,63 % Steigerung wichtiger Geschäftskennzahlen durch Experimente"
+stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook"]
+impact:
+  - label: "Kennzahl-Steigerung"
+    value: "11,63 %"
+---
+
+<ModeAware modes="hr">
+
+## Die Geschichte, kurz
+
+<StarStory>
+<StarSituation>
+
+Das Growth-Team von onlineTours hatte Hypothesen zu SEO-Landingpages und Buchungs-UX, aber keine verlässliche Möglichkeit, sie zu testen — das Frontend war eine Mischung aus Legacy-React und von Rails gerendertem HTML, ohne Komponentenbibliothek und ohne A/B-Testing-Infrastruktur.
+
+</StarSituation>
+<StarTask>
+
+Dem Team sowohl eine moderne, wiederverwendbare Komponentenbibliothek als auch eine ordentliche serverseitige A/B-Testing-Pipeline geben, damit Experimente ohne Flackern oder ständige Entwickler-Betreuung ausgeliefert werden können.
+
+</StarTask>
+<StarAction>
+
+Eine React + TypeScript Komponentenbibliothek gebaut (in Storybook dokumentiert, von Grund auf A/B-Varianten-fähig), zusammen mit serverseitiger Experiment-Zuweisung in Ruby on Rails, abgesichert durch Redis für schnelle, deterministische Varianten-Reads bei jedem Seitenaufruf.
+
+</StarAction>
+<StarResult>
+
+Das wirkungsvollste Experiment — die Neugestaltung der Preisanzeige auf der Tour-Listenseite — brachte über ein 4-wöchiges Testfenster eine Steigerung von 11,63 % bei der primären Buchungskonversionsrate.
+
+</StarResult>
+</StarStory>
+
+### Häufig gefragt
+
+<ProjectFaq>
+<ProjectFaqItem q="Was war der schwierigste Teil dieses Projekts?">
+
+Flackern bei der Zuweisung zu vermeiden. Clientseitige A/B-Logik zeigt für einen Frame die Kontrollversion, bevor die Testvariante lädt — die Zuweisung auf den Server zu verlagern, sodass die richtige Variante bereits im initialen HTML steckt, hat das behoben, erforderte aber ein Umdenken darüber, wie die Rails- und React-Schichten miteinander kommunizieren.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Wie wurde der Erfolg gemessen?">
+
+Primäre Buchungskonversionsrate, pro Variante über ein festes 4-Wochen-Fenster erfasst, bevor ein Test ausgewertet wurde.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was würdest du anders machen?">
+
+Die Experiment-Konfiguration aus der Rails-Codebasis heraus in einen dedizierten Feature-Flag-Service verlagern, damit das Produktteam Tests starten und stoppen kann, ohne ein Engineering-Deployment zu benötigen.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Kontext
+
+onlineTours ist ein Reiseaggregator. Das Growth-Team hatte Hypothesen zu SEO-Landingpages und Änderungen an der Buchungs-UX, aber keine verlässliche Möglichkeit, sie zu testen. Das bestehende Frontend war eine Mischung aus Legacy-React und von Rails gerendertem HTML, ohne Komponentenbibliothek und ohne A/B-Testing-Infrastruktur.
+
+## Was gebaut wurde
+
+Zwei parallele Workstreams:
+
+**1. Komponentenbibliothek**
+Eine React + TypeScript Komponentenbibliothek mit Tailwind-Styling und Storybook-Dokumentation. Komponenten wurden von Anfang an A/B-test-fähig designt — jede akzeptiert eine `variant`-Prop, die zwischen Kontroll- und Testvariante umschaltet.
+
+**2. A/B-Testing-Infrastruktur**
+Serverseitige Experiment-Flag-Zuweisung in Ruby on Rails. Nutzer werden deterministisch über eine gehashte Nutzer-ID Varianten zugewiesen — derselbe Nutzer sieht immer dieselbe Variante. Die Zuweisung wird in Redis gespeichert, für schnelle Reads bei jedem Seitenaufruf.
+
+## Ausgelieferte Experimente
+
+Das wirkungsvollste Experiment war eine Neugestaltung der **Tour-Listenseite** — konkret der Preisanzeige und der Standard-Sortierung. Die Testvariante zeigte Preise inklusive aller Gebühren direkt an (statt des Baseline-Musters „ab X €"). Die Steigerung betrug **11,63 %** bei der primären Buchungskonversionsrate über ein 4-Wochen-Fenster.
+
+## Technische Hinweise
+
+**Warum Jotai für lokalen State?** Die Komponentenbibliothek brauchte einen leichtgewichtigen lokalen State, der nicht in den globalen Redux-Store durchsickert. Jotais Atom-Modell ist pro Komponentenbaum gescoped, was es einfach macht, Experiment-State zu isolieren.
+
+**Warum serverseitige Zuweisung?** Clientseitige A/B-Zuweisung verursacht Flackern — Nutzer sehen für einen Frame die Kontrollversion, bevor die Testvariante lädt. Serverseitige Zuweisung bedeutet, dass die richtige Variante bereits im initialen HTML steckt.
+
+**Storybook als Vertrag.** Jede Komponente hatte eine Story pro Variante, was Design-Reviews beschleunigte und QA-Zyklen für neue Experimente verkürzte.
+
+## Was ich anders machen würde
+
+Die Experiment-Konfiguration lag in der Rails-Codebasis — eine Änderung erforderte ein Deployment. Ich würde die Experiment-Konfiguration in einen Feature-Flag-Service verlagern (LaunchDarkly oder ein einfaches Redis-basiertes JSON), damit das Produktteam Tests starten und stoppen kann, ohne Engineering einzubeziehen.
+
+</ModeAware>

@@ -280,12 +280,12 @@ export const PROJECTS: Project[] = [
       ru: "Автоматический байдер рекламы для e-commerce",
     },
     company: "egsha",
-    period: "05/2020 – 06/2021",
+    period: "03/2023 – 04/2023",
     status: "archived",
     statusNote: {
-      en: "Agency pivoted; product was client-owned and handed off.",
-      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
-      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
+      en: "Client's ad spend later moved off-marketplace; tool was retired.",
+      de: "Das Werbebudget des Kunden wanderte später vom Marketplace ab; das Tool wurde eingestellt.",
+      ru: "Позже клиент перенёс рекламный бюджет за пределы маркетплейса; инструмент вывели из эксплуатации.",
     },
     category: "work",
     tagline: {
@@ -533,7 +533,7 @@ export const PROJECTS: Project[] = [
       "/images/projects/wedo-telegram-bots/astrology-chart-2.jpg",
     ],
     credit: {
-      name: "Nikita Denisov",
+      name: { en: "Nikita Denisov", de: "Nikita Denisov", ru: "Никита Денисов" },
       role: {
         en: "Computer Vision Engineer",
         de: "Computer-Vision-Ingenieur",
@@ -546,46 +546,6 @@ export const PROJECTS: Project[] = [
       },
       linkedinUrl: "https://www.linkedin.com/in/nikita-den/",
     },
-  },
-  {
-    slug: "wedo-employee-activity-tracker",
-    title: {
-      en: "Employee Activity Tracking Tool",
-      de: "Tool zur Mitarbeiteraktivitäts-Verfolgung",
-      ru: "Инструмент учёта активности сотрудников",
-    },
-    period: "05/2020 – 06/2021",
-    status: "archived",
-    statusNote: {
-      en: "Agency pivoted; product was client-owned and handed off.",
-      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
-      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
-    },
-    category: "freelance",
-    tagline: {
-      en: "9 tracking options for employee activity",
-      de: "9 Tracking-Optionen für Mitarbeiteraktivität",
-      ru: "9 опций отслеживания активности сотрудников",
-    },
-    description: {
-      hr: {
-        en: "Full-Stack Developer building an internal tool to monitor employee activity.",
-        de: "Full-Stack-Entwickler für ein internes Tool zur Überwachung der Mitarbeiteraktivität.",
-        ru: "Full-stack разработчик внутреннего инструмента мониторинга активности сотрудников.",
-      },
-      business: {
-        en: "Internal program to control and report on employee activity, with 9 configurable tracking options. One of many small, standalone freelance engagements rather than a single product — from AI-powered tools to e-commerce storefronts to internal ops dashboards.",
-        de: "Internes Programm zur Kontrolle und zum Reporting von Mitarbeiteraktivität mit 9 konfigurierbaren Tracking-Optionen. Eines von vielen kleinen, eigenständigen Freelance-Projekten statt eines einzelnen Produkts — von KI-Tools über E-Commerce-Shops bis zu internen Ops-Dashboards.",
-        ru: "Внутренняя программа контроля и отчётности по активности сотрудников с 9 настраиваемыми опциями отслеживания. Один из многих небольших самостоятельных фриланс-проектов, а не единый продукт — от AI-инструментов до e-commerce витрин и внутренних дашбордов.",
-      },
-      tech: {
-        en: "Built with Angular.",
-        de: "Mit Angular gebaut.",
-        ru: "Разработан на Angular.",
-      },
-    },
-    impact: [{ label: { en: "Tracking options", de: "Tracking-Optionen", ru: "Опций отслеживания" }, value: "9" }],
-    stack: ["Angular"],
   },
   {
     slug: "wedo-horsium-game",
@@ -627,7 +587,7 @@ export const PROJECTS: Project[] = [
     stack: ["NestJS", "MongoDB"],
     images: ["/images/projects/wedo-horsium-game/horse-asset-browser.jpg"],
     credit: {
-      name: "Anastasia Zibrova",
+      name: { en: "Anastasia Zibrova", de: "Anastasia Zibrova", ru: "Анастасия Зиброва" },
       role: {
         en: "Founder, Horsium",
         de: "Gründerin, Horsium",
@@ -790,7 +750,7 @@ export const PROJECTS: Project[] = [
       business: {
         en: "A purely academic engagement for a university acquaintance's thesis, run as his first Agile-style freelance work and earning ₽7,000. Stayed on good terms with the client — two years later, referred a friend to him for follow-on front-end work.",
         de: "Ein rein akademisches Projekt für die Abschlussarbeit eines Uni-Bekannten, als erste Agile-artige Freelance-Arbeit durchgeführt und mit 7.000 ₽ vergütet. Der Kontakt blieb gut — zwei Jahre später wurde ihm ein Freund für weitere Frontend-Arbeit empfohlen.",
-        ru: "Чисто академический проект для дипломной работы знакомого по университету, первый фриланс-опыт в agile-формате, заработок ₽7 000. Сохранились хорошие отношения с заказчиком — через два года порекомендовал ему друга для дальнейшей фронтенд-работы.",
+        ru: "Чисто академический проект для дипломной работы знакомого по университету, первый фриланс-опыт в agile-формате, заработок 7 000 ₽. Сохранились хорошие отношения с заказчиком — через два года порекомендовал ему друга для дальнейшей фронтенд-работы.",
       },
       tech: {
         en: "JavaScript frontend rendering live TensorFlow training data streamed from the client's backend; Trello for kanban tracking.",
@@ -825,22 +785,22 @@ export const PROJECTS: Project[] = [
       de: "Frontend vollständig geliefert; das Produkt selbst wurde nie verkauft, die Zahlung nie abgeschlossen.",
       ru: "Фронтенд сдан полностью; сам продукт так и не продан, оплата не завершена.",
     },
-    category: "personal",
+    category: "freelance",
     tagline: {
-      en: "Angular ops dashboard for an internal workforce tool — scope grew 14x mid-flight",
-      de: "Angular-Ops-Dashboard für ein internes Workforce-Tool — Umfang wuchs während der Arbeit um das 14-Fache",
-      ru: "Операционный дашборд на Angular для внутреннего HR-инструмента — скоуп вырос в 14 раз по ходу проекта",
+      en: "Angular ops dashboard for employee activity tracking — 9 monitoring modules, scope grew 14x mid-flight",
+      de: "Angular-Ops-Dashboard zur Mitarbeiteraktivitäts-Verfolgung — 9 Tracking-Module, Umfang wuchs während der Arbeit um das 14-Fache",
+      ru: "Операционный дашборд на Angular для отслеживания активности сотрудников — 9 модулей мониторинга, скоуп вырос в 14 раз по ходу проекта",
     },
     description: {
       hr: {
-        en: "Led front-end delivery (and, in practice, day-to-day team coordination) on an internal operations dashboard, learning Angular from scratch mid-project.",
-        de: "Frontend-Lieferung geleitet (und in der Praxis auch die tägliche Teamkoordination) für ein internes Operations-Dashboard, dabei Angular während des Projekts von Grund auf gelernt.",
-        ru: "Руководил сдачей фронтенда (а на практике и ежедневной координацией команды) для внутреннего операционного дашборда, изучая Angular с нуля прямо по ходу проекта.",
+        en: "Led front-end delivery (and, in practice, day-to-day team coordination) on an internal employee-activity-tracking dashboard — 9 monitoring modules spanning screenshots, keystrokes, file transfers, and browsing history — learning Angular from scratch mid-project.",
+        de: "Frontend-Lieferung geleitet (und in der Praxis auch die tägliche Teamkoordination) für ein internes Dashboard zur Mitarbeiteraktivitäts-Verfolgung — 9 Tracking-Module von Screenshots über Tastenanschläge bis zu Dateiübertragungen und Browserverlauf — dabei Angular während des Projekts von Grund auf gelernt.",
+        ru: "Руководил сдачей фронтенда (а на практике и ежедневной координацией команды) для внутреннего дашборда отслеживания активности сотрудников — 9 модулей мониторинга: от скриншотов и нажатий клавиш до передачи файлов и истории браузера — изучая Angular с нуля прямо по ходу проекта.",
       },
       business: {
-        en: "Scope grew from an initial ₽7,000 quote to ₽100,000, but stalled for months on unclear requirements and a stuck backend partner. The front-end shipped complete and bug-free — but the client never sold the finished product, and the engagement ended without full payment. A formative lesson: get a written scope and contract before starting work.",
-        de: "Der Umfang wuchs von einem ursprünglichen Angebot über 7.000 ₽ auf 100.000 ₽, stockte aber monatelang wegen unklarer Anforderungen und eines ins Stocken geratenen Backend-Partners. Das Frontend wurde vollständig und fehlerfrei geliefert — doch der Kunde verkaufte das fertige Produkt nie, und das Projekt endete ohne vollständige Bezahlung. Eine prägende Lektion: vor Arbeitsbeginn einen schriftlichen Scope und Vertrag einholen.",
-        ru: "Скоуп вырос с изначальной сметы в ₽7 000 до ₽100 000, но месяцами буксовал из-за неясных требований и застрявшего бэкенд-партнёра. Фронтенд был сдан полностью и без багов — но клиент так и не продал готовый продукт, и проект завершился без полной оплаты. Важный урок: заранее получать письменный скоуп и договор.",
+        en: "An internal program to monitor and report on employee computer activity across 9 configurable tracking modules — screenshots, keystrokes, file transfers, a password manager, proxy history, and remote terminal access among them. Scope grew from an initial 7,000 ₽ quote to 100,000 ₽, but stalled for months on unclear requirements and a stuck backend partner. The front-end shipped complete and bug-free — but the client never sold the finished product, and the engagement ended without full payment. A formative lesson: get a written scope and contract before starting work.",
+        de: "Ein internes Programm zur Überwachung und zum Reporting von Mitarbeiter-Computeraktivität über 9 konfigurierbare Tracking-Module — darunter Screenshots, Tastenanschläge, Dateiübertragungen, ein Passwort-Manager, Proxy-Verlauf und Remote-Terminal-Zugriff. Der Umfang wuchs von einem ursprünglichen Angebot über 7.000 ₽ auf 100.000 ₽, stockte aber monatelang wegen unklarer Anforderungen und eines ins Stocken geratenen Backend-Partners. Das Frontend wurde vollständig und fehlerfrei geliefert — doch der Kunde verkaufte das fertige Produkt nie, und das Projekt endete ohne vollständige Bezahlung. Eine prägende Lektion: vor Arbeitsbeginn einen schriftlichen Scope und Vertrag einholen.",
+        ru: "Внутренняя программа мониторинга и отчётности по компьютерной активности сотрудников с 9 настраиваемыми модулями отслеживания — среди них скриншоты, нажатия клавиш, передача файлов, менеджер паролей, история прокси и удалённый доступ к терминалу. Скоуп вырос с изначальной сметы в 7 000 ₽ до 100 000 ₽, но месяцами буксовал из-за неясных требований и застрявшего бэкенд-партнёра. Фронтенд был сдан полностью и без багов — но клиент так и не продал готовый продукт, и проект завершился без полной оплаты. Важный урок: заранее получать письменный скоуп и договор.",
       },
       tech: {
         en: "Angular frontend with RxJS, complex dashboard layouts and charting, integrated against a partner-built backend. Juggled three separate UI libraries (Nebular, Bootstrap, Material) accumulated over the project's life.",
@@ -848,7 +808,10 @@ export const PROJECTS: Project[] = [
         ru: "Фронтенд на Angular с RxJS, сложные дашборд-раскладки и графики, интеграция с бэкендом от партнёра. Приходилось жонглировать тремя разными UI-библиотеками (Nebular, Bootstrap, Material), накопившимися за время проекта.",
       },
     },
-    impact: [{ label: { en: "Scope growth", de: "Umfangswachstum", ru: "Рост скоупа" }, value: "₽7K → ₽100K" }],
+    impact: [
+      { label: { en: "Scope growth", de: "Umfangswachstum", ru: "Рост скоупа" }, value: "₽7K → ₽100K" },
+      { label: { en: "Tracking modules", de: "Tracking-Module", ru: "Модулей мониторинга" }, value: "9" },
+    ],
     stack: ["Angular", "RxJS"],
     links: [
       { labelKey: "demo", url: "https://universalinsight.vercel.app/pages/dashboard" },
@@ -861,8 +824,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/universal-insight-dashboard/gallery-01.jpeg",
       "/images/projects/universal-insight-dashboard/gallery-02.jpeg",
       "/images/projects/universal-insight-dashboard/gallery-03.jpeg",
-      "/images/projects/universal-insight-dashboard/file-analytics-mockup.jpg",
-      "/images/projects/universal-insight-dashboard/orders-dashboard-mockup.jpg",
       "/images/projects/universal-insight-dashboard/monitoring-mockup.jpg",
     ],
   },
@@ -890,7 +851,7 @@ export const PROJECTS: Project[] = [
       business: {
         en: "Delivered as part of a bid on a subway battery-supply tender — the admin panel tracking all 30 battery units' live readings, with a rebalancing trigger for operators. Built with a 4-person freelance team, earning ₽30,000; missed the original deadline after the charting library couldn't handle real-time updates and had to be swapped mid-project.",
         de: "Geliefert im Rahmen eines Angebots für eine U-Bahn-Batterielieferungs-Ausschreibung — das Admin-Panel zeigt die Live-Messwerte aller 30 Batterieeinheiten und gibt Betreibern einen Rebalancing-Trigger. Gebaut mit einem 4-köpfigen Freelance-Team, Honorar 30.000 ₽; die ursprüngliche Frist verpasst, nachdem die Charting-Bibliothek Echtzeit-Updates nicht bewältigen konnte und mitten im Projekt ausgetauscht werden musste.",
-        ru: "Сдано в рамках участия в тендере на поставку батарей для метро — админка показывает показания всех 30 батарей в реальном времени и даёт операторам кнопку перебалансировки. Собрано командой из 4 фрилансеров, доход ₽30 000; не успели к изначальному дедлайну, потому что библиотека графиков не справилась с обновлениями в реальном времени и её пришлось менять по ходу проекта.",
+        ru: "Сдано в рамках участия в тендере на поставку батарей для метро — админка показывает показания всех 30 батарей в реальном времени и даёт операторам кнопку перебалансировки. Собрано командой из 4 фрилансеров, доход 30 000 ₽; не успели к изначальному дедлайну, потому что библиотека графиков не справилась с обновлениями в реальном времени и её пришлось менять по ходу проекта.",
       },
       tech: {
         en: "Angular dashboard consuming live sensor telemetry sent over cellular from battery units on subway rolling stock, with a rebalancing action wired to a backend command endpoint.",
@@ -975,7 +936,7 @@ export const PROJECTS: Project[] = [
       business: {
         en: "An 8-month freelance engagement worth roughly $1,000 (₽70,789) with a highly professional, always-available client — the clearest, best-run client relationship of his student freelance years, with zero payment or communication issues.",
         de: "Ein 8-monatiges Freelance-Projekt im Wert von rund 1.000 $ (70.789 ₽) mit einem sehr professionellen, jederzeit erreichbaren Kunden — die klarste, am besten geführte Kundenbeziehung seiner Freelance-Jahre als Student, ohne jegliche Zahlungs- oder Kommunikationsprobleme.",
-        ru: "8-месячный фриланс-проект стоимостью около $1000 (₽70 789) с очень профессиональным, всегда на связи клиентом — самые чёткие и хорошо выстроенные отношения с клиентом за все студенческие годы фриланса, без единой проблемы с оплатой или коммуникацией.",
+        ru: "8-месячный фриланс-проект стоимостью около $1000 (70 789 ₽) с очень профессиональным, всегда на связи клиентом — самые чёткие и хорошо выстроенные отношения с клиентом за все студенческие годы фриланса, без единой проблемы с оплатой или коммуникацией.",
       },
       tech: {
         en: "React frontend (migrated from an initial Angular build). Discord for team comms, Postman for API contracts, a GitLab Kanban board for tracking.",
@@ -1031,7 +992,7 @@ export const PROJECTS: Project[] = [
       business: {
         en: "Referred in after a difficult prior engagement, delivered the store in 3 weeks instead of the usual months — and designed its visual identity himself, well-received enough that the client paid an extra €50 for it and 50% over the quoted rate overall. The client came back for a second engagement: a landing page on the same idea — most people don't know how to start mining crypto, but plenty will lend idle computing power for something tangible, in this case CS:GO skins — earning another ₽15,000.",
         de: "Über eine Empfehlung nach einem schwierigen vorherigen Projekt gewonnen, den Shop in 3 Wochen statt der üblichen Monate geliefert — und die visuelle Identität selbst entworfen, die so gut ankam, dass der Kunde dafür 50 € extra sowie insgesamt 50 % über dem vereinbarten Satz zahlte. Der Kunde kam für ein zweites Projekt zurück: eine Landingpage nach derselben Idee — die meisten wissen nicht, wie man mit Krypto-Mining anfängt, aber viele leihen ungenutzte Rechenleistung für etwas Greifbares, in diesem Fall CS:GO-Skins — und brachte weitere 15.000 ₽ ein.",
-        ru: "Пришёл по рекомендации после сложного предыдущего проекта, сдал магазин за 3 недели вместо обычных месяцев — и сам придумал визуальную айдентику, которая понравилась настолько, что клиент доплатил за неё €50 и в итоге заплатил на 50% больше оговорённой ставки. Клиент вернулся со вторым проектом — лендингом на той же идее: большинство не знает, как начать майнить крипту, но многие готовы одолжить простаивающие мощности за что-то осязаемое, в данном случае скины CS:GO — принеся ещё ₽15 000.",
+        ru: "Пришёл по рекомендации после сложного предыдущего проекта, сдал магазин за 3 недели вместо обычных месяцев — и сам придумал визуальную айдентику, которая понравилась настолько, что клиент доплатил за неё €50 и в итоге заплатил на 50% больше оговорённой ставки. Клиент вернулся со вторым проектом — лендингом на той же идее: большинство не знает, как начать майнить крипту, но многие готовы одолжить простаивающие мощности за что-то осязаемое, в данном случае скины CS:GO — принеся ещё 15 000 ₽.",
       },
       tech: {
         en: "Both built with GatsbyJS. The landing page's animation-heavy design ultimately made it noticeably laggy — a lesson in budgeting a performance pass for heavy scroll animations.",
@@ -1062,7 +1023,7 @@ export const PROJECTS: Project[] = [
       de: "Bestellformular für die Druckerei",
       ru: "Форма заказа для типографии",
     },
-    period: "08/2021",
+    period: "09/2019",
     status: "archived",
     company: "Yohan Loshop (own studio)",
     category: "work",
@@ -1099,7 +1060,7 @@ export const PROJECTS: Project[] = [
       de: "Legion — Portal für ein Bauunternehmen",
       ru: "Legion — портал для строительной компании",
     },
-    period: "10/2021 – 05/2022",
+    period: "10/2019 – 04/2020",
     status: "archived",
     statusNote: {
       en: "Engagement ended after the client's side lost confidence in delivery speed.",
@@ -1122,7 +1083,7 @@ export const PROJECTS: Project[] = [
       business: {
         en: "Earned ₽25,000 across a 7-month engagement. The clearest lesson from running his own studio: without a written scope, an unclear client point of contact turns page-by-page delivery into open-ended scope creep — and without steady revenue, a 3-person team can't compete with what junior full-time roles pay in the same city.",
         de: "25.000 ₽ Honorar über ein 7-monatiges Projekt. Die klarste Lektion aus dem eigenen Studio: Ohne schriftlichen Scope verwandelt ein unklarer Ansprechpartner beim Kunden seitenweise Lieferung in endlosen Scope-Creep — und ohne stetigen Umsatz kann ein 3-köpfiges Team nicht mit dem mithalten, was Junior-Vollzeitstellen in derselben Stadt zahlen.",
-        ru: "Заработок ₽25 000 за 7-месячный проект. Самый чёткий урок из ведения собственной студии: без письменного скоупа неясный контакт со стороны клиента превращает постраничную поставку в бесконечное расползание скоупа — а без стабильного дохода команда из 3 человек не может конкурировать с зарплатой джуниор-позиций на полной занятости в том же городе.",
+        ru: "Заработок 25 000 ₽ за 7-месячный проект. Самый чёткий урок из ведения собственной студии: без письменного скоупа неясный контакт со стороны клиента превращает постраничную поставку в бесконечное расползание скоупа — а без стабильного дохода команда из 3 человек не может конкурировать с зарплатой джуниор-позиций на полной занятости в том же городе.",
       },
       tech: {
         en: "Built with GatsbyJS, after evaluating and discarding several headless CMS options (Contentful, CosmicJS, DatoCMS) before settling on one.",

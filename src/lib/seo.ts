@@ -124,3 +124,104 @@ export async function buildNavBreadcrumbJsonLd(locale: string, navKey: string, p
     { name: t(navKey), path },
   ]);
 }
+
+/** WebPage schema for a single page — pair with a page's `generateMetadata` title/description
+ * so the two stay in sync instead of drifting into separate copy. */
+export function buildWebPageJsonLd({
+  locale,
+  path,
+  name,
+  description,
+}: {
+  locale: string;
+  path: string;
+  name: string;
+  description: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url: `${BASE_URL}/${locale}${path}`,
+    inLanguage: locale,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Vitalii Popov",
+      url: `${BASE_URL}/${locale}`,
+    },
+  };
+}
+
+type ProjectLinkLike = { labelKey: string; url: string };
+
+// Every `Project.links[].labelKey` in use today (see messages/*.json → Projects.linkLabels),
+// split by what the URL actually is. Keys outside both sets (eventPage, competition,
+// demoVideo) are intentionally left out of structured data — they describe context around
+// a project, not the software itself, so mapping them to schema.org properties would
+// overstate what they are.
+const SOFTWARE_ACCESS_LABEL_KEYS = new Set([
+  "demo", "store", "liveDemo", "liveDemoAdmin", "liveSite", "adminPanel",
+  "demoStore", "demoLanding", "originalHackathonDemo", "firebaseExtension", "liveTranslation",
+]);
+const REPOSITORY_LABEL_KEYS = new Set([
+  "github", "githubBackend", "githubFrontend", "githubAdmin", "githubEmbedder",
+  "githubReranker", "originalHackathonGithub", "githubStore", "githubLanding",
+]);
+
+/**
+ * Splits a project's real `links` into a primary access URL (the live app/demo — becomes
+ * `SoftwareApplication.url`) and secondary identity URLs (repos, plus any other access
+ * points — become `sameAs`), for `buildProjectJsonLd` below.
+ */
+export function classifyProjectLinks(links: ProjectLinkLike[] = []) {
+  const accessLinks = links.filter((l) => SOFTWARE_ACCESS_LABEL_KEYS.has(l.labelKey));
+  const repoLinks = links.filter((l) => REPOSITORY_LABEL_KEYS.has(l.labelKey));
+  const [primary, ...secondaryAccess] = accessLinks;
+  const relatedUrls = [...secondaryAccess, ...repoLinks].map((l) => l.url);
+  return { demoUrl: primary?.url, relatedUrls };
+}
+
+/**
+ * Describes one portfolio project as a SoftwareApplication when it has a real deployed
+ * demo or public repo link, otherwise as a CreativeWork — avoids implying every project
+ * (e.g. an internal, non-public engagement) is an installable/visitable app when it isn't.
+ * `demoUrl`/`relatedUrls` must come from `classifyProjectLinks` — never fabricated.
+ */
+export function buildProjectJsonLd({
+  locale,
+  path,
+  name,
+  description,
+  image,
+  keywords,
+  demoUrl,
+  relatedUrls,
+}: {
+  locale: string;
+  path: string;
+  name: string;
+  description: string;
+  image?: string;
+  keywords?: string[];
+  demoUrl?: string;
+  relatedUrls?: string[];
+}) {
+  const pageUrl = `${BASE_URL}/${locale}${path}`;
+  const isSoftware = Boolean(demoUrl || (relatedUrls && relatedUrls.length > 0));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": isSoftware ? "SoftwareApplication" : "CreativeWork",
+    name,
+    description,
+    mainEntityOfPage: pageUrl,
+    url: demoUrl ?? pageUrl,
+    inLanguage: locale,
+    ...(image && { image }),
+    ...(keywords && keywords.length > 0 && { keywords: keywords.join(", ") }),
+    ...(relatedUrls && relatedUrls.length > 0 && { sameAs: relatedUrls }),
+    ...(isSoftware && { applicationCategory: "DeveloperApplication" }),
+    author: { "@type": "Person", name: "Vitalii Popov", url: `${BASE_URL}/${locale}` },
+  };
+}
