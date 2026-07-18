@@ -263,15 +263,9 @@ export function AboutGalleryClient({
             since that changes which photos are "first". */}
         <div aria-hidden className="sr-only">
           {visibleGridPhotos.slice(0, GALLERY_PRELOAD_COUNT).map((photo) => (
-            <Image
-              key={photo.id}
-              src={photo.src}
-              alt=""
-              width={photo.width}
-              height={photo.height}
-              sizes={LIGHTBOX_SIZES}
-              priority
-            />
+            <div key={photo.id} className="relative h-px w-px overflow-hidden">
+              <Image src={photo.src} alt="" fill sizes={LIGHTBOX_SIZES} priority />
+            </div>
           ))}
         </div>
       </div>

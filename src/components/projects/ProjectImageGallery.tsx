@@ -79,7 +79,9 @@ export function ProjectImageGallery({
           the exact same `_next/image` URL ahead of time instead of on first open. */}
       <div aria-hidden className="sr-only">
         {images.slice(0, GALLERY_PRELOAD_COUNT).map((src) => (
-          <Image key={src} src={src} alt="" width={1} height={1} sizes={LIGHTBOX_SIZES} priority />
+          <div key={src} className="relative h-px w-px overflow-hidden">
+            <Image src={src} alt="" fill sizes={LIGHTBOX_SIZES} priority />
+          </div>
         ))}
       </div>
 
