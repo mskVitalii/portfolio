@@ -622,6 +622,19 @@
       "trackAria": "Animierte Simulation einer Inspektionskapsel, die auf Schienen über ein Förderband fährt und drei eingebaute Fehler meldet",
       "strategicNote": "Das echte Gerät führt diese Schleife direkt auf dem Chip aus — Anomalien in Geräusch und Vibration werden lokal erkannt, statt Rohdaten in die Cloud zu streamen."
     },
+    "ncahootsFlow": {
+      "title": "So funktioniert der Schenk-Ablauf",
+      "description": "NCahoots verwandelt die Anfrage einer Person in eine vollständig verpackte, gelieferte Geschenkbox — hier wird aus der Anfrage ein verschicktes Paket.",
+      "steps": [
+        { "label": "Anfrage", "description": "Ein Schenkender wendet sich an NCahoots, um ein Geschenk für jemanden zu organisieren." },
+        { "label": "Fragebogen", "description": "NCahoots schickt einen Fragebogen an die Freunde, Kollegen und Bekannten der beschenkten Person." },
+        { "label": "Geschenkauswahl", "description": "Basierend auf den Antworten wählt ein Manager Geschenke bei Amazon aus." },
+        { "label": "Eintrag im Admin-Panel", "description": "Der Manager trägt jedes Geschenk im Admin-Panel ein." },
+        { "label": "Verpackung & Wünsche", "description": "Das Admin-Panel druckt Verpackungsetiketten und persönliche Wünsche für jedes Geschenk." },
+        { "label": "Lieferung", "description": "Alles wird verpackt und dem Kunden zur Feier geliefert." }
+      ],
+      "builtLabel": "In diesem Projekt umgesetzt"
+    },
     "creditHeading": "Gemeinsam entwickelt mit",
     "creditLinkedIn": "Auf LinkedIn ansehen"
   },

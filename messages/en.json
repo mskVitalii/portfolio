@@ -622,6 +622,19 @@
       "trackAria": "Animated simulation of an inspection pod riding rails above a conveyor belt, flagging three seeded faults",
       "strategicNote": "The real device runs this loop on-chip — flagging anomalies in sound and vibration locally instead of streaming raw sensor data to the cloud."
     },
+    "ncahootsFlow": {
+      "title": "How the gifting flow works",
+      "description": "NCahoots turns one person's request into a fully wrapped, delivered gift box — here's where the request becomes a shipped package.",
+      "steps": [
+        { "label": "Request", "description": "A gift-giver reaches out to NCahoots to arrange a gift for someone." },
+        { "label": "Questionnaire", "description": "NCahoots sends a questionnaire to the honoree's friends, colleagues, and acquaintances." },
+        { "label": "Gift selection", "description": "Based on the answers, a manager picks gifts on Amazon." },
+        { "label": "Admin panel entry", "description": "The manager logs every gift into the admin panel." },
+        { "label": "Packaging & notes", "description": "The admin panel prints packaging labels and personal notes for each gift." },
+        { "label": "Delivery", "description": "Everything is wrapped and delivered to the client at the party." }
+      ],
+      "builtLabel": "Built in this project"
+    },
     "creditHeading": "Built together with",
     "creditLinkedIn": "View on LinkedIn"
   },

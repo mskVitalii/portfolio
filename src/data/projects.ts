@@ -929,26 +929,25 @@ export const PROJECTS: Project[] = [
     },
     description: {
       hr: {
-        en: "Led front-end delivery of an admin panel for NCahoots, a Silicon Valley gifting startup, coordinating a small remote team and migrating the stack from Angular to React mid-engagement.",
-        de: "Leitete die Frontend-Lieferung eines Admin-Panels für NCahoots, ein Geschenke-Startup aus dem Silicon Valley, koordinierte ein kleines Remote-Team und migrierte den Stack mitten im Projekt von Angular zu React.",
-        ru: "Руководил сдачей фронтенда админки для NCahoots — стартапа по подаркам из Кремниевой долины, координировал небольшую удалённую команду и мигрировал стек с Angular на React прямо по ходу проекта.",
+        en: "Led front-end delivery of an admin panel for NCahoots, a Silicon Valley gifting startup, coordinating a small remote team.",
+        de: "Leitete die Frontend-Lieferung eines Admin-Panels für NCahoots, ein Geschenke-Startup aus dem Silicon Valley, koordinierte ein kleines Remote-Team.",
+        ru: "Руководил сдачей фронтенда админки для NCahoots — стартапа по подаркам из Кремниевой долины, координировал небольшую удалённую команду.",
       },
       business: {
-        en: "An 8-month freelance engagement worth roughly $1,000 (₽70,789) with a highly professional, always-available client — the clearest, best-run client relationship of his student freelance years, with zero payment or communication issues.",
-        de: "Ein 8-monatiges Freelance-Projekt im Wert von rund 1.000 $ (70.789 ₽) mit einem sehr professionellen, jederzeit erreichbaren Kunden — die klarste, am besten geführte Kundenbeziehung seiner Freelance-Jahre als Student, ohne jegliche Zahlungs- oder Kommunikationsprobleme.",
-        ru: "8-месячный фриланс-проект стоимостью около $1000 (70 789 ₽) с очень профессиональным, всегда на связи клиентом — самые чёткие и хорошо выстроенные отношения с клиентом за все студенческие годы фриланса, без единой проблемы с оплатой или коммуникацией.",
+        en: "Led the front-end of a Silicon Valley gifting startup's admin panel, coordinating a small remote team.",
+        de: "Leitete das Frontend des Admin-Panels für ein Geschenke-Startup aus dem Silicon Valley, koordinierte ein kleines Remote-Team.",
+        ru: "Руководил фронтендом админки стартапа по дарению подарков из Кремниевой долины, координировал небольшую удалённую команду.",
       },
       tech: {
-        en: "React frontend (migrated from an initial Angular build). Discord for team comms, Postman for API contracts, a GitLab Kanban board for tracking.",
-        de: "React-Frontend (migriert von einer anfänglichen Angular-Version). Discord für Team-Kommunikation, Postman für API-Verträge, ein GitLab-Kanban-Board für das Tracking.",
-        ru: "Фронтенд на React (мигрировано с изначальной версии на Angular). Discord для командной коммуникации, Postman для API-контрактов, канбан-доска GitLab для трекинга.",
+        en: "React frontend. Discord for team comms, Postman for API contracts, a GitLab Kanban board for tracking.",
+        de: "React-Frontend. Discord für Team-Kommunikation, Postman für API-Verträge, ein GitLab-Kanban-Board für das Tracking.",
+        ru: "Фронтенд на React. Discord для командной коммуникации, Postman для API-контрактов, канбан-доска GitLab для трекинга.",
       },
     },
     impact: [
-      { label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽70,789" },
-      { label: { en: "Duration", de: "Dauer", ru: "Длительность" }, value: "8 months" },
+      { label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "$1,000" },
     ],
-    stack: ["React", "Angular"],
+    stack: ["React"],
     links: [
       { labelKey: "demo", url: "https://admin-silicon-valley.vercel.app" },
       { labelKey: "github", url: "https://github.com/mskVitalii/admin_silicon_valley" },

@@ -21,6 +21,7 @@ import { PseoLanguageGrid } from "./PseoLanguageGrid";
 import { ScalingSimulator } from "./ScalingSimulator";
 import { CancelGame } from "./CancelGame";
 import { RailScanDemo } from "./RailScanDemo";
+import { NCahootsFlowDiagram } from "./NCahootsFlowDiagram";
 import type { Project } from "@/data/projects";
 
 /** Full case-study block for one project — title through MDX write-up. Reused
@@ -129,6 +130,9 @@ export async function ProjectDetailSection({
 
       {/* Interactive demo for the Thin[gk]athon on-device fault detection loop */}
       {project.slug === "infineon-thingkathon" && <RailScanDemo />}
+
+      {/* Diagram explaining the NCahoots gifting flow end to end */}
+      {project.slug === "ncahoots-admin-panel" && <NCahootsFlowDiagram />}
 
       {/* Stack — raw tech names are only meaningful to recruiters and engineers, not a business audience */}
       <ModeAware modes={["hr", "tech"]}>
