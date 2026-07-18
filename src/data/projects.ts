@@ -29,6 +29,10 @@ export interface Project {
     business: LocalizedText;
     tech: LocalizedText;
   };
+  /** Shorter business-mode blurb for the project list/card view — falls back to
+   * `description.business` when absent. The project detail page always renders
+   * `description.business` in full. */
+  cardSummary?: LocalizedText;
   /** Optional structured Situation/Task/Action/Result breakdown, rendered instead
    * of a wall of text in HR mode when a project's story fits the format well. */
   star?: {
@@ -55,9 +59,9 @@ export const PROJECTS: Project[] = [
   {
     slug: "infineon-parking-guidance",
     title: {
-      en: "Parking Guidance System",
-      de: "Parkleitsystem",
-      ru: "Система навигации по парковке",
+      en: "Parkdinsky — Parking Guidance System",
+      de: "Parkdinsky – Parkleitsystem",
+      ru: "Parkdinsky - система навигации по парковке",
     },
     company: "Infineon Technologies AG",
     period: "09/2024 – present",
@@ -144,6 +148,8 @@ export const PROJECTS: Project[] = [
     images: [
       "/images/projects/infineon-thingkathon/conveyor-rig-1.jpg",
       "/images/projects/infineon-thingkathon/conveyor-rig-2.jpg",
+      "/images/projects/infineon-thingkathon/conveyor-line-wide.png",
+      "/images/projects/infineon-thingkathon/psoc-edge-kit-setup.jpeg",
       "/images/projects/infineon-thingkathon/architecture-sketch-1.jpg",
       "/images/projects/infineon-thingkathon/architecture-sketch-2.jpg",
     ],
@@ -168,9 +174,9 @@ export const PROJECTS: Project[] = [
     },
     description: {
       hr: {
-        en: "Full-Stack Developer building A/B testing infrastructure and a React component library at a travel aggregator for tours & hotels.",
-        de: "Full-Stack-Entwickler für A/B-Testing-Infrastruktur und eine React-Komponentenbibliothek bei einem Reise-Aggregator für Touren & Hotels.",
-        ru: "Full-stack разработчик A/B-тестирования и библиотеки React-компонентов в турагрегаторе туров и отелей.",
+        en: "Full-Stack Developer building A/B testing infrastructure and a React component library at a travel aggregator for tours & hotels — every SEO and UX change shipped behind an A/B test to protect and grow booking conversion.",
+        de: "Full-Stack-Entwickler für A/B-Testing-Infrastruktur und eine React-Komponentenbibliothek bei einem Reise-Aggregator für Touren & Hotels — jede SEO- und UX-Änderung lief hinter einem A/B-Test, um die Buchungskonversion zu schützen und zu steigern.",
+        ru: "Full-stack разработчик A/B-тестирования и библиотеки React-компонентов в турагрегаторе туров и отелей — каждое изменение в SEO и UX выкатывалось через A/B-тест, чтобы защитить и увеличить конверсию бронирований.",
       },
       business: {
         en: "Developed business logic for A/B testing in SEO and UX that increased key metrics by 11.63%. Built new UI components in production since November 2023, replacing legacy screens.",
@@ -178,13 +184,18 @@ export const PROJECTS: Project[] = [
         ru: "Разработал бизнес-логику A/B-тестирования в SEO и UX, которая подняла ключевые метрики на 11,63%. С ноября 2023 года новые UI-компоненты выкатывались в прод, заменяя устаревшие экраны.",
       },
       tech: {
-        en: "Server-side A/B flag logic in Ruby on Rails 7 with Redis-based caching. Legacy UI maintained in React + Redux. New component library built with React, TypeScript, Tailwind CSS and Jotai, documented in Storybook and deployed via GitLab CI/CD on Docker & Kubernetes.",
-        de: "Serverseitige A/B-Flag-Logik in Ruby on Rails 7 mit Redis-Caching. Legacy-UI in React + Redux gepflegt. Neue Komponentenbibliothek mit React, TypeScript, Tailwind CSS und Jotai gebaut, in Storybook dokumentiert und via GitLab CI/CD auf Docker & Kubernetes deployt.",
-        ru: "Серверная логика A/B-флагов на Ruby on Rails 7 с кешированием на Redis. Legacy UI поддерживался на React + Redux. Новая библиотека компонентов на React, TypeScript, Tailwind CSS и Jotai, задокументирована в Storybook, деплой через GitLab CI/CD на Docker и Kubernetes.",
+        en: "Server-side A/B flag logic in Ruby on Rails 7 with Redis-based caching, gating every SEO and UX change behind a test to protect and grow booking conversion across the aggregated inventory. Legacy UI maintained in React + Redux. New component library built with React, TypeScript, Tailwind CSS and Jotai, documented in Storybook and deployed via GitLab CI/CD on Docker & Kubernetes.",
+        de: "Serverseitige A/B-Flag-Logik in Ruby on Rails 7 mit Redis-Caching — jede SEO- und UX-Änderung lief hinter einem A/B-Test, um die Buchungskonversion über das aggregierte Angebot zu schützen und zu steigern. Legacy-UI in React + Redux gepflegt. Neue Komponentenbibliothek mit React, TypeScript, Tailwind CSS und Jotai gebaut, in Storybook dokumentiert und via GitLab CI/CD auf Docker & Kubernetes deployt.",
+        ru: "Серверная логика A/B-флагов на Ruby on Rails 7 с кешированием на Redis — каждое изменение в SEO и UX выкатывалось через A/B-тест, чтобы защитить и увеличить конверсию бронирований по агрегированному инвентарю. Legacy UI поддерживался на React + Redux. Новая библиотека компонентов на React, TypeScript, Tailwind CSS и Jotai, задокументирована в Storybook, деплой через GitLab CI/CD на Docker и Kubernetes.",
       },
     },
     impact: [{ label: { en: "Metric uplift", de: "Kennzahl-Steigerung", ru: "Прирост метрики" }, value: "11.63%" }],
     stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook", "GitLab CI/CD"],
+    images: [
+      "/images/projects/online-tours-ab/homepage.png",
+      "/images/projects/online-tours-ab/tour-search-results.png",
+      "/images/projects/online-tours-ab/callback-widget.png",
+    ],
   },
 
   // ─── OZON Tech (07/2021 – 07/2023) — "Contribution to 2 projects" ─────────
@@ -240,9 +251,9 @@ export const PROJECTS: Project[] = [
     status: "archived",
     category: "work",
     tagline: {
-      en: "€86K/year saved by replacing manual scanning workflows",
-      de: "86.000 €/Jahr eingespart durch Ablösung manueller Scan-Workflows",
-      ru: "€86К в год экономии за счёт отказа от ручного сканирования",
+      en: "€86K saved by replacing manual scanning workflows",
+      de: "86.000 € eingespart durch Ablösung manueller Scan-Workflows",
+      ru: "€86К экономии за счёт отказа от ручного сканирования",
     },
     description: {
       hr: {
@@ -251,9 +262,9 @@ export const PROJECTS: Project[] = [
         ru: "Backend-разработчик сервиса point-update для складских сканеров штрихкодов OZON, развёрнутого для ускорения зоны обработки возвратов.",
       },
       business: {
-        en: "Integrated barcode scanner hardware with a real-time point-update service in OZON's returns zone, cutting manual data-entry — saving €86,000/year while giving warehouse ops a scalable foundation for return-processing throughput as order volume grew. Still in use today.",
-        de: "Barcode-Scanner-Hardware mit einem Echtzeit-Point-Update-Service in OZONs Retourenzone integriert und manuelle Dateneingabe reduziert — spart 86.000 €/Jahr und gibt dem Lagerbetrieb eine skalierbare Grundlage für steigenden Retourendurchsatz. Bis heute im Einsatz.",
-        ru: "Интегрировали оборудование сканеров штрихкодов с сервисом point-update в реальном времени в зоне возвратов OZON, сократив ручной ввод данных — экономия €86 000 в год и масштабируемая основа для роста пропускной способности обработки возвратов. До сих пор в эксплуатации.",
+        en: "Integrated barcode scanner hardware with a real-time point-update service in OZON's returns zone, cutting manual data-entry — saving €86,000 while giving warehouse ops a scalable foundation for return-processing throughput as order volume grew. Still in use today.",
+        de: "Barcode-Scanner-Hardware mit einem Echtzeit-Point-Update-Service in OZONs Retourenzone integriert und manuelle Dateneingabe reduziert — spart 86.000 € und gibt dem Lagerbetrieb eine skalierbare Grundlage für steigenden Retourendurchsatz. Bis heute im Einsatz.",
+        ru: "Интегрировали оборудование сканеров штрихкодов с сервисом point-update в реальном времени в зоне возвратов OZON, сократив ручной ввод данных — экономия €86 000 и масштабируемая основа для роста пропускной способности обработки возвратов. До сих пор в эксплуатации.",
       },
       tech: {
         en: "C# integration of barcode scanner hardware over WebSockets, with a PostgreSQL-backed point-update service rolled out across many distributed returns-zone terminals. Also rewrote a Mattermost bot that monitors warehouse errors from Python to C#.",
@@ -261,7 +272,7 @@ export const PROJECTS: Project[] = [
         ru: "Интеграция оборудования сканеров штрихкодов на C# через WebSockets, сервис point-update на PostgreSQL, развёрнутый на множестве распределённых терминалов зоны возвратов. Также переписал Mattermost-бота для мониторинга складских ошибок с Python на C#.",
       },
     },
-    impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K/yr" }],
+    impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
     images: [
       "/images/projects/ozon-tech/office-54th-floor.png",
@@ -324,11 +335,6 @@ export const PROJECTS: Project[] = [
     company: "egsha",
     period: "01/2023 – 02/2023",
     status: "archived",
-    statusNote: {
-      en: "Delivered for launch; friend's business, no further engagement afterward.",
-      de: "Zum Launch geliefert; Geschäft eines Freundes, danach kein weiteres Engagement.",
-      ru: "Сдали к запуску; бизнес друга, дальнейшего сотрудничества не было.",
-    },
     category: "work",
     tagline: {
       en: "Classic cross-border resale: sourced via Poizon in China, margin from price delta and traffic cost",
@@ -355,6 +361,7 @@ export const PROJECTS: Project[] = [
     impact: [{ label: { en: "Delivery", de: "Lieferzeit", ru: "Срок сдачи" }, value: "3 weeks" }],
     stack: ["Next.js", "GraphQL", "Redux", "DatoCMS"],
     links: [{ labelKey: "store", url: "https://flyboot.vercel.app/" }],
+    images: ["/images/projects/flyboots-store/site-screenshot.webp"],
   },
   {
     slug: "phone-repair-resale",
@@ -384,9 +391,9 @@ export const PROJECTS: Project[] = [
         ru: "Вёл небольшой бизнес по восстановлению и перепродаже iPhone со школьным другом — отвечал за закупку и склад, партнёр занимался ремонтом и продажами.",
       },
       business: {
-        en: "The first real attempt at business: bought broken phones off Avito, repaired them with parts from the radio market, and resold them — 3 units sold before a bad parts order from China ended the venture at a loss. It stopped making sense fast, too, as phones became harder to disassemble and original boards impossible to source. A first hands-on lesson in inventory risk.",
-        de: "Der erste echte Geschäftsversuch: defekte Handys über Avito gekauft, mit Teilen vom Elektronikmarkt repariert und weiterverkauft — 3 Stück verkauft, bevor eine fehlerhafte Ersatzteillieferung aus China das Unternehmen mit Verlust beendete. Es verlor auch schnell an Sinn, da Telefone zunehmend schwerer zu zerlegen und originale Ersatzplatinen unmöglich zu beschaffen waren. Eine erste praktische Lektion in Bestandsrisiko.",
-        ru: "Первая настоящая попытка бизнеса: покупали сломанные телефоны на Avito, чинили их запчастями с радиорынка и перепродавали — продали 3 штуки, пока неудачная партия запчастей из Китая не закончила предприятие с убытком. Затея быстро теряла смысл и по другой причине: телефоны становились всё менее разборными, а оригинальные платы было не достать. Первый практический урок про риски товарных остатков.",
+        en: "Bought broken phones off Avito, repaired them with parts from the radio market, and resold them — 3 units sold before a bad parts order from China ended the venture at a loss. It stopped making sense fast, too, as phones became harder to disassemble and original boards impossible to source.",
+        de: "Defekte Handys über Avito gekauft, mit Teilen vom Elektronikmarkt repariert und weiterverkauft — 3 Stück verkauft, bevor eine fehlerhafte Ersatzteillieferung aus China das Unternehmen mit Verlust beendete. Es verlor auch schnell an Sinn, da Telefone zunehmend schwerer zu zerlegen und originale Ersatzplatinen unmöglich zu beschaffen waren.",
+        ru: "Покупали сломанные телефоны на Avito, чинили их запчастями с радиорынка и перепродавали — продали 3 штуки, пока неудачная партия запчастей из Китая не закончила предприятие с убытком. Затея быстро теряла смысл и по другой причине: телефоны становились всё менее разборными, а оригинальные платы было не достать.",
       },
       tech: {
         en: "No software — inventory and parts tracked in a spreadsheet.",
@@ -413,13 +420,8 @@ export const PROJECTS: Project[] = [
       ru: "AI-поддержка для магазинов Shopify",
     },
     company: "dunlimited",
-    period: "05/2020 – 06/2021",
+    period: "03/2026 – 04/2026",
     status: "archived",
-    statusNote: {
-      en: "Agency pivoted; product was client-owned and handed off.",
-      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
-      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
-    },
     category: "work",
     tagline: {
       en: "Handles 660 customer support tickets a month across 5 shops, built on Gorgias",
@@ -433,9 +435,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик AI-инструмента поддержки для продавцов Shopify, построенного поверх платформы Gorgias.",
       },
       business: {
-        en: "The AI drafts every reply and sends it directly when confident enough; otherwise a human just approves it instead of writing from scratch. It filters spam, fills templates from Shopify order context, and escalates uncertain cases to a human via Telegram rather than guessing, backed by guardrails tested during development. One store, everleakproof (lingerie), is non-returnable once shipped, so the bot's instant reaction time was the only thing that could still catch a cancellation before dispatch. Live across 5 Shopify shops, handling 660 tickets a month.",
-        de: "Die KI entwirft jede Antwort und verschickt sie bei ausreichender Sicherheit direkt; andernfalls muss ein Mensch nur freigeben, statt selbst zu schreiben. Sie filtert Spam, füllt Vorlagen aus dem Shopify-Bestellkontext und eskaliert unsichere Fälle statt zu raten per Telegram an einen Menschen, abgesichert durch während der Entwicklung getestete Guardrails. Ein Shop, everleakproof (Dessous), ist nach Versand nicht rückgabefähig — die sofortige Reaktionszeit des Bots war die einzige Chance, eine Stornierung noch vor dem Versand abzufangen. Im Einsatz bei 5 Shopify-Shops, 660 Tickets im Monat.",
-        ru: "Нейросеть готовит каждый ответ и при достаточной уверенности отправляет его сама; иначе человеку остаётся только одобрить черновик, а не писать с нуля. Она фильтрует спам, заполняет шаблоны по контексту заказа Shopify и эскалирует неуверенные случаи человеку через Telegram, а не гадает — это подкреплено гардрейлами, протестированными в процессе разработки. Один из магазинов, everleakproof (нижнее бельё), не подлежит возврату после отправки — мгновенная реакция бота была единственным шансом успеть отменить заказ до отправки. Работает в 5 магазинах Shopify, 660 обращений в месяц.",
+        en: "The AI drafts every reply and sends it directly when confident enough; otherwise a human just approves it instead of writing from scratch. It filters spam, fills templates from Shopify order context, and escalates uncertain cases to a human via Telegram, backed by guardrails tested during development.\n\nOne store, everleakproof (lingerie), is non-returnable once shipped, so the bot's instant reaction time was the only thing that could still catch a cancellation before dispatch.",
+        de: "Die KI entwirft jede Antwort und verschickt sie bei ausreichender Sicherheit direkt; andernfalls muss ein Mensch nur freigeben, statt selbst zu schreiben. Sie filtert Spam, füllt Vorlagen aus dem Shopify-Bestellkontext und eskaliert unsichere Fälle per Telegram an einen Menschen, abgesichert durch während der Entwicklung getestete Guardrails.\n\nEin Shop, everleakproof (Dessous), ist nach Versand nicht rückgabefähig — die sofortige Reaktionszeit des Bots war die einzige Chance, eine Stornierung noch vor dem Versand abzufangen.",
+        ru: "Нейросеть готовит каждый ответ и при достаточной уверенности отправляет его сама; иначе человеку остаётся только одобрить черновик, а не писать с нуля. Она фильтрует спам, заполняет шаблоны по контексту заказа Shopify и эскалирует неуверенные случаи человеку через Telegram — это подкреплено гардрейлами, протестированными в процессе разработки.\n\nОдин из магазинов, everleakproof (нижнее бельё), не подлежит возврату после отправки — мгновенная реакция бота была единственным шансом успеть отменить заказ до отправки.",
       },
       tech: {
         en: "AI-assisted support automation built on the Gorgias support platform and integrated with the Shopify API for order/product context. Spam classification, template-filling, guardrail checks against over-promising, and a Telegram-bot escalation path for low-confidence cases — covered by tests written during development.",
@@ -443,7 +445,10 @@ export const PROJECTS: Project[] = [
         ru: "AI-автоматизация поддержки на платформе Gorgias, интегрированная с API Shopify для контекста заказов/товаров. Классификация спама, заполнение шаблонов, гардрейл-проверки против чрезмерных обещаний и эскалация через Telegram-бота для случаев с низкой уверенностью — покрыто тестами, написанными в процессе разработки.",
       },
     },
-    impact: [{ label: { en: "Tickets handled", de: "Bearbeitete Tickets", ru: "Обработано обращений" }, value: "660/mo" }],
+    impact: [
+      { label: { en: "Tickets handled", de: "Bearbeitete Tickets", ru: "Обработано обращений" }, value: "660/mo" },
+      { label: { en: "Shops", de: "Shops", ru: "Магазинов" }, value: "5" },
+    ],
     stack: ["Python", "Shopify", "Gorgias", "AI", "Telegram Bot API"],
     images: ["/images/projects/wedo-shopify-ai-support/ai-spam-classification.jpg"],
   },
@@ -457,11 +462,6 @@ export const PROJECTS: Project[] = [
     company: "dunlimited",
     period: "05/2020 – 06/2021",
     status: "archived",
-    statusNote: {
-      en: "Agency pivoted; product was client-owned and handed off.",
-      de: "Agentur hat sich neu ausgerichtet; das Produkt gehörte dem Kunden und wurde übergeben.",
-      ru: "Агентство сменило направление; продукт принадлежал клиенту и был передан ему.",
-    },
     category: "work",
     tagline: {
       en: "A straightforward sync: Shopify shipping costs pushed into TripleWhale for attribution reporting",
@@ -475,9 +475,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик пайплайна синхронизации данных между магазином Shopify и TripleWhale — платформой атрибуции и аналитики для Shopify.",
       },
       business: {
-        en: "A fairly banal but necessary integration: synced Shipping Costs from the Shopify order logistics system into TripleWhale, giving the client accurate marketing attribution reporting without manual data entry.",
-        de: "Eine ziemlich banale, aber notwendige Integration: Versandkosten aus dem Shopify-Bestell-Logistiksystem an TripleWhale synchronisiert und dem Kunden so präzises Marketing-Attribution-Reporting ohne manuelle Dateneingabe ermöglicht.",
-        ru: "Довольно банальная, но нужная интеграция: синхронизация Shipping Costs из логистической системы заказов Shopify в TripleWhale — точная маркетинговая атрибуция для клиента без ручного ввода данных.",
+        en: "A fairly banal but necessary integration: synced Shipping Costs from the Shopify order logistics system into TripleWhale. Needed to get rid of manual data entry.",
+        de: "Eine ziemlich banale, aber notwendige Integration: Versandkosten aus dem Shopify-Bestell-Logistiksystem an TripleWhale synchronisiert. Nötig, um die manuelle Dateneingabe loszuwerden.",
+        ru: "Довольно банальная, но нужная интеграция: синхронизация Shipping Costs из логистической системы заказов Shopify в TripleWhale. Нужно, чтобы избавиться от ручного ввода данных.",
       },
       tech: {
         en: "Python service syncing Shopify order and ad-spend data into TripleWhale via its API.",
@@ -510,23 +510,23 @@ export const PROJECTS: Project[] = [
     },
     description: {
       hr: {
-        en: "Full-Stack Developer building 3 Telegram bots end-to-end, including architecture, monitoring, and the deployment pipeline.",
-        de: "Full-Stack-Entwickler für 3 Telegram-Bots end-to-end — inklusive Architektur, Monitoring und Deployment-Pipeline.",
-        ru: "Full-stack разработчик 3 Telegram-ботов от начала до конца — архитектура, мониторинг, деплой-пайплайн.",
+        en: "Full-Stack Developer building 4 Telegram bots end-to-end, including architecture, monitoring, and the deployment pipeline.",
+        de: "Full-Stack-Entwickler für 4 Telegram-Bots end-to-end — inklusive Architektur, Monitoring und Deployment-Pipeline.",
+        ru: "Full-stack разработчик 4 Telegram-ботов от начала до конца — архитектура, мониторинг, деплой-пайплайн.",
       },
       business: {
-        en: "These bots sold access to scripted AI characters — a psychologist users cried talking to (voice messages via Whisper made that possible), and a fortune-teller taught to 'lie' convincingly: vague enough to always feel relevant, specific enough to feel true. Generated graphics and video kept it entertaining. The project closed once Telegram's cost-per-lead grew too high to sustain — but shipped 3 bots on a CI/CD pipeline that published new versions within 10 seconds of a push.",
-        de: "Diese Bots verkauften Zugang zu skriptierten KI-Charakteren — ein Psychologe, bei dem Nutzer im Gespräch weinten (möglich durch Sprachnachrichten via Whisper), und ein Wahrsager, der überzeugend zu 'lügen' lernte: vage genug, um immer relevant zu wirken, konkret genug, um wahr zu klingen. Generierte Grafiken und Videos hielten es unterhaltsam. Das Projekt schloss, als der Cost-per-Lead auf Telegram zu hoch wurde — zuvor wurden 3 Bots über eine CI/CD-Pipeline ausgeliefert, die neue Versionen innerhalb von 10 Sekunden nach einem Push veröffentlichte.",
-        ru: "Эти боты продавали доступ к AI-персонажам по сценарию — психологу, с которым пользователи плакали (это стало возможным благодаря голосовым сообщениям через Whisper), и предсказателю, обученному правдоподобно 'врать': достаточно туманно, чтобы казаться в тему, и достаточно конкретно, чтобы звучать правдой. Сгенерированная графика и видео дополнительно развлекали. Проект закрылся, когда стоимость лида в Telegram стала слишком высокой — но до этого выпустили 3 бота с CI/CD-пайплайном, публиковавшим новую версию за 10 секунд после пуша.",
+        en: "These bots sold access to scripted AI characters — a psychologist users cried talking to (voice messages via Whisper made that possible), and a fortune-teller taught to 'lie' convincingly: vague enough to always feel relevant, specific enough to feel true. Generated graphics and video kept it entertaining. The project closed once Telegram's cost-per-lead grew too high to sustain.",
+        de: "Diese Bots verkauften Zugang zu skriptierten KI-Charakteren — ein Psychologe, bei dem Nutzer im Gespräch weinten (möglich durch Sprachnachrichten via Whisper), und ein Wahrsager, der überzeugend zu 'lügen' lernte: vage genug, um immer relevant zu wirken, konkret genug, um wahr zu klingen. Generierte Grafiken und Videos hielten es unterhaltsam. Das Projekt schloss, als der Cost-per-Lead auf Telegram zu hoch wurde.",
+        ru: "Эти боты продавали доступ к AI-персонажам по сценарию — психологу, с которым пользователи плакали (это стало возможным благодаря голосовым сообщениям через Whisper), и предсказателю, обученному правдоподобно 'врать': достаточно туманно, чтобы казаться в тему, и достаточно конкретно, чтобы звучать правдой. Сгенерированная графика и видео дополнительно развлекали. Проект закрылся, когда стоимость лида в Telegram стала слишком высокой.",
       },
       tech: {
-        en: "Python (aiogram) bots backed by PostgreSQL, with Whisper wired in for voice-message transcription. Self-hosted CI/CD via a GitHub Actions self-hosted runner, deploying to the team's own server with Docker layer caching for ~10s deploys. Images stored in Minio (S3-compatible), Redis for auth tokens and user state.",
-        de: "Python-Bots (aiogram) mit PostgreSQL im Hintergrund, Whisper für die Transkription von Sprachnachrichten eingebunden. Selbst gehostetes CI/CD über einen GitHub-Actions-Self-Hosted-Runner, Deployment auf den eigenen Server des Teams mit Docker-Layer-Caching für ~10-Sekunden-Deploys. Bilder in Minio (S3-kompatibel), Redis für Auth-Tokens und Nutzerstatus.",
-        ru: "Боты на Python (aiogram) с PostgreSQL, подключён Whisper для транскрибации голосовых сообщений. Self-hosted CI/CD через self-hosted раннер GitHub Actions, деплой на собственный сервер команды с кешированием слоёв Docker для деплоя за ~10 секунд. Изображения в Minio (S3-совместимое хранилище), Redis для токенов авторизации и состояния пользователя.",
+        en: "Python (aiogram) bots backed by PostgreSQL, with Whisper wired in for voice-message transcription, and a Telegram Mini App for a richer in-chat UI. Self-hosted CI/CD via a GitHub Actions self-hosted runner, deploying to the team's own server with Docker layer caching for ~10s deploys, monitored with Grafana. Images stored in AWS S3, Redis for auth tokens and user state.",
+        de: "Python-Bots (aiogram) mit PostgreSQL im Hintergrund, Whisper für die Transkription von Sprachnachrichten sowie eine Telegram Mini App für eine reichhaltigere In-Chat-Oberfläche. Selbst gehostetes CI/CD über einen GitHub-Actions-Self-Hosted-Runner, Deployment auf den eigenen Server des Teams mit Docker-Layer-Caching für ~10-Sekunden-Deploys, überwacht mit Grafana. Bilder in AWS S3, Redis für Auth-Tokens und Nutzerstatus.",
+        ru: "Боты на Python (aiogram) с PostgreSQL, подключён Whisper для транскрибации голосовых сообщений, а также Telegram Mini App для более насыщенного интерфейса внутри чата. Self-hosted CI/CD через self-hosted раннер GitHub Actions, деплой на собственный сервер команды с кешированием слоёв Docker для деплоя за ~10 секунд, мониторинг через Grafana. Изображения хранятся в AWS S3, Redis — для токенов авторизации и состояния пользователя.",
       },
     },
     impact: [{ label: { en: "Deploy time", de: "Deploy-Zeit", ru: "Время деплоя" }, value: "<10 sec" }],
-    stack: ["Python", "aiogram", "Whisper", "PostgreSQL", "Docker", "GitHub Actions", "Minio", "Redis"],
+    stack: ["Python", "aiogram", "Whisper", "PostgreSQL", "Docker", "GitHub Actions", "AWS S3", "Redis", "Grafana", "Telegram Mini App"],
     images: [
       "/images/projects/wedo-telegram-bots/user-dashboard.jpg",
       "/images/projects/wedo-telegram-bots/astrology-chart-1.jpg",
@@ -554,7 +554,7 @@ export const PROJECTS: Project[] = [
       de: "Horsium — Pferdezucht-Simulator",
       ru: "Horsium — симулятор коневодства",
     },
-    period: "05/2020 – 06/2021",
+    period: "08/2025",
     status: "active",
     statusNote: {
       en: "Still in active development.",
@@ -574,9 +574,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик бэкенда Horsium — онлайн-симулятора разведения лошадей, придуманного и развиваемого командой фанатов конного спорта для таких же фанатов.",
       },
       business: {
-        en: "An online horse-breeding simulator recreating realistic horse genetics: horses are bred according to inherited traits, and that breeding lays down each horse's potential — the same way it works in real equestrian breeding. Still an active, ongoing build rather than a finished product.",
-        de: "Ein Online-Pferdezucht-Simulator mit realistischer Pferdegenetik: Pferde werden nach vererbten Merkmalen gezüchtet, und diese Zucht legt das Potenzial jedes Pferdes fest — genau wie in der echten Pferdezucht. Noch immer aktiv in Entwicklung, kein fertiges Produkt.",
-        ru: "Онлайн-симулятор разведения лошадей с реалистичной генетикой: лошади разводятся согласно наследуемым признакам, и это разведение закладывает потенциал каждой лошади — точно так же, как в реальном коневодстве. Проект всё ещё активно разрабатывается, а не завершён.",
+        en: "An online horse-breeding simulator recreating realistic horse genetics: horses are bred according to inherited traits, and that breeding lays down each horse's potential — the same way it works in real equestrian breeding. Still an active, ongoing build.",
+        de: "Ein Online-Pferdezucht-Simulator mit realistischer Pferdegenetik: Pferde werden nach vererbten Merkmalen gezüchtet, und diese Zucht legt das Potenzial jedes Pferdes fest — genau wie in der echten Pferdezucht. Noch immer aktiv in Entwicklung.",
+        ru: "Онлайн-симулятор разведения лошадей с реалистичной генетикой: лошади разводятся согласно наследуемым признакам, и это разведение закладывает потенциал каждой лошади — точно так же, как в реальном коневодстве. Проект всё ещё активно разрабатывается.",
       },
       tech: {
         en: "Backend built with NestJS and MongoDB.",
@@ -585,6 +585,7 @@ export const PROJECTS: Project[] = [
       },
     },
     stack: ["NestJS", "MongoDB"],
+    links: [{ labelKey: "liveSite", url: "https://horsium.com/" }],
     images: ["/images/projects/wedo-horsium-game/horse-asset-browser.jpg"],
     credit: {
       name: { en: "Anastasia Zibrova", de: "Anastasia Zibrova", ru: "Анастасия Зиброва" },
@@ -780,11 +781,6 @@ export const PROJECTS: Project[] = [
     },
     period: "08/2020 – 05/2021",
     status: "archived",
-    statusNote: {
-      en: "Front-end delivered in full; the product itself was never sold and payment was never completed.",
-      de: "Frontend vollständig geliefert; das Produkt selbst wurde nie verkauft, die Zahlung nie abgeschlossen.",
-      ru: "Фронтенд сдан полностью; сам продукт так и не продан, оплата не завершена.",
-    },
     category: "freelance",
     tagline: {
       en: "Angular ops dashboard for employee activity tracking — 9 monitoring modules, scope grew 14x mid-flight",
@@ -798,9 +794,9 @@ export const PROJECTS: Project[] = [
         ru: "Руководил сдачей фронтенда (а на практике и ежедневной координацией команды) для внутреннего дашборда отслеживания активности сотрудников — 9 модулей мониторинга: от скриншотов и нажатий клавиш до передачи файлов и истории браузера — изучая Angular с нуля прямо по ходу проекта.",
       },
       business: {
-        en: "An internal program to monitor and report on employee computer activity across 9 configurable tracking modules — screenshots, keystrokes, file transfers, a password manager, proxy history, and remote terminal access among them. Scope grew from an initial 7,000 ₽ quote to 100,000 ₽, but stalled for months on unclear requirements and a stuck backend partner. The front-end shipped complete and bug-free — but the client never sold the finished product, and the engagement ended without full payment. A formative lesson: get a written scope and contract before starting work.",
-        de: "Ein internes Programm zur Überwachung und zum Reporting von Mitarbeiter-Computeraktivität über 9 konfigurierbare Tracking-Module — darunter Screenshots, Tastenanschläge, Dateiübertragungen, ein Passwort-Manager, Proxy-Verlauf und Remote-Terminal-Zugriff. Der Umfang wuchs von einem ursprünglichen Angebot über 7.000 ₽ auf 100.000 ₽, stockte aber monatelang wegen unklarer Anforderungen und eines ins Stocken geratenen Backend-Partners. Das Frontend wurde vollständig und fehlerfrei geliefert — doch der Kunde verkaufte das fertige Produkt nie, und das Projekt endete ohne vollständige Bezahlung. Eine prägende Lektion: vor Arbeitsbeginn einen schriftlichen Scope und Vertrag einholen.",
-        ru: "Внутренняя программа мониторинга и отчётности по компьютерной активности сотрудников с 9 настраиваемыми модулями отслеживания — среди них скриншоты, нажатия клавиш, передача файлов, менеджер паролей, история прокси и удалённый доступ к терминалу. Скоуп вырос с изначальной сметы в 7 000 ₽ до 100 000 ₽, но месяцами буксовал из-за неясных требований и застрявшего бэкенд-партнёра. Фронтенд был сдан полностью и без багов — но клиент так и не продал готовый продукт, и проект завершился без полной оплаты. Важный урок: заранее получать письменный скоуп и договор.",
+        en: "An internal program to monitor and report on employee computer activity across 9 configurable tracking modules — screenshots, keystrokes, file transfers, a password manager, proxy history, and remote terminal access among them. Led a team of 3 developers. Scope grew from an initial 7,000 ₽ quote to 100,000 ₽, but stalled for months on unclear requirements and a stuck backend partner.\n\nThe front-end shipped complete and bug-free — but the client never sold the finished product, and the engagement ended without full payment. A formative lesson: get a written scope and contract before starting work.",
+        de: "Ein internes Programm zur Überwachung und zum Reporting von Mitarbeiter-Computeraktivität über 9 konfigurierbare Tracking-Module — darunter Screenshots, Tastenanschläge, Dateiübertragungen, ein Passwort-Manager, Proxy-Verlauf und Remote-Terminal-Zugriff. Leitete ein Team von 3 Entwicklern. Der Umfang wuchs von einem ursprünglichen Angebot über 7.000 ₽ auf 100.000 ₽, stockte aber monatelang wegen unklarer Anforderungen und eines ins Stocken geratenen Backend-Partners.\n\nDas Frontend wurde vollständig und fehlerfrei geliefert — doch der Kunde verkaufte das fertige Produkt nie, und das Projekt endete ohne vollständige Bezahlung. Eine prägende Lektion: vor Arbeitsbeginn einen schriftlichen Scope und Vertrag einholen.",
+        ru: "Внутренняя программа мониторинга и отчётности по компьютерной активности сотрудников с 9 настраиваемыми модулями отслеживания — среди них скриншоты, нажатия клавиш, передача файлов, менеджер паролей, история прокси и удалённый доступ к терминалу. Руководил командой из 3 разработчиков. Скоуп вырос с изначальной сметы в 7 000 ₽ до 100 000 ₽, но месяцами буксовал из-за неясных требований и застрявшего бэкенд-партнёра.\n\nФронтенд был сдан полностью и без багов — но клиент так и не продал готовый продукт, и проект завершился без полной оплаты. Важный урок: заранее получать письменный скоуп и договор.",
       },
       tech: {
         en: "Angular frontend with RxJS, complex dashboard layouts and charting, integrated against a partner-built backend. Juggled three separate UI libraries (Nebular, Bootstrap, Material) accumulated over the project's life.",
@@ -809,7 +805,7 @@ export const PROJECTS: Project[] = [
       },
     },
     impact: [
-      { label: { en: "Scope growth", de: "Umfangswachstum", ru: "Рост скоупа" }, value: "₽7K → ₽100K" },
+      { label: { en: "Project value", de: "Projektwert", ru: "Сумма проекта" }, value: "₽100K" },
       { label: { en: "Tracking modules", de: "Tracking-Module", ru: "Модулей мониторинга" }, value: "9" },
     ],
     stack: ["Angular", "RxJS"],
@@ -849,15 +845,20 @@ export const PROJECTS: Project[] = [
         ru: "Собрал фронтенд админки для системы мониторинга батарей метро в составе команды, участвовавшей в тендере на поставку батарей для метро — визуализация напряжения, температуры и тока в реальном времени плюс кнопка запуска перебалансировки для команды, следящей за 30 батареями.",
       },
       business: {
-        en: "Delivered as part of a bid on a subway battery-supply tender — the admin panel tracking all 30 battery units' live readings, with a rebalancing trigger for operators. Built with a 4-person freelance team, earning ₽30,000; missed the original deadline after the charting library couldn't handle real-time updates and had to be swapped mid-project.",
-        de: "Geliefert im Rahmen eines Angebots für eine U-Bahn-Batterielieferungs-Ausschreibung — das Admin-Panel zeigt die Live-Messwerte aller 30 Batterieeinheiten und gibt Betreibern einen Rebalancing-Trigger. Gebaut mit einem 4-köpfigen Freelance-Team, Honorar 30.000 ₽; die ursprüngliche Frist verpasst, nachdem die Charting-Bibliothek Echtzeit-Updates nicht bewältigen konnte und mitten im Projekt ausgetauscht werden musste.",
-        ru: "Сдано в рамках участия в тендере на поставку батарей для метро — админка показывает показания всех 30 батарей в реальном времени и даёт операторам кнопку перебалансировки. Собрано командой из 4 фрилансеров, доход 30 000 ₽; не успели к изначальному дедлайну, потому что библиотека графиков не справилась с обновлениями в реальном времени и её пришлось менять по ходу проекта.",
+        en: "As part of a bid on a subway battery-supply tender — the admin panel shows all 30 battery units' live readings and gives operators a rebalancing button. Led a team of 3 developers.",
+        de: "Im Rahmen eines Angebots für eine U-Bahn-Batterielieferungs-Ausschreibung — das Admin-Panel zeigt die Live-Messwerte aller 30 Batterieeinheiten und gibt Betreibern eine Rebalancing-Taste. Leitete ein Team von 3 Entwicklern.",
+        ru: "В рамках участия в тендере на поставку батарей для метро — админка показывает показания всех 30 батарей в реальном времени и даёт операторам кнопку перебалансировки. Руководил командой из 3 разработчиков.",
       },
       tech: {
         en: "Angular dashboard consuming live sensor telemetry sent over cellular from battery units on subway rolling stock, with a rebalancing action wired to a backend command endpoint.",
         de: "Angular-Dashboard, das Live-Sensortelemetrie empfängt, die per Mobilfunk von Batterieeinheiten in U-Bahn-Wagen gesendet wird, mit einer Rebalancing-Aktion, die an einen Backend-Kommando-Endpunkt angebunden ist.",
         ru: "Дашборд на Angular, принимающий телеметрию датчиков в реальном времени, передаваемую по сотовой сети от батарей на подвижном составе метро, с действием перебалансировки, подключённым к командному эндпоинту бэкенда.",
       },
+    },
+    cardSummary: {
+      en: "As part of a bid on a subway battery-supply tender — the admin panel shows all 30 battery units' live readings and gives operators a rebalancing button.",
+      de: "Im Rahmen eines Angebots für eine U-Bahn-Batterielieferungs-Ausschreibung — das Admin-Panel zeigt die Live-Messwerte aller 30 Batterieeinheiten und gibt Betreibern eine Rebalancing-Taste.",
+      ru: "В рамках участия в тендере на поставку батарей для метро — админка показывает показания всех 30 батарей в реальном времени и даёт операторам кнопку перебалансировки.",
     },
     impact: [
       { label: { en: "Revenue", de: "Honorar", ru: "Доход" }, value: "₽30,000" },
@@ -970,9 +971,9 @@ export const PROJECTS: Project[] = [
   {
     slug: "mining-skins-store",
     title: {
-      en: "Skins-for-Mining Store & Landing Page",
-      de: "Skins-für-Mining-Shop & Landingpage",
-      ru: "Магазин и лендинг скинов за майнинг",
+      en: "SkinMiners — Skins-for-Mining Store & Landing Page",
+      de: "SkinMiners – Skins-für-Mining-Shop & Landingpage",
+      ru: "SkinMiners - магазин и лендинг скинов за майнинг",
     },
     period: "03/2021 – 06/2021",
     status: "archived",
@@ -989,9 +990,9 @@ export const PROJECTS: Project[] = [
         ru: "Первый фриланс-проект, взятый в одиночку, без команды — сам магазин скинов плюс дашборд отслеживания майнинг-активности каждого пользователя и маркетинговая страница продукта наград за майнинг. Через несколько недель добавился отдельный лендинг, собранный с небольшой ситуативной командой.",
       },
       business: {
-        en: "Referred in after a difficult prior engagement, delivered the store in 3 weeks instead of the usual months — and designed its visual identity himself, well-received enough that the client paid an extra €50 for it and 50% over the quoted rate overall. The client came back for a second engagement: a landing page on the same idea — most people don't know how to start mining crypto, but plenty will lend idle computing power for something tangible, in this case CS:GO skins — earning another ₽15,000.",
-        de: "Über eine Empfehlung nach einem schwierigen vorherigen Projekt gewonnen, den Shop in 3 Wochen statt der üblichen Monate geliefert — und die visuelle Identität selbst entworfen, die so gut ankam, dass der Kunde dafür 50 € extra sowie insgesamt 50 % über dem vereinbarten Satz zahlte. Der Kunde kam für ein zweites Projekt zurück: eine Landingpage nach derselben Idee — die meisten wissen nicht, wie man mit Krypto-Mining anfängt, aber viele leihen ungenutzte Rechenleistung für etwas Greifbares, in diesem Fall CS:GO-Skins — und brachte weitere 15.000 ₽ ein.",
-        ru: "Пришёл по рекомендации после сложного предыдущего проекта, сдал магазин за 3 недели вместо обычных месяцев — и сам придумал визуальную айдентику, которая понравилась настолько, что клиент доплатил за неё €50 и в итоге заплатил на 50% больше оговорённой ставки. Клиент вернулся со вторым проектом — лендингом на той же идее: большинство не знает, как начать майнить крипту, но многие готовы одолжить простаивающие мощности за что-то осязаемое, в данном случае скины CS:GO — принеся ещё 15 000 ₽.",
+        en: "Most people don't know how to mine cryptocurrency, but plenty will rent out their computers' processing power for a tangible reward — CS:GO skins. Delivered the store in 3 weeks instead of the usual months, and designed its visual identity himself, well-received enough that the client tipped an extra €50 for it.",
+        de: "Die meisten wissen nicht, wie man Kryptowährung schürft, aber viele vermieten die Rechenleistung ihrer Computer für eine greifbare Belohnung — CS:GO-Skins. Den Shop in 3 Wochen statt der üblichen Monate geliefert und die visuelle Identität selbst entworfen, die so gut ankam, dass der Kunde dafür 50 € Trinkgeld extra zahlte.",
+        ru: "Большинство не знает, как майнить криптовалюту, но многие готовы сдавать мощности своих компьютеров за осязаемую награду — скины CS:GO. Сдал магазин за 3 недели вместо месяцев — и сам придумал визуальную айдентику, которая понравилась настолько, что клиент доплатил за неё €50 чаевыми.",
       },
       tech: {
         en: "Both built with GatsbyJS. The landing page's animation-heavy design ultimately made it noticeably laggy — a lesson in budgeting a performance pass for heavy scroll animations.",

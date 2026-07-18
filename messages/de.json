@@ -603,7 +603,6 @@
     "railScan": {
       "title": "Fahrt entlang der Schiene",
       "description": "Eine simulierte Inspektionskapsel scannt ein laufendes Förderband nach eingebauten Fehlern — derselbe Erkennungs- und Meldeloop, den das echte Gerät auf dem PSoC Edge ausführt.",
-      "hint": "Drücke Play/Pause, um die Wiedergabe zu steuern.",
       "defectsLabel": "Erkannte Fehler",
       "distanceLabel": "Band gescannt",
       "statusLabel": "Status",
@@ -617,8 +616,6 @@
         "surfaceWear": "Oberflächenverschleiß",
         "foreignObject": "Fremdkörper"
       },
-      "playLabel": "Abspielen",
-      "pauseLabel": "Pause",
       "trackAria": "Animierte Simulation einer Inspektionskapsel, die auf Schienen über ein Förderband fährt und drei eingebaute Fehler meldet",
       "strategicNote": "Das echte Gerät führt diese Schleife direkt auf dem Chip aus — Anomalien in Geräusch und Vibration werden lokal erkannt, statt Rohdaten in die Cloud zu streamen."
     },

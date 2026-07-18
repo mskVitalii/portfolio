@@ -74,9 +74,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "onlineTours — remote-first турагрегатор туров и отелей, ведущий продуктовую разработку через эксперименты в SEO и UX. Работа велась по Scrum.",
       },
       business: {
-        en: "onlineTours doesn't hold its own tour inventory — it resells traffic by aggregating tour & hotel offers from partner suppliers, and monetizes through partner placement across the platform. Every SEO and UX change ships behind an A/B test to protect and grow booking conversion across that aggregated inventory.",
-        de: "onlineTours hält keinen eigenen Touren-Bestand — es verkauft Traffic weiter, indem es Touren- und Hotelangebote von Partneranbietern aggregiert, und monetarisiert über Partnerplatzierungen auf der Plattform. Jede SEO- und UX-Änderung läuft hinter einem A/B-Test, um die Buchungskonversion über dieses aggregierte Angebot zu schützen und zu steigern.",
-        ru: "onlineTours не держит собственный туристический инвентарь — перепродаёт трафик, агрегируя предложения туров и отелей от партнёров-поставщиков, и монетизируется через размещение партнёров на платформе. Каждое изменение в SEO и UX выкатывается через A/B-тест, чтобы защитить и увеличить конверсию бронирований по этому агрегированному инвентарю.",
+        en: "onlineTours resells traffic by aggregating tour & hotel offers from partner suppliers, and monetizes through partner placement across the platform.",
+        de: "onlineTours verkauft Traffic weiter, indem es Touren- und Hotelangebote von Partneranbietern aggregiert, und monetarisiert über Partnerplatzierungen auf der Plattform.",
+        ru: "onlineTours перепродаёт трафик, агрегируя предложения туров и отелей от партнёров-поставщиков, и монетизируется через размещение партнёров на платформе.",
       },
       tech: {
         en: "Legacy Ruby on Rails + React/Redux platform being incrementally modernized with a new TypeScript/Tailwind component library, deployed via GitLab CI/CD on Docker & Kubernetes.",
@@ -170,9 +170,9 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "Ведущее маркетинговое агентство Сингапура и его собственные товарные бренды.",
       },
       tech: {
-        en: "Python service work spanning a Gorgias-based Shopify AI support integration, a TripleWhale attribution sync, and a suite of Telegram bots (aiogram + PostgreSQL + Whisper) with CI/CD to a self-hosted GitHub Actions runner, Minio image storage, and Redis for auth tokens and state.",
-        de: "Python-Service-Arbeit über eine Gorgias-basierte Shopify-KI-Support-Integration, eine TripleWhale-Attribution-Synchronisierung und eine Suite von Telegram-Bots (aiogram + PostgreSQL + Whisper) mit CI/CD auf einen selbst gehosteten GitHub-Actions-Runner, Minio-Bildspeicher und Redis für Auth-Tokens und Status.",
-        ru: "Python-сервисы: AI-интеграция поддержки Shopify на базе Gorgias, синхронизация атрибуции с TripleWhale и набор Telegram-ботов (aiogram + PostgreSQL + Whisper) с CI/CD на self-hosted раннер GitHub Actions, хранилищем изображений Minio и Redis для токенов авторизации и состояния.",
+        en: "Python service work spanning a Gorgias-based Shopify AI support integration, a TripleWhale attribution sync, and a suite of Telegram bots (aiogram + PostgreSQL + Whisper + a Telegram Mini App) with CI/CD to a self-hosted GitHub Actions runner, Grafana monitoring, AWS S3 image storage, and Redis for auth tokens and state.",
+        de: "Python-Service-Arbeit über eine Gorgias-basierte Shopify-KI-Support-Integration, eine TripleWhale-Attribution-Synchronisierung und eine Suite von Telegram-Bots (aiogram + PostgreSQL + Whisper + eine Telegram Mini App) mit CI/CD auf einen selbst gehosteten GitHub-Actions-Runner, Grafana-Monitoring, AWS-S3-Bildspeicher und Redis für Auth-Tokens und Status.",
+        ru: "Python-сервисы: AI-интеграция поддержки Shopify на базе Gorgias, синхронизация атрибуции с TripleWhale и набор Telegram-ботов (aiogram + PostgreSQL + Whisper + Telegram Mini App) с CI/CD на self-hosted раннер GitHub Actions, мониторингом через Grafana, хранилищем изображений AWS S3 и Redis для токенов авторизации и состояния.",
       },
     },
   },

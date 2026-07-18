@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Play, Pause, MousePointerClick } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Severity = "warn" | "crit";
@@ -53,10 +52,8 @@ export function RailScanDemo() {
   const t = useTranslations("Projects");
   const locale = useLocale();
 
-  const [running, setRunning] = useState(true);
   const [, forceRender] = useState(0);
 
-  const runningRef = useRef(running);
   const posRef = useRef(TRAVEL_MIN);
   const dirRef = useRef<1 | -1>(1);
   const beltOffsetRef = useRef(0);
@@ -70,44 +67,38 @@ export function RailScanDemo() {
   const rafRef = useRef(0);
 
   useEffect(() => {
-    runningRef.current = running;
-  }, [running]);
-
-  useEffect(() => {
     lastTimeRef.current = performance.now();
 
     function tick(now: number) {
       const dt = Math.min((now - lastTimeRef.current) / 1000, 0.05);
       lastTimeRef.current = now;
 
-      if (runningRef.current) {
-        const prevPos = posRef.current;
-        posRef.current += dirRef.current * BASE_SPEED_FRAC * dt;
-        if (posRef.current >= TRAVEL_MAX) {
-          posRef.current = TRAVEL_MAX;
-          dirRef.current = -1;
-        }
-        if (posRef.current <= TRAVEL_MIN) {
-          posRef.current = TRAVEL_MIN;
-          dirRef.current = 1;
-        }
-        distanceRef.current += Math.abs(posRef.current - prevPos) * TRACK_LENGTH_M;
-        beltOffsetRef.current = (beltOffsetRef.current + 30 * dt) % 40;
-
-        let current: FaultZone | null = null;
-        for (const z of ZONES) {
-          if (posRef.current + HALF_FRAC > z.start && posRef.current - HALF_FRAC < z.end) {
-            current = z;
-            break;
-          }
-        }
-        if (current && lastZoneIdRef.current !== current.id) {
-          defectsRef.current += 1;
-          fluxSpikeRef.current = current.peak;
-        }
-        lastZoneIdRef.current = current ? current.id : null;
-        activeZoneRef.current = current;
+      const prevPos = posRef.current;
+      posRef.current += dirRef.current * BASE_SPEED_FRAC * dt;
+      if (posRef.current >= TRAVEL_MAX) {
+        posRef.current = TRAVEL_MAX;
+        dirRef.current = -1;
       }
+      if (posRef.current <= TRAVEL_MIN) {
+        posRef.current = TRAVEL_MIN;
+        dirRef.current = 1;
+      }
+      distanceRef.current += Math.abs(posRef.current - prevPos) * TRACK_LENGTH_M;
+      beltOffsetRef.current = (beltOffsetRef.current + 30 * dt) % 40;
+
+      let current: FaultZone | null = null;
+      for (const z of ZONES) {
+        if (posRef.current + HALF_FRAC > z.start && posRef.current - HALF_FRAC < z.end) {
+          current = z;
+          break;
+        }
+      }
+      if (current && lastZoneIdRef.current !== current.id) {
+        defectsRef.current += 1;
+        fluxSpikeRef.current = current.peak;
+      }
+      lastZoneIdRef.current = current ? current.id : null;
+      activeZoneRef.current = current;
 
       fluxSpikeRef.current *= Math.exp(-dt / FLUX_DECAY_TAU);
       fluxNoiseRef.current = (Math.random() - 0.5) * 0.4;
@@ -131,11 +122,6 @@ export function RailScanDemo() {
     <div className="rounded-xl border bg-card p-6 mb-10">
       <h3 className="font-semibold mb-1">{t("railScan.title")}</h3>
       <p className="text-sm text-muted-foreground mb-6">{t("railScan.description")}</p>
-
-      <div className="mb-4 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
-        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
-        {t("railScan.hint")}
-      </div>
 
       {/* Stats */}
       <div className="mb-4 grid grid-cols-3 gap-3 text-center">
@@ -287,18 +273,6 @@ export function RailScanDemo() {
           <span className="h-2 w-2 rounded-full bg-red-500" />
           {t("railScan.legendFault")}
         </span>
-      </div>
-
-      {/* controls */}
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={() => setRunning((r) => !r)}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
-        >
-          {running ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
-          {running ? t("railScan.pauseLabel") : t("railScan.playLabel")}
-        </button>
       </div>
 
       <p className="mt-4 border-t pt-4 text-xs leading-relaxed text-muted-foreground">

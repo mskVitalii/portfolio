@@ -23,9 +23,13 @@ export function ProjectDescription({ project }: { project: Project }) {
     return <StarFormat star={project.star} />;
   }
 
+  const paragraphs = localize(project.description[activeMode], locale).split("\n\n");
+
   return (
-    <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-      {localize(project.description[activeMode], locale)}
-    </p>
+    <div className="text-lg text-muted-foreground leading-relaxed mb-10 space-y-4">
+      {paragraphs.map((paragraph, i) => (
+        <p key={i}>{paragraph}</p>
+      ))}
+    </div>
   );
 }

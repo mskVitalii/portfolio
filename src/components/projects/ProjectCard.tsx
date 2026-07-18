@@ -19,7 +19,10 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
 
   useEffect(() => setMounted(true), []);
 
-  const description = localize(mounted ? project.description[mode] : project.description.business, locale);
+  const businessMode = mounted && mode === "business";
+  const rawDescription =
+    businessMode && project.cardSummary ? project.cardSummary : mounted ? project.description[mode] : project.description.business;
+  const description = localize(rawDescription, locale);
 
   return (
     <motion.div
@@ -65,18 +68,22 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
         )}
 
         <div className="flex items-center justify-between mt-auto">
-          <div className="flex flex-wrap gap-1">
-            {project.stack.slice(0, 4).map((tech) => (
-              <Badge key={tech} variant="secondary" className="text-xs">
-                {tech}
-              </Badge>
-            ))}
-            {project.stack.length > 4 && (
-              <Badge variant="secondary" className="text-xs text-muted-foreground">
-                +{project.stack.length - 4}
-              </Badge>
-            )}
-          </div>
+          {businessMode ? (
+            <div />
+          ) : (
+            <div className="flex flex-wrap gap-1">
+              {project.stack.slice(0, 4).map((tech) => (
+                <Badge key={tech} variant="secondary" className="text-xs">
+                  {tech}
+                </Badge>
+              ))}
+              {project.stack.length > 4 && (
+                <Badge variant="secondary" className="text-xs text-muted-foreground">
+                  +{project.stack.length - 4}
+                </Badge>
+              )}
+            </div>
+          )}
           <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
         </div>
       </Link>

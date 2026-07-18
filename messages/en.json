@@ -603,7 +603,6 @@
     "railScan": {
       "title": "Ride along the rail",
       "description": "A simulated inspection pod scans a moving belt for seeded faults — the same detect-and-flag loop the real device runs on PSoC Edge.",
-      "hint": "Press play/pause to control playback.",
       "defectsLabel": "Defects flagged",
       "distanceLabel": "Belt scanned",
       "statusLabel": "Status",
@@ -617,8 +616,6 @@
         "surfaceWear": "Surface wear",
         "foreignObject": "Foreign object"
       },
-      "playLabel": "Play",
-      "pauseLabel": "Pause",
       "trackAria": "Animated simulation of an inspection pod riding rails above a conveyor belt, flagging three seeded faults",
       "strategicNote": "The real device runs this loop on-chip — flagging anomalies in sound and vibration locally instead of streaming raw sensor data to the cloud."
     },
