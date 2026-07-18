@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { RotateCcw } from "lucide-react";
+import { MousePointerClick, RotateCcw } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
@@ -163,6 +163,11 @@ export function IpoSimulator() {
         <li>{t("ipoSim.step4")}</li>
         <li>{t("ipoSim.step5")}</li>
       </ol>
+
+      <div className="mb-4 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
+        {t("ipoSim.hint")}
+      </div>
 
       <div className="mb-4">
         <div className="flex justify-between text-xs text-muted-foreground mb-1.5">

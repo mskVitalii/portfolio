@@ -119,6 +119,20 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
         ru: "Лёгкие commerce-проекты — от Python-сервиса ценообразования, разработанного по TDD, через учёт склада в таблице в самом раннем проекте до полноценного магазина на Next.js с платежами и интеграциями доставки в более позднем.",
       },
     },
+    credit: {
+      name: "Georgiy Sinokhchyan",
+      role: {
+        en: "Founder, egsha",
+        de: "Gründer, egsha",
+        ru: "Основатель egsha",
+      },
+      note: {
+        en: "Georgiy is egsha — a good friend whose string of small e-commerce ventures over the years gave a space to build things end-to-end, from a pricing algorithm to a full cross-border storefront.",
+        de: "Georgiy ist egsha — ein guter Freund, dessen Reihe kleiner E-Commerce-Unternehmungen über die Jahre den Raum bot, Dinge end-to-end zu bauen, von einem Preisalgorithmus bis zu einem vollständigen grenzüberschreitenden Shop.",
+        ru: "Георгий и есть egsha — хороший друг, чья череда небольших e-commerce начинаний за эти годы дала возможность строить всё от начала до конца: от алгоритма ценообразования до полноценного трансграничного магазина.",
+      },
+      linkedinUrl: "https://www.linkedin.com/in/georgiy-sinokhchyan-836107221/",
+    },
   },
   {
     name: "WeDo.agency",

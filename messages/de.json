@@ -455,6 +455,7 @@
     "galleryCloseAria": "Schließen",
     "galleryPrevAria": "Vorheriges Bild",
     "galleryNextAria": "Nächstes Bild",
+    "documentOpenInNewTab": "In neuem Tab öffnen",
     "timelineNow": "jetzt",
     "timelinePresent": "aktuell",
     "categories": {
@@ -508,11 +509,13 @@
       "statusInvisible": "Zu niedrig, um zu ranken — kaum sichtbar, die Ausgabe bringt also auch keinen Ertrag.",
       "rankLabel": "Ungefährer Suchrang",
       "rankTop": "Oben in den Ergebnissen",
-      "rankBottom": "Unten in den Ergebnissen"
+      "rankBottom": "Unten in den Ergebnissen",
+      "hint": "Zieh den Regler, um dein Gebot zu ändern."
     },
     "ipoSim": {
       "title": "So zahlt sich ein Börsengang auf Zypern wirklich aus",
       "description": "speechki.com an die Börse zu bringen bedeutete mehr als gute Zahlen — es bedeutete, genau diese Abfolge zu durchlaufen, bei der nur eine Partei einen festen Zahltag hat und alle anderen darauf wetten, wo der Markt landet.",
+      "hint": "Zieh unten den Regler, um den Verkaufspreis festzulegen.",
       "step1": "Mindestens 50.000 $ realen, geprüften Gewinn nachweisen",
       "step2": "Das geistige Eigentum in eine neue Holding-Gesellschaft auslagern, frei von der alten Investoren-Cap-Table",
       "step3": "Eine unabhängige Prüfung legt die Unternehmensbewertung fest und verifiziert die Bücher",
@@ -541,6 +544,7 @@
       "title": "Warum der Point-Update-Service die eigentliche Wette war",
       "description": "Die Barcode-Scanner selbst waren nicht die Herausforderung — sie über einen gemeinsamen Service statt fest verdrahtet mit einer einzigen App laufen zu lassen, war es. Zieh den Regler, um zu sehen, warum diese Entscheidung mit wachsender Last zählt.",
       "usersLabel": "Gleichzeitige Nutzer",
+      "hint": "Zieh den Regler, um die Nutzerzahl zu ändern.",
       "verticalLabel": "Vertikal (1 Maschine)",
       "horizontalLabel": "Horizontal (N Maschinen)",
       "tier": {
@@ -568,6 +572,7 @@
       "deployLabel": "KI einsetzen",
       "aiActiveLabel": "KI ist im Einsatz",
       "resetLabel": "Zurücksetzen",
+      "hint": "Halte eine markierte Box gedrückt, um sie abzufangen.",
       "holdAria": "Gedrückt halten, um diese Bestellung vor dem Versand zu stornieren",
       "strategicNote": "Das ist der everleakproof-Sonderfall aus dem echten Projekt: Ist eine Dessous-Bestellung erst verschickt, ist sie nicht mehr rückgabefähig — das einzige Stornofenster liegt vor dem Versand. Ein Mensch muss eine markierte Bestellung bemerken, entscheiden und rechtzeitig klicken — der Support-Bot reagierte in dem Moment, in dem eine Stornierung einging, und traf ein Fenster, das ein Mensch nur manchmal trifft."
     },
@@ -575,6 +580,7 @@
       "title": "So skaliert der programmatische SEO-Trick wirklich",
       "description": "Jede unterstützte Sprache, gepaart mit jeder anderen Sprache, wurde zu einer eigenen Landingpage — den Regler ziehen, um zu sehen, warum aus 60 Sprachen Tausende Seiten werden, dann eine auswählen, um genau zu sehen, welche Seiten sie erzeugt.",
       "languageCountLabel": "Unterstützte Sprachen",
+      "hint": "Zieh den Regler, um die Sprachenzahl zu ändern.",
       "formulaCaption": "Sprachen × andere Sprachen = Landingpages",
       "pickLanguageLabel": "Ausgangssprache wählen",
       "generatesTemplate": "{lang} allein erzeugt {count} Landingpages — eine pro Zielsprache:",
@@ -590,6 +596,7 @@
     "railScan": {
       "title": "Fahrt entlang der Schiene",
       "description": "Eine simulierte Inspektionskapsel scannt ein laufendes Förderband nach eingebauten Fehlern — derselbe Erkennungs- und Meldeloop, den das echte Gerät auf dem PSoC Edge ausführt.",
+      "hint": "Drücke Play/Pause, um die Wiedergabe zu steuern.",
       "defectsLabel": "Erkannte Fehler",
       "distanceLabel": "Band gescannt",
       "statusLabel": "Status",
@@ -603,10 +610,8 @@
         "surfaceWear": "Oberflächenverschleiß",
         "foreignObject": "Fremdkörper"
       },
-      "speedLabel": "Geschwindigkeit",
       "playLabel": "Abspielen",
       "pauseLabel": "Pause",
-      "resetLabel": "Zurücksetzen",
       "trackAria": "Animierte Simulation einer Inspektionskapsel, die auf Schienen über ein Förderband fährt und drei eingebaute Fehler meldet",
       "strategicNote": "Das echte Gerät führt diese Schleife direkt auf dem Chip aus — Anomalien in Geräusch und Vibration werden lokal erkannt, statt Rohdaten in die Cloud zu streamen."
     },

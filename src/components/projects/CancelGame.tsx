@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Bot, RotateCcw } from "lucide-react";
+import { Bot, MousePointerClick, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TRACK_HOURS = 24;
@@ -215,6 +215,11 @@ export function CancelGame() {
       <h3 className="font-semibold mb-1">{t("cancelGame.title")}</h3>
       <p className="text-sm text-muted-foreground mb-1">{t("cancelGame.description")}</p>
       <p className="text-xs text-muted-foreground mb-4">{t("cancelGame.legend")}</p>
+
+      <div className="mb-4 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
+        {t("cancelGame.hint")}
+      </div>
 
       <div className="mb-4 grid grid-cols-2 gap-3 text-center sm:grid-cols-4">
         <div>

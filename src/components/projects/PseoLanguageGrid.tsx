@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { MousePointerClick } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
 const MIN_LANGUAGES = 2;
@@ -31,6 +32,11 @@ export function PseoLanguageGrid() {
     <div className="rounded-xl border bg-card p-6 mb-10">
       <h3 className="font-semibold mb-1">{t("pseoSim.title")}</h3>
       <p className="text-sm text-muted-foreground mb-6">{t("pseoSim.description")}</p>
+
+      <div className="mb-5 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
+        {t("pseoSim.hint")}
+      </div>
 
       <div className="mb-5">
         <div className="flex justify-between text-xs text-muted-foreground mb-1.5">

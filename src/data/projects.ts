@@ -1,5 +1,5 @@
 import type { LocalizedText } from "@/lib/localized";
-import { COMPANY_BUNDLES, getCompanyBundle } from "./companies";
+import { COMPANY_BUNDLES, getCompanyBundle, type CompanyCredit } from "./companies";
 
 export type ProjectStatus = "active" | "archived" | "deprecated";
 export type ProjectCategory = "work" | "education" | "hackathon" | "personal" | "freelance";
@@ -43,6 +43,11 @@ export interface Project {
   /** Public paths (e.g. "/images/projects/<slug>/foo.png") to screenshots/photos for this project. */
   images?: string[];
   links?: ProjectLink[];
+  /** Supporting documents (e.g. reference letters) rendered as an inline PDF viewer. */
+  referenceDocuments?: { title: LocalizedText; url: string }[];
+  /** Optional human shout-out to a collaborator on this specific project (as opposed to
+   * `CompanyBundle.credit`, which applies to every project under that company). */
+  credit?: CompanyCredit;
 }
 
 export const PROJECTS: Project[] = [
@@ -87,6 +92,15 @@ export const PROJECTS: Project[] = [
       { label: { en: "Monthly active", de: "Monatlich aktiv", ru: "Активных в месяц" }, value: "3,000" },
     ],
     stack: ["Python", "C#", "C", "JS/TS", "React", "Computer Vision", "PSoC Edge"],
+    images: [
+      "/images/projects/infineon-parking-guidance/campus-building-day.jpg",
+      "/images/projects/infineon-parking-guidance/campus-building-night.jpg",
+      "/images/projects/infineon-parking-guidance/dresden-campus-map.jpg",
+      "/images/projects/infineon-parking-guidance/embedded-hardware-enclosure.jpg",
+      "/images/projects/infineon-parking-guidance/psoc-edge-camera-kit.jpg",
+      "/images/projects/infineon-parking-guidance/psoc-edge-ai-kit-box.jpg",
+      "/images/projects/infineon-parking-guidance/cv-bus-detection-demo.jpg",
+    ],
   },
   {
     slug: "infineon-thingkathon",
@@ -127,6 +141,12 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["PSoC Edge", "Embedded Systems", "Computer Vision", "Machine Learning"],
     links: [{ labelKey: "eventPage", url: "https://www.eventbrite.de/e/thingkathon-distributed-ai-for-predictive-maintenance-tickets-1986900174909" }],
+    images: [
+      "/images/projects/infineon-thingkathon/conveyor-rig-1.jpg",
+      "/images/projects/infineon-thingkathon/conveyor-rig-2.jpg",
+      "/images/projects/infineon-thingkathon/architecture-sketch-1.jpg",
+      "/images/projects/infineon-thingkathon/architecture-sketch-2.jpg",
+    ],
   },
 
   // ─── onlineTours (08/2023 – 07/2024) ────────────────────────────────────────
@@ -243,7 +263,12 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K/yr" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
-    images: ["/images/projects/ozon-tech/office-54th-floor.png"],
+    images: [
+      "/images/projects/ozon-tech/office-54th-floor.png",
+      "/images/projects/ozon-tech/office-view-1.jpg",
+      "/images/projects/ozon-tech/office-view-2.jpg",
+      "/images/projects/ozon-tech/street-view-night.jpg",
+    ],
   },
 
   // ─── egsha ───────────────────────────────────────────────────────────────
@@ -371,6 +396,12 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Units sold", de: "Verkaufte Einheiten", ru: "Продано штук" }, value: "3" }],
     stack: ["Excel"],
+    images: [
+      "/images/projects/phone-repair-resale/cracked-screen.jpg",
+      "/images/projects/phone-repair-resale/disassembled-parts.jpg",
+      "/images/projects/phone-repair-resale/opened-iphone-internals.jpg",
+      "/images/projects/phone-repair-resale/restored-iphone-back.jpg",
+    ],
   },
 
   // ─── WeDo.agency (05/2020 – 06/2021) ───────────────────────────────────────
@@ -414,6 +445,7 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Tickets handled", de: "Bearbeitete Tickets", ru: "Обработано обращений" }, value: "660/mo" }],
     stack: ["Python", "Shopify", "Gorgias", "AI", "Telegram Bot API"],
+    images: ["/images/projects/wedo-shopify-ai-support/ai-spam-classification.jpg"],
   },
   {
     slug: "dunlimited-triplewhale-integration",
@@ -495,6 +527,25 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Deploy time", de: "Deploy-Zeit", ru: "Время деплоя" }, value: "<10 sec" }],
     stack: ["Python", "aiogram", "Whisper", "PostgreSQL", "Docker", "GitHub Actions", "Minio", "Redis"],
+    images: [
+      "/images/projects/wedo-telegram-bots/user-dashboard.jpg",
+      "/images/projects/wedo-telegram-bots/astrology-chart-1.jpg",
+      "/images/projects/wedo-telegram-bots/astrology-chart-2.jpg",
+    ],
+    credit: {
+      name: "Nikita Denisov",
+      role: {
+        en: "Computer Vision Engineer",
+        de: "Computer-Vision-Ingenieur",
+        ru: "Инженер по компьютерному зрению",
+      },
+      note: {
+        en: "Nikita built the computer-vision pipeline behind the generated graphics and video that kept these bots entertaining.",
+        de: "Nikita hat die Computer-Vision-Pipeline hinter den generierten Grafiken und Videos gebaut, die diese Bots unterhaltsam machten.",
+        ru: "Никита построил пайплайн компьютерного зрения, стоящий за генерируемой графикой и видео, которые делали этих ботов увлекательными.",
+      },
+      linkedinUrl: "https://www.linkedin.com/in/nikita-den/",
+    },
   },
   {
     slug: "wedo-employee-activity-tracker",
@@ -574,6 +625,21 @@ export const PROJECTS: Project[] = [
       },
     },
     stack: ["NestJS", "MongoDB"],
+    images: ["/images/projects/wedo-horsium-game/horse-asset-browser.jpg"],
+    credit: {
+      name: "Anastasia Zibrova",
+      role: {
+        en: "Founder, Horsium",
+        de: "Gründerin, Horsium",
+        ru: "Основательница Horsium",
+      },
+      note: {
+        en: "Horsium was Anastasia's idea from the start — she's the equestrian enthusiast whose vision this backend was built to serve.",
+        de: "Horsium war von Anfang an Anastasias Idee — sie ist die Pferdesport-Enthusiastin, deren Vision dieses Backend umsetzt.",
+        ru: "Horsium с самого начала — идея Анастасии: именно её видение как фаната конного спорта воплощает этот бэкенд.",
+      },
+      linkedinUrl: "https://www.linkedin.com/in/anzania/",
+    },
   },
 
   // ─── WeDo.agency — Speechki.com ventures ────────────────────────────────
@@ -617,6 +683,10 @@ export const PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Generation time", de: "Generierungszeit", ru: "Время генерации" }, value: "<1 min" }],
     stack: ["Next.js", "Firebase", "Minio", "AWS", "AI"],
+    images: [
+      "/images/projects/audioland-musicgen/generations-page-1.jpg",
+      "/images/projects/audioland-musicgen/generations-page-2.jpg",
+    ],
   },
   {
     slug: "wedo-ai-video-dubbing",
@@ -646,9 +716,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик, нашедший бесплатный канал привлечения для AI-продукта озвучки видео на раннем этапе — программную SEO-кампанию на 60 языков, принёсшую первых 150 пользователей.",
       },
       business: {
-        en: "Programmatic SEO pages on Next.js targeting 60×59 language-pair search results brought the product's first 150 users at effectively zero acquisition cost — a scrappy alternative to paid marketing for an early-stage product with no budget.",
-        de: "Programmatische SEO-Seiten auf Next.js für 60×59 Sprachpaar-Suchergebnisse brachten dem Produkt die ersten 150 Nutzer bei praktisch null Akquisitionskosten — eine pragmatische Alternative zu bezahltem Marketing für ein Frühphasenprodukt ohne Budget.",
-        ru: "Программные SEO-страницы на Next.js под 60×59 языковых пар в поиске принесли продукту первых 150 пользователей практически без затрат на привлечение — находчивая альтернатива платному маркетингу для продукта на раннем этапе без бюджета.",
+        en: "Programmatic SEO pages on Next.js targeting 60×59 language-pair search results brought the product's first 150 users at effectively zero acquisition cost — a scrappy alternative to paid marketing for an early-stage product with no budget. The go-to-market plan also included a listing on AppSumo — a marketplace selling one shared subscription across dozens of small SaaS tools — competing for the same customers as rask.ai and elevenlabs.com.",
+        de: "Programmatische SEO-Seiten auf Next.js für 60×59 Sprachpaar-Suchergebnisse brachten dem Produkt die ersten 150 Nutzer bei praktisch null Akquisitionskosten — eine pragmatische Alternative zu bezahltem Marketing für ein Frühphasenprodukt ohne Budget. Der Go-to-Market-Plan sah außerdem eine Listung auf AppSumo vor — einem Marktplatz, der ein gemeinsames Abonnement für Dutzende kleiner SaaS-Tools verkauft — im Wettbewerb um dieselben Kunden wie rask.ai und elevenlabs.com.",
+        ru: "Программные SEO-страницы на Next.js под 60×59 языковых пар в поиске принесли продукту первых 150 пользователей практически без затрат на привлечение — находчивая альтернатива платному маркетингу для продукта на раннем этапе без бюджета. План выхода на рынок также включал размещение на AppSumo — маркетплейсе, продающем одну общую подписку на десятки небольших SaaS-инструментов — конкурируя за тех же клиентов, что rask.ai и elevenlabs.com.",
       },
       tech: {
         en: "Python backend for AI video translation/dubbing, programmatic SEO pages built with Next.js covering 60 languages (60×59 landing-page combinations), Google Analytics on the frontend, translated video files stored on Google Cloud Storage.",
@@ -684,6 +754,15 @@ export const PROJECTS: Project[] = [
       { label: { en: "Programmatic landing pages", de: "Programmatische Landingpages", ru: "Программных лендингов" }, value: "60×59" },
     ],
     stack: ["Python", "Next.js", "AI", "Google Analytics", "Google Cloud Storage"],
+    images: [
+      "/images/projects/wedo-ai-video-dubbing/sitemap-language-pages.jpg",
+      "/images/projects/wedo-ai-video-dubbing/pricing-light.jpg",
+      "/images/projects/wedo-ai-video-dubbing/pricing-dark.jpg",
+      "/images/projects/wedo-ai-video-dubbing/firebase-analytics-1.jpg",
+      "/images/projects/wedo-ai-video-dubbing/firebase-analytics-2.jpg",
+      "/images/projects/wedo-ai-video-dubbing/firebase-analytics-3.jpg",
+      "/images/projects/wedo-ai-video-dubbing/amplitude-analytics.jpg",
+    ],
   },
 
   // ─── Personal, freelance & academic projects (2018 – 2023) ────────────────
@@ -729,6 +808,7 @@ export const PROJECTS: Project[] = [
       "/images/projects/neural-network-visualizer/app-screenshot.png",
       "/images/projects/neural-network-visualizer/math-visualization.png",
       "/images/projects/neural-network-visualizer/notes-photo.png",
+      "/images/projects/neural-network-visualizer/tensorflow-playground-demo.jpg",
     ],
   },
   {
@@ -781,6 +861,9 @@ export const PROJECTS: Project[] = [
       "/images/projects/universal-insight-dashboard/gallery-01.jpeg",
       "/images/projects/universal-insight-dashboard/gallery-02.jpeg",
       "/images/projects/universal-insight-dashboard/gallery-03.jpeg",
+      "/images/projects/universal-insight-dashboard/file-analytics-mockup.jpg",
+      "/images/projects/universal-insight-dashboard/orders-dashboard-mockup.jpg",
+      "/images/projects/universal-insight-dashboard/monitoring-mockup.jpg",
     ],
   },
   {
@@ -826,6 +909,7 @@ export const PROJECTS: Project[] = [
       "/images/projects/subway-battery-monitor/final-photo-1.jpeg",
       "/images/projects/subway-battery-monitor/final-photo-2.jpeg",
       "/images/projects/subway-battery-monitor/dashboard-notes-1.png",
+      "/images/projects/subway-battery-monitor/battery-dashboard.jpg",
     ],
   },
   {
@@ -911,6 +995,16 @@ export const PROJECTS: Project[] = [
     images: [
       "/images/projects/ncahoots-admin-panel/sample-data-1.jpeg",
       "/images/projects/ncahoots-admin-panel/sample-data-2.jpeg",
+    ],
+    referenceDocuments: [
+      {
+        title: {
+          en: "Academic practice supervisor's review (HSE, 2021)",
+          de: "Beurteilung des Praxisbetreuers (HSE, 2021)",
+          ru: "Отзыв руководителя учебной практики (НИУ ВШЭ, 2021)",
+        },
+        url: "/documents/ncahoots-admin-panel/practice-supervisor-review.pdf",
+      },
     ],
   },
   {
@@ -1292,6 +1386,10 @@ export const PROJECTS: Project[] = [
       { labelKey: "competition", url: "https://staffbase.com/ai-challenge" },
       { labelKey: "demoVideo", url: "https://www.youtube.com/watch?v=4vvkE5uHvkU" },
       { labelKey: "github", url: "https://github.com/mskVitalii/Semki" },
+    ],
+    images: [
+      "/images/projects/semki-staffbase-hackathon/staffbase-org-settings.jpg",
+      "/images/projects/semki-staffbase-hackathon/ai-search-demo.jpg",
     ],
   },
 ];

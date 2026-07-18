@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Server, Boxes, TriangleAlert } from "lucide-react";
+import { Server, Boxes, MousePointerClick, TriangleAlert } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
@@ -87,6 +87,11 @@ export function ScalingSimulator() {
     <div className="rounded-xl border bg-card p-6 mb-10">
       <h3 className="font-semibold mb-1">{t("scalingSim.title")}</h3>
       <p className="text-sm text-muted-foreground mb-6">{t("scalingSim.description")}</p>
+
+      <div className="mb-6 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
+        {t("scalingSim.hint")}
+      </div>
 
       <div className="mb-6">
         <div className="flex justify-between text-xs text-muted-foreground mb-1.5">

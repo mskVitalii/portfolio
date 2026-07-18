@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Play, Pause, RotateCcw } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
+import { Play, Pause, MousePointerClick } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Severity = "warn" | "crit";
@@ -55,11 +54,9 @@ export function RailScanDemo() {
   const locale = useLocale();
 
   const [running, setRunning] = useState(true);
-  const [speed, setSpeed] = useState(1);
   const [, forceRender] = useState(0);
 
   const runningRef = useRef(running);
-  const speedRef = useRef(speed);
   const posRef = useRef(TRAVEL_MIN);
   const dirRef = useRef<1 | -1>(1);
   const beltOffsetRef = useRef(0);
@@ -77,10 +74,6 @@ export function RailScanDemo() {
   }, [running]);
 
   useEffect(() => {
-    speedRef.current = speed;
-  }, [speed]);
-
-  useEffect(() => {
     lastTimeRef.current = performance.now();
 
     function tick(now: number) {
@@ -88,9 +81,8 @@ export function RailScanDemo() {
       lastTimeRef.current = now;
 
       if (runningRef.current) {
-        const speedFrac = BASE_SPEED_FRAC * speedRef.current;
         const prevPos = posRef.current;
-        posRef.current += dirRef.current * speedFrac * dt;
+        posRef.current += dirRef.current * BASE_SPEED_FRAC * dt;
         if (posRef.current >= TRAVEL_MAX) {
           posRef.current = TRAVEL_MAX;
           dirRef.current = -1;
@@ -100,7 +92,7 @@ export function RailScanDemo() {
           dirRef.current = 1;
         }
         distanceRef.current += Math.abs(posRef.current - prevPos) * TRACK_LENGTH_M;
-        beltOffsetRef.current = (beltOffsetRef.current + 30 * speedRef.current * dt) % 40;
+        beltOffsetRef.current = (beltOffsetRef.current + 30 * dt) % 40;
 
         let current: FaultZone | null = null;
         for (const z of ZONES) {
@@ -128,18 +120,6 @@ export function RailScanDemo() {
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  const handleReset = () => {
-    posRef.current = TRAVEL_MIN;
-    dirRef.current = 1;
-    beltOffsetRef.current = 0;
-    lastZoneIdRef.current = null;
-    activeZoneRef.current = null;
-    defectsRef.current = 0;
-    distanceRef.current = 0;
-    fluxSpikeRef.current = 0;
-    setRunning(true);
-  };
-
   const number = (n: number) => new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(n);
 
   const activeZone = activeZoneRef.current;
@@ -151,6 +131,11 @@ export function RailScanDemo() {
     <div className="rounded-xl border bg-card p-6 mb-10">
       <h3 className="font-semibold mb-1">{t("railScan.title")}</h3>
       <p className="text-sm text-muted-foreground mb-6">{t("railScan.description")}</p>
+
+      <div className="mb-4 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
+        {t("railScan.hint")}
+      </div>
 
       {/* Stats */}
       <div className="mb-4 grid grid-cols-3 gap-3 text-center">
@@ -314,25 +299,6 @@ export function RailScanDemo() {
           {running ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
           {running ? t("railScan.pauseLabel") : t("railScan.playLabel")}
         </button>
-        <button
-          type="button"
-          onClick={handleReset}
-          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          {t("railScan.resetLabel")}
-        </button>
-        <div className="flex min-w-[140px] flex-1 items-center gap-2">
-          <span className="whitespace-nowrap text-xs text-muted-foreground">{t("railScan.speedLabel")}</span>
-          <Slider
-            min={0.5}
-            max={3}
-            step={0.25}
-            value={speed}
-            onValueChange={(value) => setSpeed(value)}
-            aria-label={t("railScan.speedLabel")}
-          />
-        </div>
       </div>
 
       <p className="mt-4 border-t pt-4 text-xs leading-relaxed text-muted-foreground">

@@ -10,7 +10,10 @@ import { localize } from "@/lib/localized";
 import { useMDXComponents } from "../../../mdx-components";
 import { getPageContent, getPageSlugs } from "@/lib/content";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
+import { CompanyCredit } from "./CompanyCredit";
+import { ModeAware } from "@/components/tri-mode/ModeAware";
 import { ProjectImageGallery } from "./ProjectImageGallery";
+import { ProjectDocumentViewer } from "./ProjectDocumentViewer";
 import { ProjectDescription } from "./ProjectDescription";
 import { AdBidderDemo } from "./AdBidderDemo";
 import { IpoSimulator } from "./IpoSimulator";
@@ -69,9 +72,8 @@ export async function ProjectDetailSection({
         </div>
 
         <Title className="text-4xl font-bold mb-3">{localize(project.title, locale)}</Title>
-        <p className="text-xl text-muted-foreground mb-6">{localize(project.tagline, locale)}</p>
 
-        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
           {project.company && (
             <span className="flex items-center gap-1.5">
               <Building2 className="h-4 w-4" />
@@ -107,6 +109,9 @@ export async function ProjectDetailSection({
       {/* Mode-aware description (STAR cards for HR mode when available) */}
       <ProjectDescription project={project} />
 
+      {/* Shout-out to a collaborator on this specific project */}
+      {project.credit && <CompanyCredit credit={project.credit} className="mb-10" />}
+
       {/* Interactive demo for the ad-bidding mechanic */}
       {project.slug === "wedo-ecommerce-bidder" && <AdBidderDemo />}
 
@@ -125,14 +130,16 @@ export async function ProjectDetailSection({
       {/* Interactive demo for the Thin[gk]athon on-device fault detection loop */}
       {project.slug === "infineon-thingkathon" && <RailScanDemo />}
 
-      {/* Stack */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {project.stack.map((tech) => (
-          <Badge key={tech} variant="secondary">
-            {tech}
-          </Badge>
-        ))}
-      </div>
+      {/* Stack — raw tech names are only meaningful to recruiters and engineers, not a business audience */}
+      <ModeAware modes={["hr", "tech"]}>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.stack.map((tech) => (
+            <Badge key={tech} variant="secondary">
+              {tech}
+            </Badge>
+          ))}
+        </div>
+      </ModeAware>
 
       {/* External links */}
       {project.links && project.links.length > 0 && (
@@ -163,6 +170,17 @@ export async function ProjectDetailSection({
             prevAria: t("galleryPrevAria"),
             nextAria: t("galleryNextAria"),
           }}
+        />
+      )}
+
+      {/* Reference documents (PDF viewer) */}
+      {project.referenceDocuments && project.referenceDocuments.length > 0 && (
+        <ProjectDocumentViewer
+          documents={project.referenceDocuments.map((doc) => ({
+            title: localize(doc.title, locale),
+            url: doc.url,
+          }))}
+          openInNewTabLabel={t("documentOpenInNewTab")}
         />
       )}
 

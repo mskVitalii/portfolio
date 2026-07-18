@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { MousePointerClick } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +43,11 @@ export function AdBidderDemo() {
     <div className="rounded-xl border bg-card p-6 mb-10">
       <h3 className="font-semibold mb-1">{t("adBidder.title")}</h3>
       <p className="text-sm text-muted-foreground mb-6">{t("adBidder.description")}</p>
+
+      <div className="mb-6 flex items-center gap-1.5 rounded-md border border-dashed px-3 py-1.5 text-xs text-muted-foreground">
+        <MousePointerClick className="h-3.5 w-3.5 shrink-0" />
+        {t("adBidder.hint")}
+      </div>
 
       <div className="mb-6">
         <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
