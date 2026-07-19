@@ -106,16 +106,8 @@ Produktkatalog  ──Kafka──►  Go-Such-Service  ──REST──►  WMS-
 
 **Warum Kafka statt DB-Polling?** Entkoppelt Katalog-Updates von Index-Aktualisierungen. Lagersuchen liefern nie länger als ~2 Sekunden nach einer Produktänderung veraltete Daten.
 
-## Herausforderungen
-
-Der schwierigste Teil war das **Problem der russischen Transliteration**: Lagermitarbeiter tippen SKU-Namen sowohl kyrillisch als auch lateinisch ein (z. B. „БОЛТ М8" und „bolt m8"). Einen eigenen ElasticSearch-Analyzer zu bauen, der beide Richtungen handhabt, ohne zu viele falsche Treffer zurückzugeben, erforderte viel Iteration anhand von Test-Queries.
-
 ## Observability
 
 Prometheus-Metriken, von Grafana abgegriffen. Wichtigste Dashboards: Query-Latenz P50/P95/P99, Cache-Trefferquote, Kafka-Consumer-Lag, Indexgröße über die Zeit.
-
-## Was ich anders machen würde
-
-Die Cache-Invalidierungslogik war an Kafka-Events gebunden, was nach einem Batch-Produktupdate einen Cache-Miss-Sturm verursachte. Ich würde einen kurzen TTL als Sicherheitsnetz hinzufügen, selbst wenn explizite Invalidierung vorhanden ist.
 
 </ModeAware>

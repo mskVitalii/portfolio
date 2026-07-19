@@ -1,4 +1,4 @@
-import type { LocalizedText } from "@/lib/localized";
+import { localize, type LocalizedText } from "@/lib/localized";
 import { COMPANY_BUNDLES, getCompanyBundle, type CompanyCredit } from "./companies";
 
 export type ProjectStatus = "active" | "archived" | "deprecated";
@@ -13,6 +13,21 @@ export interface ProjectLink {
   /** Key into messages.Projects.linkLabels */
   labelKey: string;
   url: string;
+}
+
+export interface ProjectImage {
+  src: string;
+  /** Per-image caption — distinguishes gallery photos in alt text and Google Images
+   * instead of every image in a multi-photo gallery repeating the bare project title. */
+  alt: LocalizedText;
+}
+
+export function imageSrc(image: string | ProjectImage): string {
+  return typeof image === "string" ? image : image.src;
+}
+
+export function imageAlt(image: string | ProjectImage, fallback: LocalizedText, locale: string): string {
+  return localize(typeof image === "string" ? fallback : image.alt, locale);
 }
 
 export interface Project {
@@ -44,8 +59,10 @@ export interface Project {
   impact?: ProjectImpact[];
   stack: string[];
   featured?: boolean;
-  /** Public paths (e.g. "/images/projects/<slug>/foo.png") to screenshots/photos for this project. */
-  images?: string[];
+  /** Public paths (e.g. "/images/projects/<slug>/foo.png") to screenshots/photos for this
+   * project — plain strings share the project title as alt text, `ProjectImage` gives an
+   * individual photo its own caption (use it for any gallery with more than one image). */
+  images?: (string | ProjectImage)[];
   links?: ProjectLink[];
   /** Supporting documents (e.g. reference letters) rendered as an inline PDF viewer. */
   referenceDocuments?: { title: LocalizedText; url: string }[];
@@ -97,13 +114,13 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["Python", "C#", "C", "JS/TS", "React", "Computer Vision", "PSoC Edge"],
     images: [
-      "/images/projects/infineon-parking-guidance/campus-building-day.jpg",
-      "/images/projects/infineon-parking-guidance/campus-building-night.jpg",
-      "/images/projects/infineon-parking-guidance/dresden-campus-map.jpg",
-      "/images/projects/infineon-parking-guidance/embedded-hardware-enclosure.jpg",
-      "/images/projects/infineon-parking-guidance/psoc-edge-camera-kit.jpg",
-      "/images/projects/infineon-parking-guidance/psoc-edge-ai-kit-box.jpg",
-      "/images/projects/infineon-parking-guidance/cv-bus-detection-demo.jpg",
+      { src: "/images/projects/infineon-parking-guidance/campus-building-day.jpg", alt: { en: "Infineon's Dresden campus building, daytime", de: "Infineons Campusgebäude in Dresden, tagsüber", ru: "Кампус Infineon в Дрездене днём" } },
+      { src: "/images/projects/infineon-parking-guidance/campus-building-night.jpg", alt: { en: "Infineon's Dresden campus building at night", de: "Infineons Campusgebäude in Dresden bei Nacht", ru: "Кампус Infineon в Дрездене ночью" } },
+      { src: "/images/projects/infineon-parking-guidance/dresden-campus-map.jpg", alt: { en: "Map of parking zones across the Dresden campus", de: "Karte der Parkzonen auf dem Dresdner Campus", ru: "Карта парковочных зон на кампусе в Дрездене" } },
+      { src: "/images/projects/infineon-parking-guidance/embedded-hardware-enclosure.jpg", alt: { en: "Embedded hardware enclosure housing the on-camera compute", de: "Eingebettetes Hardware-Gehäuse für die Kamera-Recheneinheit", ru: "Корпус встраиваемого оборудования для камеры" } },
+      { src: "/images/projects/infineon-parking-guidance/psoc-edge-camera-kit.jpg", alt: { en: "PSoC Edge camera kit used for on-device ANPR", de: "PSoC-Edge-Kamera-Kit für die eingebettete Kennzeichenerkennung", ru: "Камерный комплект PSoC Edge для распознавания номеров" } },
+      { src: "/images/projects/infineon-parking-guidance/psoc-edge-ai-kit-box.jpg", alt: { en: "PSoC Edge AI kit packaging", de: "Verpackung des PSoC-Edge-KI-Kits", ru: "Упаковка AI-комплекта PSoC Edge" } },
+      { src: "/images/projects/infineon-parking-guidance/cv-bus-detection-demo.jpg", alt: { en: "Computer-vision demo detecting a bus in a parking zone", de: "Computer-Vision-Demo zur Erkennung eines Busses in einer Parkzone", ru: "Демонстрация компьютерного зрения при обнаружении автобуса в зоне парковки" } },
     ],
   },
   {
@@ -146,12 +163,12 @@ export const PROJECTS: Project[] = [
     stack: ["PSoC Edge", "Embedded Systems", "Computer Vision", "Machine Learning"],
     links: [{ labelKey: "eventPage", url: "https://www.eventbrite.de/e/thingkathon-distributed-ai-for-predictive-maintenance-tickets-1986900174909" }],
     images: [
-      "/images/projects/infineon-thingkathon/conveyor-rig-1.jpg",
-      "/images/projects/infineon-thingkathon/conveyor-rig-2.jpg",
-      "/images/projects/infineon-thingkathon/conveyor-line-wide.png",
-      "/images/projects/infineon-thingkathon/psoc-edge-kit-setup.jpeg",
-      "/images/projects/infineon-thingkathon/architecture-sketch-1.jpg",
-      "/images/projects/infineon-thingkathon/architecture-sketch-2.jpg",
+      { src: "/images/projects/infineon-thingkathon/conveyor-rig-1.jpg", alt: { en: "Conveyor-line rig built for the hackathon demo", de: "Für die Hackathon-Demo gebauter Förderband-Aufbau", ru: "Стенд с конвейерной линией, собранный для демо на хакатоне" } },
+      { src: "/images/projects/infineon-thingkathon/conveyor-rig-2.jpg", alt: { en: "Conveyor-line rig, close-up view", de: "Förderband-Aufbau, Nahaufnahme", ru: "Стенд с конвейерной линией, крупный план" } },
+      { src: "/images/projects/infineon-thingkathon/conveyor-line-wide.png", alt: { en: "Wide view of the conveyor line setup", de: "Weite Ansicht des Förderband-Aufbaus", ru: "Общий план стенда с конвейерной линией" } },
+      { src: "/images/projects/infineon-thingkathon/psoc-edge-kit-setup.jpeg", alt: { en: "PSoC Edge kit wired up to the conveyor rig", de: "PSoC-Edge-Kit, verkabelt mit dem Förderband-Aufbau", ru: "Комплект PSoC Edge, подключённый к стенду конвейера" } },
+      { src: "/images/projects/infineon-thingkathon/architecture-sketch-1.jpg", alt: { en: "Whiteboard sketch of the fault-detection architecture", de: "Whiteboard-Skizze der Fehlererkennungs-Architektur", ru: "Набросок архитектуры обнаружения неисправностей на доске" } },
+      { src: "/images/projects/infineon-thingkathon/architecture-sketch-2.jpg", alt: { en: "Second whiteboard sketch of the system architecture", de: "Zweite Whiteboard-Skizze der Systemarchitektur", ru: "Второй набросок архитектуры системы на доске" } },
     ],
   },
 
@@ -192,9 +209,9 @@ export const PROJECTS: Project[] = [
     impact: [{ label: { en: "Metric uplift", de: "Kennzahl-Steigerung", ru: "Прирост метрики" }, value: "11.63%" }],
     stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook", "GitLab CI/CD"],
     images: [
-      "/images/projects/online-tours-ab/homepage.png",
-      "/images/projects/online-tours-ab/tour-search-results.png",
-      "/images/projects/online-tours-ab/callback-widget.png",
+      { src: "/images/projects/online-tours-ab/homepage.png", alt: { en: "Aggregator homepage for tours and hotels", de: "Startseite des Aggregators für Touren und Hotels", ru: "Главная страница агрегатора туров и отелей" } },
+      { src: "/images/projects/online-tours-ab/tour-search-results.png", alt: { en: "Tour search results page", de: "Suchergebnisseite für Touren", ru: "Страница результатов поиска туров" } },
+      { src: "/images/projects/online-tours-ab/callback-widget.png", alt: { en: "Callback request widget", de: "Rückruf-Widget", ru: "Виджет заказа обратного звонка" } },
     ],
   },
 
@@ -275,10 +292,10 @@ export const PROJECTS: Project[] = [
     impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
     images: [
-      "/images/projects/ozon-tech/office-54th-floor.png",
-      "/images/projects/ozon-tech/office-view-1.jpg",
-      "/images/projects/ozon-tech/office-view-2.jpg",
-      "/images/projects/ozon-tech/street-view-night.jpg",
+      { src: "/images/projects/ozon-tech/office-54th-floor.png", alt: { en: "OZON office on the 54th floor", de: "OZON-Büro im 54. Stock", ru: "Офис OZON на 54 этаже" } },
+      { src: "/images/projects/ozon-tech/office-view-1.jpg", alt: { en: "View from the OZON office", de: "Aussicht aus dem OZON-Büro", ru: "Вид из офиса OZON" } },
+      { src: "/images/projects/ozon-tech/office-view-2.jpg", alt: { en: "Another view from the OZON office", de: "Weitere Aussicht aus dem OZON-Büro", ru: "Ещё один вид из офиса OZON" } },
+      { src: "/images/projects/ozon-tech/street-view-night.jpg", alt: { en: "Street view near the OZON office at night", de: "Straßenblick beim OZON-Büro bei Nacht", ru: "Вид на улицу у офиса OZON ночью" } },
     ],
   },
 
@@ -286,9 +303,9 @@ export const PROJECTS: Project[] = [
   {
     slug: "wedo-ecommerce-bidder",
     title: {
-      en: "E-Commerce Ad Bidder",
-      de: "E-Commerce-Anzeigenbieter",
-      ru: "Автоматический байдер рекламы для e-commerce",
+      en: "E-Commerce Ad Bidder + Repricer",
+      de: "E-Commerce-Anzeigenbieter + Repricer",
+      ru: "Автоматический биддер рекламы для e-commerce + репрайсер",
     },
     company: "egsha",
     period: "03/2023 – 04/2023",
@@ -312,9 +329,9 @@ export const PROJECTS: Project[] = [
         ru: "Full-stack разработчик автоматического оптимизатора цены рекламы для e-commerce клиента.",
       },
       business: {
-        en: "On the marketplace, sellers pay per view — bid too high and a $100 product loses money before it's even shown 10 times; bid too low and it barely gets seen at all. The right price weighs stock levels, the marketplace's mandatory ad program, and historical performance. Automating it saved the client €52,000/year versus manual management.",
-        de: "Im Marketplace zahlen Verkäufer pro Ansicht — ein zu hohes Gebot lässt ein 100-$-Produkt schon vor der 10. Ansicht ins Minus rutschen, ein zu niedriges bedeutet, dass es kaum gesehen wird. Der richtige Preis berücksichtigt Lagerbestand, das obligatorische Werbeprogramm des Marktplatzes und historische Performance-Daten. Diese Preisentscheidung zu automatisieren sparte dem Kunden 52.000 €/Jahr gegenüber manueller Steuerung.",
-        ru: "На маркетплейсе продавец платит за показ карточки: слишком высокая ставка уводит товар за $100 в минус ещё до 10-го показа, слишком низкая — товар почти никто не видит. Правильная цена учитывает остатки на складе, обязательную рекламную программу маркетплейса и исторические данные. Автоматизация этого решения сэкономила клиенту €52 000 в год по сравнению с ручным управлением.",
+        en: "On the marketplace, sellers pay per view — bid too high and a $100 product loses money before it's even shown 10 times; bid too low and it barely gets seen at all. The right price weighs stock levels, the marketplace's mandatory ad program, and historical performance. Automating it saved the client €52,000/year versus manual management. A repricer module rounds it out: once the mandatory ad program period ends, it resets the price back to what it was beforehand, preserving full net profit instead of letting it leak into marketplace loyalty points.",
+        de: "Im Marketplace zahlen Verkäufer pro Ansicht — ein zu hohes Gebot lässt ein 100-$-Produkt schon vor der 10. Ansicht ins Minus rutschen, ein zu niedriges bedeutet, dass es kaum gesehen wird. Der richtige Preis berücksichtigt Lagerbestand, das obligatorische Werbeprogramm des Marktplatzes und historische Performance-Daten. Diese Preisentscheidung zu automatisieren sparte dem Kunden 52.000 €/Jahr gegenüber manueller Steuerung. Ein Repricer-Modul ergänzt das Ganze: Nach Ablauf des obligatorischen Werbeprogramms setzt es den Preis auf den vorherigen Stand zurück und bewahrt so den vollen Nettogewinn, statt ihn in Bonuspunkte des Marktplatzes abfließen zu lassen.",
+        ru: "На маркетплейсе продавец платит за показ карточки: слишком высокая ставка уводит товар за $100 в минус ещё до 10-го показа, слишком низкая — товар почти никто не видит. Правильная цена учитывает остатки на складе, обязательную рекламную программу маркетплейса и исторические данные. Автоматизация этого решения сэкономила клиенту €52 000 в год по сравнению с ручным управлением. Модуль-репрайсер дополняет систему: после окончания обязательной рекламной программы (УПП) он возвращает цену товара к значению, которое было до участия в программе, сохраняя чистую прибыль продавца — вместо того, чтобы часть её конвертировалась в баллы маркетплейса.",
       },
       tech: {
         en: "Python service for e-commerce ad bidding and price optimization, developed test-first (TDD) with pure functions — guaranteeing the correct bid is set at the correct moment in time, without side effects that would make the pricing logic hard to trust.",
@@ -353,9 +370,9 @@ export const PROJECTS: Project[] = [
         ru: "Классический трансграничный ресейл: закупка в Китае через Poizon, доставка через границу, маржа — на разнице цен между рынками. 3 недели, 3–4 человека на полной занятости, чтобы успеть к дате запуска клиента — прямая проверка фронтенд-навыков, оставшихся после 6-месячной backend-стажировки в OZON. Они подтвердились.",
       },
       tech: {
-        en: "Next.js (started on a beta release, which caused early SSR/SSG confusion) with Redux Toolkit, GraphQL, and DatoCMS. Integrated CDEK and BoxBerry for shipping and PayAnyWay for payments. Yandex.Metrica for real-time user behavior tracking.",
-        de: "Next.js (auf einer Beta-Version gestartet, was anfangs zu SSR/SSG-Verwirrung führte) mit Redux Toolkit, GraphQL und DatoCMS. CDEK und BoxBerry für den Versand sowie PayAnyWay für Zahlungen integriert. Yandex.Metrica für Echtzeit-Nutzerverhaltens-Tracking.",
-        ru: "Next.js (стартовали на бета-версии, что поначалу вызывало путаницу с SSR/SSG) с Redux Toolkit, GraphQL и DatoCMS. Интегрированы CDEK и BoxBerry для доставки, PayAnyWay для платежей. Яндекс.Метрика для отслеживания поведения пользователей в реальном времени.",
+        en: "Next.js (started on a beta release) with Redux Toolkit, GraphQL, and DatoCMS. Integrated CDEK and BoxBerry for shipping and PayAnyWay for payments. Yandex.Metrica for real-time user behavior tracking.",
+        de: "Next.js (auf einer Beta-Version gestartet) mit Redux Toolkit, GraphQL und DatoCMS. CDEK und BoxBerry für den Versand sowie PayAnyWay für Zahlungen integriert. Yandex.Metrica für Echtzeit-Nutzerverhaltens-Tracking.",
+        ru: "Next.js (стартовали на бета-версии) с Redux Toolkit, GraphQL и DatoCMS. Интегрированы CDEK и BoxBerry для доставки, PayAnyWay для платежей. Яндекс.Метрика для отслеживания поведения пользователей в реальном времени.",
       },
     },
     impact: [{ label: { en: "Delivery", de: "Lieferzeit", ru: "Срок сдачи" }, value: "3 weeks" }],
@@ -404,10 +421,10 @@ export const PROJECTS: Project[] = [
     impact: [{ label: { en: "Units sold", de: "Verkaufte Einheiten", ru: "Продано штук" }, value: "3" }],
     stack: ["Excel"],
     images: [
-      "/images/projects/phone-repair-resale/cracked-screen.jpg",
-      "/images/projects/phone-repair-resale/disassembled-parts.jpg",
-      "/images/projects/phone-repair-resale/opened-iphone-internals.jpg",
-      "/images/projects/phone-repair-resale/restored-iphone-back.jpg",
+      { src: "/images/projects/phone-repair-resale/cracked-screen.jpg", alt: { en: "iPhone with a cracked screen bought for repair", de: "iPhone mit gesprungenem Display, gekauft zur Reparatur", ru: "iPhone с разбитым экраном, купленный для ремонта" } },
+      { src: "/images/projects/phone-repair-resale/disassembled-parts.jpg", alt: { en: "Disassembled iPhone parts laid out", de: "Zerlegte iPhone-Teile ausgelegt", ru: "Разобранные детали iPhone разложены" } },
+      { src: "/images/projects/phone-repair-resale/opened-iphone-internals.jpg", alt: { en: "Opened iPhone showing internal components", de: "Geöffnetes iPhone mit sichtbaren Innenkomponenten", ru: "Открытый iPhone с видимыми внутренними компонентами" } },
+      { src: "/images/projects/phone-repair-resale/restored-iphone-back.jpg", alt: { en: "Restored iPhone back panel after repair", de: "Wiederhergestellte iPhone-Rückseite nach der Reparatur", ru: "Восстановленная задняя панель iPhone после ремонта" } },
     ],
   },
 
@@ -498,9 +515,9 @@ export const PROJECTS: Project[] = [
     period: "05/2020 – 06/2021",
     status: "archived",
     statusNote: {
-      en: "Shut down — Telegram cost-per-lead grew too high to sustain.",
-      de: "Eingestellt — Cost-per-Lead auf Telegram wurde zu hoch, um tragfähig zu bleiben.",
-      ru: "Закрыт — стоимость лида в Telegram стала слишком высокой.",
+      en: "Shut down — Telegram's inherently high cost-per-lead, combined with Stars/TON commission fees, killed the economics.",
+      de: "Eingestellt — die von Natur aus hohen Cost-per-Lead auf Telegram killten zusammen mit den Stars/TON-Gebühren die Wirtschaftlichkeit.",
+      ru: "Закрыт — высокая стоимость лида в Telegram и комиссии Stars/TON вместе убили экономику.",
     },
     category: "work",
     tagline: {
@@ -510,27 +527,35 @@ export const PROJECTS: Project[] = [
     },
     description: {
       hr: {
-        en: "Full-Stack Developer building 4 Telegram bots end-to-end, including architecture, monitoring, and the deployment pipeline.",
-        de: "Full-Stack-Entwickler für 4 Telegram-Bots end-to-end — inklusive Architektur, Monitoring und Deployment-Pipeline.",
-        ru: "Full-stack разработчик 4 Telegram-ботов от начала до конца — архитектура, мониторинг, деплой-пайплайн.",
+        en: "Full-Stack Developer building 4 Telegram bots end-to-end, including architecture, monitoring, and the deployment pipeline, plus the Meta ad integration with Keitaro for conversion tracking.",
+        de: "Full-Stack-Entwickler für 4 Telegram-Bots end-to-end — inklusive Architektur, Monitoring, Deployment-Pipeline und der Meta-Anzeigenintegration mit Keitaro für das Conversion-Tracking.",
+        ru: "Full-stack разработчик 4 Telegram-ботов от начала до конца — архитектура, мониторинг, деплой-пайплайн, а также интеграция рекламы Meta с Keitaro для трекинга конверсий.",
       },
       business: {
-        en: "These bots sold access to scripted AI characters — a psychologist users cried talking to (voice messages via Whisper made that possible), and a fortune-teller taught to 'lie' convincingly: vague enough to always feel relevant, specific enough to feel true. Generated graphics and video kept it entertaining. The project closed once Telegram's cost-per-lead grew too high to sustain.",
-        de: "Diese Bots verkauften Zugang zu skriptierten KI-Charakteren — ein Psychologe, bei dem Nutzer im Gespräch weinten (möglich durch Sprachnachrichten via Whisper), und ein Wahrsager, der überzeugend zu 'lügen' lernte: vage genug, um immer relevant zu wirken, konkret genug, um wahr zu klingen. Generierte Grafiken und Videos hielten es unterhaltsam. Das Projekt schloss, als der Cost-per-Lead auf Telegram zu hoch wurde.",
-        ru: "Эти боты продавали доступ к AI-персонажам по сценарию — психологу, с которым пользователи плакали (это стало возможным благодаря голосовым сообщениям через Whisper), и предсказателю, обученному правдоподобно 'врать': достаточно туманно, чтобы казаться в тему, и достаточно конкретно, чтобы звучать правдой. Сгенерированная графика и видео дополнительно развлекали. Проект закрылся, когда стоимость лида в Telegram стала слишком высокой.",
+        en: "These bots sold access to scripted AI characters — a psychologist users cried talking to (voice messages via Whisper made that possible), and a fortune-teller taught to 'lie' convincingly: vague enough to always feel relevant, specific enough to feel true. Generated graphics and video kept it entertaining. The project shut down once the numbers stopped working: Telegram's cost-per-lead is inherently high, and monetizing through Telegram Stars meant a 50% commission converting to TON plus TON's own fee on top — combined, that killed the economics.",
+        de: "Diese Bots verkauften Zugang zu skriptierten KI-Charakteren — ein Psychologe, bei dem Nutzer im Gespräch weinten (möglich durch Sprachnachrichten via Whisper), und ein Wahrsager, der überzeugend zu 'lügen' lernte: vage genug, um immer relevant zu wirken, konkret genug, um wahr zu klingen. Generierte Grafiken und Videos hielten es unterhaltsam. Das Projekt wurde eingestellt, als die Wirtschaftlichkeit nicht mehr aufging: Der Cost-per-Lead auf Telegram ist von Natur aus hoch, und die Monetarisierung über Telegram Stars bedeutete 50 % Provision bei der Umwandlung in TON plus eine zusätzliche TON-eigene Gebühr obendrauf — zusammen killte das die Wirtschaftlichkeit.",
+        ru: "Эти боты продавали доступ к AI-персонажам по сценарию — психологу, с которым пользователи плакали (это стало возможным благодаря голосовым сообщениям через Whisper), и предсказателю, обученному правдоподобно 'врать': достаточно туманно, чтобы казаться в тему, и достаточно конкретно, чтобы звучать правдой. Сгенерированная графика и видео дополнительно развлекали. Проект закрылся, когда экономика перестала сходиться: стоимость лида в Telegram изначально высокая, а монетизация через Telegram Stars означала 50% комиссии при конвертации в TON плюс ещё комиссию самого TON сверху — вместе это и убило экономику проекта.",
       },
       tech: {
-        en: "Python (aiogram) bots backed by PostgreSQL, with Whisper wired in for voice-message transcription, and a Telegram Mini App for a richer in-chat UI. Self-hosted CI/CD via a GitHub Actions self-hosted runner, deploying to the team's own server with Docker layer caching for ~10s deploys, monitored with Grafana. Images stored in AWS S3, Redis for auth tokens and user state.",
-        de: "Python-Bots (aiogram) mit PostgreSQL im Hintergrund, Whisper für die Transkription von Sprachnachrichten sowie eine Telegram Mini App für eine reichhaltigere In-Chat-Oberfläche. Selbst gehostetes CI/CD über einen GitHub-Actions-Self-Hosted-Runner, Deployment auf den eigenen Server des Teams mit Docker-Layer-Caching für ~10-Sekunden-Deploys, überwacht mit Grafana. Bilder in AWS S3, Redis für Auth-Tokens und Nutzerstatus.",
-        ru: "Боты на Python (aiogram) с PostgreSQL, подключён Whisper для транскрибации голосовых сообщений, а также Telegram Mini App для более насыщенного интерфейса внутри чата. Self-hosted CI/CD через self-hosted раннер GitHub Actions, деплой на собственный сервер команды с кешированием слоёв Docker для деплоя за ~10 секунд, мониторинг через Grafana. Изображения хранятся в AWS S3, Redis — для токенов авторизации и состояния пользователя.",
+        en: "Python (aiogram) bots backed by PostgreSQL, with Whisper wired in for voice-message transcription, and a Telegram Mini App for a richer in-chat UI. Self-hosted CI/CD via a GitHub Actions self-hosted runner, deploying to the team's own server with Docker layer caching for ~10s deploys, monitored with Grafana. Images stored in AWS S3, Redis for auth tokens and user state.\n\nConfigured the Meta ad integration with Keitaro so conversions reported back accurately for cost-per-lead tracking. Facebook's ad policy penalizes landing pages that prompt a download, but the default t.me link page carries Telegram's own app-download button — so a stripped-down clone of that page was self-hosted with the download button removed, leaving only the deep link into the bot.",
+        de: "Python-Bots (aiogram) mit PostgreSQL im Hintergrund, Whisper für die Transkription von Sprachnachrichten sowie eine Telegram Mini App für eine reichhaltigere In-Chat-Oberfläche. Selbst gehostetes CI/CD über einen GitHub-Actions-Self-Hosted-Runner, Deployment auf den eigenen Server des Teams mit Docker-Layer-Caching für ~10-Sekunden-Deploys, überwacht mit Grafana. Bilder in AWS S3, Redis für Auth-Tokens und Nutzerstatus.\n\nDie Meta-Anzeigenintegration mit Keitaro konfiguriert, damit Conversions für das Cost-per-Lead-Tracking korrekt zurückgemeldet wurden. Facebooks Anzeigenrichtlinie bestraft Landingpages, die zu einem Download auffordern, aber die Standard-t.me-Linkseite trägt Telegrams eigenen App-Download-Button — deshalb wurde ein abgespeckter Klon dieser Seite selbst gehostet, bei dem der Download-Button entfernt wurde und nur der Deep-Link zum Bot übrig blieb.",
+        ru: "Боты на Python (aiogram) с PostgreSQL, подключён Whisper для транскрибации голосовых сообщений, а также Telegram Mini App для более насыщенного интерфейса внутри чата. Self-hosted CI/CD через self-hosted раннер GitHub Actions, деплой на собственный сервер команды с кешированием слоёв Docker для деплоя за ~10 секунд, мониторинг через Grafana. Изображения хранятся в AWS S3, Redis — для токенов авторизации и состояния пользователя.\n\nНастроил интеграцию рекламы Meta с Keitaro, чтобы конверсии корректно отбивались для трекинга стоимости лида. Facebook штрафует рекламу, если по клику пользователь попадает на страницу с призывом что-то скачать — а дефолтная страница ссылки t.me несёт собственную кнопку скачивания Telegram. Поэтому самостоятельно захостил урезанный клон этой страницы без кнопки скачивания — осталась только диплинк-ссылка на бота.",
       },
     },
     impact: [{ label: { en: "Deploy time", de: "Deploy-Zeit", ru: "Время деплоя" }, value: "<10 sec" }],
-    stack: ["Python", "aiogram", "Whisper", "PostgreSQL", "Docker", "GitHub Actions", "AWS S3", "Redis", "Grafana", "Telegram Mini App"],
+    stack: ["Python", "aiogram", "Whisper", "PostgreSQL", "Docker", "GitHub Actions", "AWS S3", "Redis", "Grafana", "Telegram Mini App", "Keitaro", "Meta Ads"],
     images: [
-      "/images/projects/wedo-telegram-bots/user-dashboard.jpg",
-      "/images/projects/wedo-telegram-bots/astrology-chart-1.jpg",
-      "/images/projects/wedo-telegram-bots/astrology-chart-2.jpg",
+      { src: "/images/projects/wedo-telegram-bots/user-dashboard.jpg", alt: { en: "Admin dashboard for managing the Telegram bots", de: "Admin-Dashboard zur Verwaltung der Telegram-Bots", ru: "Админ-панель для управления Telegram-ботами" } },
+      { src: "/images/projects/wedo-telegram-bots/astrology-chart-1.jpg", alt: { en: "AI-generated astrology chart shown to users", de: "KI-generiertes Astrologie-Diagramm für Nutzer", ru: "AI-сгенерированная астрологическая карта для пользователя" } },
+      { src: "/images/projects/wedo-telegram-bots/astrology-chart-2.jpg", alt: { en: "Second AI-generated astrology chart example", de: "Zweites Beispiel eines KI-generierten Astrologie-Diagramms", ru: "Второй пример AI-сгенерированной астрологической карты" } },
+      { src: "/images/projects/wedo-telegram-bots/tarot-card-emperor.jpg", alt: { en: "AI-generated tarot card: The Emperor", de: "KI-generierte Tarotkarte: Der Herrscher", ru: "AI-сгенерированная карта Таро: Император" } },
+      { src: "/images/projects/wedo-telegram-bots/tarot-mini-app-loading.jpg", alt: { en: "Loading screen of the tarot Telegram Mini App", de: "Ladebildschirm der Tarot-Telegram-Mini-App", ru: "Экран загрузки Tarot Mini App в Telegram" } },
+      { src: "/images/projects/wedo-telegram-bots/palmistry-reading.jpg", alt: { en: "AI palmistry reading result screen", de: "Ergebnis einer KI-Handlesung", ru: "Результат AI-гадания по ладони" } },
+      { src: "/images/projects/wedo-telegram-bots/traffic-dashboard.jpg", alt: { en: "Dashboard tracking ad traffic and conversions", de: "Dashboard zur Nachverfolgung von Werbetraffic und Conversions", ru: "Дашборд отслеживания рекламного трафика и конверсий" } },
+      { src: "/images/projects/wedo-telegram-bots/specialist-selection-menu.jpg", alt: { en: "Menu for selecting an AI character", de: "Menü zur Auswahl eines KI-Charakters", ru: "Меню выбора AI-персонажа" } },
+      { src: "/images/projects/wedo-telegram-bots/user-profile-menu.jpg", alt: { en: "User profile menu in the bot", de: "Nutzerprofil-Menü im Bot", ru: "Меню профиля пользователя в боте" } },
+      { src: "/images/projects/wedo-telegram-bots/tarot-video-message.jpg", alt: { en: "AI-generated video message from the tarot character", de: "KI-generierte Videobotschaft des Tarot-Charakters", ru: "AI-сгенерированное видеообращение персонажа-таролога" } },
+      { src: "/images/projects/wedo-telegram-bots/tarot-card-hermit-reading.jpg", alt: { en: "AI-generated tarot reading: The Hermit", de: "KI-generierte Tarot-Lesung: Der Eremit", ru: "AI-гадание Таро: Отшельник" } },
     ],
     credit: {
       name: { en: "Nikita Denisov", de: "Nikita Denisov", ru: "Никита Денисов" },
@@ -637,16 +662,16 @@ export const PROJECTS: Project[] = [
         ru: "Audioland (и родственный проект Dubbing) существовали ради вывода speechki.com на Кипрскую фондовую биржу — план требовал показать реальную прибыль на нейросетевых продуктах speechki.com. Стартап не взлетел не из-за продукта, а из-за политики монетизации плагинов OpenAI: «нельзя монетизировать ни до, ни во время, ни после эксплуатации ботов» — то есть никак.",
       },
       tech: {
-        en: "AI app deployed with Next.js and Firebase; generated tracks stored in Minio object storage. Generation requests go through a queue administered by an algorithm that spins up AWS machines on demand — that's what makes the pipeline scale.",
-        de: "KI-App mit Next.js und Firebase deployt; generierte Titel in Minio-Objektspeicher abgelegt. Generierungsanfragen laufen über eine Warteschlange, die von einem Algorithmus verwaltet wird, der bei Bedarf AWS-Maschinen hochfährt — das macht die Pipeline skalierbar.",
-        ru: "AI-приложение развёрнуто на Next.js и Firebase; сгенерированные треки хранятся в Minio. Запросы на генерацию идут через очередь, которой управляет алгоритм, поднимающий машины на AWS по мере необходимости — именно это обеспечивает масштабируемость пайплайна.",
+        en: "AI app deployed with Next.js and Firebase; generated tracks stored in AWS S3. Generation requests go through a queue administered by an algorithm that spins up AWS machines on demand — that's what makes the pipeline scale.",
+        de: "KI-App mit Next.js und Firebase deployt; generierte Titel in AWS S3 abgelegt. Generierungsanfragen laufen über eine Warteschlange, die von einem Algorithmus verwaltet wird, der bei Bedarf AWS-Maschinen hochfährt — das macht die Pipeline skalierbar.",
+        ru: "AI-приложение развёрнуто на Next.js и Firebase; сгенерированные треки хранятся в AWS S3. Запросы на генерацию идут через очередь, которой управляет алгоритм, поднимающий машины на AWS по мере необходимости — именно это обеспечивает масштабируемость пайплайна.",
       },
     },
     impact: [{ label: { en: "Generation time", de: "Generierungszeit", ru: "Время генерации" }, value: "<1 min" }],
-    stack: ["Next.js", "Firebase", "Minio", "AWS", "AI"],
+    stack: ["Next.js", "Firebase", "AWS S3", "AWS", "AI"],
     images: [
-      "/images/projects/audioland-musicgen/generations-page-1.jpg",
-      "/images/projects/audioland-musicgen/generations-page-2.jpg",
+      { src: "/images/projects/audioland-musicgen/generations-page-1.jpg", alt: { en: "Audioland music-generation results page", de: "Audioland-Ergebnisseite für Musikgenerierung", ru: "Страница результатов генерации музыки в Audioland" } },
+      { src: "/images/projects/audioland-musicgen/generations-page-2.jpg", alt: { en: "Second view of the music-generation results page", de: "Zweite Ansicht der Musikgenerierungs-Ergebnisseite", ru: "Второй вид страницы результатов генерации музыки" } },
     ],
   },
   {
@@ -716,13 +741,13 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["Python", "Next.js", "AI", "Google Analytics", "Google Cloud Storage"],
     images: [
-      "/images/projects/wedo-ai-video-dubbing/sitemap-language-pages.jpg",
-      "/images/projects/wedo-ai-video-dubbing/pricing-light.jpg",
-      "/images/projects/wedo-ai-video-dubbing/pricing-dark.jpg",
-      "/images/projects/wedo-ai-video-dubbing/firebase-analytics-1.jpg",
-      "/images/projects/wedo-ai-video-dubbing/firebase-analytics-2.jpg",
-      "/images/projects/wedo-ai-video-dubbing/firebase-analytics-3.jpg",
-      "/images/projects/wedo-ai-video-dubbing/amplitude-analytics.jpg",
+      { src: "/images/projects/wedo-ai-video-dubbing/sitemap-language-pages.jpg", alt: { en: "Sitemap listing the programmatic language-pair landing pages", de: "Sitemap mit den programmatischen Sprachpaar-Landingpages", ru: "Карта сайта с программными лендингами языковых пар" } },
+      { src: "/images/projects/wedo-ai-video-dubbing/pricing-light.jpg", alt: { en: "Pricing page, light theme", de: "Preisseite, helles Theme", ru: "Страница цен, светлая тема" } },
+      { src: "/images/projects/wedo-ai-video-dubbing/pricing-dark.jpg", alt: { en: "Pricing page, dark theme", de: "Preisseite, dunkles Theme", ru: "Страница цен, тёмная тема" } },
+      { src: "/images/projects/wedo-ai-video-dubbing/firebase-analytics-1.jpg", alt: { en: "Firebase Analytics dashboard, view 1", de: "Firebase-Analytics-Dashboard, Ansicht 1", ru: "Дашборд Firebase Analytics, вид 1" } },
+      { src: "/images/projects/wedo-ai-video-dubbing/firebase-analytics-2.jpg", alt: { en: "Firebase Analytics dashboard, view 2", de: "Firebase-Analytics-Dashboard, Ansicht 2", ru: "Дашборд Firebase Analytics, вид 2" } },
+      { src: "/images/projects/wedo-ai-video-dubbing/firebase-analytics-3.jpg", alt: { en: "Firebase Analytics dashboard, view 3", de: "Firebase-Analytics-Dashboard, Ansicht 3", ru: "Дашборд Firebase Analytics, вид 3" } },
+      { src: "/images/projects/wedo-ai-video-dubbing/amplitude-analytics.jpg", alt: { en: "Amplitude analytics dashboard", de: "Amplitude-Analytics-Dashboard", ru: "Дашборд Amplitude Analytics" } },
     ],
   },
 
@@ -766,10 +791,10 @@ export const PROJECTS: Project[] = [
       { labelKey: "github", url: "https://github.com/mskVitalii/WebFaceNN" },
     ],
     images: [
-      "/images/projects/neural-network-visualizer/app-screenshot.png",
-      "/images/projects/neural-network-visualizer/math-visualization.png",
-      "/images/projects/neural-network-visualizer/notes-photo.png",
-      "/images/projects/neural-network-visualizer/tensorflow-playground-demo.jpg",
+      { src: "/images/projects/neural-network-visualizer/app-screenshot.png", alt: { en: "Screenshot of the neural-network training visualizer app", de: "Screenshot der Trainings-Visualisierungs-App für neuronale Netze", ru: "Скриншот приложения-визуализатора обучения нейросети" } },
+      { src: "/images/projects/neural-network-visualizer/math-visualization.png", alt: { en: "Visualization of the underlying training math", de: "Visualisierung der zugrunde liegenden Trainingsmathematik", ru: "Визуализация математики, лежащей в основе обучения" } },
+      { src: "/images/projects/neural-network-visualizer/notes-photo.png", alt: { en: "Handwritten notes used while building the visualizer", de: "Handschriftliche Notizen aus der Entwicklung des Visualizers", ru: "Рукописные заметки, сделанные во время разработки визуализатора" } },
+      { src: "/images/projects/neural-network-visualizer/tensorflow-playground-demo.jpg", alt: { en: "Demo screen inspired by TensorFlow Playground", de: "Demo-Bildschirm, inspiriert von TensorFlow Playground", ru: "Демо-экран, вдохновлённый TensorFlow Playground" } },
     ],
   },
   {
@@ -814,13 +839,13 @@ export const PROJECTS: Project[] = [
       { labelKey: "github", url: "https://github.com/mskVitalii/universal_insight" },
     ],
     images: [
-      "/images/projects/universal-insight-dashboard/dashboard-overview.png",
-      "/images/projects/universal-insight-dashboard/charts-view.png",
-      "/images/projects/universal-insight-dashboard/design-mockup.png",
-      "/images/projects/universal-insight-dashboard/gallery-01.jpeg",
-      "/images/projects/universal-insight-dashboard/gallery-02.jpeg",
-      "/images/projects/universal-insight-dashboard/gallery-03.jpeg",
-      "/images/projects/universal-insight-dashboard/monitoring-mockup.jpg",
+      { src: "/images/projects/universal-insight-dashboard/dashboard-overview.png", alt: { en: "Overview of the employee-activity monitoring dashboard", de: "Übersicht des Dashboards zur Mitarbeiteraktivitäts-Überwachung", ru: "Обзор дашборда мониторинга активности сотрудников" } },
+      { src: "/images/projects/universal-insight-dashboard/charts-view.png", alt: { en: "Charts view of employee activity data", de: "Diagrammansicht der Mitarbeiteraktivitätsdaten", ru: "Вид с графиками активности сотрудников" } },
+      { src: "/images/projects/universal-insight-dashboard/design-mockup.png", alt: { en: "Design mockup for the dashboard UI", de: "Design-Mockup der Dashboard-Oberfläche", ru: "Дизайн-макет интерфейса дашборда" } },
+      { src: "/images/projects/universal-insight-dashboard/gallery-01.jpeg", alt: { en: "Dashboard screenshot, gallery view 1", de: "Dashboard-Screenshot, Galerieansicht 1", ru: "Скриншот дашборда, вид из галереи 1" } },
+      { src: "/images/projects/universal-insight-dashboard/gallery-02.jpeg", alt: { en: "Dashboard screenshot, gallery view 2", de: "Dashboard-Screenshot, Galerieansicht 2", ru: "Скриншот дашборда, вид из галереи 2" } },
+      { src: "/images/projects/universal-insight-dashboard/gallery-03.jpeg", alt: { en: "Dashboard screenshot, gallery view 3", de: "Dashboard-Screenshot, Galerieansicht 3", ru: "Скриншот дашборда, вид из галереи 3" } },
+      { src: "/images/projects/universal-insight-dashboard/monitoring-mockup.jpg", alt: { en: "Mockup of one of the 9 monitoring modules", de: "Mockup eines der 9 Tracking-Module", ru: "Макет одного из 9 модулей мониторинга" } },
     ],
   },
   {
@@ -867,11 +892,11 @@ export const PROJECTS: Project[] = [
     stack: ["Angular"],
     links: [{ labelKey: "demo", url: "https://mew2-ultra.web.app/" }],
     images: [
-      "/images/projects/subway-battery-monitor/dashboard-overview.png",
-      "/images/projects/subway-battery-monitor/final-photo-1.jpeg",
-      "/images/projects/subway-battery-monitor/final-photo-2.jpeg",
-      "/images/projects/subway-battery-monitor/dashboard-notes-1.png",
-      "/images/projects/subway-battery-monitor/battery-dashboard.jpg",
+      { src: "/images/projects/subway-battery-monitor/dashboard-overview.png", alt: { en: "Overview of the subway battery-monitoring dashboard", de: "Übersicht des U-Bahn-Batterieüberwachungs-Dashboards", ru: "Обзор дашборда мониторинга батарей метро" } },
+      { src: "/images/projects/subway-battery-monitor/final-photo-1.jpeg", alt: { en: "Photo of the finished dashboard, view 1", de: "Foto des fertigen Dashboards, Ansicht 1", ru: "Фото готового дашборда, вид 1" } },
+      { src: "/images/projects/subway-battery-monitor/final-photo-2.jpeg", alt: { en: "Photo of the finished dashboard, view 2", de: "Foto des fertigen Dashboards, Ansicht 2", ru: "Фото готового дашборда, вид 2" } },
+      { src: "/images/projects/subway-battery-monitor/dashboard-notes-1.png", alt: { en: "Notes sketched while designing the dashboard", de: "Notizen, die beim Entwurf des Dashboards skizziert wurden", ru: "Заметки, сделанные при проектировании дашборда" } },
+      { src: "/images/projects/subway-battery-monitor/battery-dashboard.jpg", alt: { en: "Live telemetry view for one battery unit", de: "Live-Telemetrieansicht für eine Batterieeinheit", ru: "Вид телеметрии в реальном времени для одной батареи" } },
     ],
   },
   {
@@ -909,8 +934,8 @@ export const PROJECTS: Project[] = [
     stack: ["C#"],
     links: [{ labelKey: "github", url: "https://github.com/mskVitalii/AMC-Makeathon-2020" }],
     images: [
-      "/images/projects/amc-makeathon-2020/project-screenshot.png",
-      "/images/projects/amc-makeathon-2020/presentation-notes.png",
+      { src: "/images/projects/amc-makeathon-2020/project-screenshot.png", alt: { en: "Screenshot of the hackathon project", de: "Screenshot des Hackathon-Projekts", ru: "Скриншот проекта с хакатона" } },
+      { src: "/images/projects/amc-makeathon-2020/presentation-notes.png", alt: { en: "Notes from the hackathon presentation", de: "Notizen aus der Hackathon-Präsentation", ru: "Заметки с презентации на хакатоне" } },
     ],
   },
   {
@@ -954,8 +979,8 @@ export const PROJECTS: Project[] = [
       { labelKey: "github", url: "https://github.com/mskVitalii/admin_silicon_valley" },
     ],
     images: [
-      "/images/projects/ncahoots-admin-panel/sample-data-1.jpeg",
-      "/images/projects/ncahoots-admin-panel/sample-data-2.jpeg",
+      { src: "/images/projects/ncahoots-admin-panel/sample-data-1.jpeg", alt: { en: "Sample data view in the NCahoots admin panel", de: "Beispieldaten-Ansicht im NCahoots-Admin-Panel", ru: "Вид с примером данных в админке NCahoots" } },
+      { src: "/images/projects/ncahoots-admin-panel/sample-data-2.jpeg", alt: { en: "Second sample data view in the NCahoots admin panel", de: "Zweite Beispieldaten-Ansicht im NCahoots-Admin-Panel", ru: "Второй вид с примером данных в админке NCahoots" } },
     ],
     referenceDocuments: [
       {
@@ -1009,11 +1034,11 @@ export const PROJECTS: Project[] = [
       { labelKey: "githubLanding", url: "https://github.com/kolbak/Skin-Miners" },
     ],
     images: [
-      "/images/projects/mining-skins-store/store-screenshot-1.png",
-      "/images/projects/mining-skins-store/store-screenshot-2.png",
-      "/images/projects/mining-skins-store/gallery-1.jpeg",
-      "/images/projects/mining-skins-store/gallery-2.jpeg",
-      "/images/projects/mining-skins-landing/homepage.png",
+      { src: "/images/projects/mining-skins-store/store-screenshot-1.png", alt: { en: "SkinMiners store screenshot", de: "SkinMiners-Shop-Screenshot", ru: "Скриншот магазина SkinMiners" } },
+      { src: "/images/projects/mining-skins-store/store-screenshot-2.png", alt: { en: "Second SkinMiners store screenshot", de: "Zweiter SkinMiners-Shop-Screenshot", ru: "Второй скриншот магазина SkinMiners" } },
+      { src: "/images/projects/mining-skins-store/gallery-1.jpeg", alt: { en: "SkinMiners store gallery photo 1", de: "SkinMiners-Shop-Galeriefoto 1", ru: "Фото из галереи магазина SkinMiners 1" } },
+      { src: "/images/projects/mining-skins-store/gallery-2.jpeg", alt: { en: "SkinMiners store gallery photo 2", de: "SkinMiners-Shop-Galeriefoto 2", ru: "Фото из галереи магазина SkinMiners 2" } },
+      { src: "/images/projects/mining-skins-landing/homepage.png", alt: { en: "Homepage of the follow-on marketing landing page", de: "Startseite der Folge-Marketing-Landingpage", ru: "Главная страница дополнительного маркетингового лендинга" } },
     ],
   },
   {
@@ -1062,11 +1087,6 @@ export const PROJECTS: Project[] = [
     },
     period: "10/2019 – 04/2020",
     status: "archived",
-    statusNote: {
-      en: "Engagement ended after the client's side lost confidence in delivery speed.",
-      de: "Projekt endete, nachdem der Kunde das Vertrauen in die Liefergeschwindigkeit verlor.",
-      ru: "Проект завершился, когда клиент потерял уверенность в скорости поставки.",
-    },
     company: "Yohan Loshop (own studio)",
     category: "work",
     tagline: {
@@ -1081,9 +1101,9 @@ export const PROJECTS: Project[] = [
         ru: "Отвечал за инженерную часть крупнейшего клиентского проекта студии из 3 человек: корпоративный портал для строительной компании, с несколькими раундами изменений дизайна и требований.",
       },
       business: {
-        en: "Earned ₽25,000 across a 7-month engagement. The clearest lesson from running his own studio: without a written scope, an unclear client point of contact turns page-by-page delivery into open-ended scope creep — and without steady revenue, a 3-person team can't compete with what junior full-time roles pay in the same city.",
-        de: "25.000 ₽ Honorar über ein 7-monatiges Projekt. Die klarste Lektion aus dem eigenen Studio: Ohne schriftlichen Scope verwandelt ein unklarer Ansprechpartner beim Kunden seitenweise Lieferung in endlosen Scope-Creep — und ohne stetigen Umsatz kann ein 3-köpfiges Team nicht mit dem mithalten, was Junior-Vollzeitstellen in derselben Stadt zahlen.",
-        ru: "Заработок 25 000 ₽ за 7-месячный проект. Самый чёткий урок из ведения собственной студии: без письменного скоупа неясный контакт со стороны клиента превращает постраничную поставку в бесконечное расползание скоупа — а без стабильного дохода команда из 3 человек не может конкурировать с зарплатой джуниор-позиций на полной занятости в том же городе.",
+        en: "The portal was meant to sell apartments in the company's residential developments — a showcase for its construction projects designed to drive direct buyer inquiries.",
+        de: "Das Portal sollte Wohnungen in den Wohnkomplexen des Unternehmens verkaufen — ein Schaufenster für seine Bauprojekte, ausgelegt auf direkte Anfragen von Wohnungskäufern.",
+        ru: "Через портал ожидались продажи квартир в жилых комплексах компании — витрина её строительных проектов, рассчитанная на прямые заявки от покупателей.",
       },
       tech: {
         en: "Built with GatsbyJS, after evaluating and discarding several headless CMS options (Contentful, CosmicJS, DatoCMS) before settling on one.",
@@ -1231,9 +1251,9 @@ export const PROJECTS: Project[] = [
     period: "03/2022 – 05/2022",
     status: "archived",
     statusNote: {
-      en: "Grew out of a parallax-scrolling comic page built at his first hackathon in 07/2020, which didn't place but proved the concept. Led a 4-person student team on the full editor two years later; marketing outreach to artists didn't convert.",
-      de: "Entstand aus einer Parallax-Scroll-Comicseite, die er bei seinem ersten Hackathon im 07/2020 baute — ohne Platzierung, aber mit belegtem Konzept. Zwei Jahre später ein 4-köpfiges Studententeam für den vollständigen Editor geleitet; Marketing-Outreach an Künstler konvertierte nicht.",
-      ru: "Вырос из параллакс-скролл-страницы комикса, сделанной на первом хакатоне в 07/2020 — без призового места, но с доказанной концепцией. Через два года руководил командой из 4 студентов над полноценным редактором; маркетинговый охват художников не сконвертировался.",
+      en: "Marketing outreach to artists didn't convert into adoption; the editor was retired.",
+      de: "Marketing-Ansprache an Künstler führte zu keiner Nutzung; der Editor wurde eingestellt.",
+      ru: "Маркетинговый охват художников не привёл к внедрению; редактор был свёрнут.",
     },
     category: "hackathon",
     tagline: {
@@ -1266,8 +1286,8 @@ export const PROJECTS: Project[] = [
       { labelKey: "originalHackathonGithub", url: "https://github.com/mskVitalii/Scott-Pilgrim-Parallax" },
     ],
     images: [
-      "/images/projects/effects-parallax-editor/editor.png",
-      "/images/projects/effects-parallax-editor/original-hackathon-build.png",
+      { src: "/images/projects/effects-parallax-editor/editor.png", alt: { en: "Screenshot of the parallax comic editor", de: "Screenshot des Parallax-Comic-Editors", ru: "Скриншот редактора параллакс-комиксов" } },
+      { src: "/images/projects/effects-parallax-editor/original-hackathon-build.png", alt: { en: "Original 2020 hackathon prototype: a parallax-scrolling comic page", de: "Ursprünglicher Hackathon-Prototyp von 2020: eine Parallax-Scroll-Comicseite", ru: "Исходный прототип с хакатона 2020 года: параллакс-страница комикса" } },
     ],
   },
   {
@@ -1349,8 +1369,8 @@ export const PROJECTS: Project[] = [
       { labelKey: "github", url: "https://github.com/mskVitalii/Semki" },
     ],
     images: [
-      "/images/projects/semki-staffbase-hackathon/staffbase-org-settings.jpg",
-      "/images/projects/semki-staffbase-hackathon/ai-search-demo.jpg",
+      { src: "/images/projects/semki-staffbase-hackathon/staffbase-org-settings.jpg", alt: { en: "Organization settings screen in Semki", de: "Organisationseinstellungen in Semki", ru: "Экран настроек организации в Semki" } },
+      { src: "/images/projects/semki-staffbase-hackathon/ai-search-demo.jpg", alt: { en: "AI-powered employee search results in Semki", de: "KI-gestützte Mitarbeitersuche-Ergebnisse in Semki", ru: "Результаты AI-поиска сотрудников в Semki" } },
     ],
   },
 ];
@@ -1397,10 +1417,10 @@ export const EDUCATION_PROJECTS: Project[] = [
       { labelKey: "github", url: "https://github.com/mskVitalii/FassonAPI" },
     ],
     images: [
-      "/images/projects/fassonapi-coursework/architecture-scheme.png",
-      "/images/projects/fassonapi-coursework/late-night-coding.png",
-      "/images/projects/fassonapi-coursework/award-1.jpeg",
-      "/images/projects/fassonapi-coursework/award-2.jpeg",
+      { src: "/images/projects/fassonapi-coursework/architecture-scheme.png", alt: { en: "Architecture diagram for the FassonAPI coursework", de: "Architekturdiagramm der FassonAPI-Kursarbeit", ru: "Диаграмма архитектуры курсовой FassonAPI" } },
+      { src: "/images/projects/fassonapi-coursework/late-night-coding.png", alt: { en: "Late-night coding session while building FassonAPI", de: "Nächtliche Programmiersession beim Bau von FassonAPI", ru: "Ночная сессия написания кода во время работы над FassonAPI" } },
+      { src: "/images/projects/fassonapi-coursework/award-1.jpeg", alt: { en: "HSE Best Projects award, photo 1", de: "HSE-Best-Projects-Auszeichnung, Foto 1", ru: "Награда HSE Best Projects, фото 1" } },
+      { src: "/images/projects/fassonapi-coursework/award-2.jpeg", alt: { en: "HSE Best Projects award, photo 2", de: "HSE-Best-Projects-Auszeichnung, Foto 2", ru: "Награда HSE Best Projects, фото 2" } },
     ],
   },
   {
@@ -1439,9 +1459,9 @@ export const EDUCATION_PROJECTS: Project[] = [
     stack: ["C++", "Arduino"],
     links: [{ labelKey: "github", url: "https://github.com/mskVitalii/Arduino-Color-Sound" }],
     images: [
-      "/images/projects/cyberphys-color-robot/robot-build-1.png",
-      "/images/projects/cyberphys-color-robot/robot-build-2.png",
-      "/images/projects/cyberphys-color-robot/robot-build-3.png",
+      { src: "/images/projects/cyberphys-color-robot/robot-build-1.png", alt: { en: "Building the color-sensing robot, step 1", de: "Bau des farberkennenden Roboters, Schritt 1", ru: "Сборка робота, распознающего цвет, шаг 1" } },
+      { src: "/images/projects/cyberphys-color-robot/robot-build-2.png", alt: { en: "Building the color-sensing robot, step 2", de: "Bau des farberkennenden Roboters, Schritt 2", ru: "Сборка робота, распознающего цвет, шаг 2" } },
+      { src: "/images/projects/cyberphys-color-robot/robot-build-3.png", alt: { en: "The finished color-sensing robot", de: "Der fertige farberkennende Roboter", ru: "Готовый робот, распознающий цвет" } },
     ],
   },
   {

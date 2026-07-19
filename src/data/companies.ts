@@ -116,7 +116,7 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
       tech: {
         en: "Lightweight commerce builds spanning a TDD-built Python pricing service, spreadsheet-tracked inventory in the earliest venture, and a full Next.js storefront with payments and shipping integrations in the later one.",
         de: "Schlanke Commerce-Projekte, von einem testgetrieben entwickelten Python-Preisservice über tabellenbasierten Bestand im frühesten Vorhaben bis zu einem vollständigen Next.js-Shop mit Zahlungs- und Versandintegrationen im späteren.",
-        ru: "Лёгкие commerce-проекты — от Python-сервиса ценообразования, разработанного по TDD, через учёт склада в таблице в самом раннем проекте до полноценного магазина на Next.js с платежами и интеграциями доставки в более позднем.",
+        ru: "E-commerce-проекты — от Python-сервиса ценообразования, разработанного по TDD, через учёт склада в таблице в самом раннем проекте до полноценного магазина на Next.js с платежами и интеграциями доставки в более позднем.",
       },
     },
     credit: {

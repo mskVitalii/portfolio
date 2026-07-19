@@ -55,12 +55,13 @@ export async function buildPageMetadata({
   const t = await getTranslations({ locale, namespace: "Common" });
   const siteName = t("siteName");
   const ogImage = buildOgImageUrl(locale, { title });
+  const ogTitle = `${title} | ${siteName}`;
   return {
     title,
     description,
     alternates: buildAlternates(locale, path),
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       type: "website" as const,
       siteName,
@@ -69,7 +70,7 @@ export async function buildPageMetadata({
     },
     twitter: {
       card: "summary_large_image" as const,
-      title,
+      title: ogTitle,
       description,
       images: [ogImage],
     },
@@ -123,6 +124,84 @@ export async function buildNavBreadcrumbJsonLd(locale: string, navKey: string, p
     { name: t("home"), path: "" },
     { name: t(navKey), path },
   ]);
+}
+
+const KNOWS_ABOUT = [
+  "Go", "Python", "C#", "Node.js", "Ruby on Rails", "React", "TypeScript", "Next.js",
+  "Tailwind CSS", "Docker", "Kubernetes", "Kafka", "Redis", "PostgreSQL", "ElasticSearch",
+  "Helm", "GitHub Actions", "Docker Registry", "Computer Vision", "LLM Integration", "RAG",
+  "Qdrant", "Embedding Models", "LangChain", "Ollama", "MCP Server", "Context Engineering",
+  "Hugging Face", "Claude Code", "GitHub Copilot", "C",
+];
+
+const HAS_CREDENTIAL = [
+  { name: "Claude API & SDK Fundamentals", url: "https://verify.skilljar.com/c/arhv5wtraues" },
+  { name: "Anthropic API Essentials", url: "https://verify.skilljar.com/c/zxjoevsgqx84" },
+  { name: "Claude Code Practitioner", url: "https://verify.skilljar.com/c/7msxhy7wnwq3" },
+].map(({ name, url }) => ({
+  "@type": "EducationalOccupationalCredential",
+  name,
+  credentialCategory: "certification",
+  recognizedBy: { "@type": "Organization", name: "Anthropic" },
+  url,
+}));
+
+/** Canonical Person description — shared by the site-wide Person JSON-LD (every page)
+ * and the homepage's ProfilePage `mainEntity`, so the two never drift apart. */
+export async function buildPersonJsonLd(locale: string) {
+  const t = await getTranslations({ locale, namespace: "Hero" });
+  const description = `${t("tagline")} ${t("taglineHighlight")}${t("taglineEnd")} ${t("experience")}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Vitalii Popov",
+    givenName: "Vitalii",
+    familyName: "Popov",
+    url: `${BASE_URL}/${locale}`,
+    image: `${BASE_URL}/images/about/avatar/vitalii.jpg`,
+    jobTitle: t("role"),
+    description,
+    email: "mailto:msk.vitaly@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Berlin",
+      addressCountry: "DE",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Germany",
+    },
+    knowsLanguage: ["en", "de", "ru"],
+    sameAs: [
+      "https://linkedin.com/in/mskvitalii",
+      "https://github.com/mskvitalii",
+      "https://t.me/mskvitalii",
+      "https://medium.com/@msk.vitalii",
+      "https://habr.com/ru/users/mskVitalii/",
+    ],
+    worksFor: [
+      { "@type": "Organization", name: "Infineon Technologies AG" },
+      { "@type": "Organization", name: "OZON Tech" },
+    ],
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "Chemnitz University of Technology" },
+      { "@type": "CollegeOrUniversity", name: "Higher School of Economics" },
+    ],
+    knowsAbout: KNOWS_ABOUT,
+    hasCredential: HAS_CREDENTIAL,
+  };
+}
+
+/** ProfilePage schema for the homepage — Google's recommended wrapper for personal-profile
+ * pages, pointing `mainEntity` at the same Person emitted site-wide by `buildPersonJsonLd`. */
+export async function buildProfilePageJsonLd(locale: string) {
+  const person = await buildPersonJsonLd(locale);
+  const { "@context": _context, ...personEntity } = person;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: personEntity,
+  };
 }
 
 /** WebPage schema for a single page — pair with a page's `generateMetadata` title/description

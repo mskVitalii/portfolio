@@ -781,7 +781,12 @@
   },
   "RecommendationsPage": {
     "metaTitle": "Empfehlungen",
-    "metaDescription": "Was Kollegen, Kunden und Partner über die Zusammenarbeit mit Vitalii Popov sagen."
+    "metaDescription": "Was Kollegen, Kunden und Partner über die Zusammenarbeit mit Vitalii Popov sagen.",
+    "heading": "Empfehlungen",
+    "subtitle": "Was Kollegen, Vorgesetzte und Projektpartner über die Zusammenarbeit mit mir sagen.",
+    "collectingTitle": "Empfehlungen werden gesammelt",
+    "collectingBody": "Ich kontaktiere gerade ehemalige Kollegen und Vorgesetzte. Dieser Bereich wird in Kürze mit verifizierten Erfahrungsberichten aktualisiert.",
+    "linkedinCta": "LinkedIn-Empfehlungen ansehen"
   },
   "HireMeLinks": {
     "emailDescription": "Am besten für ausführliche Projektanfragen",

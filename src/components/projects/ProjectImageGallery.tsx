@@ -6,6 +6,8 @@ import { ZoomIn, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { SHIMMER_BLUR_DATA_URL, GALLERY_PRELOAD_COUNT } from "@/lib/imagePlaceholder";
+import { imageSrc, imageAlt, type ProjectImage } from "@/data/projects";
+import { type LocalizedText } from "@/lib/localized";
 
 const LIGHTBOX_SIZES = "96vw";
 
@@ -21,18 +23,22 @@ export interface ProjectGalleryStrings {
 
 export function ProjectImageGallery({
   images,
-  alt,
+  fallbackAlt,
+  locale,
   strings,
 }: {
-  images: string[];
-  alt: string;
+  images: (string | ProjectImage)[];
+  fallbackAlt: LocalizedText;
+  locale: string;
   strings: ProjectGalleryStrings;
 }) {
   const [zoomIndex, setZoomIndex] = useState<number | null>(null);
+  const srcs = images.map((img) => imageSrc(img));
+  const alts = images.map((img) => imageAlt(img, fallbackAlt, locale));
 
   const showPrev = () =>
-    setZoomIndex((i) => (i === null ? i : (i - 1 + images.length) % images.length));
-  const showNext = () => setZoomIndex((i) => (i === null ? i : (i + 1) % images.length));
+    setZoomIndex((i) => (i === null ? i : (i - 1 + srcs.length) % srcs.length));
+  const showNext = () => setZoomIndex((i) => (i === null ? i : (i + 1) % srcs.length));
 
   useEffect(() => {
     if (zoomIndex === null) return;
@@ -50,7 +56,7 @@ export function ProjectImageGallery({
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10">
-        {images.map((src, i) => (
+        {srcs.map((src, i) => (
           <button
             key={src}
             type="button"
@@ -60,7 +66,7 @@ export function ProjectImageGallery({
           >
             <Image
               src={src}
-              alt={alt}
+              alt={alts[i]}
               fill
               placeholder="blur"
               blurDataURL={SHIMMER_BLUR_DATA_URL}
@@ -78,7 +84,7 @@ export function ProjectImageGallery({
           `sizes` as the lightbox Image below, so the browser fetches and caches
           the exact same `_next/image` URL ahead of time instead of on first open. */}
       <div aria-hidden className="sr-only">
-        {images.slice(0, GALLERY_PRELOAD_COUNT).map((src) => (
+        {srcs.slice(0, GALLERY_PRELOAD_COUNT).map((src) => (
           <div key={src} className="relative h-px w-px overflow-hidden">
             <Image src={src} alt="" fill sizes={LIGHTBOX_SIZES} priority />
           </div>
@@ -93,13 +99,13 @@ export function ProjectImageGallery({
             if (e.target === e.currentTarget) setZoomIndex(null);
           }}
         >
-          <DialogTitle className="sr-only">{alt}</DialogTitle>
+          <DialogTitle className="sr-only">{zoomIndex !== null ? alts[zoomIndex] : ""}</DialogTitle>
           {zoomIndex !== null && (
             <div className="relative flex h-[92dvh] w-[96dvw] max-w-5xl items-center justify-center">
               <Image
-                key={images[zoomIndex]}
-                src={images[zoomIndex]}
-                alt={alt}
+                key={srcs[zoomIndex]}
+                src={srcs[zoomIndex]}
+                alt={alts[zoomIndex]}
                 fill
                 placeholder="blur"
                 blurDataURL={SHIMMER_BLUR_DATA_URL}
@@ -123,7 +129,7 @@ export function ProjectImageGallery({
                 className="absolute inset-y-0 right-0 w-1/2 cursor-e-resize"
               />
 
-              {images.length > 1 && (
+              {srcs.length > 1 && (
                 <>
                   <button
                     type="button"

@@ -106,16 +106,8 @@ Product Catalog  ──Kafka──►  Go Search Service  ──REST──►  W
 
 **Why Kafka instead of DB polling?** Decouples catalog updates from index refreshes. Warehouse searches never hit stale data for more than ~2 seconds after a product change.
 
-## Challenges
-
-The hardest part was the **Russian transliteration problem**: warehouse staff type SKU names both in Cyrillic and in Latin (e.g. "БОЛТ М8" and "bolt m8"). Building a custom ElasticSearch analyzer that handled both directions without returning too many false positives required a lot of iteration on test queries.
-
 ## Observability
 
 Prometheus metrics scraped by Grafana. Key dashboards: query latency P50/P95/P99, cache hit rate, Kafka consumer lag, index size over time.
-
-## What I'd do differently
-
-The cache invalidation logic was tied to Kafka events, which meant a cache miss storm after a batch product update. I'd add a short TTL as a safety net even when explicit invalidation is in place.
 
 </ModeAware>

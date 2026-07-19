@@ -16,7 +16,7 @@ import { ArrowLeft, Building2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { PROJECTS, EDUCATION_PROJECTS, periodEndKey } from "@/data/projects";
+import { PROJECTS, EDUCATION_PROJECTS, periodEndKey, imageSrc } from "@/data/projects";
 import { COMPANY_BUNDLES, getCompanyBundleBySlug } from "@/data/companies";
 import { CompanyBlurb } from "@/components/projects/CompanyBlurb";
 import { CompanyCredit } from "@/components/projects/CompanyCredit";
@@ -131,7 +131,7 @@ export default async function CompanyProjectsPage({
           path: `/projects/company/${companySlug}#${project.slug}`,
           name: localize(project.title, locale),
           description: localize(project.description.business, locale),
-          image: project.images?.[0] ? `${BASE_URL}${project.images[0]}` : undefined,
+          image: project.images?.[0] ? `${BASE_URL}${imageSrc(project.images[0])}` : undefined,
           keywords: project.stack,
           demoUrl,
           relatedUrls,

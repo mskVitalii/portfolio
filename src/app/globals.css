@@ -181,19 +181,26 @@
 
 /* Neon glow on primary elements in dark mode (inspired by slsbmb.com) —
    color follows the active audience-lens accent via --primary */
-.dark [class*="bg-primary"]:not([class*="bg-primary-foreground"]),
-.dark button[class*="bg-primary"] {
+.dark [class*="bg-primary"]:not([class*="bg-primary-foreground"]):not(.glow-sm),
+.dark button[class*="bg-primary"]:not(.glow-sm) {
   box-shadow:
     0 0 1.5em 2px oklch(from var(--primary) l c h / 35%),
     0 0 4em 10px oklch(from var(--primary) l c h / 20%);
   transition: box-shadow 0.3s ease;
 }
 
-.dark [class*="bg-primary"]:not([class*="bg-primary-foreground"]):hover,
-.dark button[class*="bg-primary"]:hover {
+.dark [class*="bg-primary"]:not([class*="bg-primary-foreground"]):not(.glow-sm):hover,
+.dark button[class*="bg-primary"]:not(.glow-sm):hover {
   box-shadow:
     0 0 2em 4px oklch(from var(--primary) l c h / 55%),
     0 0 6em 16px oklch(from var(--primary) l c h / 30%);
+}
+
+/* Smaller glow variant for non-CTA primary elements (e.g. status badges) —
+   the full CTA-sized glow above is too bright for small text pills. */
+.dark .glow-sm {
+  box-shadow: 0 0 0.6em 1px oklch(from var(--primary) l c h / 20%);
+  transition: box-shadow 0.3s ease;
 }
 
 /* Shimmer skeleton animation */

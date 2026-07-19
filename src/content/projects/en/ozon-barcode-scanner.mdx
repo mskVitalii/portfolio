@@ -115,8 +115,4 @@ Coordinating updates across many independently-running terminal agents without a
 
 Reused the same Prometheus/Grafana stack as the warehouse search service. Per-terminal scan throughput and error rate were the key dashboards for catching a misbehaving terminal before it fell behind on returns.
 
-## What I'd do differently
-
-Add automated per-terminal health checks to the rollout pipeline itself, so a bad update surfaced immediately instead of waiting for a picker to notice a stuck queue.
-
 </ModeAware>

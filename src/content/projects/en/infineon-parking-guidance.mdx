@@ -22,7 +22,7 @@ impact:
 <StarStory>
 <StarSituation>
 
-Infineon's Dresden campus has hundreds of parking spaces across several lots. The company was evaluating commercial parking-guidance vendors — the best quote came in at €480,000/year in licensing and maintenance fees.
+Infineon is one of Europe's largest chipmakers, serving automotive, industrial, and IoT markets. Its Dresden campus has hundreds of parking spaces across several lots. The company was evaluating commercial parking-guidance vendors — the best quote came in at €480,000/year in licensing and maintenance fees.
 
 </StarSituation>
 <StarTask>
@@ -32,7 +32,7 @@ Build an in-house alternative — hardware to dashboard — for a fraction of th
 </StarTask>
 <StarAction>
 
-Built embedded firmware for license-plate recognition and occupancy counting running directly on IP cameras, Python backend services to aggregate zone occupancy, a C# device-management layer, and a React dashboard for real-time visibility.
+Built embedded firmware for license-plate recognition and occupancy counting running directly on IP cameras, a Python computer-vision service to determine free spots for the map, a C# device-management layer (auth, REST/WebSocket API), and a React dashboard for real-time visibility.
 
 </StarAction>
 <StarResult>
@@ -77,8 +77,8 @@ The alternative: build it in-house.
 A full parking guidance system, from hardware to dashboard:
 
 - **Embedded firmware** in C running on IP cameras — performs ANPR (Automatic Number Plate Recognition) and occupancy counting without sending video streams over the network.
-- **Python microservices** aggregate zone occupancy, handle authentication, and serve the REST/WebSocket API.
-- **C# device management layer** handles camera provisioning, firmware updates, and health monitoring.
+- **Python computer-vision service** processes camera data and determines which parking spots are occupied, highlighting them on the map.
+- **C# device management layer** handles authentication, serves the REST/WebSocket API, camera provisioning, firmware updates, and health monitoring.
 - **React + TypeScript dashboard** gives security staff and drivers a real-time map of available spaces.
 
 </ModeAware>
@@ -88,15 +88,17 @@ A full parking guidance system, from hardware to dashboard:
 ## Architecture
 
 ```
-┌──────────────────┐     MQTT      ┌────────────────────┐
-│  IP Camera (C)   │ ────────────► │  Python Backend    │
-│  ANPR + Count    │               │  (Event Processor) │
-└──────────────────┘               └────────┬───────────┘
-                                            │ WebSocket
-                                   ┌────────▼───────────┐
-                                   │  React Dashboard   │
-                                   │  (Real-time map)   │
-                                   └────────────────────┘
+                  MQTT
+┌───────────────┐       ┌────────────────────┐
+│ IP Camera (C) │─────► │ Backend (C#)       │
+│ ANPR + Count  │       │ REST/WebSocket API │
+└───────────────┘       └────────────────────┘
+                                   │ WebSocket
+                                   ▼
+                          ┌─────────────────┐
+                          │ React Dashboard │
+                          │ (Real-time map) │
+                          └─────────────────┘
 ```
 
 Cameras run the detection locally (edge computing) — only occupancy events are sent over the network, not video. This keeps bandwidth low and avoids GDPR issues with centralized video storage.
@@ -116,9 +118,5 @@ Cameras run the detection locally (edge computing) — only occupancy events are
 ## Outcome
 
 The system went live on campus. **€480,000/year saved** vs. the vendor quote. The barrier control subsystem added independently serves **8,000 registered users** with **3,000 monthly active**.
-
-## What I'd do differently
-
-The MQTT topic structure grew organically and became inconsistent across camera types. I'd define the topic schema upfront as a formal contract and version it from day one.
 
 </ModeAware>

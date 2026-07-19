@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import {
   buildAlternates,
@@ -16,7 +16,7 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { getProject, PROJECTS, EDUCATION_PROJECTS } from "@/data/projects";
+import { getProject, PROJECTS, EDUCATION_PROJECTS, imageSrc } from "@/data/projects";
 import { getCompanyBundle } from "@/data/companies";
 import { ProjectDetailSection } from "@/components/projects/ProjectDetailSection";
 import { NextProjectLink } from "@/components/projects/NextProjectLink";
@@ -91,7 +91,7 @@ export default async function ProjectDetailPage({
   // there instead of duplicating the content.
   const bundle = getCompanyBundle(project.company);
   if (bundle) {
-    redirect(`/${locale}/projects/company/${bundle.slug}#${project.slug}`);
+    permanentRedirect(`/${locale}/projects/company/${bundle.slug}#${project.slug}`);
   }
 
   const tNav = await getTranslations({ locale, namespace: "Nav" });
@@ -114,7 +114,7 @@ export default async function ProjectDetailPage({
     path: `/projects/${slug}`,
     name: projectTitle,
     description: projectDescription,
-    image: project.images?.[0] ? `${BASE_URL}${project.images[0]}` : undefined,
+    image: project.images?.[0] ? `${BASE_URL}${imageSrc(project.images[0])}` : undefined,
     keywords: project.stack,
     demoUrl,
     relatedUrls,

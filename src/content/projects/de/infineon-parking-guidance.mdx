@@ -22,7 +22,7 @@ impact:
 <StarStory>
 <StarSituation>
 
-Der Infineon-Campus in Dresden hat Hunderte Parkplätze über mehrere Bereiche verteilt. Das Unternehmen holte Angebote von kommerziellen Parkleitsystem-Anbietern ein — das beste Angebot lag bei 480.000 €/Jahr an Lizenz- und Wartungsgebühren.
+Infineon ist einer der größten Chiphersteller Europas, tätig in Automotive-, Industrie- und IoT-Märkten. Der Campus in Dresden hat Hunderte Parkplätze über mehrere Bereiche verteilt. Das Unternehmen holte Angebote von kommerziellen Parkleitsystem-Anbietern ein — das beste Angebot lag bei 480.000 €/Jahr an Lizenz- und Wartungsgebühren.
 
 </StarSituation>
 <StarTask>
@@ -32,7 +32,7 @@ Eine Eigenentwicklung bauen — von der Hardware bis zum Dashboard — für eine
 </StarTask>
 <StarAction>
 
-Eingebettete Firmware für Kennzeichenerkennung und Belegungszählung gebaut, die direkt auf IP-Kameras läuft, dazu Python-Backend-Services zur Aggregation der Zonenbelegung, eine C#-Geräteverwaltungsschicht und ein React-Dashboard für Echtzeit-Sichtbarkeit.
+Eingebettete Firmware für Kennzeichenerkennung und Belegungszählung gebaut, die direkt auf IP-Kameras läuft, dazu einen Python-Computer-Vision-Service zur Bestimmung freier Plätze für die Karte, eine C#-Geräteverwaltungsschicht (Authentifizierung, REST/WebSocket-API) und ein React-Dashboard für Echtzeit-Sichtbarkeit.
 
 </StarAction>
 <StarResult>
@@ -77,8 +77,8 @@ Die Alternative: Eigenentwicklung.
 Ein vollständiges Parkleitsystem, von der Hardware bis zum Dashboard:
 
 - **Eingebettete Firmware** in C auf IP-Kameras — führt ANPR (automatische Kennzeichenerkennung) und Belegungszählung durch, ohne Videostreams über das Netzwerk zu senden.
-- **Python-Microservices** aggregieren die Zonenbelegung, übernehmen die Authentifizierung und stellen die REST-/WebSocket-API bereit.
-- **C#-Geräteverwaltungsschicht** übernimmt Kamera-Provisionierung, Firmware-Updates und Health-Monitoring.
+- **Python-Computer-Vision-Service** verarbeitet die Kameradaten und bestimmt, welche Parkplätze belegt sind, um sie auf der Karte hervorzuheben.
+- **C#-Geräteverwaltungsschicht** übernimmt die Authentifizierung, stellt die REST-/WebSocket-API bereit und kümmert sich um Kamera-Provisionierung, Firmware-Updates und Health-Monitoring.
 - **React + TypeScript Dashboard** gibt Sicherheitspersonal und Fahrern eine Echtzeit-Karte der verfügbaren Plätze.
 
 </ModeAware>
@@ -88,15 +88,17 @@ Ein vollständiges Parkleitsystem, von der Hardware bis zum Dashboard:
 ## Architektur
 
 ```
-┌──────────────────┐     MQTT      ┌────────────────────┐
-│  IP-Kamera (C)    │ ────────────► │  Python-Backend     │
-│  ANPR + Zählung   │               │  (Event-Prozessor)  │
-└──────────────────┘               └────────┬───────────┘
-                                            │ WebSocket
-                                   ┌────────▼───────────┐
-                                   │  React-Dashboard    │
-                                   │  (Echtzeit-Karte)   │
-                                   └────────────────────┘
+                   MQTT
+┌────────────────┐       ┌─────────────────────┐
+│ IP-Kamera (C)  │─────► │ Backend (C#)        │
+│ ANPR + Zählung │       │ REST-/WebSocket-API │
+└────────────────┘       └─────────────────────┘
+                                    │ WebSocket
+                                    ▼
+                          ┌──────────────────┐
+                          │ React-Dashboard  │
+                          │ (Echtzeit-Karte) │
+                          └──────────────────┘
 ```
 
 Die Kameras führen die Erkennung lokal aus (Edge Computing) — nur Belegungsereignisse werden über das Netzwerk gesendet, kein Video. Das hält die Bandbreite niedrig und vermeidet DSGVO-Probleme durch zentrale Videospeicherung.
@@ -116,9 +118,5 @@ Die Kameras führen die Erkennung lokal aus (Edge Computing) — nur Belegungser
 ## Ergebnis
 
 Das System ging auf dem Campus live. **480.000 €/Jahr gespart** gegenüber dem Anbieterangebot. Das eigenständig hinzugefügte Schrankensteuerungs-Subsystem bedient **8.000 registrierte Nutzer** mit **3.000 monatlich aktiv**.
-
-## Was ich anders machen würde
-
-Die MQTT-Topic-Struktur wuchs organisch und wurde über die Kameratypen hinweg inkonsistent. Ich würde das Topic-Schema von Anfang an als formalen Vertrag definieren und versionieren.
 
 </ModeAware>

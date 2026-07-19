@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { buildPageMetadata, buildWebPageJsonLd } from "@/lib/seo";
+import { buildPageMetadata, buildWebPageJsonLd, buildProfilePageJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/home/Hero";
 import { ImpactDashboard } from "@/components/home/ImpactDashboard";
@@ -44,10 +44,12 @@ export default async function HomePage({
     name: t("metaTitle"),
     description: t("metaDescription"),
   });
+  const profilePageJsonLd = await buildProfilePageJsonLd(locale);
 
   return (
     <main>
       <JsonLd data={webPageJsonLd} />
+      <JsonLd data={profilePageJsonLd} />
       <Hero />
       <ImpactDashboard />
       <BrandCloud />

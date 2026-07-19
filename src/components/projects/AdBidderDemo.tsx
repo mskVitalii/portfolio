@@ -29,7 +29,7 @@ const INVISIBLE_THRESHOLD = 0.2;
 type Status = "healthy" | "loss" | "invisible";
 
 const STATUS_STYLES: Record<Status, string> = {
-  healthy: "text-emerald-600 dark:text-emerald-400 border-emerald-500/30 bg-emerald-500/10",
+  healthy: "text-primary border-primary/30 bg-primary/10 glow-sm",
   loss: "text-red-600 dark:text-red-400 border-red-500/30 bg-red-500/10",
   invisible: "text-amber-600 dark:text-amber-400 border-amber-500/30 bg-amber-500/10",
 };

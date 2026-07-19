@@ -167,7 +167,8 @@ export async function ProjectDetailSection({
       {project.images && project.images.length > 0 && (
         <ProjectImageGallery
           images={project.images}
-          alt={localize(project.title, locale)}
+          fallbackAlt={project.title}
+          locale={locale}
           strings={{
             zoomAria: t("galleryZoomAria"),
             closeAria: t("galleryCloseAria"),

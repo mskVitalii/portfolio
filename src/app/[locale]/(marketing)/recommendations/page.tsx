@@ -45,25 +45,20 @@ export default async function RecommendationsPage({
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={webPageJsonLd} />
       <div className="mb-12">
-        <h1 className="text-4xl font-bold mb-4">Recommendations</h1>
-        <p className="text-muted-foreground text-lg">
-          What colleagues, managers, and collaborators say about working with me.
-        </p>
+        <h1 className="text-4xl font-bold mb-4">{t("heading")}</h1>
+        <p className="text-muted-foreground text-lg">{t("subtitle")}</p>
       </div>
 
       <div className="rounded-xl border border-dashed p-10 text-center">
-        <p className="font-medium mb-2">Collecting recommendations</p>
-        <p className="text-sm text-muted-foreground max-w-md mx-auto">
-          I'm reaching out to former colleagues and managers. This section will be
-          updated with verified testimonials shortly.
-        </p>
+        <p className="font-medium mb-2">{t("collectingTitle")}</p>
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">{t("collectingBody")}</p>
         <a
           href="https://linkedin.com/in/mskvitalii"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 mt-6 text-sm text-primary hover:underline"
         >
-          See LinkedIn recommendations
+          {t("linkedinCta")}
           <ExternalLink className="h-3.5 w-3.5" />
         </a>
       </div>
