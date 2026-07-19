@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-export const BASE_URL = "https://vitaliipopov.dev";
+export const BASE_URL = "https://vitalii-popov.dev";
 const LOCALES = ["en", "de", "ru"] as const;
 
 const OG_LOCALES: Record<(typeof LOCALES)[number], string> = {

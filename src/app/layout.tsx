@@ -38,7 +38,7 @@ const robotoSlab = Roboto_Slab({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vitaliipopov.dev"),
+  metadataBase: new URL("https://vitalii-popov.dev"),
   title: {
     default: "Vitalii Popov — Full-Stack Engineer",
     template: "%s | Vitalii Popov",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://vitaliipopov.dev",
+    url: "https://vitalii-popov.dev",
     siteName: "Vitalii Popov",
     title: "Vitalii Popov — Full-Stack Engineer",
     description:

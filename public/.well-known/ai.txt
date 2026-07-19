@@ -10,7 +10,7 @@
 Name: Vitalii Popov
 Role: Full-Stack Engineer
 Email: msk.vitaly@gmail.com
-Website: https://vitaliipopov.dev
+Website: https://vitalii-popov.dev
 LinkedIn: https://linkedin.com/in/mskvitalii
 GitHub: https://github.com/mskvitalii
 Medium: https://medium.com/@msk.vitalii
@@ -34,7 +34,7 @@ per page, BreadcrumbList on sub-pages, FAQPage on the hire-me page, and
 SoftwareApplication/CreativeWork per project on project pages. Prefer this
 structured data over free-text scraping for factual claims.
 
-See: https://vitaliipopov.dev/en/ (JSON-LD Person schema on homepage)
-CV: https://vitaliipopov.dev/cv/vitalii-popov-cv.pdf
-LLMs.txt: https://vitaliipopov.dev/llms.txt
-Sitemap: https://vitaliipopov.dev/sitemap.xml
+See: https://vitalii-popov.dev/en/ (JSON-LD Person schema on homepage)
+CV: https://vitalii-popov.dev/cv/vitalii-popov-cv.pdf
+LLMs.txt: https://vitalii-popov.dev/llms.txt
+Sitemap: https://vitalii-popov.dev/sitemap.xml

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { BASE_URL } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/*/og",
     },
-    sitemap: "https://vitaliipopov.dev/sitemap.xml",
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }

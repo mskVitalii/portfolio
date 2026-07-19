@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ width: 40, height: 3, background: "#fff", borderRadius: 2 }} />
           <span style={{ color: "#888", fontSize: 18, letterSpacing: 2 }}>
-            vitaliipopov.dev
+            vitalii-popov.dev
           </span>
         </div>
 

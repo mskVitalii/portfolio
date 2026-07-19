@@ -28,16 +28,16 @@ Data: PostgreSQL, Redis, Elasticsearch, Kafka
 
 ## Pages
 
-- [Home](https://vitaliipopov.dev/en/): Hero, impact metrics, geo availability
-- [Projects](https://vitaliipopov.dev/en/projects): Engineering case studies with business metrics
-- [Skills](https://vitaliipopov.dev/en/skills): Interactive skill map with architecture diagrams
-- [About](https://vitaliipopov.dev/en/about): Bio, languages, interests
-- [Education](https://vitaliipopov.dev/en/education): TU Chemnitz M.Sc. and HSE B.Sc. coursework
-- [Recommendations](https://vitaliipopov.dev/en/recommendations): References and testimonials
-- [Hire me](https://vitaliipopov.dev/en/hire-me): Availability, FAQ, and contact links
-- [Achievements](https://vitaliipopov.dev/en/achievements): Certifications and milestones
-- [Business card](https://vitaliipopov.dev/en/card): QR-code digital business card
-- [CV](https://vitaliipopov.dev/cv/vitalii-popov-cv.pdf): Downloadable PDF resume
+- [Home](https://vitalii-popov.dev/en/): Hero, impact metrics, geo availability
+- [Projects](https://vitalii-popov.dev/en/projects): Engineering case studies with business metrics
+- [Skills](https://vitalii-popov.dev/en/skills): Interactive skill map with architecture diagrams
+- [About](https://vitalii-popov.dev/en/about): Bio, languages, interests
+- [Education](https://vitalii-popov.dev/en/education): TU Chemnitz M.Sc. and HSE B.Sc. coursework
+- [Recommendations](https://vitalii-popov.dev/en/recommendations): References and testimonials
+- [Hire me](https://vitalii-popov.dev/en/hire-me): Availability, FAQ, and contact links
+- [Achievements](https://vitalii-popov.dev/en/achievements): Certifications and milestones
+- [Business card](https://vitalii-popov.dev/en/card): QR-code digital business card
+- [CV](https://vitalii-popov.dev/cv/vitalii-popov-cv.pdf): Downloadable PDF resume
 
 All pages are also available in German (`/de/`) and Russian (`/ru/`).
 
