@@ -8,7 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { useViewMode } from "@/store/viewMode";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
-import { localize, formatImpactValue } from "@/lib/localized";
+import { localize, formatImpactValue, formatPeriod } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
@@ -41,7 +41,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
               {t(`categories.${project.category}` as "categories.work")}
             </Badge>
           </div>
-          <span className="text-xs text-muted-foreground shrink-0">{project.period}</span>
+          <span className="text-xs text-muted-foreground shrink-0">{formatPeriod(project.period, t("timelinePresent"))}</span>
         </div>
 
         <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">

@@ -11,7 +11,7 @@ import { ProjectStatusBadge } from "./ProjectStatusBadge";
 import { ModeAware } from "@/components/tri-mode/ModeAware";
 import { CompanyBlurb } from "./CompanyBlurb";
 import { getCompanyBundle } from "@/data/companies";
-import { localize, formatImpactValue } from "@/lib/localized";
+import { localize, formatImpactValue, formatPeriod } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 // Same "MM/YYYY" comparison approach as ProjectsFilter's periodStartKey, kept
@@ -23,14 +23,14 @@ function periodKey(token: string): number {
   return year ? parseInt(year[0], 10) * 12 : 0;
 }
 
-function formatPeriodRange(projects: Project[]): string {
+function formatPeriodRange(projects: Project[], presentLabel: string): string {
   const ranges = projects.map((p) => p.period.split(/\s*[–—-]\s*/).map((s) => s.trim()));
   const starts = ranges.map((r) => r[0]);
   const ends = ranges.map((r) => r[1] ?? r[0]);
   const hasPresent = ends.some((e) => e.toLowerCase() === "present");
 
   const earliestStart = starts.reduce((a, b) => (periodKey(a) < periodKey(b) ? a : b));
-  if (hasPresent) return `${earliestStart} – present`;
+  if (hasPresent) return `${earliestStart} – ${presentLabel}`;
 
   const latestEnd = ends.reduce((a, b) => (periodKey(a) > periodKey(b) ? a : b));
   return earliestStart === latestEnd ? earliestStart : `${earliestStart} – ${latestEnd}`;
@@ -61,7 +61,7 @@ export function ProjectCompanyBundle({ company, projects }: { company: string; p
             </Badge>
           </div>
 
-          <p className="text-sm text-muted-foreground mb-2">{formatPeriodRange(projects)}</p>
+          <p className="text-sm text-muted-foreground mb-2">{formatPeriodRange(projects, t("timelinePresent"))}</p>
 
           {bundle && <CompanyBlurb blurb={bundle.blurb} className="text-sm mb-3" />}
 
@@ -117,7 +117,7 @@ export function ProjectCompanyBundle({ company, projects }: { company: string; p
                         <span className="text-[10px] text-muted-foreground whitespace-nowrap">{localize(project.impact[0].label, locale)}</span>
                       </div>
                     )}
-                    <span className="text-xs text-muted-foreground hidden sm:inline">{project.period}</span>
+                    <span className="text-xs text-muted-foreground hidden sm:inline">{formatPeriod(project.period, t("timelinePresent"))}</span>
                     <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
                 </Link>

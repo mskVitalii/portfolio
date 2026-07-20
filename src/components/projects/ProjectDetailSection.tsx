@@ -6,7 +6,7 @@ import { Calendar, Building2, AlertCircle, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { localize, formatImpactValue } from "@/lib/localized";
+import { localize, formatImpactValue, formatPeriod } from "@/lib/localized";
 import { useMDXComponents } from "../../../mdx-components";
 import { getPageContent, getPageSlugs } from "@/lib/content";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
@@ -83,7 +83,7 @@ export async function ProjectDetailSection({
           )}
           <span className="flex items-center gap-1.5">
             <Calendar className="h-4 w-4" />
-            {project.period}
+            {formatPeriod(project.period, t("timelinePresent"))}
           </span>
         </div>
 

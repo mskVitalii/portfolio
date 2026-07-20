@@ -7,7 +7,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { FileDown, Award, ChevronRight, CheckCircle2, ExternalLink, GraduationCap } from "lucide-react";
 import type { Project } from "@/data/projects";
-import { localize } from "@/lib/localized";
+import { localize, formatPeriod } from "@/lib/localized";
 import { Certificates } from "@/components/education/Certificates";
 
 // ─── HSE Logo SVG ──────────────────────────────────────────────────────────────
@@ -299,6 +299,7 @@ const TUC_STATIC = {
 
 function TucCard({ isDark }: { isDark: boolean }) {
   const t = useTranslations("EducationPage");
+  const tProjects = useTranslations("Projects");
   const c = isDark ? TUC_DARK : TUC_LIGHT;
   const d = TUC_STATIC;
 
@@ -457,7 +458,7 @@ function TucCard({ isDark }: { isDark: boolean }) {
           <div style={{ width: "48px", height: "3px", background: c.primary, marginBottom: "20px" }} />
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mb-6" style={{ color: c.muted }}>
-            <span>{d.period}</span>
+            <span>{formatPeriod(d.period, tProjects("timelinePresent"))}</span>
             <span>|</span>
             <span>{d.location}</span>
             <span>|</span>
@@ -571,6 +572,7 @@ function githubLink(project: Project): string | undefined {
 
 function MiniProjectCard({ project, c, headingFont }: { project: Project; c: Colors; headingFont: string }) {
   const t = useTranslations("EducationPage");
+  const tProjects = useTranslations("Projects");
   const locale = useLocale();
   const gh = githubLink(project);
   return (
@@ -609,7 +611,7 @@ function MiniProjectCard({ project, c, headingFont }: { project: Project; c: Col
             </span>
           ))}
         </div>
-        <span className="text-[10px] shrink-0 font-medium" style={{ color: c.muted }}>{project.period}</span>
+        <span className="text-[10px] shrink-0 font-medium" style={{ color: c.muted }}>{formatPeriod(project.period, tProjects("timelinePresent"))}</span>
       </div>
     </div>
   );

@@ -9,6 +9,13 @@ export function localize(text: LocalizedText, locale: string): string {
   return text[locale as Locale] ?? text.en;
 }
 
+/** `period` strings in data files (e.g. "09/2024 – present") are authored once in
+ * English; swap the trailing "present" for the locale's translated word at render
+ * time instead of maintaining per-locale period strings in the data. */
+export function formatPeriod(period: string, presentLabel: string): string {
+  return period.replace(/present\s*$/i, presentLabel);
+}
+
 /** Impact-metric values (e.g. "₽7,000") are authored once, prefix-symbol style
  * (matching EN/DE convention), and shared across locales. Russian typographic
  * convention puts the ₽ symbol after the number, so flip it at render time for

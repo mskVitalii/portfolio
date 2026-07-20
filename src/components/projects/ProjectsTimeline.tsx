@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import { motion } from "motion/react";
 import { useTranslations, useLocale } from "next-intl";
-import { localize } from "@/lib/localized";
+import { localize, formatPeriod } from "@/lib/localized";
 import type { Project } from "@/data/projects";
 
 const START_YEAR = 2020;
@@ -167,7 +167,7 @@ export function ProjectsTimeline({ projects }: { projects: Project[] }) {
             ? `${group.startText} – ${group.endText}`
             : `${group.startText} – ${t("timelinePresent")}`;
           const tooltip = group.projects
-            .map((p) => `${localize(p.title, locale)} (${p.period})`)
+            .map((p) => `${localize(p.title, locale)} (${formatPeriod(p.period, t("timelinePresent"))})`)
             .join("\n");
 
           return (
