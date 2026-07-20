@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Roboto, Nunito_Sans, Roboto_Slab } from "next/font/google";
-import { headers } from "next/headers";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { routing } from "@/i18n/routing";
 import "./globals.css";
 
 const inter = Inter({
@@ -81,17 +81,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = await headers();
-  const locale = headersList.get("x-next-intl-locale") ?? "en";
-
   return (
     <html
-      lang={locale}
+      lang={routing.defaultLocale}
       suppressHydrationWarning
       data-view-mode="hr"
       className={`${inter.variable} ${jetbrainsMono.variable} ${roboto.variable} ${nunitoSans.variable} ${robotoSlab.variable}`}

@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { useAchievementsStore } from "@/store/achievements";
-import { useVisitedPagesStore } from "@/store/visitedPages";
 import { SOCIAL_LINKS } from "@/data/social";
 import { ACHIEVEMENTS, PAGE_ACHIEVEMENTS, ALL_PAGE_ACHIEVEMENT_IDS } from "@/data/achievements";
 import { AchievementToaster } from "./AchievementToast";
@@ -14,13 +13,6 @@ export function AchievementsProvider() {
   const pathname = usePathname();
   const unlock = useAchievementsStore((s) => s.unlock);
   const unlocked = useAchievementsStore((s) => s.unlocked);
-  const markVisited = useVisitedPagesStore((s) => s.markVisited);
-
-  // Records the visit immediately (unlike page-visit achievements below, which
-  // wait for a scroll-to-bottom) so nav UI can show "already seen" right away.
-  useEffect(() => {
-    markVisited(pathname);
-  }, [pathname, markVisited]);
 
   // Page-visit achievements only unlock once the visitor scrolls to the bottom of a known page
   // (pathname from next-intl navigation is already locale-stripped). Short pages that already

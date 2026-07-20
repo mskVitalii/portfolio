@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Menu, X, Check } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
-import { useVisitedPagesStore } from "@/store/visitedPages";
+import { getRecommendedHref } from "@/lib/funnel";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -25,7 +25,7 @@ export function MobileNav() {
   const [mounted, setMounted] = useState(false);
   const t = useTranslations("Nav");
   const pathname = usePathname();
-  const visited = useVisitedPagesStore((s) => s.visited);
+  const recommendedHref = getRecommendedHref(pathname);
 
   useEffect(() => {
     setMounted(true);
@@ -49,10 +49,7 @@ export function MobileNav() {
           <nav className="container mx-auto px-4 py-6 flex flex-col gap-1">
             {NAV_LINKS.map(({ key, href }) => {
               const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
-              const isVisited =
-                mounted &&
-                !isActive &&
-                (href === "/" ? visited.includes("/") : visited.some((v) => v === href || v.startsWith(`${href}/`)));
+              const isRecommended = mounted && !isActive && href === recommendedHref;
               return (
                 <Link
                   key={key}
@@ -60,11 +57,15 @@ export function MobileNav() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     "flex items-center justify-between gap-2 text-lg py-3 px-2 rounded-lg hover:bg-muted transition-colors",
-                    isActive ? "font-bold text-foreground bg-muted" : "font-medium text-muted-foreground"
+                    isActive
+                      ? "font-bold text-foreground bg-muted"
+                      : isRecommended
+                        ? "font-medium text-primary"
+                        : "font-medium text-muted-foreground"
                   )}
                 >
                   <span>{t(key)}</span>
-                  {isVisited && <Check className="h-4 w-4 shrink-0 text-muted-foreground/50" aria-hidden="true" />}
+                  {isRecommended && <ArrowRight className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />}
                 </Link>
               );
             })}

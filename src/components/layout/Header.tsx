@@ -8,6 +8,7 @@ import { ViewModeSwitcher } from "@/components/tri-mode/ViewModeSwitcher";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileNav } from "./MobileNav";
 import { buttonVariants } from "@/components/ui/button";
+import { getRecommendedHref } from "@/lib/funnel";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -24,6 +25,7 @@ const NAV_LINKS = [
 export function Header() {
   const t = useTranslations();
   const pathname = usePathname();
+  const recommendedHref = getRecommendedHref(pathname);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
@@ -36,13 +38,15 @@ export function Header() {
           <nav className="hidden nav:flex items-center gap-4 text-sm text-muted-foreground">
             {NAV_LINKS.map(({ key, href }) => {
               const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+              const isRecommended = !isActive && href === recommendedHref;
               return (
                 <Link
                   key={key}
                   href={href}
                   className={cn(
                     "hover:text-foreground transition-colors",
-                    isActive && "text-foreground font-medium"
+                    isActive && "text-foreground font-medium",
+                    isRecommended && "text-primary font-medium"
                   )}
                 >
                   {t(`Nav.${key}`)}

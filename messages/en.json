@@ -11,7 +11,8 @@
     "downloadCv": "Download CV"
   },
   "ExploreMore": {
-    "title": "Keep exploring"
+    "title": "Keep exploring",
+    "recommended": "Suggested next"
   },
   "Nav": {
     "home": "Home",

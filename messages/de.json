@@ -11,7 +11,8 @@
     "downloadCv": "Lebenslauf herunterladen"
   },
   "ExploreMore": {
-    "title": "Weiter entdecken"
+    "title": "Weiter entdecken",
+    "recommended": "Empfohlener nächster Schritt"
   },
   "Nav": {
     "home": "Startseite",

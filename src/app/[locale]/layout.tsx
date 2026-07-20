@@ -7,6 +7,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { ViewModeProvider } from "@/components/layout/ViewModeProvider";
+import { HtmlLangSync } from "@/components/layout/HtmlLangSync";
 import { Header } from "@/components/layout/Header";
 import { ExploreMore } from "@/components/layout/ExploreMore";
 import { Footer } from "@/components/layout/Footer";
@@ -92,6 +93,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <HtmlLangSync locale={locale} />
       <PersonJsonLd locale={locale} />
       <WebsiteJsonLd locale={locale} />
       <ViewModeProvider>

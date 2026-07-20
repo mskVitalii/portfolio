@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Home,
   UserRound,
@@ -15,7 +14,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { useVisitedPagesStore } from "@/store/visitedPages";
+import { getRecommendedHref } from "@/lib/funnel";
 import { cn } from "@/lib/utils";
 
 const PAGES: { key: string; href: "/" | "/about" | "/projects" | "/skills" | "/education" | "/recommendations" | "/hire-me" | "/card" | "/achievements"; icon: LucideIcon }[] = [
@@ -36,10 +35,7 @@ const PAGES: { key: string; href: "/" | "/about" | "/projects" | "/skills" | "/e
 export function ExploreMore() {
   const t = useTranslations();
   const pathname = usePathname();
-  const visited = useVisitedPagesStore((s) => s.visited);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const recommendedHref = getRecommendedHref(pathname);
 
   const others = PAGES.filter(({ href }) =>
     href === "/" ? pathname !== "/" : !pathname.startsWith(href)
@@ -55,19 +51,25 @@ export function ExploreMore() {
         </p>
         <div className="flex flex-wrap gap-2">
           {others.map(({ key, href, icon: Icon }) => {
-            const isVisited =
-              mounted && (href === "/" ? visited.includes("/") : visited.some((v) => v === href || v.startsWith(`${href}/`)));
+            const isRecommended = href === recommendedHref;
             return (
               <Link
                 key={key}
                 href={href}
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm text-muted-foreground transition-colors hover:border-foreground/50 hover:text-foreground",
-                  isVisited && "opacity-60"
+                  "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm transition-colors",
+                  isRecommended
+                    ? "border-primary/60 bg-primary/10 text-primary hover:border-primary hover:bg-primary/15"
+                    : "text-muted-foreground hover:border-foreground/50 hover:text-foreground"
                 )}
               >
                 <Icon className="h-3.5 w-3.5" />
                 {t(`Nav.${key}`)}
+                {isRecommended && (
+                  <span className="text-[10px] font-semibold uppercase tracking-wide">
+                    · {t("ExploreMore.recommended")}
+                  </span>
+                )}
               </Link>
             );
           })}
