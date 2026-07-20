@@ -30,6 +30,13 @@ export interface TinderStrings {
 type SwipeDirection = "like" | "pass";
 
 const STACK_DEPTH = 3;
+// Matches the deck's own max-w-md/sm:max-w-lg/lg:max-w-xl container widths, so
+// next/image requests a source large enough for the actual rendered size
+// instead of defaulting to a small, blurry bucket on wide desktop viewports.
+const CARD_SIZES = "(min-width: 1024px) 576px, (min-width: 640px) 512px, 100vw";
+// Default next/image quality (75) visibly compressed these portrait photos —
+// bump to 90 for the deck (see images.qualities in next.config.ts).
+const CARD_QUALITY = 90;
 
 export function TinderDeck({
   photos,
@@ -101,6 +108,18 @@ export function TinderDeck({
 
   return (
     <div className="mx-auto flex w-full max-w-md flex-col items-center gap-5 sm:max-w-lg lg:max-w-xl">
+      {/* Preload every photo in the deck up front — it's a small, fixed set
+          (hasFace photos only), so swiping through never waits on a fetch.
+          Same sizes/quality as the visible Card below, so the browser reuses
+          the exact cached _next/image URL instead of fetching it twice. */}
+      <div aria-hidden="true" className="sr-only">
+        {photos.map((photo) => (
+          <div key={photo.id} className="relative h-px w-px overflow-hidden">
+            <Image src={photo.src} alt="" fill sizes={CARD_SIZES} quality={CARD_QUALITY} priority />
+          </div>
+        ))}
+      </div>
+
       <p className="text-sm text-muted-foreground">
         {strings.progressTemplate
           .replace("{current}", String(index + 1))
@@ -199,7 +218,8 @@ function Card({
         src={photo.src}
         alt={photo.caption}
         fill
-        sizes="384px"
+        sizes={CARD_SIZES}
+        quality={CARD_QUALITY}
         className="pointer-events-none object-cover"
         draggable={false}
         priority={priority}

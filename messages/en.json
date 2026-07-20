@@ -242,7 +242,7 @@
     "bio2ProjectsLabel": "projects",
     "travelMap": {
       "title": "Where I've been",
-      "subtitle": "I've spent my whole conscious life in just two cities — Moscow and Chemnitz — and given them a lot of my time. But it's time to move forward: I now live in Berlin, I'm finishing my Master's in Web Engineering at Chemnitz University of Technology, and the next goal is German citizenship.",
+      "subtitle": "I've spent my whole conscious life in just two cities — Moscow and Chemnitz — and given them a lot of my time. I now live in Chemnitz, having finished my Master's in Web Engineering at Chemnitz University of Technology, and the next goal is German citizenship.",
       "allLabel": "All",
       "countries": {
         "russia": "Russia",
@@ -442,8 +442,6 @@
     "sectionHackathons": "Hackathons",
     "sectionFreelance": "Freelance Projects",
     "sectionPersonal": "Personal Projects",
-    "companyLabel": "Company:",
-    "clearCompanyFilter": "Clear company filter",
     "projectCount": "{count, plural, one {# project} other {# projects}}",
     "noProjectsYet": "No projects in this category yet.",
     "viewList": "List",

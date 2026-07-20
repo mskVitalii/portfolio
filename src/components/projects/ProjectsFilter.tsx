@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { X, Building2 } from "lucide-react";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectCompanyBundle } from "./ProjectCompanyBundle";
 import { useViewMode } from "@/store/viewMode";
@@ -89,9 +86,6 @@ function sortEntries(entries: WorkEntry[], businessMode: boolean): WorkEntry[] {
 
 export function ProjectsFilter({ projects }: { projects: Project[] }) {
   const t = useTranslations("Projects");
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const companyFilter = searchParams.get("company");
   const { mode } = useViewMode();
   const [mounted, setMounted] = useState(false);
 
@@ -105,20 +99,7 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
   // show Freelance (which all earned real revenue) instead of Personal there.
   const hidePersonal = businessMode;
 
-  // The commercial-work section is the only one with a meaningful `company`
-  // field, so a company deep-link (from the Impact Dashboard / brand cloud)
-  // narrows that section and scrolls straight to it.
-  useEffect(() => {
-    if (companyFilter) {
-      document.getElementById("work")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [companyFilter]);
-
-  const workProjects = projects.filter(
-    (p) =>
-      p.category === "work" &&
-      (!companyFilter || p.company?.toLowerCase().includes(companyFilter.toLowerCase()))
-  );
+  const workProjects = projects.filter((p) => p.category === "work");
   const workEntries = sortEntries(buildWorkEntries(workProjects), businessMode);
 
   const otherSections = SECTIONS.filter(
@@ -157,24 +138,6 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
           </a>
         ))}
       </div>
-
-      {/* Company filter banner */}
-      {companyFilter && (
-        <div className="mb-6 flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-primary/8 border border-primary/25 text-sm">
-            <Building2 className="w-4 h-4 text-primary shrink-0" />
-            <span className="text-muted-foreground">{t("companyLabel")}</span>
-            <span className="font-semibold text-primary">{companyFilter}</span>
-            <button
-              onClick={() => router.push("/projects")}
-              aria-label={t("clearCompanyFilter")}
-              className="ml-1 rounded-full p-0.5 hover:bg-primary/15 transition-colors"
-            >
-              <X className="w-3.5 h-3.5 text-primary" />
-            </button>
-          </div>
-        </div>
-      )}
 
       {workEntries.length > 0 && (
         <section id="work" className="scroll-mt-20 mb-16 last:mb-0">

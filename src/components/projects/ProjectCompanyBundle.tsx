@@ -45,7 +45,10 @@ export function ProjectCompanyBundle({ company, projects }: { company: string; p
   const bundle = getCompanyBundle(company);
 
   return (
-    <div className="sm:col-span-2 rounded-xl border bg-card overflow-hidden hover:border-primary/50 transition-colors">
+    <div
+      id={bundle?.slug}
+      className="sm:col-span-2 scroll-mt-20 rounded-xl border bg-card overflow-hidden hover:border-primary/50 transition-colors"
+    >
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}

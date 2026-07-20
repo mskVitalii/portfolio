@@ -1673,6 +1673,7 @@ export const EDUCATION_PROJECTS: Project[] = [
     links: [
       { labelKey: "liveSite", url: "https://prospero-frontend.vercel.app/" },
       { labelKey: "adminPanel", url: "https://prospero-adminka.vercel.app/" },
+      { labelKey: "demoVideo", url: "https://www.youtube.com/watch?v=5vYHcLEGCOY" },
       { labelKey: "githubFrontend", url: "https://github.com/mskVitalii/prospero_frontend" },
       { labelKey: "githubBackend", url: "https://github.com/mskVitalii/prospero_backend" },
       { labelKey: "githubAdmin", url: "https://github.com/mskVitalii/prospero_adminka" },
@@ -1714,7 +1715,10 @@ export const EDUCATION_PROJECTS: Project[] = [
       },
     },
     stack: ["TypeScript"],
-    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/chemnitz_map" }],
+    links: [
+      { labelKey: "demoVideo", url: "https://www.youtube.com/watch?v=Fke_llSadfE" },
+      { labelKey: "github", url: "https://github.com/mskVitalii/chemnitz_map" },
+    ],
   },
   {
     slug: "swe-low-code-sql",
@@ -1801,24 +1805,24 @@ export const EDUCATION_PROJECTS: Project[] = [
     },
     company: "Chemnitz University of Technology",
     period: "03/2025 – present",
-    status: "active",
+    status: "archived",
     statusNote: {
-      en: "In progress — the Master-Arbeit is not yet submitted (85 of 120 ECTS completed per the latest transcript).",
-      de: "In Arbeit — die Masterarbeit ist noch nicht eingereicht (85 von 120 ECTS laut aktuellem Notenspiegel).",
-      ru: "В процессе — магистерская работа ещё не сдана (85 из 120 ECTS по последней выписке).",
+      en: "Completed — the Master-Arbeit has been submitted and the Master's degree completed.",
+      de: "Abgeschlossen — die Masterarbeit wurde eingereicht und der Master erfolgreich abgeschlossen.",
+      ru: "Завершено — магистерская работа сдана, магистратура закончена.",
     },
     category: "education",
     tagline: {
-      en: "Master's thesis (in progress): a semantic search engine for government open data, built as 4 cooperating microservices",
-      de: "Masterarbeit (in Arbeit): eine semantische Suchmaschine für offene Verwaltungsdaten, aufgebaut als 4 zusammenarbeitende Microservices",
-      ru: "Магистерская работа (в процессе): семантический поисковый движок по открытым государственным данным на 4 взаимодействующих микросервисах",
+      en: "Master's thesis: a semantic search engine for government open data, built as 4 cooperating microservices",
+      de: "Masterarbeit: eine semantische Suchmaschine für offene Verwaltungsdaten, aufgebaut als 4 zusammenarbeitende Microservices",
+      ru: "Магистерская работа: семантический поисковый движок по открытым государственным данным на 4 взаимодействующих микросервисах",
     },
     featured: true,
     description: {
       hr: {
-        en: "Master's thesis at TU Chemnitz, currently in progress — designing and building a semantic search engine over government open data, split into four independently deployable services: frontend, backend/API, an embedding service, and a reranker.",
-        de: "Masterarbeit an der TU Chemnitz, derzeit in Arbeit — Entwurf und Bau einer semantischen Suchmaschine über offene Verwaltungsdaten, aufgeteilt in vier unabhängig deploybare Services: Frontend, Backend/API, einen Embedding-Service und einen Reranker.",
-        ru: "Магистерская работа в TU Chemnitz, в процессе — проектирование и разработка семантического поискового движка по открытым государственным данным, разделённого на четыре независимо разворачиваемых сервиса: фронтенд, бэкенд/API, сервис эмбеддингов и реранкер.",
+        en: "Master's thesis at TU Chemnitz — designing and building a semantic search engine over government open data, split into four independently deployable services: frontend, backend/API, an embedding service, and a reranker.",
+        de: "Masterarbeit an der TU Chemnitz — Entwurf und Bau einer semantischen Suchmaschine über offene Verwaltungsdaten, aufgeteilt in vier unabhängig deploybare Services: Frontend, Backend/API, einen Embedding-Service und einen Reranker.",
+        ru: "Магистерская работа в TU Chemnitz — проектирование и разработка семантического поискового движка по открытым государственным данным, разделённого на четыре независимо разворачиваемых сервиса: фронтенд, бэкенд/API, сервис эмбеддингов и реранкер.",
       },
       business: {
         en: "A production-style thesis project demonstrating a full semantic-search pipeline — from raw open-data ingestion through embedding, retrieval, and reranking to a natural-language search UI.",

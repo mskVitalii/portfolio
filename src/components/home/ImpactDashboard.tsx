@@ -8,11 +8,12 @@ import { Link } from "@/i18n/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IMPACT_METRICS } from "@/data/metrics";
+import { getCompanyBundle } from "@/data/companies";
 
 const REVENUE_SEGMENTS = [
   { label: "Infineon", value: 480, color: "#6366f1", href: "/projects/infineon-parking-guidance" },
   { label: "OZON Tech", value: 86, color: "#10b981", href: "/projects/ozon-warehouse-search" },
-  { label: "WeDo.agency", value: 52, color: "#f59e0b", href: "/projects?company=WeDo.agency#work" },
+  { label: "WeDo.agency", value: 52, color: "#f59e0b", href: `/projects#${getCompanyBundle("WeDo.agency")?.slug ?? "work"}` },
 ];
 const TOTAL_REVENUE = REVENUE_SEGMENTS.reduce((sum, s) => sum + s.value, 0);
 

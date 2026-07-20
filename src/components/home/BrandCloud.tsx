@@ -3,10 +3,12 @@
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { getCompanyBundle } from "@/data/companies";
 
 interface Brand {
   name: string;
   logo: string;
+  /** Must match a `CompanyBundle.name` in @/data/companies exactly — resolved to that bundle's slug for the /projects#slug deep link. */
   company: string;
   darkBg?: boolean;
 }
@@ -20,8 +22,8 @@ const BRANDS: Brand[] = [
   { name: "OZON Tech",   logo: "/brands/ozon.svg",        company: "OZON Tech" },
   { name: "WeDo.agency", logo: "/brands/wedo.jpeg",       company: "WeDo.agency" },
   { name: "onlineTours", logo: "/brands/onlinetours.svg", company: "onlineTours" },
-  { name: "Dunlimited",  logo: "/brands/dunlimited.svg",  company: "Dunlimited", darkBg: true },
-  { name: "Egsha",       logo: "/brands/egsha.png",       company: "Egsha" },
+  { name: "Dunlimited",  logo: "/brands/dunlimited.svg",  company: "dunlimited", darkBg: true },
+  { name: "Egsha",       logo: "/brands/egsha.png",       company: "egsha" },
 ];
 
 export function BrandCloud() {
@@ -45,7 +47,7 @@ export function BrandCloud() {
               className="transition-all duration-200"
             >
               <Link
-                href={`/projects?company=${encodeURIComponent(brand.company)}#work`}
+                href={`/projects#${getCompanyBundle(brand.company)?.slug ?? "work"}`}
                 title={`Projects at ${brand.name}`}
                 className="flex items-center"
               >
