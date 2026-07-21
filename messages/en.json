@@ -63,13 +63,13 @@
     "title": "What makes this combination rare",
     "subtitle": "Not just years of experience — a specific mix of it.",
     "fullStackTitle": "From silicon to screen",
-    "fullStackDesc": "Embedded computer vision running on-device in C, distributed backend services handling 200M+ items, and production React/Next.js frontends — shipped by the same person, not handed off between specialists.",
+    "fullStackDesc": "I build embedded computer vision that runs on-device in C, distributed backend services handling 200M+ items, and production React/Next.js frontends — all of it myself, not handed off between specialists.",
     "aiNativeTitle": "AI-certified, not AI-curious",
-    "aiNativeDesc": "Anthropic-certified on the Claude API/SDK and Claude Code. RAG, LangChain, and MCP applied to tools that actually shipped, not slide decks.",
+    "aiNativeDesc": "I'm Anthropic-certified on the Claude API/SDK and Claude Code, and I've applied RAG, LangChain, and MCP to tools I actually shipped — not slide decks.",
     "businessFluentTitle": "Every project ships with a number",
-    "businessFluentDesc": "€480K saved, €86K saved, +11.63% uplift — outcomes translated into currency and percentages a founder or exec can act on immediately.",
+    "businessFluentDesc": "€480K saved, €86K saved, +11.63% uplift — I translate outcomes into currency and percentages a founder or exec can act on immediately.",
     "readyNowTitle": "Already in Germany, already trilingual",
-    "readyNowDesc": "Living and working in Chemnitz, EN/DE/RU fluent, EU work authorization in place — zero relocation friction for a German or EU role."
+    "readyNowDesc": "I live and work in Chemnitz, speak EN/DE/RU fluently, and already hold EU work authorization — zero relocation friction for a German or EU role."
   },
   "HireMeTeaser": {
     "cta": "Full FAQ & details →"

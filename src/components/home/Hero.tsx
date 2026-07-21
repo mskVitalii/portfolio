@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { LinkedinIcon, GithubIcon } from "@/components/icons/SocialIcons";
 import { getSocialLink } from "@/data/social";
+import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 
 type IconProps = { className?: string };
 
@@ -31,6 +32,12 @@ export function Hero() {
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 py-16 relative">
+      {/* The header stays off-screen until the AudienceFilter slide (see useHeaderUnlock),
+          so the language switcher needs its own reachable copy here on the first slide. */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 rounded-lg border bg-background/80 p-1 backdrop-blur-sm">
+        <LocaleSwitcher />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}

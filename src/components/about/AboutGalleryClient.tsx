@@ -260,10 +260,13 @@ export function AboutGalleryClient({
             — same `sizes`/dimensions as the lightbox Image below, so the browser
             fetches and caches the exact same `_next/image` URL ahead of time
             instead of on first open. Recomputes when the country filter changes,
-            since that changes which photos are "first". */}
-        <div aria-hidden className="sr-only">
+            since that changes which photos are "first".
+            Sized to an actual 100vw strip (not collapsed via `sr-only`) so the
+            rendered width matches the declared `sizes="100vw"` — otherwise Next.js
+            flags a (harmless but noisy) sizes-mismatch warning in dev. */}
+        <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 overflow-hidden opacity-0">
           {visibleGridPhotos.slice(0, GALLERY_PRELOAD_COUNT).map((photo) => (
-            <div key={photo.id} className="relative h-px w-px overflow-hidden">
+            <div key={photo.id} className="relative h-px w-full">
               <Image src={photo.src} alt="" fill sizes={LIGHTBOX_SIZES} priority />
             </div>
           ))}
