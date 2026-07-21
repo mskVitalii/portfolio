@@ -42,7 +42,7 @@
   "ImpactDashboard": {
     "title": "Impact",
     "subtitle": "Measurable outcomes from real production systems",
-    "totalSavings": "total annual savings generated",
+    "totalSavings": "total savings generated",
     "documented": "Documented cost savings across production systems",
     "metricsNote": "Each metric links to the full project case study.",
     "annualSavings": "Annual savings",
