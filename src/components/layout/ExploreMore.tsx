@@ -31,11 +31,14 @@ const PAGES: { key: string; href: "/" | "/about" | "/projects" | "/skills" | "/e
 
 /** "Where else can you go" block shown near the bottom of every page — distinct
  * from the Footer's plain link list, this surfaces the other sections as
- * inviting pills and excludes whichever section the visitor is already on. */
+ * inviting pills and excludes whichever section the visitor is already on.
+ * Skipped on the home page itself, where HomePageCta already fills this role. */
 export function ExploreMore() {
   const t = useTranslations();
   const pathname = usePathname();
   const recommendedHref = getRecommendedHref(pathname);
+
+  if (pathname === "/") return null;
 
   const others = PAGES.filter(({ href }) =>
     href === "/" ? pathname !== "/" : !pathname.startsWith(href)

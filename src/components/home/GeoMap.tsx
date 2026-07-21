@@ -46,10 +46,9 @@ const TIER_COLORS: Record<LocationTier, string> = {
 
 const CURRENT_MARKER = { name: "Chemnitz", coordinates: [12.93, 50.83] as [number, number] };
 const DEFAULT_IDEAL_MARKER = { name: "Berlin", coordinates: [13.4, 52.52] as [number, number] };
-const OPEN_MARKER = { name: "Dubai", coordinates: [55.3, 25.2] as [number, number] };
 
 // Legend labels are rendered inside the component using translations
-const LEGEND_TIERS = ["current", "ideal", "open"] as const;
+const LEGEND_TIERS = ["current", "ideal"] as const;
 
 export interface VisitorGeo {
   city: string;
@@ -62,6 +61,12 @@ export function GeoMap() {
   const t = useTranslations("GeoMap");
   const { mode } = useViewMode();
   const [visitorGeo, setVisitorGeo] = useState<VisitorGeo | null>(null);
+  // react-simple-maps' projection math produces last-bit-different floating point
+  // results between Node's SSR pass and the browser at this zoom level, which trips
+  // React's hydration diff on the marker `transform` attributes — render client-only.
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (mode !== "hr") return;
@@ -90,7 +95,6 @@ export function GeoMap() {
       tier: "ideal",
       label: showVisitorAsIdeal ? t("markerNearYou", { city: visitorGeo!.city }) : t("markerIdeal"),
     },
-    { ...OPEN_MARKER, tier: "open", label: t("markerOpen") },
   ];
 
   return (
@@ -104,47 +108,51 @@ export function GeoMap() {
         </div>
 
         <div className="rounded-2xl border overflow-hidden bg-muted/30">
-          <ComposableMap
-            projectionConfig={{ center: [20, 45], scale: 420 }}
-            width={800}
-            height={380}
-            style={{ width: "100%", height: "auto" }}
-          >
-            <Geographies geography={GEO_URL}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const tier = COUNTRY_FILLS[geo.id as string];
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={tier ? TIER_COLORS[tier] : "var(--muted)"}
-                      stroke="var(--border)"
-                      strokeWidth={0.5}
-                      style={{
-                        default: { outline: "none", cursor: "default" },
-                        hover: { outline: "none", fill: tier ? TIER_COLORS[tier] : "var(--muted)", cursor: "default" },
-                        pressed: { outline: "none" },
-                      }}
-                    />
-                  );
-                })
-              }
-            </Geographies>
+          {mounted ? (
+            <ComposableMap
+              projectionConfig={{ center: [10.45, 51.16], scale: 2600 }}
+              width={800}
+              height={380}
+              style={{ width: "100%", height: "auto" }}
+            >
+              <Geographies geography={GEO_URL}>
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const tier = COUNTRY_FILLS[geo.id as string];
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill={tier ? TIER_COLORS[tier] : "var(--muted)"}
+                        stroke="var(--border)"
+                        strokeWidth={0.5}
+                        style={{
+                          default: { outline: "none", cursor: "default" },
+                          hover: { outline: "none", fill: tier ? TIER_COLORS[tier] : "var(--muted)", cursor: "default" },
+                          pressed: { outline: "none" },
+                        }}
+                      />
+                    );
+                  })
+                }
+              </Geographies>
 
-            {markers.map(({ name, coordinates, tier, label }) => (
-              <Marker key={name} coordinates={coordinates}>
-                <circle r={5} fill={TIER_COLORS[tier]} stroke="white" strokeWidth={1.5} />
-                <text
-                  textAnchor="middle"
-                  y={-10}
-                  style={{ fontSize: "9px", fill: "var(--foreground)", fontFamily: "inherit" }}
-                >
-                  {label}
-                </text>
-              </Marker>
-            ))}
-          </ComposableMap>
+              {markers.map(({ name, coordinates, tier, label }) => (
+                <Marker key={name} coordinates={coordinates}>
+                  <circle r={5} fill={TIER_COLORS[tier]} stroke="white" strokeWidth={1.5} />
+                  <text
+                    textAnchor="middle"
+                    y={-10}
+                    style={{ fontSize: "9px", fill: "var(--foreground)", fontFamily: "inherit" }}
+                  >
+                    {label}
+                  </text>
+                </Marker>
+              ))}
+            </ComposableMap>
+          ) : (
+            <div style={{ aspectRatio: "800 / 380" }} />
+          )}
         </div>
 
         {/* Legend */}
@@ -155,10 +163,11 @@ export function GeoMap() {
                 className="w-3 h-3 rounded-sm inline-block shrink-0"
                 style={{ background: TIER_COLORS[tier] }}
               />
-              {t(`legend${tier.charAt(0).toUpperCase() + tier.slice(1)}` as "legendCurrent" | "legendIdeal" | "legendOpen")}
+              {t(`legend${tier.charAt(0).toUpperCase() + tier.slice(1)}` as "legendCurrent" | "legendIdeal")}
             </div>
           ))}
         </div>
+        <p className="mt-3 text-sm text-muted-foreground">{t("legendOpen")}</p>
       </div>
     </section>
   );

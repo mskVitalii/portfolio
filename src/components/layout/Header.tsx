@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { FileDown } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -9,6 +10,7 @@ import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileNav } from "./MobileNav";
 import { buttonVariants } from "@/components/ui/button";
 import { getRecommendedHref } from "@/lib/funnel";
+import { useHeaderUnlock } from "@/store/headerUnlock";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -26,9 +28,26 @@ export function Header() {
   const t = useTranslations();
   const pathname = usePathname();
   const recommendedHref = getRecommendedHref(pathname);
+  const { unlocked } = useHeaderUnlock();
+
+  // On the home page, the header stays off-screen until the visitor scrolls through the
+  // story to the audience-picker slide (see AudienceFilter's useHeaderUnlock().unlock()
+  // call) — everywhere else it behaves like a normal sticky header.
+  const isStoryMode = pathname === "/";
+  const visible = !isStoryMode || unlocked;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
+    <motion.header
+      initial={false}
+      animate={{ y: visible ? 0 : "-100%", opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      inert={!visible ? true : undefined}
+      aria-hidden={!visible}
+      className={cn(
+        "z-50 w-full border-b bg-background/80 backdrop-blur-sm",
+        isStoryMode ? "fixed top-0 inset-x-0" : "sticky top-0"
+      )}
+    >
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-bold text-sm">
@@ -71,6 +90,6 @@ export function Header() {
           <MobileNav />
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

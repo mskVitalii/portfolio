@@ -30,7 +30,7 @@ export function Hero() {
   const tCommon = useTranslations("Common");
 
   return (
-    <section className="min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center text-center px-4 py-16 relative">
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 py-16 relative">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}

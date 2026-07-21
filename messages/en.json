@@ -35,6 +35,10 @@
     "aboutLink": "About me →",
     "scrollHint": "↓ see impact"
   },
+  "TopProjects": {
+    "title": "Work that paid for itself",
+    "subtitle": "A closer look at two projects — the rest is in the numbers below."
+  },
   "ImpactDashboard": {
     "title": "Impact",
     "subtitle": "Measurable outcomes from real production systems",
@@ -55,6 +59,21 @@
   "BrandCloud": {
     "label": "Companies I've worked with"
   },
+  "Uniques": {
+    "title": "What makes this combination rare",
+    "subtitle": "Not just years of experience — a specific mix of it.",
+    "fullStackTitle": "From silicon to screen",
+    "fullStackDesc": "Embedded computer vision running on-device in C, distributed backend services handling 200M+ items, and production React/Next.js frontends — shipped by the same person, not handed off between specialists.",
+    "aiNativeTitle": "AI-certified, not AI-curious",
+    "aiNativeDesc": "Anthropic-certified on the Claude API/SDK and Claude Code. RAG, LangChain, and MCP applied to tools that actually shipped, not slide decks.",
+    "businessFluentTitle": "Every project ships with a number",
+    "businessFluentDesc": "€480K saved, €86K saved, +11.63% uplift — outcomes translated into currency and percentages a founder or exec can act on immediately.",
+    "readyNowTitle": "Already in Germany, already trilingual",
+    "readyNowDesc": "Living and working in Chemnitz, EN/DE/RU fluent, EU work authorization in place — zero relocation friction for a German or EU role."
+  },
+  "HireMeTeaser": {
+    "cta": "Full FAQ & details →"
+  },
   "GeoMap": {
     "title": "Open to opportunities",
     "subtitle": "Based in Chemnitz, Germany — targeting roles in Germany, open to EU · UK · US · UAE · CA · SG · JP · KR · AU",
@@ -63,8 +82,10 @@
     "legendOpen": "Also open to (EU · UK · US · UAE · CA · SG · JP · KR · AU)",
     "markerCurrent": "📍 Now",
     "markerIdeal": "🎯 Ideal",
-    "markerNearYou": "🎯 Near {city}",
-    "markerOpen": "✓ Open"
+    "markerNearYou": "🎯 Near {city}"
+  },
+  "DramaticPause": {
+    "line": "That's the pitch. Everything below is the proof."
   },
   "ViewMode": {
     "label": "Audience mode",

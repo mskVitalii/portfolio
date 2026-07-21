@@ -35,6 +35,10 @@
     "aboutLink": "Über mich →",
     "scrollHint": "↓ Wirkung anzeigen"
   },
+  "TopProjects": {
+    "title": "Arbeit, die sich ausgezahlt hat",
+    "subtitle": "Ein genauerer Blick auf zwei Projekte — der Rest steckt in den Zahlen weiter unten."
+  },
   "ImpactDashboard": {
     "title": "Wirkung",
     "subtitle": "Messbare Ergebnisse aus realen Produktivsystemen",
@@ -55,6 +59,21 @@
   "BrandCloud": {
     "label": "Unternehmen, mit denen ich gearbeitet habe"
   },
+  "Uniques": {
+    "title": "Was diese Kombination selten macht",
+    "subtitle": "Nicht nur Jahre an Erfahrung — eine bestimmte Mischung davon.",
+    "fullStackTitle": "Vom Chip bis zum Bildschirm",
+    "fullStackDesc": "Eingebettete Computer Vision, die on-device in C läuft, verteilte Backend-Services für über 200 Mio. Artikel und produktive React/Next.js-Frontends — von derselben Person umgesetzt, nicht zwischen Spezialisten aufgeteilt.",
+    "aiNativeTitle": "KI-zertifiziert, nicht nur KI-interessiert",
+    "aiNativeDesc": "Anthropic-zertifiziert für die Claude API/SDK und Claude Code. RAG, LangChain und MCP in tatsächlich ausgelieferten Tools eingesetzt, nicht nur in Präsentationsfolien.",
+    "businessFluentTitle": "Jedes Projekt liefert eine Zahl",
+    "businessFluentDesc": "480.000 € eingespart, 86.000 € eingespart, +11,63 % Steigerung — Ergebnisse übersetzt in Beträge und Prozentzahlen, mit denen ein Gründer oder eine Führungskraft sofort arbeiten kann.",
+    "readyNowTitle": "Schon in Deutschland, schon dreisprachig",
+    "readyNowDesc": "Lebt und arbeitet in Chemnitz, fließend in EN/DE/RU, Arbeitserlaubnis für die EU vorhanden — keine Reibung bei einer Rolle in Deutschland oder der EU."
+  },
+  "HireMeTeaser": {
+    "cta": "Vollständiges FAQ & Details →"
+  },
   "GeoMap": {
     "title": "Offen für Möglichkeiten",
     "subtitle": "Wohnhaft in Chemnitz — Zielmarkt Deutschland, offen für EU · UK · US · VAE · CA · SG · JP · KR · AU",
@@ -63,8 +82,10 @@
     "legendOpen": "Auch offen für (EU · UK · US · VAE · CA · SG · JP · KR · AU)",
     "markerCurrent": "📍 Jetzt",
     "markerIdeal": "🎯 Wunschziel",
-    "markerNearYou": "🎯 Nahe {city}",
-    "markerOpen": "✓ Offen"
+    "markerNearYou": "🎯 Nahe {city}"
+  },
+  "DramaticPause": {
+    "line": "Das war der Pitch. Alles darunter ist der Beweis."
   },
   "ViewMode": {
     "label": "Zielgruppe",

@@ -4,9 +4,13 @@ import { routing } from "@/i18n/routing";
 import { buildPageMetadata, buildWebPageJsonLd, buildProfilePageJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/home/Hero";
+import { TopProjects } from "@/components/home/TopProjects";
 import { ImpactDashboard } from "@/components/home/ImpactDashboard";
 import { GeoMap } from "@/components/home/GeoMap";
 import { BrandCloud } from "@/components/home/BrandCloud";
+import { Uniques } from "@/components/home/Uniques";
+import { HireMeTeaser } from "@/components/home/HireMeTeaser";
+import { DramaticPause } from "@/components/home/DramaticPause";
 import { HomePageCta } from "@/components/home/HomePageCta";
 import { AudienceFilter } from "@/components/home/AudienceFilter";
 
@@ -51,9 +55,13 @@ export default async function HomePage({
       <JsonLd data={webPageJsonLd} />
       <JsonLd data={profilePageJsonLd} />
       <Hero />
+      <TopProjects />
       <ImpactDashboard />
       <BrandCloud />
+      <Uniques />
+      <HireMeTeaser />
       <GeoMap />
+      <DramaticPause />
       <AudienceFilter />
       <HomePageCta />
     </main>

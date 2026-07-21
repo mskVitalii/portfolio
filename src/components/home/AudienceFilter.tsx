@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useViewMode, type ViewMode } from "@/store/viewMode";
+import { useHeaderUnlock } from "@/store/headerUnlock";
 import { cn } from "@/lib/utils";
 
 const MODES: {
@@ -46,9 +48,19 @@ const MODES: {
 export function AudienceFilter() {
   const t = useTranslations("AudienceFilter");
   const { mode, setMode } = useViewMode();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const { unlock } = useHeaderUnlock();
+
+  // This is also the slide that reveals the story-mode header on the home page — by the
+  // time visitors reach the audience picker, they've already seen the pitch, and this
+  // control literally duplicates the one waiting for them in the header.
+  useEffect(() => {
+    if (isInView) unlock();
+  }, [isInView, unlock]);
 
   return (
-    <section className="py-20 px-4 border-t">
+    <section ref={sectionRef} className="py-20 px-4 border-t">
       <div className="container mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
