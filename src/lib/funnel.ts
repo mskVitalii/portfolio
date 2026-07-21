@@ -6,9 +6,14 @@ export const FUNNEL_ORDER = ["/", "/projects", "/about", "/hire-me"] as const;
 export type FunnelHref = (typeof FUNNEL_ORDER)[number];
 
 /** Given the current pathname, returns the next href in the funnel to
- * recommend, or null if the current page isn't on the funnel or is already
- * its last step. */
+ * recommend, or null if the current page isn't on the funnel, is already
+ * its last step, or already recommends a specific next step of its own. */
 export function getRecommendedHref(pathname: string): FunnelHref | null {
+  // Individual project/company pages end with their own NextProjectLink
+  // ("next project ->"); layering the funnel's recommendation on top would
+  // compete with it instead of reinforcing it.
+  if (pathname.startsWith("/projects/")) return null;
+
   const index = FUNNEL_ORDER.findIndex((href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href)
   );
