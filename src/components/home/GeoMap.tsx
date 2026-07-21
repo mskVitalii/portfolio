@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 import { useViewMode } from "@/store/viewMode";
 
-const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const GEO_URL = "/geo/countries-110m.json";
 
 type LocationTier = "current" | "ideal" | "open" | "ask";
 

@@ -10,7 +10,7 @@ import { useAchievementsStore } from "@/store/achievements";
 import { cn } from "@/lib/utils";
 import { SHIMMER_BLUR_DATA_URL, GALLERY_PRELOAD_COUNT } from "@/lib/imagePlaceholder";
 
-const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const GEO_URL = "/geo/countries-110m.json";
 const VISITED_FILL = "#FD267A";
 const ACTIVE_FILL = "#C4145A";
 const LIGHTBOX_SIZES = "100vw";
