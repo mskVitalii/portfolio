@@ -8,9 +8,15 @@ import { Badge } from "@/components/ui/badge";
 import { PROJECTS } from "@/data/projects";
 import { localize, formatImpactValue } from "@/lib/localized";
 
-/** Order is deliberate: OZON leads (recognizable brand, the "look who I've worked with"
- * hook), Infineon follows with the bigger documented number. */
-const FEATURED_SLUGS = ["ozon-barcode-scanner", "infineon-parking-guidance"] as const;
+/** Order is deliberate: recognizable brands lead (OZON, then Infineon with the bigger
+ * documented number), the two more unusual builds close it out (an AI support agent,
+ * a TDD-tested pricing bot). */
+const FEATURED_SLUGS = [
+  "ozon-barcode-scanner",
+  "infineon-parking-guidance",
+  "wedo-shopify-ai-support",
+  "wedo-ecommerce-bidder",
+] as const;
 
 export function TopProjects() {
   const t = useTranslations("TopProjects");
@@ -50,11 +56,14 @@ export function TopProjects() {
                   <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">
                     {project.company}
                   </p>
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
                     {localize(project.title, locale)}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6 flex-1">
+                  <p className="text-sm text-muted-foreground mb-3">
                     {localize(project.tagline, locale)}
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed mb-6 flex-1 line-clamp-4">
+                    {localize(project.description.business, locale)}
                   </p>
 
                   {headline && (

@@ -1050,7 +1050,7 @@ export const PROJECTS: Project[] = [
     },
     period: "09/2019",
     status: "archived",
-    company: "Yohan Loshop (own studio)",
+    company: "Yohan Loshop",
     category: "work",
     tagline: {
       en: "First project of a 3-person studio he co-founded — a print-order form",
@@ -1087,7 +1087,7 @@ export const PROJECTS: Project[] = [
     },
     period: "10/2019 – 04/2020",
     status: "archived",
-    company: "Yohan Loshop (own studio)",
+    company: "Yohan Loshop",
     category: "work",
     tagline: {
       en: "Corporate portal for a construction firm — his studio's first paid contract",

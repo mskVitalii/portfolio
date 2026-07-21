@@ -177,7 +177,7 @@ export const COMPANY_BUNDLES: CompanyBundle[] = [
     },
   },
   {
-    name: "Yohan Loshop (own studio)",
+    name: "Yohan Loshop",
     slug: "yohan-loshop",
     blurb: {
       hr: {
