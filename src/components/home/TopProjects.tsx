@@ -63,7 +63,7 @@ export function TopProjects() {
                     {localize(project.tagline, locale)}
                   </p>
                   <p className="text-muted-foreground leading-relaxed mb-6 flex-1 line-clamp-4">
-                    {localize(project.description.business, locale)}
+                    {localize(project.cardSummary ?? project.description.business, locale)}
                   </p>
 
                   {headline && (

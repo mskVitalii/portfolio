@@ -21,6 +21,26 @@ export function formatPeriod(period: string, presentLabel: string): string {
  * convention puts the ₽ symbol after the number, so flip it at render time for
  * the ru locale instead of duplicating every impact value per locale. */
 export function formatImpactValue(value: string, locale: string): string {
-  if (locale !== "ru") return value;
-  return value.replace(/₽\s*([\d][\d.,]*[KM]?)/gi, (_, num: string) => `${num}₽`);
+  let result = value;
+
+  if (locale === "ru") {
+    result = result.replace(/₽\s*([\d][\d.,]*[KM]?)/gi, (_, num: string) => `${num}₽`);
+  }
+
+  // "/mo" and "/yr" are authored in English (matching most impact values); DE/RU
+  // need a translated rate suffix instead of a bare English abbreviation.
+  const RATE_SUFFIXES: Record<string, { de: string; ru: string }> = {
+    "/mo": { de: "/Monat", ru: " в месяц" },
+    "/yr": { de: "/Jahr", ru: " в год" },
+  };
+  if (locale === "de" || locale === "ru") {
+    for (const [suffix, translated] of Object.entries(RATE_SUFFIXES)) {
+      if (result.endsWith(suffix)) {
+        result = result.slice(0, -suffix.length) + translated[locale];
+        break;
+      }
+    }
+  }
+
+  return result;
 }

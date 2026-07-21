@@ -2,17 +2,17 @@
 
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Layers, Sparkles, Euro, Globe2, type LucideIcon } from "lucide-react";
+import { Layers, Sparkles, Building2, Globe2, type LucideIcon } from "lucide-react";
 
 const ITEMS: {
   id: string;
   icon: LucideIcon;
-  titleKey: "fullStackTitle" | "aiNativeTitle" | "businessFluentTitle" | "readyNowTitle";
-  descKey: "fullStackDesc" | "aiNativeDesc" | "businessFluentDesc" | "readyNowDesc";
+  titleKey: "fullStackTitle" | "aiNativeTitle" | "scaleRangeTitle" | "readyNowTitle";
+  descKey: "fullStackDesc" | "aiNativeDesc" | "scaleRangeDesc" | "readyNowDesc";
 }[] = [
   { id: "fullStack", icon: Layers, titleKey: "fullStackTitle", descKey: "fullStackDesc" },
   { id: "aiNative", icon: Sparkles, titleKey: "aiNativeTitle", descKey: "aiNativeDesc" },
-  { id: "businessFluent", icon: Euro, titleKey: "businessFluentTitle", descKey: "businessFluentDesc" },
+  { id: "scaleRange", icon: Building2, titleKey: "scaleRangeTitle", descKey: "scaleRangeDesc" },
   { id: "readyNow", icon: Globe2, titleKey: "readyNowTitle", descKey: "readyNowDesc" },
 ];
 
@@ -30,7 +30,6 @@ export function Uniques() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold">{t("title")}</h2>
-          <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

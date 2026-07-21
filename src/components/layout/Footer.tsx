@@ -6,6 +6,7 @@ import { getSocialLink } from "@/data/social";
 export function Footer() {
   const t = useTranslations("Footer");
   const tNav = useTranslations("Nav");
+  const tCommon = useTranslations("Common");
   const year = new Date().getFullYear();
 
   const navLinks = [
@@ -26,7 +27,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <p className="font-bold mb-2">Vitalii Popov</p>
+            <p className="font-bold mb-2">{tCommon("siteName")}</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               {taglineLine1}
               <br />
@@ -95,7 +96,7 @@ export function Footer() {
         </div>
 
         <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-          <p>© {year} Vitalii Popov</p>
+          <p>© {year} {tCommon("siteName")}</p>
           <div className="flex items-center gap-4">
             <a href="/sitemap.xml" className="hover:text-foreground transition-colors">{t("sitemap")}</a>
             <a href="/cv/vitalii-popov-cv.pdf" download="Vitalii_Popov_CV.pdf" className="hover:text-foreground transition-colors">{t("downloadCv")}</a>

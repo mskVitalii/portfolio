@@ -8,6 +8,7 @@ import { TopProjects } from "@/components/home/TopProjects";
 import { ImpactDashboard } from "@/components/home/ImpactDashboard";
 import { GeoMap } from "@/components/home/GeoMap";
 import { BrandCloud } from "@/components/home/BrandCloud";
+import { EducationTeaser } from "@/components/home/EducationTeaser";
 import { Uniques } from "@/components/home/Uniques";
 import { HireMeTeaser } from "@/components/home/HireMeTeaser";
 import { DramaticPause } from "@/components/home/DramaticPause";
@@ -58,6 +59,7 @@ export default async function HomePage({
       <TopProjects />
       <ImpactDashboard />
       <BrandCloud />
+      <EducationTeaser />
       <Uniques />
       <HireMeTeaser />
       <GeoMap />

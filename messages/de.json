@@ -59,17 +59,26 @@
   "BrandCloud": {
     "label": "Unternehmen, mit denen ich gearbeitet habe"
   },
+  "EducationTeaser": {
+    "title": "Bildung",
+    "tucDegree": "M.Sc. Web Engineering",
+    "tucOrg": "TU Chemnitz, Deutschland",
+    "tucDesc": "Verteilte Systeme, Cloud-native Anwendungen und Service Engineering — parallel zur Vollzeitstelle bei Infineon.",
+    "hseDegree": "B.Sc. Software Engineering",
+    "hseOrg": "HSE University, Moskau",
+    "hseDesc": "Algorithmen, Softwarearchitektur, Datenbanken — die CS-Grundlagen, auf denen alles andere aufbaut.",
+    "cta": "Den vollständigen akademischen Werdegang ansehen →"
+  },
   "Uniques": {
     "title": "Was diese Kombination selten macht",
-    "subtitle": "Nicht nur Jahre an Erfahrung — eine bestimmte Mischung davon.",
     "fullStackTitle": "Vom Chip bis zum Bildschirm",
     "fullStackDesc": "Eingebettete Computer Vision, die on-device in C läuft, verteilte Backend-Services für über 200 Mio. Artikel und produktive React/Next.js-Frontends — das setze ich alles selbst um, nicht aufgeteilt zwischen Spezialisten.",
     "aiNativeTitle": "KI-zertifiziert, nicht nur KI-interessiert",
     "aiNativeDesc": "Ich bin Anthropic-zertifiziert für die Claude API/SDK und Claude Code und setze RAG, LangChain und MCP in tatsächlich ausgelieferten Tools ein, nicht nur in Präsentationsfolien.",
-    "businessFluentTitle": "Jedes Projekt liefert eine Zahl",
-    "businessFluentDesc": "480.000 € eingespart, 86.000 € eingespart, +11,63 % Steigerung — ich übersetze Ergebnisse in Beträge und Prozentzahlen, mit denen ein Gründer oder eine Führungskraft sofort arbeiten kann.",
-    "readyNowTitle": "Schon in Deutschland, schon dreisprachig",
-    "readyNowDesc": "Ich lebe und arbeite in Chemnitz, spreche fließend EN/DE/RU und habe bereits eine Arbeitserlaubnis für die EU — keine Reibung bei einer Rolle in Deutschland oder der EU."
+    "scaleRangeTitle": "Erfahrung in Startups und Konzernen",
+    "scaleRangeDesc": "9 Startup-Produkte in einem Jahr bei WeDo.agency und freiberufliche Projekte für egsha — daneben Infineon (Europas größter Halbleiterhersteller) und OZON in Amazon-Größenordnung. Gleichermaßen produktiv in beiden Welten.",
+    "readyNowTitle": "Dreisprachig und umzugsbereit",
+    "readyNowDesc": "Fließend in Englisch, Deutsch und Russisch, mit bereits vorhandener EU-Arbeitserlaubnis — offen auch für Rollen außerhalb Deutschlands."
   },
   "HireMeTeaser": {
     "cta": "Vollständiges FAQ & Details →"

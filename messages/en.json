@@ -59,17 +59,26 @@
   "BrandCloud": {
     "label": "Companies I've worked with"
   },
+  "EducationTeaser": {
+    "title": "Education",
+    "tucDegree": "M.Sc. Web Engineering",
+    "tucOrg": "TU Chemnitz, Germany",
+    "tucDesc": "Distributed systems, cloud-native apps, and service engineering — while working full-time at Infineon.",
+    "hseDegree": "B.Sc. Software Engineering",
+    "hseOrg": "HSE University, Moscow",
+    "hseDesc": "Algorithms, software architecture, databases — the CS fundamentals everything else builds on.",
+    "cta": "See the full academic journey →"
+  },
   "Uniques": {
     "title": "What makes this combination rare",
-    "subtitle": "Not just years of experience — a specific mix of it.",
     "fullStackTitle": "From silicon to screen",
     "fullStackDesc": "I build embedded computer vision that runs on-device in C, distributed backend services handling 200M+ items, and production React/Next.js frontends — all of it myself, not handed off between specialists.",
     "aiNativeTitle": "AI-certified, not AI-curious",
     "aiNativeDesc": "I'm Anthropic-certified on the Claude API/SDK and Claude Code, and I've applied RAG, LangChain, and MCP to tools I actually shipped — not slide decks.",
-    "businessFluentTitle": "Every project ships with a number",
-    "businessFluentDesc": "€480K saved, €86K saved, +11.63% uplift — I translate outcomes into currency and percentages a founder or exec can act on immediately.",
-    "readyNowTitle": "Already in Germany, already trilingual",
-    "readyNowDesc": "I live and work in Chemnitz, speak EN/DE/RU fluently, and already hold EU work authorization — zero relocation friction for a German or EU role."
+    "scaleRangeTitle": "Startup and enterprise experience",
+    "scaleRangeDesc": "9 startup products in a year at WeDo.agency and freelance work for egsha — alongside Infineon (Europe's largest semiconductor manufacturer) and Amazon-scale OZON. Equally comfortable in both worlds.",
+    "readyNowTitle": "Trilingual and ready to relocate",
+    "readyNowDesc": "Fluent in English, German, and Russian, with EU work authorization already in place — open to roles beyond Germany too."
   },
   "HireMeTeaser": {
     "cta": "Full FAQ & details →"

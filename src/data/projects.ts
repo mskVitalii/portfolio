@@ -107,6 +107,14 @@ export const PROJECTS: Project[] = [
         ru: "Было важно реализовать решение, работающее прямо на собственных чипах PSoC Edge компании Infineon — embedded компьютерное зрение на устройстве на C, а не инференс в облаке. Python для бэкенд-сервисов, C# для вспомогательных сервисов, JS/TS + React для фронтенда.",
       },
     },
+    // Distinct from description.business — this is what shows alongside the tagline
+    // on card-style displays (e.g. TopProjects), so it deliberately picks up new
+    // details instead of restating "in-house system replacing a vendor" again.
+    cardSummary: {
+      en: "Now powers a barrier-control app used by 8,000 people, 3,000 of them monthly active — and saves €480K a year versus the market alternative.",
+      de: "Treibt heute eine Schrankensteuerung mit 8.000 Nutzern an, davon 3.000 monatlich aktiv — und spart 480.000 € pro Jahr gegenüber der Marktalternative.",
+      ru: "Сегодня управляет приложением шлагбаумов с 8 000 пользователей, из них 3 000 — ежемесячно активные, и экономит €480 000 в год по сравнению с рыночной альтернативой.",
+    },
     impact: [
       { label: { en: "Annual savings", de: "Jährliche Einsparung", ru: "Экономия в год" }, value: "€480K" },
       { label: { en: "Users", de: "Nutzer", ru: "Пользователей" }, value: "8,000" },
@@ -289,6 +297,12 @@ export const PROJECTS: Project[] = [
         ru: "Интеграция оборудования сканеров штрихкодов на C# через WebSockets, сервис point-update на PostgreSQL, развёрнутый на множестве распределённых терминалов зоны возвратов. Также переписал Mattermost-бота для мониторинга складских ошибок с Python на C#.",
       },
     },
+    // Distinct from description.business — see the same note on Infineon's entry above.
+    cardSummary: {
+      en: "A real-time point-update service now runs across OZON's returns-zone terminals, built to scale as order volume keeps growing — still in production today.",
+      de: "Ein Echtzeit-Point-Update-Service läuft heute auf allen Terminals in OZONs Retourenzone — gebaut, um mit wachsendem Bestellvolumen zu skalieren, und bis heute im Einsatz.",
+      ru: "Сервис point-update в реальном времени работает сегодня на всех терминалах зоны возвратов OZON — рассчитан на рост объёма заказов и до сих пор в эксплуатации.",
+    },
     impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
     images: [
@@ -338,6 +352,12 @@ export const PROJECTS: Project[] = [
         de: "Python-Service für E-Commerce-Anzeigenbietung und Preisoptimierung, testgetrieben (TDD) mit reinen Funktionen entwickelt — garantiert, dass zur richtigen Zeit das richtige Gebot gesetzt wird, ohne Seiteneffekte, die die Preislogik unzuverlässig machen würden.",
         ru: "Python-сервис для автоматических ставок и оптимизации цены рекламы в e-commerce, разработанный по TDD с чистыми функциями — это гарантирует, что нужная ставка выставляется в нужный момент времени, без побочных эффектов, которые сделали бы логику ценообразования ненадёжной.",
       },
+    },
+    // Distinct from description.business — see the same note on Infineon's entry above.
+    cardSummary: {
+      en: "Bid too high on the marketplace and a $100 product loses money before its 10th view; bid too low and it barely gets seen. A repricer module rounds it out, resetting the price once the marketplace's mandatory ad program ends — protecting full margin instead of leaking it into loyalty points.",
+      de: "Ein zu hohes Gebot lässt ein 100-$-Produkt schon vor der 10. Ansicht ins Minus rutschen, ein zu niedriges bedeutet, es wird kaum gesehen. Ein Repricer-Modul rundet es ab: Nach Ablauf des obligatorischen Werbeprogramms setzt es den Preis zurück und bewahrt so die volle Marge, statt sie in Bonuspunkte abfließen zu lassen.",
+      ru: "Слишком высокая ставка уводит товар за $100 в минус ещё до 10-го показа, слишком низкая — его почти никто не видит. Модуль-репрайсер дополняет систему: после окончания обязательной рекламной программы он возвращает цену к исходной, сохраняя полную маржу вместо утечки в баллы маркетплейса.",
     },
     impact: [{ label: { en: "Ad savings", de: "Werbe-Einsparung", ru: "Экономия на рекламе" }, value: "€52K/yr" }],
     stack: ["Python", "TDD"],
