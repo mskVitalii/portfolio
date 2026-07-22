@@ -1,0 +1,108 @@
+---
+title: "Prospero — News Aggregator (Bachelor's Thesis)"
+company: "Higher School of Economics"
+period: "03/2023 – 06/2023"
+status: "archived"
+category: "education"
+tagline: "Bachelor's thesis: a fully instrumented news-aggregation platform"
+stack: ["Go", "ElasticSearch", "PostgreSQL", "Next.js", "React", "Redux Toolkit", "Docker", "Prometheus", "Grafana", "Jaeger", "ELK"]
+impact:
+  - label: "Thesis grade"
+    value: "B+"
+---
+
+<ModeAware modes="hr">
+
+## The story, in brief
+
+<StarStory>
+<StarSituation>
+
+HSE's Bachelor's thesis needed to be a real, defensible engineering project — not a toy assignment — and he wanted to use it to pick up Go, a language he hadn't shipped anything in yet.
+
+</StarSituation>
+<StarTask>
+
+Design, build, and ship a working news aggregator end to end — backend, frontend, and admin tooling — in roughly a month, scoped and estimated like a real product cycle rather than an open-ended student project.
+
+</StarTask>
+<StarAction>
+
+Scoped the idea into epics and stories in Jira, parked lower-priority ideas in a Notion backlog, and built a Go backend (his first project in the language) that harvests RSS feeds on a schedule and indexes them in ElasticSearch, with PostgreSQL holding publishers and sources. A Next.js frontend plots results on a live map with faceted filters — date, category, country, language — and a separate admin panel manages the source list. Logs, traces, and metrics were wired up from day one instead of bolted on after.
+
+</StarAction>
+<StarResult>
+
+Shipped and defended for a B+. One piece of committee feedback during the defense — that the map's visible bounds should filter which articles appear — went into the code before submission, not just the write-up.
+
+</StarResult>
+</StarStory>
+
+### Frequently asked
+
+<ProjectFaq>
+<ProjectFaqItem q="Why Go for a thesis project, with no prior experience in it?">
+
+The thesis was the excuse to finally learn it properly. Go's standard library made the RSS-harvesting scheduler and the ElasticSearch/Postgres plumbing straightforward enough to still hit the one-month budget while learning the language at the same time.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="What's the admin panel actually for?">
+
+Managing the source list — adding publishers and their RSS feeds, with the location data (country, city, coordinates) the frontend map needs. It's not a content-moderation tool; there's no article approval queue.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="What would you do differently?">
+
+Kafka shows up in an early architecture sketch in the repo's own README but was never built — a reminder to cut a diagram down to what actually shipped before calling it done.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Context
+
+Prospero is a news aggregator built as a Bachelor's thesis at HSE — the brief was open-ended (build something real), so the scope became a decision exercise as much as an engineering one: what fits in a month, sized like a real product, without ending up as a toy.
+
+## What was built
+
+A four-part system: a public frontend, a Go API, an admin panel, and the observability stack tying them together.
+
+- **RSS harvesting** — a `gocron`-scheduled job pulls new articles from each registered source on an interval and indexes them.
+- **Search** — ElasticSearch holds article content and a denormalized publisher index for autocomplete; PostgreSQL is the source of truth for publishers and their RSS sources, including geo-coordinates for the map.
+- **Frontend** — Next.js/React with Redux Toolkit and RTK Query, Mantine UI, and a Yandex Maps view of results. Filters combine a date histogram, category/country/language dropdowns (including a clickable world map), and boolean query operators (AND / EXACT / NOT).
+- **Admin panel** — a separate Next.js app, JWT-authenticated, for adding and editing publishers and RSS sources.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architecture
+
+```
+RSS Sources  ──gocron──►  Go Backend (Gin)  ──REST──►  Next.js Web
+                            │      │                    (map + filters)
+                            │      └────────────────────► Next.js Admin
+                            ▼
+                  PostgreSQL + ElasticSearch
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technical decisions
+
+**Why Go, untested by him at the time?** The scheduler and HTTP layer needed to be simple and fast to write correctly under a one-month budget — Go's standard library and static typing caught a lot of mistakes at compile time that a scripting language wouldn't have.
+
+**Why split search into ElasticSearch and PostgreSQL instead of one database?** Postgres is the right shape for the small, relational catalog of publishers and sources. ElasticSearch is the right shape for full-text search and autocomplete over harvested article content — using Postgres for both would have meant hand-rolling fuzzy text search on top of it.
+
+**Why a separate admin app instead of an admin mode in the main frontend?** Different audience, different auth model — the public site is fully open, the admin panel is JWT-gated. Keeping them as separate Next.js deployments meant the public site's bundle never had to carry admin-only code.
+
+## Observability
+
+Logs in the ELK stack, request tracing in Jaeger, metrics in Prometheus/Grafana, and Yandex.Metrica for traffic — set up alongside the first backend endpoints rather than added later. CI/CD on a self-hosted GitHub Actions runner rebuilds and redeploys the Docker Compose stack on every push to main.
+
+</ModeAware>

@@ -14,6 +14,7 @@ import { CompanyCredit } from "./CompanyCredit";
 import { ModeAware } from "@/components/tri-mode/ModeAware";
 import { ProjectImageGallery } from "./ProjectImageGallery";
 import { ProjectDocumentViewer } from "./ProjectDocumentViewer";
+import { YouTubeEmbed } from "./YouTubeEmbed";
 import { ProjectDescription } from "./ProjectDescription";
 import { AdBidderDemo } from "./AdBidderDemo";
 import { IpoSimulator } from "./IpoSimulator";
@@ -37,6 +38,8 @@ export async function ProjectDetailSection({
   titleAs?: "h1" | "h2";
 }) {
   const t = await getTranslations({ locale, namespace: "Projects" });
+  const demoVideo = project.links?.find((link) => link.labelKey === "demoVideo");
+  const otherLinks = project.links?.filter((link) => link.labelKey !== "demoVideo");
   let mdxContent: React.ReactNode = null;
   const slugs = getPageSlugs("projects", locale);
 
@@ -107,6 +110,15 @@ export async function ProjectDetailSection({
         </div>
       )}
 
+      {/* Demo video — embedded inline (click-to-play facade) instead of just linking out */}
+      {demoVideo && (
+        <YouTubeEmbed
+          url={demoVideo.url}
+          title={`${localize(project.title, locale)} — ${t("linkLabels.demoVideo")}`}
+          openInNewTabLabel={t("documentOpenInNewTab")}
+        />
+      )}
+
       {/* Mode-aware description (STAR cards for HR mode when available) */}
       <ProjectDescription project={project} />
 
@@ -146,9 +158,9 @@ export async function ProjectDetailSection({
       </ModeAware>
 
       {/* External links */}
-      {project.links && project.links.length > 0 && (
+      {otherLinks && otherLinks.length > 0 && (
         <div className="flex flex-wrap gap-3 mb-10">
-          {project.links.map((link) => (
+          {otherLinks.map((link) => (
             <a
               key={link.url}
               href={link.url}

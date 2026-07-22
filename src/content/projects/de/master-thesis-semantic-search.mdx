@@ -1,0 +1,116 @@
+---
+title: "Semantische Suche über offene Verwaltungsdaten — Masterarbeit"
+company: "Chemnitz University of Technology"
+period: "03/2025 – present"
+status: "archived"
+category: "education"
+tagline: "Masterarbeit: eine semantische Suchmaschine für offene Verwaltungsdaten, aufgebaut als 4 zusammenarbeitende Microservices"
+stack: ["Python", "FastAPI", "TypeScript", "React", "Qdrant"]
+impact:
+  - label: "Services"
+    value: "4"
+  - label: "Verglichene Embedding-Modelle"
+    value: "4"
+---
+
+<ModeAware modes="hr">
+
+## Die Geschichte, kurz
+
+<StarStory>
+<StarSituation>
+
+Die Masterarbeit im Web-Engineering-Studiengang der TU Chemnitz brauchte eine echte Forschungsfrage, keine reine Umsetzungsübung. Er wählte semantische Suche über offene Verwaltungsdaten — eine Domäne, in der Relevanz wirklich schwer zu treffen ist: lückenhafte Metadaten, uneinheitliche Beschreibungen, Verwaltungssprache, die selten dem entspricht, wie Menschen tatsächlich fragen.
+
+</StarSituation>
+<StarTask>
+
+Ein echtes Retrieval-System von vorne bis hinten bauen — Ingestion, Embedding, hybride Suche, Reranking — und messen, welche Kombination an Techniken wirklich hilft, statt es nur zu behaupten.
+
+</StarTask>
+<StarAction>
+
+Das System in vier unabhängig deploybare Services aufgeteilt: Frontend, Backend-Orchestrator, Embedding-Service und Reranker. Vier verschiedene Embedding-Modelle nebeneinander hinter einem einheitlichen API-Vertrag deployt, Qdrants native hybride Dense-plus-Sparse-Suche verdrahtet, einen Reranking-Schritt ergänzt und einen Benchmark-Harness gebaut, der jede Modell-/Suchmodus-Kombination gegen manuell bewertete Relevanz misst.
+
+</StarAction>
+<StarResult>
+
+Ein funktionierendes System, das seine eigene Verarbeitung live streamt — das Frontend zeigt jede Pipeline-Stufe während sie läuft —, gestützt auf einen Benchmark, der vier Embedding-Modelle über verschiedene Suchmodi vergleicht. Der eigentliche Beitrag der Arbeit ist die Evaluationsmethodik, nicht ein einzelnes trainiertes Modell.
+
+</StarResult>
+</StarStory>
+
+### Häufig gefragt
+
+<ProjectFaq>
+<ProjectFaqItem q="Warum vier separate Embedding-Modelle statt vorab das beste auszuwählen?">
+
+Weil „das beste" von Sprache und Domäne abhängt — deutsche Verwaltungsterminologie ist nicht dasselbe Retrieval-Problem wie allgemeiner englischer Text. Alle vier hinter einer identischen API zu deployen machte die Modellwahl zu etwas, das der Benchmark-Harness messen konnte, statt zu einer einmaligen Vermutung, die nie wieder überprüft wird.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was ist hier eigentlich neu, wenn das Reranker-Modell selbst von der Stange ist?">
+
+Es nutzt einen starken vortrainierten Reranker statt selbst einen zu trainieren — keine Schande auf einem Master-Zeitplan. Der Forschungsschwerpunkt liegt im Design der Retrieval-Pipeline und im Benchmark, der misst, welche Kombination — Dense, Sparse, Hybrid, Reranking, Multi-Query — tatsächlich etwas bringt.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Warum die Pipeline zum Frontend streamen, statt einfach eine fertige Antwort zurückzugeben?">
+
+Eine Suche, die über vier Stufen mehrere Sekunden braucht, muss zeigen, was sie tut — sonst wirkt sie einfach kaputt. Server-Sent Events machen aus dieser Latenz einen sichtbaren, nachvollziehbaren Ablauf statt eines leeren Ladespinners.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Kontext
+
+Die Web-Engineering-Masterarbeit an der TU Chemnitz verlangt eine echte Forschungsfrage, nicht nur eine Umsetzung. Offene Verwaltungsdatenportale sind schwer gut durchsuchbar: Einträge sind lückenhaft, uneinheitlich beschrieben und oft in einer Verwaltungssprache verfasst, die nicht dem entspricht, wie Menschen tatsächlich fragen. Die Arbeit untersucht, welche Retrieval-Techniken — Dense Embeddings, Sparse-Keyword-Vektoren, hybride Fusion, Reranking, Multi-Query-Expansion — tatsächlich helfen, und wie stark.
+
+## Was gebaut wurde
+
+Vier Services, jeder unabhängig deploybar und unabhängig skalierbar:
+
+- **Frontend** (Vite/React, Mantine, Leaflet, Three.js) — eine Such-UI, die einen Server-Sent-Events-Stream öffnet und jede Pipeline-Stufe live rendert: Forschungsfrage → Embeddings → Vektorsuche → Datensätze → Interpretation.
+- **Backend** (Python/FastAPI) — der Orchestrator. Verteilt eine Anfrage an den/die Embedder, führt hybride Suche gegen Qdrant aus, ruft den Reranker auf und danach ein LLM für Multi-Query-Expansion und eine abschließende Interpretation der Ergebnisse in natürlicher Sprache.
+- **Embedder** (Python/FastAPI, vier Container aus einem Image) — ein Container pro Modell: BAAI bge-m3, intfloat multilingual-e5-base, jinaai jina-embeddings-v3 und sentence-transformers LaBSE. Jeder Container berechnet zusätzlich modellunabhängige Sparse-Vektoren per Hashing-Trick, damit Dense- und Sparse-Suche über alle vier Modelle vergleichbar bleiben.
+- **Reranker** (Python/FastAPI, PyTorch) — jina-reranker-v3 hinter einem Endpoint mit automatischer Geräteauswahl (CUDA → MPS → CPU) und adaptivem Batching, das seine Batch-Größe bei einem Out-of-Memory-Fehler halbiert und erneut versucht, statt abzustürzen.
+- **Ingestion** — separate Scraper für die Open-Data-Portale von Berlin, Chemnitz, Dresden und Leipzig, die den Datensatzkatalog jeder Stadt per Playwright durchlaufen.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architektur
+
+```
+Frontend (Vite/React)
+    │  SSE: Forschungsfrage → Embeddings → Suche → Datensätze → Interpretation
+    ▼
+Backend (FastAPI, Orchestrator)
+    ├──► Embedder × 4 Modelle  (bge-m3, e5-base, jina-v3, LaBSE)
+    ├──► Qdrant                (hybrid Dense+Sparse, RRF-Fusion)
+    ├──► Reranker              (jina-reranker-v3)
+    └──► LLM                   (Multi-Query + Interpretation)
+
+Ingestion (Playwright) ──► Portale Berlin / Chemnitz / Dresden / Leipzig ──► Qdrant + MongoDB
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technische Entscheidungen
+
+**Warum vier Embedding-Modelle statt eines?** Das beste Embedding-Modell hängt von Domäne und Sprache ab, besonders bei deutscher Verwaltungsterminologie. Alle vier hinter identischen `/embed`-Verträgen zu deployen machte die Modellwahl zu etwas Messbarem im Benchmark-Harness, statt zu einer einmaligen, nie überprüften Vermutung.
+
+**Warum hybrid Dense+Sparse statt nur Dense Embeddings?** Dense Embeddings allein verpassen exakte Keyword- und Akronym-Treffer, die in Titeln von Verwaltungsdatensätzen häufig sind. Qdrants native Reciprocal-Rank-Fusion über benannte Dense- und Sparse-Vektoren kombiniert beides, ohne einen zweiten Index zu pflegen.
+
+**Warum ein Reranker zusätzlich zur Vektorsuche?** Vektorsuche optimiert in einem Durchgang auf ungefähre Ähnlichkeit über den gesamten Korpus. Ein Reranker bewertet nur die Top-Kandidaten neu, mit einem Modell, das Anfrage und Dokument gemeinsam betrachtet — ein zweiter, teurerer, aber genauerer Durchgang über eine kurze Liste.
+
+## Evaluationsmethodik
+
+Ein Benchmark-Harness durchläuft jede Kombination aus Modell, Suchmodus und Multi-Query und bewertet sie auf zwei Arten: ein gewichteter Score (Kosinus-Ähnlichkeit gewichtet mit einer manuell vergebenen Relevanzbewertung) und ein Relevanz-Prozentsatz (Anteil der Ergebnisse, die mindestens als „relevant" bewertet wurden). Ergebnisse werden nach Excel exportiert — derselbe Harness, der das System validierte, erzeugte auch das Auswertungskapitel der Arbeit.
+
+</ModeAware>

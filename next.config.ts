@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   images: {
     // Default is [75]; the Tinder-mode deck (TinderDeck.tsx) requests 90 for sharper photos.
     qualities: [75, 90],
+    remotePatterns: [
+      // YouTubeEmbed thumbnail facade (click-to-play — avoids loading the iframe up front)
+      { protocol: "https", hostname: "i.ytimg.com" },
+    ],
   },
 };
 

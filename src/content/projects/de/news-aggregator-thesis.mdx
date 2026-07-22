@@ -1,0 +1,108 @@
+---
+title: "Prospero — News-Aggregator (Bachelorarbeit)"
+company: "Higher School of Economics"
+period: "03/2023 – 06/2023"
+status: "archived"
+category: "education"
+tagline: "Bachelorarbeit: eine vollständig instrumentierte News-Aggregations-Plattform"
+stack: ["Go", "ElasticSearch", "PostgreSQL", "Next.js", "React", "Redux Toolkit", "Docker", "Prometheus", "Grafana", "Jaeger", "ELK"]
+impact:
+  - label: "Abschlussnote"
+    value: "B+"
+---
+
+<ModeAware modes="hr">
+
+## Die Geschichte, kurz
+
+<StarStory>
+<StarSituation>
+
+Die Bachelorarbeit an der HSE sollte ein echtes, verteidigungsfähiges Ingenieursprojekt sein — keine Spielaufgabe —, und er wollte sie nutzen, um Go zu lernen, eine Sprache, in der er zuvor noch nichts gebaut hatte.
+
+</StarSituation>
+<StarTask>
+
+Einen funktionierenden News-Aggregator von vorne bis hinten entwerfen, bauen und ausliefern — Backend, Frontend und Admin-Tooling — in rund einem Monat, geschätzt und geplant wie ein echter Produktzyklus statt eines offenen Studienprojekts.
+
+</StarTask>
+<StarAction>
+
+Die Idee in Jira in Epics und Stories aufgeteilt, weniger priorisierte Ideen in einem Notion-Backlog geparkt, und ein Go-Backend gebaut (sein erstes Projekt in dieser Sprache), das RSS-Feeds nach Zeitplan abruft und in ElasticSearch indexiert, während PostgreSQL Publisher und Quellen verwaltet. Ein Next.js-Frontend zeigt Ergebnisse auf einer Live-Karte mit facettierten Filtern — Datum, Kategorie, Land, Sprache —, ein separates Admin-Panel verwaltet die Quellenliste. Logs, Traces und Metriken gab es von Anfang an, nicht nachträglich angeflanscht.
+
+</StarAction>
+<StarResult>
+
+Ausgeliefert und mit B+ verteidigt. Ein Stück Feedback der Kommission während der Verteidigung — dass die sichtbaren Kartengrenzen filtern sollten, welche Artikel erscheinen — floss noch vor der Abgabe in den Code ein, nicht nur in die schriftliche Arbeit.
+
+</StarResult>
+</StarStory>
+
+### Häufig gefragt
+
+<ProjectFaq>
+<ProjectFaqItem q="Warum Go für eine Abschlussarbeit, ohne vorherige Erfahrung damit?">
+
+Die Arbeit war der Vorwand, es endlich richtig zu lernen. Gos Standardbibliothek machte den RSS-Scheduler und die ElasticSearch-/Postgres-Anbindung einfach genug, um das Ein-Monats-Budget zu halten und gleichzeitig die Sprache zu lernen.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Wofür ist das Admin-Panel eigentlich da?">
+
+Für die Verwaltung der Quellenliste — Publisher und ihre RSS-Feeds hinzufügen, samt der Standortdaten (Land, Stadt, Koordinaten), die die Karte im Frontend braucht. Kein Moderationswerkzeug — es gibt keine Freigabe-Warteschlange für Artikel.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Was würdest du anders machen?">
+
+Kafka taucht in einer frühen Architekturskizze im README des Repos auf, wurde aber nie gebaut — eine Erinnerung daran, ein Diagramm auf das zu kürzen, was tatsächlich ausgeliefert wurde, bevor man es als fertig bezeichnet.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Kontext
+
+Prospero ist ein News-Aggregator, gebaut als Bachelorarbeit an der HSE — die Aufgabenstellung war offen (etwas Echtes bauen), also wurde der Zuschnitt fast so sehr zur Entscheidungsübung wie die Technik selbst: Was passt in einen Monat, im Zuschnitt eines echten Produkts, ohne am Ende ein Spielzeug zu sein?
+
+## Was gebaut wurde
+
+Ein vierteiliges System: ein öffentliches Frontend, eine Go-API, ein Admin-Panel und der Observability-Stack, der alles verbindet.
+
+- **RSS-Abruf** — ein per `gocron` geplanter Job zieht neue Artikel von jeder registrierten Quelle im Intervall und indexiert sie.
+- **Suche** — ElasticSearch hält Artikelinhalte und einen denormalisierten Publisher-Index fürs Autocomplete; PostgreSQL ist die Datenquelle für Publisher und ihre RSS-Quellen, inklusive Geokoordinaten für die Karte.
+- **Frontend** — Next.js/React mit Redux Toolkit und RTK Query, Mantine UI und einer Yandex-Maps-Ansicht der Ergebnisse. Filter kombinieren ein Datums-Histogramm, Dropdowns für Kategorie/Land/Sprache (inklusive klickbarer Weltkarte) und boolesche Suchoperatoren (AND / EXACT / NOT).
+- **Admin-Panel** — eine separate Next.js-App, JWT-authentifiziert, zum Anlegen und Bearbeiten von Publishern und RSS-Quellen.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architektur
+
+```
+RSS-Quellen  ──gocron──►  Go-Backend (Gin)  ──REST──►  Next.js Web
+                            │      │                    (Karte + Filter)
+                            │      └────────────────────► Next.js Admin
+                            ▼
+                  PostgreSQL + ElasticSearch
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technische Entscheidungen
+
+**Warum Go, ohne vorherige Erfahrung?** Scheduler und HTTP-Schicht mussten unter einem Ein-Monats-Budget einfach und korrekt zu schreiben sein — Gos Standardbibliothek und statische Typisierung fingen viele Fehler schon beim Kompilieren ab, was eine Skriptsprache nicht geleistet hätte.
+
+**Warum die Suche auf ElasticSearch und PostgreSQL aufteilen statt eine Datenbank?** Postgres passt für den kleinen, relationalen Katalog aus Publishern und Quellen. ElasticSearch passt für Volltextsuche und Autocomplete über die abgerufenen Artikelinhalte — beides in Postgres zu erledigen, hätte bedeutet, Fuzzy-Textsuche von Hand nachzubauen.
+
+**Warum eine separate Admin-App statt eines Admin-Modus im Hauptfrontend?** Unterschiedliches Publikum, unterschiedliches Auth-Modell — die öffentliche Seite ist komplett offen, das Admin-Panel JWT-geschützt. Getrennte Next.js-Deployments hielten admin-spezifischen Code aus dem Bundle der öffentlichen Seite heraus.
+
+## Observability
+
+Logs im ELK-Stack, Request-Tracing in Jaeger, Metriken in Prometheus/Grafana und Yandex.Metrica für Traffic — eingerichtet zusammen mit den ersten Backend-Endpunkten, nicht nachträglich. CI/CD auf einem selbst gehosteten GitHub-Actions-Runner baut den Docker-Compose-Stack bei jedem Push auf main neu und deployt ihn.
+
+</ModeAware>

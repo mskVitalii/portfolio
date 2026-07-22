@@ -1,0 +1,116 @@
+---
+title: "Semantic Search Across Government Open Data — Master's Thesis"
+company: "Chemnitz University of Technology"
+period: "03/2025 – present"
+status: "archived"
+category: "education"
+tagline: "Master's thesis: a semantic search engine for government open data, built as 4 cooperating microservices"
+stack: ["Python", "FastAPI", "TypeScript", "React", "Qdrant"]
+impact:
+  - label: "Services"
+    value: "4"
+  - label: "Embedding models benchmarked"
+    value: "4"
+---
+
+<ModeAware modes="hr">
+
+## The story, in brief
+
+<StarStory>
+<StarSituation>
+
+TU Chemnitz's Web Engineering Master's thesis needed a real research question, not just an implementation exercise. He picked semantic search over government open data — a domain where relevance is genuinely hard: sparse metadata, inconsistent descriptions, civic terminology that rarely matches how people actually ask questions.
+
+</StarSituation>
+<StarTask>
+
+Build a real retrieval system end to end — ingestion, embedding, hybrid search, reranking — and measure which combination of techniques actually helps, instead of asserting it.
+
+</StarTask>
+<StarAction>
+
+Split the system into four independently deployable services: a frontend, a backend orchestrator, an embedding service, and a reranker. Deployed four different embedding models side by side behind one API contract, wired Qdrant's native hybrid dense+sparse search, added a reranking pass, and built a benchmark harness that scores every model/search-mode combination against manually rated relevance.
+
+</StarAction>
+<StarResult>
+
+A working system that streams its own reasoning live — the frontend shows each pipeline stage as it runs — backed by a benchmark comparing four embedding models across search modes. The evaluation methodology, not a single trained model, is the thesis's real contribution.
+
+</StarResult>
+</StarStory>
+
+### Frequently asked
+
+<ProjectFaq>
+<ProjectFaqItem q="Why four separate embedding models instead of picking the best one upfront?">
+
+Because "best" depends on query language and domain — German civic terminology isn't the same retrieval problem as general English text. Deploying all four behind an identical API turned the model choice into something the benchmark harness could measure, instead of a guess made once and never revisited.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="What's actually novel here, if the reranker model itself is off-the-shelf?">
+
+It reuses a strong pretrained reranker rather than training one from scratch — no shame in that on a Master's timeline. The research weight sits in the retrieval pipeline design and the benchmark that measures which combination — dense, sparse, hybrid, reranked, multi-query — actually moves the needle.
+
+</ProjectFaqItem>
+<ProjectFaqItem q="Why stream the pipeline to the frontend instead of just returning a final answer?">
+
+A search that takes several seconds through four stages needs to show its work, or it just looks broken. Server-Sent Events turn that latency into a visible, legible process instead of a blank loading spinner.
+
+</ProjectFaqItem>
+</ProjectFaq>
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Context
+
+TU Chemnitz's Web Engineering Master's requires a thesis built around a genuine research question, not just an implementation. Government open-data portals are hard to search well: entries are sparse, inconsistently described, and often in civic language that doesn't match how people actually ask questions. The thesis asks which retrieval techniques — dense embeddings, sparse keyword-style vectors, hybrid fusion, reranking, multi-query expansion — actually help, and by how much.
+
+## What was built
+
+Four services, each independently deployable and independently scaled:
+
+- **Frontend** (Vite/React, Mantine, Leaflet, Three.js) — a search UI that opens a Server-Sent Events stream and renders each pipeline stage live: research question → embeddings → vector search → datasets → interpretation.
+- **Backend** (Python/FastAPI) — the orchestrator. Fans a query out to the embedder(s), runs hybrid search against Qdrant, calls the reranker, then an LLM for multi-query expansion and a final natural-language interpretation of the results.
+- **Embedder** (Python/FastAPI, four containers from one image) — one container per model: BAAI bge-m3, intfloat multilingual-e5-base, jinaai jina-embeddings-v3, and sentence-transformers LaBSE. Every container also computes model-independent sparse vectors via a hashing trick, so dense and sparse search stay comparable across all four models.
+- **Reranker** (Python/FastAPI, PyTorch) — jina-reranker-v3 behind an endpoint with automatic device selection (CUDA → MPS → CPU) and adaptive batching that halves its batch size and retries on an out-of-memory error instead of crashing.
+- **Ingestion** — separate scrapers for Berlin's, Chemnitz's, Dresden's, and Leipzig's open-data portals, walking each city's dataset catalog with Playwright.
+
+</ModeAware>
+
+<ModeAware modes="tech">
+
+## Architecture
+
+```
+Frontend (Vite/React)
+    │  SSE: research question → embeddings → search → datasets → interpretation
+    ▼
+Backend (FastAPI, orchestrator)
+    ├──► Embedder × 4 models   (bge-m3, e5-base, jina-v3, LaBSE)
+    ├──► Qdrant                (hybrid dense+sparse, RRF fusion)
+    ├──► Reranker              (jina-reranker-v3)
+    └──► LLM                   (multi-query + interpretation)
+
+Ingestion (Playwright) ──► Berlin / Chemnitz / Dresden / Leipzig portals ──► Qdrant + MongoDB
+```
+
+</ModeAware>
+
+<ModeAware modes="business tech">
+
+## Technical decisions
+
+**Why four embedding models instead of one?** The best embedding model is domain- and language-dependent, especially for German civic terminology. Deploying all four behind identical `/embed` contracts turned model choice into something the benchmark harness could measure, rather than a guess made once and never revisited.
+
+**Why hybrid dense+sparse instead of just dense embeddings?** Dense embeddings alone miss exact keyword and acronym matches common in government dataset titles. Qdrant's native reciprocal rank fusion over named dense+sparse vectors combines both without maintaining a second index.
+
+**Why a reranker on top of vector search?** Vector search optimizes for approximate similarity across the whole corpus in one pass. A reranker re-scores just the top candidates with a model that attends to the full query and document together — a second, more expensive but more accurate pass over a short list.
+
+## Evaluation methodology
+
+A benchmark harness runs every model × search-mode × multi-query combination and scores it two ways: a weighted score (cosine similarity weighted by a manually rated relevance score) and a relevance percentage (share of results rated at least "relevant"). Results export to Excel — the same harness that validated the system also generated the thesis's evaluation chapter.
+
+</ModeAware>

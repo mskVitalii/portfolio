@@ -9,6 +9,7 @@ import { FileDown, Award, ChevronRight, CheckCircle2, ExternalLink, GraduationCa
 import type { Project } from "@/data/projects";
 import { localize, formatPeriod } from "@/lib/localized";
 import { Certificates } from "@/components/education/Certificates";
+import { YouTubeEmbed } from "@/components/projects/YouTubeEmbed";
 
 // ─── HSE Logo SVG ──────────────────────────────────────────────────────────────
 
@@ -634,6 +635,8 @@ function ThesisSpotlight({
   const tProjects = useTranslations("Projects");
   const locale = useLocale();
   const inProgress = project.status === "active";
+  const demoVideo = project.links?.find((link) => link.labelKey === "demoVideo");
+  const otherLinks = project.links?.filter((link) => link.labelKey !== "demoVideo");
   return (
     <div
       className="rounded-2xl p-6 md:p-8 mb-10"
@@ -672,6 +675,13 @@ function ThesisSpotlight({
           </span>
         ))}
       </div>
+      {demoVideo && (
+        <YouTubeEmbed
+          url={demoVideo.url}
+          title={`${localize(project.title, locale)} — ${tProjects("linkLabels.demoVideo")}`}
+          openInNewTabLabel={tProjects("documentOpenInNewTab")}
+        />
+      )}
       <div className="flex flex-wrap items-center gap-3">
         <Link
           href={`/projects/${project.slug}`}
@@ -680,7 +690,7 @@ function ThesisSpotlight({
         >
           {t("viewCaseStudy")} →
         </Link>
-        {project.links?.map((link) => (
+        {otherLinks?.map((link) => (
           <a
             key={link.url}
             href={link.url}
@@ -804,9 +814,6 @@ export function EducationStack({ projects }: { projects: Project[] }) {
     <div>
       <div className="container mx-auto px-4 py-16 max-w-5xl">
         <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
-        <p className="text-muted-foreground text-lg max-w-2xl">
-          {t("subtitle")}
-        </p>
       </div>
 
       {/* ── HSE section: hero + all HSE academic projects, contained together.
