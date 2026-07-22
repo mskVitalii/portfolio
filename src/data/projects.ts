@@ -1573,7 +1573,7 @@ export const EDUCATION_PROJECTS: Project[] = [
     },
     company: "Higher School of Economics",
     period: "04/2022",
-    status: "deprecated",
+    status: "archived",
     statusNote: {
       en: "Rough prototype — the zero-code ambition outran the execution.",
       de: "Grober Prototyp — die Zero-Code-Ambition übertraf die Umsetzung.",

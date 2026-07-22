@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { localize } from "@/lib/localized";
-import { getNextProject } from "@/data/projects";
+import { getNextProject, getProject } from "@/data/projects";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,12 +11,17 @@ import { cn } from "@/lib/utils";
 export async function NextProjectLink({ slug, locale }: { slug: string; locale: string }) {
   const t = await getTranslations({ locale, namespace: "Projects" });
   const next = getNextProject(slug);
+  const project = getProject(slug);
 
   if (!next) {
+    const isEducation = project?.category === "education";
     return (
       <div className="mt-10 border-t pt-8 text-center">
-        <Link href="/projects" className={cn(buttonVariants({ variant: "outline" }))}>
-          {t("backToAllProjects")}
+        <Link
+          href={isEducation ? "/education" : "/projects"}
+          className={cn(buttonVariants({ variant: "default" }))}
+        >
+          {isEducation ? t("backToEducation") : t("backToAllProjects")}
         </Link>
       </div>
     );
