@@ -31,6 +31,12 @@ export interface GalleryPhoto {
 /** Tinder-mode bios (hasFace photos only) live in messages/{en,de,ru}.json under AboutPage.gallery.tinderBios[id]. */
 
 export const ABOUT_GALLERY: GalleryPhoto[] = [
+  // Первый курс университета, 2019 #учёба
+  { id: "about-100", src: "/images/about/tinder/tinder-01.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["study"], hasFace: true },
+  // Закончил бакалавриат, работаю в OZON, 2023 #учёба #работа
+  { id: "about-101", src: "/images/about/tinder/tinder-02.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["study", "work"], hasFace: true },
+  // Отправляюсь в Германию в магистратуру, 2023 #путешествия #Германия #учёба
+  { id: "about-102", src: "/images/about/tinder/tinder-03.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["travel", "germany", "study"], hasFace: true },
   // Поход на границу Чехии и Германии #путешествия #Чехия #Германия
   { id: "about-001", src: "/images/about/horizontal/gallery-h-01.jpg", width: 1600, height: 1200, orientation: "landscape", tags: ["travel", "czechia", "germany"], hasFace: false },
   // Готовлю блинчики на 4 человека #кулинария
@@ -229,4 +235,6 @@ export const ABOUT_GALLERY: GalleryPhoto[] = [
   { id: "about-098", src: "/images/about/vertical/gallery-v-34.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["work"], hasFace: false },
   // Экспериментирую с массажем #Германия
   { id: "about-099", src: "/images/about/vertical/gallery-v-35.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["germany"], hasFace: false },
+  // Люблю животных #животные
+  { id: "about-103", src: "/images/about/tinder/tinder-04.jpg", width: 1600, height: 900, orientation: "landscape", tags: ["animals"], hasFace: true },
 ];

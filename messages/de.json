@@ -157,14 +157,22 @@
         "summarySkipped": "{count} übersprungen"
       },
       "tinderBios": {
+        "about-100": "Gerade an der HSE University eingeschrieben — voller Ehrgeiz, die IT zu erobern.",
+        "about-101": "Beende gerade den Bachelor, erster Badge bei OZON. Hier hörte 'Code schreiben, den echte Nutzer anfassen' auf, eine Studienaufgabe zu sein, und wurde der Job.",
+        "about-102": "Einfaches Ticket nach Deutschland für den Master, Rucksack schwerer als der Plan. Auf ins Ungewisse.",
         "about-019": "Bin durch den Nebel auf einen österreichischen Berg gestiegen, nur um zu sehen, was dahinter liegt. Mache ich mit Problemen genauso — lohnt sich meistens.",
         "about-028": "Gerade von der Besteigung der Schneekoppe zurück und immer noch high davon. Gut mit Bergen, Bugs und dem Gespür, wann ein Wanderausflug (oder ein erstes Date) eine Hüttenpause braucht.",
-        "about-055": "Selfies mit 7 Tonnen schweren Bronzeköpfen sind für mich ein ganz normaler Dienstag. Eigene Icebreaker bitte mitbringen, meine hab ich schon.",
+        "about-055": "Selfies mit 7 Tonnen schweren Bronzeköpfen sind für mich ein ganz normaler Dienstag.",
         "about-067": "Hab dieses Fahrrad für 30 Euro gekauft — die beste Investition des Jahres. Faible für gute Deals und noch bessere Waldwege.",
-        "about-087": "Fürs Theater mache ich mich ordentlich schick — Ingenieure können auch Black Tie. Frag mich nach dem Stück, ich erzähl sowieso davon.",
-        "about-091": "Diesen Schnurrbart hab ich als Experiment wachsen lassen. Fazit: gemischte Kritiken, keine Reue. Ich bleibe bei Bits genauso konsequent wie beim Code-Ausliefern."
+        "about-087": "Fürs Theater mache ich mich ordentlich schick — Ingenieure können auch Black Tie.",
+        "about-091": "Diesen Schnurrbart hab ich als Experiment wachsen lassen. Fazit: gemischte Kritiken, keine Reue. Ich bleibe bei Bits genauso konsequent wie beim Code-Ausliefern.",
+        "about-103": "Ich liebe Tiere — das ist meine Katze Laska."
       },
       "captions": {
+        "about-100": "Erstes Studienjahr",
+        "about-101": "Beende den Bachelor, arbeite bei OZON",
+        "about-102": "Auf dem Weg nach Deutschland für den Master",
+        "about-103": "Ich liebe Tiere",
         "about-001": "Wanderung an die tschechisch-deutsche Grenze",
         "about-002": "Pfannkuchen für vier kochen",
         "about-003": "Wanderung an die tschechisch-deutsche Grenze",

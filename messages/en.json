@@ -157,14 +157,22 @@
         "summarySkipped": "{count} skipped"
       },
       "tinderBios": {
+        "about-100": "Just enrolled at HSE University — full of ambition to conquer IT.",
+        "about-101": "Finishing up my bachelor's, first badge clipped on at OZON. This is where 'shipping code that real users touch' stopped being a school assignment and started being the job.",
+        "about-102": "One-way ticket to Germany for a master's degree, backpack heavier than the plan. Onward into the unknown.",
         "about-019": "Chased the fog up an Austrian mountain just to see what was on the other side. I do that with problems too — pays off more often than not.",
         "about-028": "Just came down from climbing Snezka and I'm still buzzing. Good with mountains, bugs, and knowing when a hike (or a first date) needs a hut stop.",
-        "about-055": "Taking selfies with 7-ton bronze heads is a normal Tuesday for me. Bring your own icebreakers, I've clearly got mine covered.",
+        "about-055": "Taking selfies with 7-ton bronze heads is a normal Tuesday for me.",
         "about-067": "Bought this bike for 30 euros and it's the best investment I've made all year. Soft spot for a good deal and an even better forest trail.",
-        "about-087": "I clean up nicely for the theater — turns out engineers can do black tie too. Ask me about the show, or don't, I'll talk about it anyway.",
-        "about-091": "Grew this mustache as an experiment. Verdict: mixed reviews, zero regrets. I commit to bits the same way I commit to shipping code."
+        "about-087": "I clean up nicely for the theater — turns out engineers can do black tie too.",
+        "about-091": "Grew this mustache as an experiment. Verdict: mixed reviews, zero regrets. I commit to bits the same way I commit to shipping code.",
+        "about-103": "I love animals — this is my cat, Laska."
       },
       "captions": {
+        "about-100": "First year of university",
+        "about-101": "Finishing my bachelor's, working at OZON",
+        "about-102": "Heading to Germany for my master's",
+        "about-103": "I love animals",
         "about-001": "Hiking to the Czech-German border",
         "about-002": "Cooking pancakes for four",
         "about-003": "Hiking to the Czech-German border",
