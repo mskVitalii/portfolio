@@ -178,6 +178,16 @@ export const PROJECTS: Project[] = [
       { src: "/images/projects/infineon-thingkathon/architecture-sketch-1.jpg", alt: { en: "Whiteboard sketch of the fault-detection architecture", de: "Whiteboard-Skizze der Fehlererkennungs-Architektur", ru: "Набросок архитектуры обнаружения неисправностей на доске" } },
       { src: "/images/projects/infineon-thingkathon/architecture-sketch-2.jpg", alt: { en: "Second whiteboard sketch of the system architecture", de: "Zweite Whiteboard-Skizze der Systemarchitektur", ru: "Второй набросок архитектуры системы на доске" } },
     ],
+    referenceDocuments: [
+      {
+        title: {
+          en: "Thin[gk]athon 1st place certificate (Infineon, 2026)",
+          de: "Thin[gk]athon-Urkunde für den 1. Platz (Infineon, 2026)",
+          ru: "Сертификат за 1-е место на Thin[gk]athon (Infineon, 2026)",
+        },
+        url: "/documents/infineon-thingkathon/certificate.pdf",
+      },
+    ],
   },
 
   // ─── onlineTours (08/2023 – 07/2024) ────────────────────────────────────────
