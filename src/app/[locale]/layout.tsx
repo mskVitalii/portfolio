@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing } from "@/i18n/routing";
 import { ViewModeProvider } from "@/components/layout/ViewModeProvider";
 import { HtmlLangSync } from "@/components/layout/HtmlLangSync";
@@ -110,6 +111,7 @@ export default async function LocaleLayout({
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       )}
       <Analytics />
+      <SpeedInsights />
     </NextIntlClientProvider>
   );
 }
