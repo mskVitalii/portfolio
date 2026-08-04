@@ -74,11 +74,14 @@ export const metadata: Metadata = {
       "Full-stack engineer focused on building systems that create measurable business value.",
     images: ["/en/og"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
+  robots:
+    process.env.VERCEL_ENV === "production"
+      ? {
+          index: true,
+          follow: true,
+          googleBot: { index: true, follow: true, "max-image-preview": "large" },
+        }
+      : { index: false, follow: false },
 };
 
 export default function RootLayout({

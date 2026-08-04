@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1584px;
+    height: 396px;
+    overflow: hidden;
+    background: oklch(0.115 0.003 250);
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+
+  .banner {
+    position: relative;
+    width: 1584px;
+    height: 396px;
+    background:
+      radial-gradient(ellipse 900px 500px at 1300px -80px, oklch(0.88 0.25 155 / 14%), transparent 60%),
+      radial-gradient(ellipse 700px 400px at 200px 460px, oklch(0.58 0.19 250 / 10%), transparent 60%),
+      oklch(0.115 0.003 250);
+  }
+
+  /* faint dot grid, editorial-tech texture */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(oklch(1 0 0 / 6%) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    background-position: -10px -10px;
+  }
+
+  /* node-graph decoration, right side — nods to distributed systems */
+  svg.nodes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 720px;
+    height: 396px;
+    opacity: 0.55;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 44px 64px 36px 490px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: oklch(0.88 0.25 155);
+  }
+
+  .name {
+    margin-top: 10px;
+    font-size: 74px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: oklch(0.97 0 0);
+    line-height: 1;
+  }
+
+  .tagline {
+    margin-top: 16px;
+    font-size: 21px;
+    font-weight: 400;
+    color: oklch(0.72 0.005 250);
+    max-width: 760px;
+    line-height: 1.4;
+  }
+
+  .tagline b {
+    color: oklch(0.97 0 0);
+    font-weight: 600;
+  }
+
+  .metrics {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .site-link {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .site-link .url {
+    text-align: right;
+  }
+
+  .site-link .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: oklch(0.65 0.005 250);
+    letter-spacing: 0.01em;
+  }
+
+  .site-link .domain {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: oklch(0.97 0 0);
+  }
+
+  .qr-box {
+    width: 76px;
+    height: 76px;
+    background: oklch(0.97 0 0);
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .qr-box img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .metric {
+    padding-right: 36px;
+    margin-right: 36px;
+    border-right: 1px solid oklch(1 0 0 / 12%);
+  }
+  .metric:last-child {
+    border-right: none;
+  }
+
+  .metric .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 30px;
+    font-weight: 600;
+    color: oklch(0.88 0.25 155);
+    line-height: 1;
+  }
+
+  .metric .label {
+    margin-top: 6px;
+    font-size: 13px;
+    color: oklch(0.65 0.005 250);
+    letter-spacing: 0.01em;
+  }
+
+  .stack {
+    position: absolute;
+    top: 60px;
+    right: 110px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: oklch(0.9 0.01 250);
+    background: oklch(1 0 0 / 6%);
+    border: 1px solid oklch(1 0 0 / 12%);
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="grid"></div>
+
+    <svg class="nodes" viewBox="0 0 720 396" fill="none">
+      <g stroke="oklch(0.88 0.25 155 / 35%)" stroke-width="1.2">
+        <line x1="560" y1="90" x2="660" y2="150"/>
+        <line x1="560" y1="90" x2="500" y2="180"/>
+        <line x1="660" y1="150" x2="620" y2="250"/>
+        <line x1="500" y1="180" x2="620" y2="250"/>
+        <line x1="500" y1="180" x2="420" y2="130"/>
+        <line x1="620" y1="250" x2="560" y2="330"/>
+        <line x1="660" y1="150" x2="690" y2="260"/>
+        <line x1="690" y1="260" x2="620" y2="250"/>
+        <line x1="420" y1="130" x2="380" y2="220"/>
+        <line x1="380" y1="220" x2="500" y2="180"/>
+      </g>
+      <g fill="oklch(0.88 0.25 155)">
+        <circle cx="560" cy="90" r="4.5"/>
+        <circle cx="660" cy="150" r="5.5"/>
+        <circle cx="500" cy="180" r="4.5"/>
+        <circle cx="620" cy="250" r="6.5"/>
+        <circle cx="420" cy="130" r="4"/>
+        <circle cx="560" cy="330" r="4.5"/>
+        <circle cx="690" cy="260" r="4"/>
+        <circle cx="380" cy="220" r="4"/>
+      </g>
+      <g fill="oklch(0.58 0.19 250)" opacity="0.8">
+        <circle cx="560" cy="90" r="2"/>
+        <circle cx="660" cy="150" r="2.5"/>
+        <circle cx="620" cy="250" r="3"/>
+      </g>
+    </svg>
+
+    <div class="stack">
+      <span class="pill">Go</span>
+      <span class="pill">Python</span>
+      <span class="pill">C#</span>
+      <span class="pill">TypeScript</span>
+      <span class="pill">React</span>
+      <span class="pill">AI</span>
+    </div>
+
+    <div class="content">
+      <div>
+        <div class="kicker">Full-Stack Engineer · Distributed Systems · AI</div>
+        <div class="name">Vitalii Popov</div>
+        <div class="tagline">Building systems that create <b>measurable business value</b> — 5+ years across e-commerce and logistics, with hands-on AI development experience.</div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="value">€480K</div>
+          <div class="label">Annual savings</div>
+        </div>
+        <div class="metric">
+          <div class="value">8K</div>
+          <div class="label">Users served</div>
+        </div>
+        <div class="metric">
+          <div class="value">11.63%</div>
+          <div class="label">Metric uplift</div>
+        </div>
+        <div class="metric">
+          <div class="value">17+</div>
+          <div class="label">Projects shipped</div>
+        </div>
+
+        <div class="site-link">
+          <div class="url">
+            <div class="label">Full portfolio ↗</div>
+            <div class="domain">vitalii-popov.dev</div>
+          </div>
+          <div class="qr-box">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&color=10-10-14&bgcolor=255-255-255&data=https%3A%2F%2Fvitalii-popov.dev" alt="QR code to vitalii-popov.dev" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

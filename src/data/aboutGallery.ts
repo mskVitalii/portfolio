@@ -170,7 +170,7 @@ export const ABOUT_GALLERY: GalleryPhoto[] = [
   // Велосипед за 30 евро #спорт #Германия
   { id: "about-066", src: "/images/about/vertical/gallery-v-02.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: false },
   // Велосипед за 30 евро #спорт #Германия
-  { id: "about-067", src: "/images/about/vertical/gallery-v-03.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: true },
+  { id: "about-067", src: "/images/about/vertical/gallery-v-03.webp", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: true },
   // Франкфурт #Германия #путешествия
   { id: "about-068", src: "/images/about/vertical/gallery-v-04.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["germany", "travel"], hasFace: false },
   // Грибной сезон в Хемнице #Германия #путешествия
@@ -190,7 +190,7 @@ export const ABOUT_GALLERY: GalleryPhoto[] = [
   // Поход в Саксонский лес #спорт #Германия
   { id: "about-076", src: "/images/about/vertical/gallery-v-12.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: false },
   // Дешёвое жильё в Германии #спорт #Германия
-  { id: "about-077", src: "/images/about/vertical/gallery-v-13.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: false },
+  { id: "about-077", src: "/images/about/vertical/gallery-v-13.webp", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: false },
   // Поход в Саксонский лес #спорт #Германия
   { id: "about-078", src: "/images/about/vertical/gallery-v-14.jpg", width: 1200, height: 1600, orientation: "portrait", tags: ["sport", "germany"], hasFace: false },
   // Экспериментирую со скейтбордом #Германия

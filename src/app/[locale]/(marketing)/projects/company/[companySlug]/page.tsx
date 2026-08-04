@@ -12,6 +12,7 @@ import {
   BASE_URL,
 } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { ArrowLeft, Building2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
@@ -72,8 +73,6 @@ export function generateStaticParams() {
   );
 }
 
-export const dynamicParams = false;
-
 export default async function CompanyProjectsPage({
   params,
 }: {
@@ -91,11 +90,12 @@ export default async function CompanyProjectsPage({
   const t = await getTranslations({ locale, namespace: "Projects" });
   const tNav = await getTranslations({ locale, namespace: "Nav" });
   const bundleDescription = localize(bundle.blurb.business, locale);
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, [
+  const breadcrumbItems = [
     { name: tNav("home"), path: "" },
     { name: tNav("projects"), path: "/projects" },
     { name: bundle.name, path: `/projects/company/${companySlug}` },
-  ]);
+  ];
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(locale, breadcrumbItems);
   const webPageJsonLd = buildWebPageJsonLd({
     locale,
     path: `/projects/company/${companySlug}`,
@@ -107,6 +107,7 @@ export default async function CompanyProjectsPage({
     <main className="container mx-auto px-4 py-12 max-w-4xl">
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={webPageJsonLd} />
+      <Breadcrumbs items={breadcrumbItems} />
       <Link
         href="/projects"
         className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "mb-8 -ml-2")}

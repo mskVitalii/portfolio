@@ -173,7 +173,7 @@ export const PROJECTS: Project[] = [
     images: [
       { src: "/images/projects/infineon-thingkathon/conveyor-rig-1.jpg", alt: { en: "Conveyor-line rig built for the hackathon demo", de: "Für die Hackathon-Demo gebauter Förderband-Aufbau", ru: "Стенд с конвейерной линией, собранный для демо на хакатоне" } },
       { src: "/images/projects/infineon-thingkathon/conveyor-rig-2.jpg", alt: { en: "Conveyor-line rig, close-up view", de: "Förderband-Aufbau, Nahaufnahme", ru: "Стенд с конвейерной линией, крупный план" } },
-      { src: "/images/projects/infineon-thingkathon/conveyor-line-wide.png", alt: { en: "Wide view of the conveyor line setup", de: "Weite Ansicht des Förderband-Aufbaus", ru: "Общий план стенда с конвейерной линией" } },
+      { src: "/images/projects/infineon-thingkathon/conveyor-line-wide.webp", alt: { en: "Wide view of the conveyor line setup", de: "Weite Ansicht des Förderband-Aufbaus", ru: "Общий план стенда с конвейерной линией" } },
       { src: "/images/projects/infineon-thingkathon/psoc-edge-kit-setup.jpeg", alt: { en: "PSoC Edge kit wired up to the conveyor rig", de: "PSoC-Edge-Kit, verkabelt mit dem Förderband-Aufbau", ru: "Комплект PSoC Edge, подключённый к стенду конвейера" } },
       { src: "/images/projects/infineon-thingkathon/architecture-sketch-1.jpg", alt: { en: "Whiteboard sketch of the fault-detection architecture", de: "Whiteboard-Skizze der Fehlererkennungs-Architektur", ru: "Набросок архитектуры обнаружения неисправностей на доске" } },
       { src: "/images/projects/infineon-thingkathon/architecture-sketch-2.jpg", alt: { en: "Second whiteboard sketch of the system architecture", de: "Zweite Whiteboard-Skizze der Systemarchitektur", ru: "Второй набросок архитектуры системы на доске" } },
@@ -227,8 +227,8 @@ export const PROJECTS: Project[] = [
     impact: [{ label: { en: "Metric uplift", de: "Kennzahl-Steigerung", ru: "Прирост метрики" }, value: "11.63%" }],
     stack: ["React", "TypeScript", "Tailwind", "Jotai", "Redux", "Ruby on Rails", "Docker", "Kubernetes", "Redis", "Storybook", "GitLab CI/CD"],
     images: [
-      { src: "/images/projects/online-tours-ab/homepage.png", alt: { en: "Aggregator homepage for tours and hotels", de: "Startseite des Aggregators für Touren und Hotels", ru: "Главная страница агрегатора туров и отелей" } },
-      { src: "/images/projects/online-tours-ab/tour-search-results.png", alt: { en: "Tour search results page", de: "Suchergebnisseite für Touren", ru: "Страница результатов поиска туров" } },
+      { src: "/images/projects/online-tours-ab/homepage.webp", alt: { en: "Aggregator homepage for tours and hotels", de: "Startseite des Aggregators für Touren und Hotels", ru: "Главная страница агрегатора туров и отелей" } },
+      { src: "/images/projects/online-tours-ab/tour-search-results.webp", alt: { en: "Tour search results page", de: "Suchergebnisseite für Touren", ru: "Страница результатов поиска туров" } },
       { src: "/images/projects/online-tours-ab/callback-widget.png", alt: { en: "Callback request widget", de: "Rückruf-Widget", ru: "Виджет заказа обратного звонка" } },
     ],
   },
@@ -316,7 +316,7 @@ export const PROJECTS: Project[] = [
     impact: [{ label: { en: "Cost savings", de: "Kosteneinsparung", ru: "Экономия" }, value: "€86K" }],
     stack: ["C#", "WebSockets", "PostgreSQL"],
     images: [
-      { src: "/images/projects/ozon-tech/office-54th-floor.png", alt: { en: "OZON office on the 54th floor", de: "OZON-Büro im 54. Stock", ru: "Офис OZON на 54 этаже" } },
+      { src: "/images/projects/ozon-tech/office-54th-floor.webp", alt: { en: "OZON office on the 54th floor", de: "OZON-Büro im 54. Stock", ru: "Офис OZON на 54 этаже" } },
       { src: "/images/projects/ozon-tech/office-view-1.jpg", alt: { en: "View from the OZON office", de: "Aussicht aus dem OZON-Büro", ru: "Вид из офиса OZON" } },
       { src: "/images/projects/ozon-tech/office-view-2.jpg", alt: { en: "Another view from the OZON office", de: "Weitere Aussicht aus dem OZON-Büro", ru: "Ещё один вид из офиса OZON" } },
       { src: "/images/projects/ozon-tech/street-view-night.jpg", alt: { en: "Street view near the OZON office at night", de: "Straßenblick beim OZON-Büro bei Nacht", ru: "Вид на улицу у офиса OZON ночью" } },
@@ -922,10 +922,10 @@ export const PROJECTS: Project[] = [
     stack: ["Angular"],
     links: [{ labelKey: "demo", url: "https://mew2-ultra.web.app/" }],
     images: [
-      { src: "/images/projects/subway-battery-monitor/dashboard-overview.png", alt: { en: "Overview of the subway battery-monitoring dashboard", de: "Übersicht des U-Bahn-Batterieüberwachungs-Dashboards", ru: "Обзор дашборда мониторинга батарей метро" } },
+      { src: "/images/projects/subway-battery-monitor/dashboard-overview.webp", alt: { en: "Overview of the subway battery-monitoring dashboard", de: "Übersicht des U-Bahn-Batterieüberwachungs-Dashboards", ru: "Обзор дашборда мониторинга батарей метро" } },
       { src: "/images/projects/subway-battery-monitor/final-photo-1.jpeg", alt: { en: "Photo of the finished dashboard, view 1", de: "Foto des fertigen Dashboards, Ansicht 1", ru: "Фото готового дашборда, вид 1" } },
       { src: "/images/projects/subway-battery-monitor/final-photo-2.jpeg", alt: { en: "Photo of the finished dashboard, view 2", de: "Foto des fertigen Dashboards, Ansicht 2", ru: "Фото готового дашборда, вид 2" } },
-      { src: "/images/projects/subway-battery-monitor/dashboard-notes-1.png", alt: { en: "Notes sketched while designing the dashboard", de: "Notizen, die beim Entwurf des Dashboards skizziert wurden", ru: "Заметки, сделанные при проектировании дашборда" } },
+      { src: "/images/projects/subway-battery-monitor/dashboard-notes-1.webp", alt: { en: "Notes sketched while designing the dashboard", de: "Notizen, die beim Entwurf des Dashboards skizziert wurden", ru: "Заметки, сделанные при проектировании дашборда" } },
       { src: "/images/projects/subway-battery-monitor/battery-dashboard.jpg", alt: { en: "Live telemetry view for one battery unit", de: "Live-Telemetrieansicht für eine Batterieeinheit", ru: "Вид телеметрии в реальном времени для одной батареи" } },
     ],
   },
@@ -1059,7 +1059,6 @@ export const PROJECTS: Project[] = [
     stack: ["Gatsby"],
     links: [
       { labelKey: "demoStore", url: "https://skinmainers.vercel.app/about" },
-      { labelKey: "githubStore", url: "https://github.com/mskKote/ac_for_vs" },
       { labelKey: "demoLanding", url: "https://skin-miners.web.app/" },
       { labelKey: "githubLanding", url: "https://github.com/kolbak/Skin-Miners" },
     ],
@@ -1105,7 +1104,7 @@ export const PROJECTS: Project[] = [
       },
     },
     stack: ["Gatsby"],
-    links: [{ labelKey: "demo", url: "https://typography.gatsbyjs.io/" }],
+    links: [],
     images: ["/images/projects/typography-order-form/order-form.png"],
   },
   {
@@ -1442,12 +1441,9 @@ export const EDUCATION_PROJECTS: Project[] = [
     },
     impact: [{ label: { en: "Recognition", de: "Auszeichnung", ru: "Признание" }, value: "HSE Best Projects" }],
     stack: ["C#", "ASP.NET MVC", "Azure Face API", "Azure Blob Storage", "WebRTC"],
-    links: [
-      { labelKey: "demo", url: "https://fassonapi.azurewebsites.net/" },
-      { labelKey: "github", url: "https://github.com/mskVitalii/FassonAPI" },
-    ],
+    links: [{ labelKey: "github", url: "https://github.com/mskVitalii/FassonAPI" }],
     images: [
-      { src: "/images/projects/fassonapi-coursework/architecture-scheme.png", alt: { en: "Architecture diagram for the FassonAPI coursework", de: "Architekturdiagramm der FassonAPI-Kursarbeit", ru: "Диаграмма архитектуры курсовой FassonAPI" } },
+      { src: "/images/projects/fassonapi-coursework/architecture-scheme.webp", alt: { en: "Architecture diagram for the FassonAPI coursework", de: "Architekturdiagramm der FassonAPI-Kursarbeit", ru: "Диаграмма архитектуры курсовой FassonAPI" } },
       { src: "/images/projects/fassonapi-coursework/late-night-coding.png", alt: { en: "Late-night coding session while building FassonAPI", de: "Nächtliche Programmiersession beim Bau von FassonAPI", ru: "Ночная сессия написания кода во время работы над FassonAPI" } },
       { src: "/images/projects/fassonapi-coursework/award-1.jpeg", alt: { en: "HSE Best Projects award, photo 1", de: "HSE-Best-Projects-Auszeichnung, Foto 1", ru: "Награда HSE Best Projects, фото 1" } },
       { src: "/images/projects/fassonapi-coursework/award-2.jpeg", alt: { en: "HSE Best Projects award, photo 2", de: "HSE-Best-Projects-Auszeichnung, Foto 2", ru: "Награда HSE Best Projects, фото 2" } },
@@ -1489,9 +1485,9 @@ export const EDUCATION_PROJECTS: Project[] = [
     stack: ["C++", "Arduino", "TCS3200 Color Sensor"],
     links: [{ labelKey: "github", url: "https://github.com/mskVitalii/Arduino-Color-Sound" }],
     images: [
-      { src: "/images/projects/cyberphys-color-robot/robot-build-1.png", alt: { en: "Building the color-sensing robot, step 1", de: "Bau des farberkennenden Roboters, Schritt 1", ru: "Сборка робота, распознающего цвет, шаг 1" } },
-      { src: "/images/projects/cyberphys-color-robot/robot-build-2.png", alt: { en: "Building the color-sensing robot, step 2", de: "Bau des farberkennenden Roboters, Schritt 2", ru: "Сборка робота, распознающего цвет, шаг 2" } },
-      { src: "/images/projects/cyberphys-color-robot/robot-build-3.png", alt: { en: "The finished color-sensing robot", de: "Der fertige farberkennende Roboter", ru: "Готовый робот, распознающий цвет" } },
+      { src: "/images/projects/cyberphys-color-robot/robot-build-1.webp", alt: { en: "Building the color-sensing robot, step 1", de: "Bau des farberkennenden Roboters, Schritt 1", ru: "Сборка робота, распознающего цвет, шаг 1" } },
+      { src: "/images/projects/cyberphys-color-robot/robot-build-2.webp", alt: { en: "Building the color-sensing robot, step 2", de: "Bau des farberkennenden Roboters, Schritt 2", ru: "Сборка робота, распознающего цвет, шаг 2" } },
+      { src: "/images/projects/cyberphys-color-robot/robot-build-3.webp", alt: { en: "The finished color-sensing robot", de: "Der fertige farberkennende Roboter", ru: "Готовый робот, распознающий цвет" } },
     ],
   },
   {
@@ -1958,6 +1954,14 @@ function buildProjectStops(): ProjectStop[] {
   return stops;
 }
 
+/** Canonical href for a project card/link — the merged company case-study page
+ * (with anchor) for bundled companies, since their standalone /projects/[slug]
+ * URL 308-redirects there; the plain slug URL otherwise. */
+export function getProjectHref(project: Project): string {
+  const bundle = getCompanyBundle(project.company);
+  return bundle ? `/projects/company/${bundle.slug}#${project.slug}` : `/projects/${project.slug}`;
+}
+
 export interface NextProjectTarget {
   href: string;
   title: LocalizedText;
@@ -1965,7 +1969,7 @@ export interface NextProjectTarget {
 
 function firstOfStop(stop: ProjectStop): NextProjectTarget {
   if (stop.kind === "project") {
-    return { href: `/projects/${stop.project.slug}`, title: stop.project.title };
+    return { href: getProjectHref(stop.project), title: stop.project.title };
   }
   const first = stop.projects[0];
   return { href: `/projects/company/${stop.bundleSlug}#${first.slug}`, title: first.title };

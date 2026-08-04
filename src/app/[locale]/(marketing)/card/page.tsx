@@ -44,6 +44,7 @@ export default async function CardPage({
     <>
       <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={webPageJsonLd} />
+      <h1 className="sr-only">{t("title")}</h1>
       <BusinessCard />
     </>
   );

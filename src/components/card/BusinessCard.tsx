@@ -85,7 +85,7 @@ function ClassicFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-0.5">{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-slate-900">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-slate-900">{INFO.name}</p>
             <p className="text-xs text-slate-400 mt-1">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-slate-500" />
@@ -127,7 +127,7 @@ function NeonFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[10px] text-emerald-400 uppercase tracking-widest mb-0.5">{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white">{INFO.name}</p>
             <p className="text-xs text-zinc-400 mt-1">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-zinc-300" />
@@ -168,7 +168,7 @@ function SplitFront() {
           <span className="text-white font-bold text-lg">VP</span>
         </div>
         <div>
-          <h1 className="text-lg font-bold text-white leading-tight">{INFO.name}</h1>
+          <p className="text-lg font-bold text-white leading-tight">{INFO.name}</p>
           <p className="text-[11px] text-amber-100">{INFO.title}</p>
         </div>
       </div>
@@ -212,9 +212,9 @@ function PaperFront() {
               <div className="w-3 h-px bg-stone-800" />
               <p className="text-[9px] text-stone-500 uppercase tracking-[0.2em]">{INFO.title}</p>
             </div>
-            <h1 className="text-xl font-bold leading-tight text-stone-900" style={{ fontFamily: "Georgia, serif" }}>
+            <p className="text-xl font-bold leading-tight text-stone-900" style={{ fontFamily: "Georgia, serif" }}>
               {INFO.name}
-            </h1>
+            </p>
             <p className="text-[11px] text-stone-500 mt-0.5 italic">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-stone-500" />
@@ -258,7 +258,7 @@ function GradientFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[10px] text-indigo-300 uppercase tracking-widest mb-0.5">{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white">{INFO.name}</p>
             <p className="text-xs text-indigo-200 mt-1 opacity-70">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-indigo-100 opacity-80" />
@@ -310,7 +310,7 @@ function MetalFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[10px] text-zinc-500 uppercase tracking-widest mb-0.5">{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-zinc-800">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-zinc-800">{INFO.name}</p>
             <p className="text-xs text-zinc-500 mt-1">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-zinc-600" />
@@ -367,7 +367,7 @@ function BlueprintFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[9px] text-blue-200 uppercase tracking-[0.15em] mb-0.5 font-mono">{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white font-mono">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white font-mono">{INFO.name}</p>
             <p className="text-xs text-blue-200 mt-1 font-mono opacity-80">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-blue-100 font-mono" />
@@ -416,7 +416,7 @@ function InkFront() {
       <div className="flex flex-1 pt-5 pb-4 px-5 gap-4">
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
-            <h1 className="text-2xl font-black leading-tight text-zinc-900 tracking-tight">{INFO.name}</h1>
+            <p className="text-2xl font-black leading-tight text-zinc-900 tracking-tight">{INFO.name}</p>
             <p className="text-[10px] text-zinc-400 mt-0.5 uppercase tracking-widest">{INFO.title}</p>
             <div className="w-8 h-0.5 bg-red-600 my-2" />
             <p className="text-xs text-zinc-500">{INFO.subtitle}</p>
@@ -465,7 +465,7 @@ function LinenFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[9px] uppercase tracking-[0.2em] mb-0.5" style={{ color: "#c9a227", fontFamily: "Georgia, serif" }}>{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight" style={{ color: "#2c1810", fontFamily: "Georgia, serif" }}>{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight" style={{ color: "#2c1810", fontFamily: "Georgia, serif" }}>{INFO.name}</p>
             <p className="text-[11px] italic mt-0.5" style={{ color: "#7a6450", fontFamily: "Georgia, serif" }}>{INFO.subtitle}</p>
           </div>
           <ContactList className="text-stone-500" />
@@ -514,7 +514,7 @@ function HoloFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[10px] text-white/70 uppercase tracking-widest mb-0.5">{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}>{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}>{INFO.name}</p>
             <p className="text-xs text-white/70 mt-1">{INFO.subtitle}</p>
           </div>
           <ContactList className="text-white/80" />
@@ -618,7 +618,7 @@ function RetroFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[9px] uppercase tracking-[0.25em] mb-1" style={{ color: "#ff00ff", fontFamily: "monospace" }}>◆ {INFO.title} ◆</p>
-            <h1 className="text-xl font-black leading-tight" style={{ color: "#ffffff", textShadow: "2px 2px 0 #ff00ff, -1px -1px 0 #00ffff", fontFamily: "monospace" }}>{INFO.name}</h1>
+            <p className="text-xl font-black leading-tight" style={{ color: "#ffffff", textShadow: "2px 2px 0 #ff00ff, -1px -1px 0 #00ffff", fontFamily: "monospace" }}>{INFO.name}</p>
             <p className="text-[10px] mt-1" style={{ color: "#00ffff", fontFamily: "monospace" }}>{INFO.subtitle}</p>
           </div>
           <div className="space-y-0.5 font-mono text-[8px]" style={{ color: "#ff00ff99" }}>
@@ -664,7 +664,7 @@ function AuroraFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color: "#5eead4" }}>{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white" style={{ textShadow: "0 0 20px rgba(94,234,212,0.3)" }}>{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white" style={{ textShadow: "0 0 20px rgba(94,234,212,0.3)" }}>{INFO.name}</p>
             <p className="text-xs mt-1" style={{ color: "#a78bfa" }}>{INFO.subtitle}</p>
           </div>
           <ContactList className="text-teal-100/70" />
@@ -705,7 +705,7 @@ function CrimsonFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[9px] uppercase tracking-[0.2em] mb-1" style={{ color: "#ef4444", letterSpacing: "0.2em" }}>{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white">{INFO.name}</p>
             <p className="text-[11px] mt-0.5" style={{ color: "#7f1d1d" }}>{INFO.subtitle}</p>
           </div>
           <ContactList className="text-red-100/50" />
@@ -755,7 +755,7 @@ function CarbonFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[9px] uppercase tracking-[0.25em] mb-0.5" style={{ color: "#d4af37" }}>{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight text-white">{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight text-white">{INFO.name}</p>
             <p className="text-[11px] mt-0.5" style={{ color: "#d4af3780" }}>{INFO.subtitle}</p>
           </div>
           <ContactList className="text-zinc-400" />
@@ -813,7 +813,7 @@ function GhostFront() {
         <div className="flex-1 flex flex-col justify-between min-w-0">
           <div>
             <p className="text-[9px] uppercase tracking-[0.28em] mb-0.5" style={{ color: "rgba(180,200,255,0.5)" }}>{INFO.title}</p>
-            <h1 className="text-xl font-bold leading-tight" style={{ color: "rgba(230,240,255,0.92)" }}>{INFO.name}</h1>
+            <p className="text-xl font-bold leading-tight" style={{ color: "rgba(230,240,255,0.92)" }}>{INFO.name}</p>
             <p className="text-[11px] mt-0.5" style={{ color: "rgba(180,200,255,0.35)" }}>{INFO.subtitle}</p>
           </div>
           <div className="space-y-1 text-xs" style={{ color: "rgba(200,215,255,0.55)" }}>

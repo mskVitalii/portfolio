@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { ChessStats } from "@/components/about/ChessStats";
 import { LeetCodeStats } from "@/components/about/LeetCodeStats";
@@ -41,8 +40,6 @@ export async function generateMetadata({
     description: t("metaDescription"),
   });
 }
-
-const INTEREST_KEYS = ["cycling", "hiking", "skiing", "lindyHop", "hema", "writingAboutTech"] as const;
 
 export default async function AboutPage({
   params,
@@ -134,27 +131,6 @@ export default async function AboutPage({
                   <span>{t("russian")}</span>
                   <span className="text-muted-foreground">{t("native")}</span>
                 </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">
-                {t("interestsTitle")}
-              </h3>
-              <div className="flex flex-wrap gap-1">
-                {INTEREST_KEYS.map((key) => (
-                  <Badge key={key} variant="outline" className="text-xs">
-                    {t(`interests.${key}`)}
-                  </Badge>
-                ))}
-                <Link href="/projects#personal">
-                  <Badge
-                    variant="outline"
-                    className="text-xs hover:border-primary/50 hover:text-primary transition-colors"
-                  >
-                    {t("interests.programming")}
-                  </Badge>
-                </Link>
               </div>
             </div>
           </aside>

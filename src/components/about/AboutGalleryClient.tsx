@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ZoomIn, ChevronLeft, ChevronRight, Flame, X } from "lucide-react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog";
 import { TinderDeck, type TinderPhoto, type TinderStrings } from "@/components/about/TinderDeck";
 import { useAchievementsStore } from "@/store/achievements";
@@ -51,7 +52,9 @@ export interface LightboxStrings {
 
 interface AboutGalleryClientProps {
   title: string;
-  intro: string;
+  introLabel: string;
+  interestTags: string[];
+  mentorship: string;
   altFallback: string;
   gridTitle: string;
   openTinderLabel: string;
@@ -65,7 +68,9 @@ interface AboutGalleryClientProps {
 
 export function AboutGalleryClient({
   title,
-  intro,
+  introLabel,
+  interestTags,
+  mentorship,
   altFallback,
   gridTitle,
   openTinderLabel,
@@ -120,7 +125,15 @@ export function AboutGalleryClient({
   return (
     <section className="mb-16">
       <h2 className="mb-3 text-2xl font-bold">{title}</h2>
-      <p className="mb-6 max-w-2xl text-muted-foreground leading-relaxed">{intro}</p>
+      <div className="mb-6 flex max-w-2xl flex-wrap items-center gap-2">
+        <span className="text-muted-foreground">{introLabel}</span>
+        {interestTags.map((tag) => (
+          <Badge key={tag} variant="outline">
+            {tag}
+          </Badge>
+        ))}
+      </div>
+      <p className="mb-6 max-w-2xl text-muted-foreground leading-relaxed">{mentorship}</p>
 
       {tinderPhotos.length > 0 && (
         <button

@@ -4,6 +4,11 @@
     "downloadCv": "Download CV",
     "seeAllProjects": "See all projects →"
   },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has moved.",
+    "cta": "Go home"
+  },
   "Footer": {
     "tagline": "Full-Stack Engineer · Berlin\nDistributed Systems · AI",
     "navHeading": "Navigation",
@@ -114,7 +119,6 @@
     "bio2": "For my career achievements — impact numbers, case studies, what I have actually shipped — see the %%HOME%% and %%PROJECTS%%.",
     "bio4": "My current focus is on the intersection of distributed systems and AI — building things that are fast, reliable, and actually solve business problems. I write occasionally on %%LINKS%% — the last article got 5K+ views.",
     "languagesTitle": "Languages",
-    "interestsTitle": "Interests",
     "english": "English",
     "german": "German",
     "russian": "Russian",
@@ -124,7 +128,8 @@
     "galleryTitle": "Life outside of code & numbers",
     "galleryPhotoAlt": "Photo from Vitalii's life",
     "gallery": {
-      "intro": "Outside of engineering: chess, cycling, hiking, Lindy Hop dance, and Historical European martial arts. I've mentored 4 developers and translated the React Redux docs into Russian.",
+      "introLabel": "Outside of engineering:",
+      "mentorship": "I've mentored 4 developers and translated the React Redux docs into Russian.",
       "gridTitle": "Gallery",
       "tinderTitle": "Tinder mode",
       "zoomAria": "View full size",
@@ -297,13 +302,11 @@
       }
     },
     "interests": {
+      "chess": "Chess",
       "cycling": "Cycling",
       "hiking": "Hiking",
-      "skiing": "Skiing",
       "lindyHop": "Lindy Hop",
-      "hema": "HEMA",
-      "writingAboutTech": "Writing about tech",
-      "programming": "Programming"
+      "hema": "HEMA"
     }
   },
   "GameStats": {

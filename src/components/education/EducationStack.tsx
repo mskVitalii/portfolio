@@ -214,12 +214,12 @@ function HseCard({ isDark, children }: { isDark: boolean; children?: React.React
             </span>
           </div>
 
-          <h1
+          <h2
             className="leading-tight mb-1"
             style={{ color: c.headingColor, fontSize: "clamp(26px, 3.5vw, 44px)", fontWeight: 900, fontFamily: headingFont }}
           >
             {t("hseDegreeName")}
-          </h1>
+          </h2>
           <a
             href={d.programUrl}
             target="_blank"
@@ -436,12 +436,12 @@ function TucCard({ isDark }: { isDark: boolean }) {
             </span>
           </div>
 
-          <h1
+          <h2
             className="leading-tight mb-1"
             style={{ color: c.headingColor, fontSize: "clamp(24px, 3vw, 38px)", fontWeight: 700, fontFamily: font }}
           >
             {d.degree}
-          </h1>
+          </h2>
           <a
             href={d.programUrl}
             target="_blank"

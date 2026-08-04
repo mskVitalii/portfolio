@@ -38,9 +38,7 @@ export function ChessStats() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch(`https://api.chess.com/pub/player/${USERNAME}/stats`, {
-      headers: { "User-Agent": "vitalii-portfolio-site/1.0" },
-    })
+    fetch(`https://api.chess.com/pub/player/${USERNAME}/stats`)
       .then((r) => r.json())
       .then((data) => setStats(data as ChessStats))
       .catch(() => setError(true));

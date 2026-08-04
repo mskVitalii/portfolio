@@ -32,7 +32,15 @@ export async function generateMetadata({
     title: t("metaTitle"),
     description: t("metaDescription"),
   });
-  return { ...meta, title: { absolute: t("metaTitle") } };
+  // metaTitle already includes the site name ("Vitalii Popov — Full-Stack
+  // Engineer") — bypass buildPageMetadata's "<title> | <siteName>" template
+  // everywhere it'd otherwise double up.
+  return {
+    ...meta,
+    title: { absolute: t("metaTitle") },
+    openGraph: { ...meta.openGraph, title: t("metaTitle") },
+    twitter: { ...meta.twitter, title: t("metaTitle") },
+  };
 }
 
 export default async function HomePage({

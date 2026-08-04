@@ -1,7 +1,10 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LinkedinIcon, GithubIcon } from "@/components/icons/SocialIcons";
 import { getSocialLink } from "@/data/social";
+import { trackContactClick, trackCvDownload } from "@/lib/analytics";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -38,6 +41,7 @@ export function Footer() {
                 href={getSocialLink("linkedin").href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContactClick("linkedin", "footer")}
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="LinkedIn"
               >
@@ -47,6 +51,7 @@ export function Footer() {
                 href={getSocialLink("github").href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContactClick("github", "footer")}
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="GitHub"
               >
@@ -54,6 +59,7 @@ export function Footer() {
               </a>
               <a
                 href={getSocialLink("email").href}
+                onClick={() => trackContactClick("email", "footer")}
                 className="text-muted-foreground hover:text-foreground transition-colors text-sm"
               >
                 {getSocialLink("email").value}
@@ -99,7 +105,7 @@ export function Footer() {
           <p>© {year} {tCommon("siteName")}</p>
           <div className="flex items-center gap-4">
             <a href="/sitemap.xml" className="hover:text-foreground transition-colors">{t("sitemap")}</a>
-            <a href="/cv/vitalii-popov-cv.pdf" download="Vitalii_Popov_CV.pdf" className="hover:text-foreground transition-colors">{t("downloadCv")}</a>
+            <a href="/cv/vitalii-popov-cv.pdf" download="Vitalii_Popov_CV.pdf" onClick={() => trackCvDownload("footer")} className="hover:text-foreground transition-colors">{t("downloadCv")}</a>
           </div>
         </div>
       </div>

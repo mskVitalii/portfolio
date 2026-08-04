@@ -17,6 +17,8 @@ const MAP_COUNTRY_IDS: Record<string, GalleryTag | "russia" | "montenegro" | "it
 
 const FILTERABLE_COUNTRY_TAGS: GalleryTag[] = ["germany", "czechia", "austria", "spain", "netherlands"];
 
+const INTEREST_TAG_KEYS = ["chess", "cycling", "hiking", "lindyHop", "hema"] as const;
+
 export async function AboutGallery() {
   const t = await getTranslations("AboutPage");
   const altFallback = t("galleryPhotoAlt");
@@ -57,10 +59,14 @@ export async function AboutGallery() {
       : undefined,
   }));
 
+  const interestTags = INTEREST_TAG_KEYS.map((key) => t(`interests.${key}` as "interests.chess"));
+
   return (
     <AboutGalleryClient
       title={t("galleryTitle")}
-      intro={t("gallery.intro")}
+      introLabel={t("gallery.introLabel")}
+      interestTags={interestTags}
+      mentorship={t("gallery.mentorship")}
       altFallback={altFallback}
       gridTitle={t("gallery.gridTitle")}
       openTinderLabel={t("gallery.openTinder")}

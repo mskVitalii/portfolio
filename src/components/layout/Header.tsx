@@ -11,6 +11,7 @@ import { MobileNav } from "./MobileNav";
 import { buttonVariants } from "@/components/ui/button";
 import { getRecommendedHref } from "@/lib/funnel";
 import { useHeaderUnlock } from "@/store/headerUnlock";
+import { trackCvDownload } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -79,6 +80,7 @@ export function Header() {
           <a
             href="/cv/vitalii-popov-cv.pdf"
             download="Vitalii_Popov_CV.pdf"
+            onClick={() => trackCvDownload("header")}
             className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "hidden sm:flex")}
           >
             <FileDown className="h-4 w-4 mr-1.5" />

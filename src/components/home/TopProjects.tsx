@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
-import { PROJECTS } from "@/data/projects";
+import { PROJECTS, getProjectHref } from "@/data/projects";
 import { localize, formatImpactValue } from "@/lib/localized";
 
 /** Order is deliberate: recognizable brands lead (OZON, then Infineon with the bigger
@@ -50,7 +50,7 @@ export function TopProjects() {
                 className="h-full"
               >
                 <Link
-                  href={`/projects/${project.slug}`}
+                  href={getProjectHref(project)}
                   className="group flex flex-col h-full rounded-2xl border-2 bg-card p-8 hover:border-primary/50 hover:shadow-lg transition-all"
                 >
                   <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-3">

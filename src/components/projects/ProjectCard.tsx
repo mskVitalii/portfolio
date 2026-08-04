@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useViewMode } from "@/store/viewMode";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
 import { localize, formatImpactValue, formatPeriod } from "@/lib/localized";
-import type { Project } from "@/data/projects";
+import { getProjectHref, type Project } from "@/data/projects";
 
 export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
   const t = useTranslations("Projects");
@@ -31,7 +31,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
       transition={{ duration: 0.4, delay: index * 0.07, ease: "easeOut" }}
     >
       <Link
-        href={`/projects/${project.slug}`}
+        href={getProjectHref(project)}
         className="group flex flex-col h-full rounded-xl border bg-card p-6 hover:border-primary/50 hover:shadow-sm transition-all"
       >
         <div className="flex items-start justify-between gap-3 mb-3">

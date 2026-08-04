@@ -9,10 +9,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IMPACT_METRICS } from "@/data/metrics";
 
+// hrefs point straight at each project's merged company case-study page (with anchor) —
+// the standalone /projects/[slug] URLs for these three 308-redirect there, so linking
+// to the old slug would send visitors through an avoidable redirect hop.
 const REVENUE_SEGMENTS = [
-  { label: "Infineon", value: 480, color: "#6366f1", href: "/projects/infineon-parking-guidance" },
-  { label: "OZON Tech", value: 86, color: "#10b981", href: "/projects/ozon-warehouse-search" },
-  { label: "egsha", value: 52, color: "#f59e0b", href: "/projects/wedo-ecommerce-bidder" },
+  { label: "Infineon", value: 480, color: "#6366f1", href: "/projects/company/infineon#infineon-parking-guidance" },
+  { label: "OZON Tech", value: 86, color: "#10b981", href: "/projects/company/ozon#ozon-warehouse-search" },
+  { label: "egsha", value: 52, color: "#f59e0b", href: "/projects/company/egsha#wedo-ecommerce-bidder" },
 ];
 const TOTAL_REVENUE = REVENUE_SEGMENTS.reduce((sum, s) => sum + s.value, 0);
 

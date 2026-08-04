@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Mail, Send } from "lucide-react";
 import { LinkedinIcon, GithubIcon } from "@/components/icons/SocialIcons";
 import { SOCIAL_LINKS, type SocialId } from "@/data/social";
+import { trackContactClick } from "@/lib/analytics";
 
 type IconProps = { className?: string };
 
@@ -35,6 +36,7 @@ export function HireMeLinks() {
               href={href}
               target={href.startsWith("mailto") ? undefined : "_blank"}
               rel="noopener noreferrer"
+              onClick={() => trackContactClick(id, "hire_me_links")}
               className="flex items-start gap-4 p-4 rounded-lg border hover:border-primary/50 hover:bg-muted/50 transition-all group"
             >
               <div className="mt-0.5 h-9 w-9 shrink-0 rounded-md bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">

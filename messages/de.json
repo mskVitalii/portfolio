@@ -4,6 +4,11 @@
     "downloadCv": "Lebenslauf herunterladen",
     "seeAllProjects": "Alle Projekte →"
   },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "cta": "Zur Startseite"
+  },
   "Footer": {
     "tagline": "Full-Stack-Entwickler · Berlin\nVerteilte Systeme · KI",
     "navHeading": "Navigation",
@@ -114,7 +119,6 @@
     "bio2": "Für meine beruflichen Erfolge — Kennzahlen, Case Studies, was ich tatsächlich gebaut habe — schau dir die %%HOME%% und die %%PROJECTS%% an.",
     "bio4": "Mein aktueller Fokus liegt auf der Schnittstelle von verteilten Systemen und KI – ich baue schnelle, zuverlässige Lösungen, die echte Geschäftsprobleme lösen. Ich schreibe gelegentlich auf %%LINKS%% – der letzte Artikel wurde 5.000+ Mal aufgerufen.",
     "languagesTitle": "Sprachen",
-    "interestsTitle": "Interessen",
     "english": "Englisch",
     "german": "Deutsch",
     "russian": "Russisch",
@@ -124,7 +128,8 @@
     "galleryTitle": "Leben abseits von Code & Zahlen",
     "galleryPhotoAlt": "Foto aus Vitaliis Leben",
     "gallery": {
-      "intro": "Außerhalb der Arbeit: Schach, Radfahren, Wandern, Lindy-Hop-Tanz und historischer europäischer Schwertkampf (HEMA). Ich habe 4 Entwickler mentoriert und die React-Redux-Dokumentation ins Russische übersetzt.",
+      "introLabel": "Außerhalb der Arbeit:",
+      "mentorship": "Ich habe 4 Entwickler mentoriert und die React-Redux-Dokumentation ins Russische übersetzt.",
       "gridTitle": "Galerie",
       "tinderTitle": "Tinder-Modus",
       "zoomAria": "In voller Größe ansehen",
@@ -297,13 +302,11 @@
       }
     },
     "interests": {
+      "chess": "Schach",
       "cycling": "Radfahren",
       "hiking": "Wandern",
-      "skiing": "Skifahren",
       "lindyHop": "Lindy Hop",
-      "hema": "HEMA",
-      "writingAboutTech": "Über Tech schreiben",
-      "programming": "Programmieren"
+      "hema": "HEMA"
     }
   },
   "GameStats": {

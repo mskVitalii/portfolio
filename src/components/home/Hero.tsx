@@ -8,22 +8,24 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { LinkedinIcon, GithubIcon } from "@/components/icons/SocialIcons";
-import { getSocialLink } from "@/data/social";
+import { getSocialLink, type SocialId } from "@/data/social";
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
+import { trackContactClick, trackCvDownload } from "@/lib/analytics";
 
 type IconProps = { className?: string };
 
 const SOCIAL_LINKS: {
+  id: SocialId;
   labelKey: string;
   href: string;
   Icon: (p: IconProps) => React.ReactElement;
   variant: "default" | "outline" | "ghost";
   external?: boolean;
 }[] = [
-  { labelKey: "LinkedIn",  href: getSocialLink("linkedin").href, Icon: LinkedinIcon, variant: "default", external: true },
-  { labelKey: "Email",     href: getSocialLink("email").href, Icon: ({ className }) => <Mail className={className} />, variant: "outline" },
-  { labelKey: "GitHub",    href: getSocialLink("github").href, Icon: GithubIcon, variant: "outline", external: true },
-  { labelKey: "Telegram",  href: getSocialLink("telegram").href, Icon: ({ className }) => <Send className={className} />, variant: "outline", external: true },
+  { id: "linkedin", labelKey: "LinkedIn",  href: getSocialLink("linkedin").href, Icon: LinkedinIcon, variant: "default", external: true },
+  { id: "email",    labelKey: "Email",     href: getSocialLink("email").href, Icon: ({ className }) => <Mail className={className} />, variant: "outline" },
+  { id: "github",   labelKey: "GitHub",    href: getSocialLink("github").href, Icon: GithubIcon, variant: "outline", external: true },
+  { id: "telegram", labelKey: "Telegram",  href: getSocialLink("telegram").href, Icon: ({ className }) => <Send className={className} />, variant: "outline", external: true },
 ];
 
 export function Hero() {
@@ -71,11 +73,12 @@ export function Hero() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          {SOCIAL_LINKS.map(({ labelKey, href, Icon, variant, external }) => (
+          {SOCIAL_LINKS.map(({ id, labelKey, href, Icon, variant, external }) => (
             <a
               key={labelKey}
               href={href}
               className={cn(buttonVariants({ variant }))}
+              onClick={() => trackContactClick(id, "hero")}
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
               <Icon className="h-4 w-4 mr-2" />
@@ -88,6 +91,7 @@ export function Hero() {
           <a
             href="/cv/vitalii-popov-cv.pdf"
             download="Vitalii_Popov_CV.pdf"
+            onClick={() => trackCvDownload("hero")}
             className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
           >
             <FileDown className="h-4 w-4 mr-2" />
