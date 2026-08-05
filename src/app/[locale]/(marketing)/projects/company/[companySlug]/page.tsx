@@ -52,6 +52,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${bundle.name} | ${siteName}`,
       description,
+      url: `${BASE_URL}/${locale}/projects/company/${companySlug}`,
       type: "website",
       siteName,
       images: [{ url: ogUrl, width: 1200, height: 630 }],

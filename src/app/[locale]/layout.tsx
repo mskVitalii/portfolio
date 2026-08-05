@@ -41,6 +41,7 @@ export async function generateMetadata({
     keywords: seoT.raw("keywords") as string[],
     openGraph: {
       type: "website",
+      url: `${BASE_URL}/${locale}`,
       siteName,
       images: [{ url: defaultOgImage, width: 1200, height: 630 }],
       ...buildOpenGraphLocale(locale),

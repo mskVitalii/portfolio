@@ -63,6 +63,7 @@ export async function buildPageMetadata({
     openGraph: {
       title: ogTitle,
       description,
+      url: `${BASE_URL}/${locale}${path}`,
       type: "website" as const,
       siteName,
       images: [{ url: ogImage, width: 1200, height: 630 }],
@@ -171,10 +172,6 @@ export async function buildPersonJsonLd(locale: string) {
       "@type": "PostalAddress",
       addressLocality: "Berlin",
       addressCountry: "DE",
-    },
-    areaServed: {
-      "@type": "Country",
-      name: "Germany",
     },
     knowsLanguage: ["en", "de", "ru"],
     sameAs: [
