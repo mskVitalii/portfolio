@@ -4,6 +4,35 @@
     "downloadCv": "Download CV",
     "seeAllProjects": "See all projects →"
   },
+  "Seo": {
+    "keywords": [
+      "Full-Stack Engineer",
+      "Full-Stack Developer",
+      "Fullstack Developer",
+      "Full Stack Developer",
+      "Frontend Developer",
+      "Front-End Developer",
+      "Backend Developer",
+      "Back-End Developer",
+      "Software Engineer",
+      "Web Developer",
+      "Go Developer",
+      "TypeScript Developer",
+      "React Developer",
+      "Distributed Systems Engineer",
+      "AI Engineer",
+      "Berlin",
+      "Germany",
+      "Vitalii Popov"
+    ],
+    "jobTitleVariants": [
+      "Full-Stack Engineer",
+      "Full-Stack Developer",
+      "Frontend Developer",
+      "Backend Developer",
+      "Software Engineer"
+    ]
+  },
   "NotFound": {
     "title": "Page not found",
     "description": "The page you're looking for doesn't exist or has moved.",

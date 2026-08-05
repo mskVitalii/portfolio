@@ -150,7 +150,12 @@ const HAS_CREDENTIAL = [
  * and the homepage's ProfilePage `mainEntity`, so the two never drift apart. */
 export async function buildPersonJsonLd(locale: string) {
   const t = await getTranslations({ locale, namespace: "Hero" });
+  const seoT = await getTranslations({ locale, namespace: "Seo" });
   const description = `${t("tagline")} ${t("taglineHighlight")}${t("taglineEnd")} ${t("experience")}`;
+  // Array of role-title synonyms (Frontend/Backend/Full-Stack/Software Engineer) so
+  // search engines match this Person against however a recruiter phrases the role —
+  // schema.org properties accept multiple values, this isn't a single canonical title.
+  const jobTitle = seoT.raw("jobTitleVariants") as string[];
   return {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -159,7 +164,7 @@ export async function buildPersonJsonLd(locale: string) {
     familyName: "Popov",
     url: `${BASE_URL}/${locale}`,
     image: `${BASE_URL}/images/about/avatar/vitalii.jpg`,
-    jobTitle: t("role"),
+    jobTitle,
     description,
     email: "mailto:msk.vitaly@gmail.com",
     address: {

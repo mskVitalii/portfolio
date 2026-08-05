@@ -27,6 +27,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Common" });
+  const seoT = await getTranslations({ locale, namespace: "Seo" });
   const siteName = t("siteName");
   const defaultOgImage = `/${locale}/og`;
   return {
@@ -34,6 +35,10 @@ export async function generateMetadata({
       template: `%s | ${siteName}`,
       default: siteName,
     },
+    // Site-wide default — role-title synonyms (Frontend/Backend/Full-Stack/Software
+    // Engineer) so the meta tag covers however a recruiter phrases the role. Pages
+    // that don't set their own `keywords` inherit this from the layout.
+    keywords: seoT.raw("keywords") as string[],
     openGraph: {
       type: "website",
       siteName,
@@ -58,13 +63,16 @@ async function PersonJsonLd({ locale }: { locale: string }) {
   );
 }
 
-function WebsiteJsonLd({ locale }: { locale: string }) {
+async function WebsiteJsonLd({ locale }: { locale: string }) {
+  const seoT = await getTranslations({ locale, namespace: "Seo" });
+  const keywords = (seoT.raw("keywords") as string[]).join(", ");
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Vitalii Popov",
     url: `${BASE_URL}/${locale}`,
     inLanguage: locale,
+    keywords,
   };
 
   return (

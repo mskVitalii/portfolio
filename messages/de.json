@@ -4,6 +4,33 @@
     "downloadCv": "Lebenslauf herunterladen",
     "seeAllProjects": "Alle Projekte →"
   },
+  "Seo": {
+    "keywords": [
+      "Full-Stack-Entwickler",
+      "Full-Stack Developer",
+      "Fullstack-Entwickler",
+      "Frontend-Entwickler",
+      "Backend-Entwickler",
+      "Softwareentwickler",
+      "Webentwickler",
+      "Software-Ingenieur",
+      "Go-Entwickler",
+      "TypeScript-Entwickler",
+      "React-Entwickler",
+      "Verteilte Systeme",
+      "KI-Ingenieur",
+      "Berlin",
+      "Deutschland",
+      "Vitalii Popov"
+    ],
+    "jobTitleVariants": [
+      "Full-Stack-Entwickler",
+      "Full-Stack Developer",
+      "Frontend-Entwickler",
+      "Backend-Entwickler",
+      "Softwareentwickler"
+    ]
+  },
   "NotFound": {
     "title": "Seite nicht gefunden",
     "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
