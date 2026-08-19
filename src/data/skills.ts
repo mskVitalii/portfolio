@@ -30,7 +30,7 @@ export const SKILLS: Skill[] = [
     id: "python",
     name: "Python",
     category: "backend",
-    years: 5,
+    years: 2,
     level: "expert",
     projects: ["infineon-parking-guidance", "wedo-ecommerce-bidder", "wedo-ai-video-dubbing", "wedo-telegram-bots"],
     description: "FastAPI, data pipelines, CV integrations, scripting",
@@ -39,7 +39,7 @@ export const SKILLS: Skill[] = [
     id: "csharp",
     name: "C#",
     category: "backend",
-    years: 2,
+    years: 3,
     level: "proficient",
     projects: ["infineon-parking-guidance", "ozon-barcode-scanner"],
     description: "Device management, WebSocket integrations, .NET services",
@@ -77,7 +77,7 @@ export const SKILLS: Skill[] = [
     id: "typescript",
     name: "TypeScript",
     category: "frontend",
-    years: 4,
+    years: 6,
     level: "expert",
     projects: ["infineon-parking-guidance", "online-tours-ab"],
     description: "Strict mode, generics, advanced type patterns",
@@ -115,7 +115,7 @@ export const SKILLS: Skill[] = [
     id: "kubernetes",
     name: "Kubernetes",
     category: "infrastructure",
-    years: 3,
+    years: 2,
     level: "proficient",
     projects: ["ozon-warehouse-search", "online-tours-ab"],
     description: "Deployments, services, ingress, resource limits",
@@ -329,3 +329,23 @@ export const LEVEL_LABELS: Record<Skill["level"], string> = {
   proficient: "Proficient",
   expert: "Expert",
 };
+
+// Plain-text skills summary for recruiters (HR "copy skills" export).
+// Values are proper nouns / tech terms — kept in English per project i18n
+// convention. Only the section labels are translated (see SkillsPage.hr* keys).
+export const HR_SKILLS_SECTIONS = [
+  { key: "mainStack", items: "Go — 2-3 years, TypeScript/JavaScript — 6 years, C# — 2-3 years, Python — 2 years, PostgreSQL — 4 years, Redis — 3 years, Docker — 4 years, Kubernetes — 2 years, React — 5 years" },
+  { key: "databases", items: "SQL: PostgreSQL. NoSQL: Redis, Elasticsearch, MongoDB, Qdrant, Firebase" },
+  { key: "frameworksBackend", items: "Gin, FastAPI, NestJS, .NET Framework" },
+  { key: "frameworksFrontend", items: "React (5 years), Next.js (3 years), GatsbyJS, Astro, Angular (1 year)" },
+  { key: "os", items: "Linux (Ubuntu, Debian), macOS" },
+  { key: "serverSide", items: "Docker, Kubernetes, Helm, RunPod, Google Cloud Storage" },
+  { key: "cicd", items: "GitHub Actions, GitLab CI/CD" },
+  { key: "testing", items: "Unit tests, load tests, Jest, Vitest, Cypress, Selenium, E2E tests via Puppeteer" },
+  { key: "technologies", items: "Docker, Docker Compose, Git, JSON, REST/RESTful API, gRPC, GraphQL, WebSockets, Kafka" },
+  { key: "approaches", items: "SOLID, KISS, DRY, ACID, TDD, DDD, FSD, Agile, Kanban, Microservices" },
+  { key: "apiDocs", items: "OpenAPI, Swagger, Postman" },
+  { key: "monitoring", items: "Prometheus, Grafana, Jaeger, ELK, Loki, OpenTelemetry" },
+  { key: "aiMl", items: "LLM integrations, RAG, KV-cache, embeddings, Qdrant, Ollama, Hugging Face, MCP Server, Computer Vision, Claude Code, GitHub Copilot" },
+  { key: "software", items: "Bash, VSCode, IntelliJ, PyCharm, GitHub, GitLab, Jira, Notion, Confluence, DataGrip" },
+] as const;

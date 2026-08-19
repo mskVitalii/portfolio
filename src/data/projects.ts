@@ -334,11 +334,6 @@ export const PROJECTS: Project[] = [
     company: "egsha",
     period: "03/2023 – 04/2023",
     status: "archived",
-    statusNote: {
-      en: "Client's ad spend later moved off-marketplace; tool was retired.",
-      de: "Das Werbebudget des Kunden wanderte später vom Marketplace ab; das Tool wurde eingestellt.",
-      ru: "Позже клиент перенёс рекламный бюджет за пределы маркетплейса; инструмент вывели из эксплуатации.",
-    },
     category: "work",
     tagline: {
       en: "Saves the client €52,000/year in ad spend — priced via TDD-built pure functions",

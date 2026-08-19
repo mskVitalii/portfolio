@@ -38,7 +38,7 @@ export const CAREER: CareerEntry[] = [
     location: "Chemnitz, Germany",
     description:
       "Distributed systems, cloud applications, software service engineering, cybersecurity, model-driven software development. GPA 2.39.",
-    stack: ["Go", "Redis", "MongoDB", "Svelte", "Cloud"],
+    stack: ["Go", "Redis", "MongoDB", "React", "Cloud"],
   },
   {
     type: "work",

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useViewMode } from "@/store/viewMode";
 import { SkillsKeywordMatcher } from "@/components/skills/SkillsKeywordMatcher";
 import { SkillsSwitchModePrompt } from "@/components/skills/SkillsSwitchModePrompt";
+import { SkillsHrCopyButton } from "@/components/skills/SkillsHrCopyButton";
 
 // React Flow is a sizeable interactive-only dependency — defer it out of the
 // initial /skills bundle instead of loading it eagerly for every visitor.
@@ -23,6 +24,7 @@ export function SkillsModeContent() {
   if (mode === "hr") {
     return (
       <div className="space-y-16">
+        <SkillsHrCopyButton />
         <SkillsKeywordMatcher />
         <SkillsSwitchModePrompt />
       </div>

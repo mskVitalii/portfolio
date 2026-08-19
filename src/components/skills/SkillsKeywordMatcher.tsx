@@ -5,9 +5,10 @@ import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAchievementsStore } from "@/store/achievements";
-import { SKILLS, CATEGORY_LABELS, CATEGORY_COLORS, LEVEL_LABELS, type SkillCategory } from "@/data/skills";
+import { SKILLS, CATEGORY_LABELS, CATEGORY_COLORS, LEVEL_LABELS, type SkillCategory, type Skill } from "@/data/skills";
 
 const CATEGORIES = ["backend", "frontend", "infrastructure", "ai"] as const;
 const MATCH_ACHIEVEMENT_THRESHOLD = 3;
@@ -26,13 +27,46 @@ function matchSkillIds(text: string): Set<string> {
   return matched;
 }
 
+function skillRow(skill: Skill, hasInput: boolean, matchedIds: Set<string>) {
+  const isMatched = matchedIds.has(skill.id);
+  return (
+    <div
+      key={skill.id}
+      className={cn(
+        "flex items-center justify-between py-2 px-2 -mx-2 rounded-md border-b border-border/50 last:border-0 transition-colors",
+        hasInput && isMatched && "bg-primary/10 ring-1 ring-primary/40",
+        hasInput && !isMatched && "opacity-40"
+      )}
+    >
+      <div className="flex items-center gap-3">
+        <span className="font-medium text-sm">{skill.name}</span>
+        <span className="text-xs text-muted-foreground">{skill.years}y</span>
+      </div>
+      <Badge variant="outline" className="text-xs">
+        {LEVEL_LABELS[skill.level]}
+      </Badge>
+    </div>
+  );
+}
+
 export function SkillsKeywordMatcher() {
   const t = useTranslations("SkillsPage");
   const [text, setText] = useState("");
+  const [groupBy, setGroupBy] = useState<"category" | "experience">("category");
   const unlockAchievement = useAchievementsStore((s) => s.unlock);
 
   const matchedIds = useMemo(() => matchSkillIds(text), [text]);
   const hasInput = text.trim().length > 0;
+
+  const byYears = useMemo(() => {
+    const groups = new Map<number, Skill[]>();
+    for (const skill of SKILLS) {
+      const bucket = groups.get(skill.years);
+      if (bucket) bucket.push(skill);
+      else groups.set(skill.years, [skill]);
+    }
+    return Array.from(groups.entries()).sort(([a], [b]) => b - a);
+  }, []);
 
   useEffect(() => {
     if (matchedIds.size >= MATCH_ACHIEVEMENT_THRESHOLD) unlockAchievement("skillsMatch");
@@ -59,47 +93,59 @@ export function SkillsKeywordMatcher() {
       </div>
 
       {/* List view below graph — matched skills are highlighted when text is entered */}
-      <div className="mt-8 grid sm:grid-cols-2 gap-8">
-        {CATEGORIES.map((cat) => {
-          const catSkills = SKILLS.filter(
-            (s) => s.category === cat || (cat === "backend" && s.category === "languages")
-          );
-          if (catSkills.length === 0) return null;
-          return (
-            <div key={cat}>
-              <h3
-                className="font-semibold mb-4 text-sm uppercase tracking-wider"
-                style={{ color: CATEGORY_COLORS[cat as SkillCategory] }}
-              >
-                {CATEGORY_LABELS[cat as SkillCategory]}
+      <div className="mt-8 flex items-center gap-2">
+        <Button
+          variant={groupBy === "category" ? "secondary" : "ghost"}
+          size="sm"
+          onClick={() => setGroupBy("category")}
+        >
+          {t("groupByCategory")}
+        </Button>
+        <Button
+          variant={groupBy === "experience" ? "secondary" : "ghost"}
+          size="sm"
+          onClick={() => setGroupBy("experience")}
+        >
+          {t("groupByExperience")}
+        </Button>
+      </div>
+
+      {groupBy === "category" ? (
+        <div className="mt-6 grid sm:grid-cols-2 gap-8">
+          {CATEGORIES.map((cat) => {
+            const catSkills = SKILLS.filter(
+              (s) => s.category === cat || (cat === "backend" && s.category === "languages")
+            );
+            if (catSkills.length === 0) return null;
+            return (
+              <div key={cat}>
+                <h3
+                  className="font-semibold mb-4 text-sm uppercase tracking-wider"
+                  style={{ color: CATEGORY_COLORS[cat as SkillCategory] }}
+                >
+                  {CATEGORY_LABELS[cat as SkillCategory]}
+                </h3>
+                <div className="space-y-2">
+                  {catSkills.map((skill) => skillRow(skill, hasInput, matchedIds))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="mt-6 grid sm:grid-cols-2 gap-8">
+          {byYears.map(([years, skills]) => (
+            <div key={years}>
+              <h3 className="font-semibold mb-4 text-sm uppercase tracking-wider text-muted-foreground">
+                {t("yearsHeading", { years })}
               </h3>
               <div className="space-y-2">
-                {catSkills.map((skill) => {
-                  const isMatched = matchedIds.has(skill.id);
-                  return (
-                    <div
-                      key={skill.id}
-                      className={cn(
-                        "flex items-center justify-between py-2 px-2 -mx-2 rounded-md border-b border-border/50 last:border-0 transition-colors",
-                        hasInput && isMatched && "bg-primary/10 ring-1 ring-primary/40",
-                        hasInput && !isMatched && "opacity-40"
-                      )}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="font-medium text-sm">{skill.name}</span>
-                        <span className="text-xs text-muted-foreground">{skill.years}y</span>
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        {LEVEL_LABELS[skill.level]}
-                      </Badge>
-                    </div>
-                  );
-                })}
+                {skills.map((skill) => skillRow(skill, hasInput, matchedIds))}
               </div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
