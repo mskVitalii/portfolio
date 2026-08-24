@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filler Privacy Policy</title>
+<meta name="description" content="Privacy policy for the Filler Chrome extension — no backend, data only goes to your own OpenAI key and Google Drive.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #f6f7f6;
+    --bg-raised: #ffffff;
+    --ink: #1c2320;
+    --ink-soft: #4a544e;
+    --muted: #6d766f;
+    --line: #dde1dc;
+    --line-soft: #e8ebe7;
+    --accent: #1f6f5c;
+    --accent-soft: #e7f0ec;
+    --accent-ink: #14493c;
+    --code-bg: #eef1ee;
+    --shadow: 0 1px 2px rgba(20, 30, 25, 0.04);
+    --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", "SF Mono", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121613;
+      --bg-raised: #181d19;
+      --ink: #e8ebe6;
+      --ink-soft: #b6bdb6;
+      --muted: #8b938c;
+      --line: #2a312b;
+      --line-soft: #232a24;
+      --accent: #5fbfa2;
+      --accent-soft: #1a2924;
+      --accent-ink: #8ed9c0;
+      --code-bg: #1d221e;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+  }
+
+  header.doc-head {
+    padding-bottom: 2rem;
+    margin-bottom: 2.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 1.1rem;
+  }
+
+  .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2rem, 4.5vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .subhead {
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    max-width: 54ch;
+    margin: 0 0 1.1rem;
+  }
+
+  .meta {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.32rem;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin: 2.75rem 0 0.9rem;
+    text-wrap: balance;
+  }
+
+  section:first-of-type h2 { margin-top: 0; }
+
+  p { margin: 0 0 1rem; color: var(--ink); max-width: 66ch; }
+  p.lede { color: var(--ink-soft); }
+
+  ul { margin: 0 0 1rem; padding-left: 1.3rem; max-width: 64ch; }
+  li { margin-bottom: 0.45rem; }
+  li::marker { color: var(--accent); }
+
+  a { color: var(--accent-ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: currentColor; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  strong { font-weight: 600; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 0.12em 0.4em;
+    border-radius: 4px;
+    color: var(--accent-ink);
+  }
+
+  .summary-box {
+    background: var(--accent-soft);
+    border: 1px solid var(--line-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.4rem 1.6rem;
+    margin: 0 0 2.5rem;
+  }
+
+  .summary-box p:last-child { margin-bottom: 0; }
+  .summary-box ul { margin-bottom: 0; }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 0 0 1.1rem;
+    background: var(--bg-raised);
+    box-shadow: var(--shadow);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+    min-width: 480px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.72rem 1rem;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+
+  thead th {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    background: var(--code-bg);
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  td:first-child, th:first-child { color: var(--ink); font-weight: 500; }
+
+  .permit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.1rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .permit-list li {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.65rem 0.9rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+  }
+
+  .permit-key {
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    color: var(--accent-ink);
+  }
+
+  .permit-desc { color: var(--ink-soft); font-size: 0.94rem; }
+
+  .host-note {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  footer.doc-foot {
+    margin-top: 3.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  footer.doc-foot a { color: var(--ink-soft); }
+
+  @media (max-width: 520px) {
+    .permit-list li { grid-template-columns: 1fr; gap: 0.15rem; }
+    .page { padding: 3rem 1.1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="doc-head">
+    <div class="eyebrow"><span class="dot"></span> Filler — Chrome Extension</div>
+    <h1>Privacy Policy</h1>
+    <p class="subhead">What Filler handles, where it goes, and why — in plain terms, before you install it.</p>
+    <p class="meta">Last updated: August 23, 2026</p>
+  </header>
+
+  <div class="summary-box">
+    <p style="margin-bottom:0.7rem; font-weight:500;">In short</p>
+    <ul>
+      <li>Filler has <strong>no backend server</strong>. It runs entirely in your browser.</li>
+      <li>Your data goes only to services <strong>you</strong> configure with your own credentials: <strong>OpenAI</strong> (your API key) and <strong>your own Google Drive</strong>.</li>
+      <li>Filler does <strong>not</strong> sell, rent, or share your data for advertising, analytics, or anything unrelated to its stated function.</li>
+      <li>Filler does <strong>not</strong> use your data for creditworthiness or lending decisions.</li>
+      <li>Filler includes <strong>no analytics, tracking, or advertising SDKs</strong>.</li>
+    </ul>
+  </div>
+
+  <section>
+    <p class="lede">Filler is a Chrome extension that helps you apply to jobs faster: it extracts job posting details from the page you're viewing, drafts a tailored cover letter using your own OpenAI API key, and autofills that information plus your saved profile into application forms.</p>
+    <p class="lede">This policy explains what data the extension handles, where it goes, and why.</p>
+  </section>
+
+  <section>
+    <h2>What data the extension handles</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Data</th><th>What it is</th><th>Where it's stored</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Profile information</td>
+            <td>Name, email, phone, address, city, postal code, LinkedIn, GitHub, personal website, expected salary — fields you fill in yourself</td>
+            <td>Locally (<code>chrome.storage.local</code>), synced to your own Google Drive <code>appDataFolder</code></td>
+          </tr>
+          <tr>
+            <td>Résumé / CV</td>
+            <td>The PDF you upload, plus text extracted from it locally</td>
+            <td>Locally, synced to your own Google Drive <code>appDataFolder</code></td>
+          </tr>
+          <tr>
+            <td>OpenAI API key</td>
+            <td>The key you paste in during setup</td>
+            <td>Locally only (<code>chrome.storage.local</code>) — never transmitted anywhere except directly to <code>api.openai.com</code> as part of your own requests</td>
+          </tr>
+          <tr>
+            <td>Google OAuth token</td>
+            <td>Issued by Google when you click "Connect Google"</td>
+            <td>Managed by Chrome's <code>chrome.identity</code> API; used only to call the Google Drive API on your behalf</td>
+          </tr>
+          <tr>
+            <td>Job posting content</td>
+            <td>Text/structured data extracted from the job page you're viewing</td>
+            <td>Processed locally; sent to <code>api.openai.com</code> (with your key) only when you generate or extract with AI assistance</td>
+          </tr>
+          <tr>
+            <td>Generated cover letters</td>
+            <td>Text drafted from your profile and the job posting</td>
+            <td>Stored locally and in your Google Drive <code>appDataFolder</code>, only when you use the extension</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="host-note">Filler's Google Drive access is limited to the <code>drive.appdata</code> OAuth scope — a private, hidden storage area only this extension can read or write, not visible in your regular Drive file list.</p>
+  </section>
+
+  <section>
+    <h2>Who receives data, and why</h2>
+    <p>Filler talks to exactly two external services, both initiated by you and authenticated with your own credentials:</p>
+    <ul>
+      <li><strong>OpenAI</strong> (<code>api.openai.com</code>) — receives job posting text and your profile/CV text as needed, to extract structured job details and draft cover letters, using the API key you provide. Governed by <a href="https://openai.com/privacy">OpenAI's own privacy policy</a>.</li>
+      <li><strong>Google Drive</strong> (<code>www.googleapis.com</code>) — stores your profile, CV, and cover letter drafts in your own Drive account's app-data folder, using the OAuth token Chrome obtains when you connect your Google account. Governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+    </ul>
+    <p>No data is ever sent to a server operated by the developer of this extension — there isn't one.</p>
+  </section>
+
+  <section>
+    <h2>Permissions</h2>
+    <p>Filler requests the following Chrome permissions, each used only for its stated purpose:</p>
+    <ul class="permit-list">
+      <li><span class="permit-key">storage</span><span class="permit-desc">Save your API key and local caches of your profile/CV</span></li>
+      <li><span class="permit-key">activeTab</span><span class="permit-desc">Read and fill the job posting / application page you're actively viewing</span></li>
+      <li><span class="permit-key">contextMenus</span><span class="permit-desc">Let you insert a profile value into a focused field via right-click</span></li>
+      <li><span class="permit-key">sidePanel</span><span class="permit-desc">Show the main Filler UI</span></li>
+      <li><span class="permit-key">tabs</span><span class="permit-desc">Identify the active tab and route messages between the side panel and the page's content script</span></li>
+      <li><span class="permit-key">downloads</span><span class="permit-desc">Save an exported cover letter PDF to your computer</span></li>
+      <li><span class="permit-key">identity</span><span class="permit-desc">Obtain the Google OAuth token used to access your own Drive appDataFolder</span></li>
+    </ul>
+    <p class="host-note">Host permissions are limited to <code>api.openai.com</code> and <code>www.googleapis.com</code> — the two services described above.</p>
+  </section>
+
+  <section>
+    <h2>Data retention and control</h2>
+    <ul>
+      <li>All locally stored data (API key, cached profile/CV, drafts) stays on your device and is removed when you uninstall the extension or clear its storage.</li>
+      <li>Data stored in your Google Drive <code>appDataFolder</code> remains under your control; revoke Filler's access anytime from your <a href="https://myaccount.google.com/permissions">Google Account permissions</a>, which also deletes the extension's access to that folder.</li>
+      <li>You can disconnect Google or delete your saved OpenAI key at any time from the extension's settings panel.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Changes to this policy</h2>
+    <p>If this policy changes, the "Last updated" date above will be revised. Material changes will be reflected here before they take effect.</p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>Questions about this policy can be sent to <a href="mailto:msk.vitaly@gmail.com">msk.vitaly@gmail.com</a>.</p>
+  </section>
+
+  <footer class="doc-foot">
+    Filler is an independent, single-developer project. This page describes its data handling in full — nothing here is abridged.
+  </footer>
+</div>
+</body>
+</html>
