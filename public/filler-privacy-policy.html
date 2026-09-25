@@ -257,7 +257,7 @@
     <p style="margin-bottom:0.7rem; font-weight:500;">In short</p>
     <ul>
       <li>Filler has <strong>no backend server</strong>. It runs entirely in your browser.</li>
-      <li>Your data goes only to services <strong>you</strong> configure with your own credentials: <strong>OpenAI</strong> (your API key) and <strong>your own Google Drive</strong>.</li>
+      <li>Your data goes only to services <strong>you</strong> configure with your own credentials: <strong>OpenAI</strong> (your API key) and <strong>your own Google Drive</strong> — plus, only if you upload a LaTeX CV, the LaTeX compiler service described below.</li>
       <li>Filler does <strong>not</strong> sell, rent, or share your data for advertising, analytics, or anything unrelated to its stated function.</li>
       <li>Filler does <strong>not</strong> use your data for creditworthiness or lending decisions.</li>
       <li>Filler includes <strong>no analytics, tracking, or advertising SDKs</strong>.</li>
@@ -284,7 +284,7 @@
           </tr>
           <tr>
             <td>Résumé / CV</td>
-            <td>The PDF you upload, plus text extracted from it locally</td>
+            <td>The PDF, Word (.docx) or LaTeX project (.zip / .tex) you upload, plus, for a LaTeX CV, its compiled PDF, plus text extracted from it locally, and the <code>{{placeholder}}</code> settings you define for adapting it per job posting</td>
             <td>Locally, synced to your own Google Drive <code>appDataFolder</code></td>
           </tr>
           <tr>
@@ -307,10 +307,16 @@
             <td>Text drafted from your profile and the job posting</td>
             <td>Stored locally and in your Google Drive <code>appDataFolder</code>, only when you use the extension</td>
           </tr>
+          <tr>
+            <td>Adapted CVs</td>
+            <td>The PDF of your CV as adapted for a specific job posting (the one you last previewed, attached or downloaded for it), plus the values it was filled with</td>
+            <td>Your Google Drive <code>appDataFolder</code>, next to that posting's application; deleted together with it</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <p class="host-note">Filler's Google Drive access is limited to the <code>drive.appdata</code> OAuth scope — a private, hidden storage area only this extension can read or write, not visible in your regular Drive file list.</p>
+    <p class="host-note">Only if you export an adapted Word CV as PDF, Filler asks once for one more narrow scope, <code>drive.file</code> (access only to files Filler itself creates, never to your other Drive files). It uses it to upload that adapted CV as a temporary Google Doc, let Google Docs convert it to PDF, and delete the temporary file immediately afterwards — whether or not the conversion succeeded. If you never export a Word CV as PDF, this scope is never requested.</p>
   </section>
 
   <section>
@@ -319,6 +325,7 @@
     <ul>
       <li><strong>OpenAI</strong> (<code>api.openai.com</code>) — receives job posting text and your profile/CV text as needed, to extract structured job details and draft cover letters, using the API key you provide. Governed by <a href="https://openai.com/privacy">OpenAI's own privacy policy</a>.</li>
       <li><strong>Google Drive</strong> (<code>www.googleapis.com</code>) — stores your profile, CV, and cover letter drafts in your own Drive account's app-data folder, using the OAuth token Chrome obtains when you connect your Google account. Governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+      <li><strong>LaTeX-On-HTTP</strong> (<code>latex.ytotech.com</code>) — only if you upload a LaTeX CV. Browsers can't run a full TeX installation, so the files of your LaTeX project (sources, photo, other files in the .zip), with the placeholders filled in, are sent to this free open-source compile service (<a href="https://github.com/YtoTech/latex-on-http">source</a>) each time the CV is compiled: once on upload, and when you preview, attach or download an adapted version. It returns the PDF. PDF and Word CVs are never sent there.</li>
     </ul>
     <p>No data is ever sent to a server operated by the developer of this extension — there isn't one.</p>
   </section>
@@ -335,7 +342,7 @@
       <li><span class="permit-key">downloads</span><span class="permit-desc">Save an exported cover letter PDF to your computer</span></li>
       <li><span class="permit-key">identity</span><span class="permit-desc">Obtain the Google OAuth token used to access your own Drive appDataFolder</span></li>
     </ul>
-    <p class="host-note">Host permissions are limited to <code>api.openai.com</code> and <code>www.googleapis.com</code> — the two services described above.</p>
+    <p class="host-note">Host permissions are limited to <code>api.openai.com</code>, <code>www.googleapis.com</code>, and <code>latex.ytotech.com</code> — the three services described above.</p>
   </section>
 
   <section>
