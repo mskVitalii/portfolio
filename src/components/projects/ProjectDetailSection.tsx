@@ -23,6 +23,11 @@ import { ScalingSimulator } from "./ScalingSimulator";
 import { CancelGame } from "./CancelGame";
 import { RailScanDemo } from "./RailScanDemo";
 import { NCahootsFlowDiagram } from "./NCahootsFlowDiagram";
+import { StepReplayDemo } from "./StepReplayDemo";
+import { AbAssignmentDemo } from "./AbAssignmentDemo";
+import { SqlFromDiagramDemo } from "./SqlFromDiagramDemo";
+import { ParallaxDemo } from "./ParallaxDemo";
+import { ProjectFlow } from "./ProjectFlow";
 import type { Project } from "@/data/projects";
 
 /** Full case-study block for one project — title through MDX write-up. Reused
@@ -145,6 +150,22 @@ export async function ProjectDetailSection({
 
       {/* Diagram explaining the NCahoots gifting flow end to end */}
       {project.slug === "ncahoots-admin-panel" && <NCahootsFlowDiagram />}
+
+      {/* Interactive demo of Anecole's downloadable step recordings for bug reproduction */}
+      {project.slug === "anecole-online-school" && <StepReplayDemo />}
+
+      {/* Interactive demo of server-side A/B bucketing with Redis-stored assignments */}
+      {project.slug === "online-tours-ab" && <AbAssignmentDemo />}
+
+      {/* Live ER-entity → CREATE TABLE demo for the two low-code coursework projects */}
+      {project.slug === "lightning-diagram-editor" && <SqlFromDiagramDemo project="lightning" />}
+      {project.slug === "swe-low-code-sql" && <SqlFromDiagramDemo project="swe" />}
+
+      {/* Interactive demo of the layered 2.5D parallax effect */}
+      {project.slug === "effects-parallax-editor" && <ParallaxDemo />}
+
+      {/* Step-through "how it works" diagram — renders only for projects listed in ProjectFlow */}
+      <ProjectFlow slug={project.slug} />
 
       {/* Stack — shown in every lens: a short row of names costs nothing and "what was it
           built with" is a question every visitor asks */}
