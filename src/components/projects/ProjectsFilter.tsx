@@ -19,6 +19,10 @@ const SECTIONS: { id: string; category: ProjectCategory; titleKey: string }[] = 
 // expandable bundle than as separate cards scattered across the work grid.
 const BUNDLE_COMPANIES = COMPANY_BUNDLES.map((b) => b.name);
 
+// Work projects pinned to the top of the Work section in every lens (ahead of the
+// date/profit sort) and rendered as a full-width card.
+const PINNED_WORK_SLUGS = ["anecole-online-school"];
+
 // Rough, ordering-only currency normalization — good enough to rank a €480K/yr
 // corporate saving above a ₽15,000 freelance gig, not a financial calculation.
 const CURRENCY_TO_EUR: Record<string, number> = { "€": 1, "$": 0.9, "₽": 1 / 90 };
@@ -78,9 +82,15 @@ function buildWorkEntries(workProjects: Project[]): WorkEntry[] {
   return entries;
 }
 
+function isPinned(entry: WorkEntry): boolean {
+  return entry.kind === "project" && PINNED_WORK_SLUGS.includes(entry.project.slug);
+}
+
 function sortEntries(entries: WorkEntry[], businessMode: boolean): WorkEntry[] {
-  return [...entries].sort((a, b) =>
-    businessMode ? b.profitKey - a.profitKey || b.sortKey - a.sortKey : b.sortKey - a.sortKey
+  return [...entries].sort(
+    (a, b) =>
+      Number(isPinned(b)) - Number(isPinned(a)) ||
+      (businessMode ? b.profitKey - a.profitKey || b.sortKey - a.sortKey : b.sortKey - a.sortKey)
   );
 }
 
@@ -147,7 +157,7 @@ export function ProjectsFilter({ projects }: { projects: Project[] }) {
               entry.kind === "bundle" ? (
                 <ProjectCompanyBundle key={entry.company} company={entry.company} projects={entry.projects} />
               ) : (
-                <ProjectCard key={entry.project.slug} project={entry.project} index={i} />
+                <ProjectCard key={entry.project.slug} project={entry.project} index={i} wide={isPinned(entry)} />
               )
             )}
           </div>

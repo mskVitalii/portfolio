@@ -10,8 +10,19 @@ import { useViewMode } from "@/store/viewMode";
 import { ProjectStatusBadge } from "./ProjectStatusBadge";
 import { localize, formatImpactValue, formatPeriod } from "@/lib/localized";
 import { getProjectHref, type Project } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
-export function ProjectCard({ project, index = 0 }: { project: Project; index?: number }) {
+/** `wide` spans both grid columns (for a project pinned to the top of a section) and
+ * has room for more of the stack. */
+export function ProjectCard({
+  project,
+  index = 0,
+  wide = false,
+}: {
+  project: Project;
+  index?: number;
+  wide?: boolean;
+}) {
   const t = useTranslations("Projects");
   const locale = useLocale();
   const [mounted, setMounted] = useState(false);
@@ -23,12 +34,14 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
   const rawDescription =
     businessMode && project.cardSummary ? project.cardSummary : mounted ? project.description[mode] : project.description.business;
   const description = localize(rawDescription, locale);
+  const stackLimit = wide ? 8 : 4;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.07, ease: "easeOut" }}
+      className={cn(wide && "sm:col-span-2")}
     >
       <Link
         href={getProjectHref(project)}
@@ -44,7 +57,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
           <span className="text-xs text-muted-foreground shrink-0">{formatPeriod(project.period, t("timelinePresent"))}</span>
         </div>
 
-        <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">
+        <h3 className={cn("font-semibold mb-1 group-hover:text-primary transition-colors", wide ? "text-2xl" : "text-lg")}>
           {localize(project.title, locale)}
         </h3>
 
@@ -72,14 +85,14 @@ export function ProjectCard({ project, index = 0 }: { project: Project; index?: 
             <div />
           ) : (
             <div className="flex flex-wrap gap-1">
-              {project.stack.slice(0, 4).map((tech) => (
+              {project.stack.slice(0, stackLimit).map((tech) => (
                 <Badge key={tech} variant="secondary" className="text-xs">
                   {tech}
                 </Badge>
               ))}
-              {project.stack.length > 4 && (
+              {project.stack.length > stackLimit && (
                 <Badge variant="secondary" className="text-xs text-muted-foreground">
-                  +{project.stack.length - 4}
+                  +{project.stack.length - stackLimit}
                 </Badge>
               )}
             </div>
