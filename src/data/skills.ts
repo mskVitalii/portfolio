@@ -70,7 +70,7 @@ export const SKILLS: Skill[] = [
     category: "frontend",
     years: 5,
     level: "expert",
-    projects: ["infineon-parking-guidance", "online-tours-ab", "ncahoots-admin-panel", "flyboots-store"],
+    projects: ["infineon-parking-guidance", "anecole-online-school", "online-tours-ab", "ncahoots-admin-panel", "flyboots-store"],
     description: "Hooks, RSC, complex state management, performance optimization",
   },
   {

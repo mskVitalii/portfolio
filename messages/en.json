@@ -702,6 +702,677 @@
       ],
       "builtLabel": "Built in this project"
     },
+    "flowUi": {
+      "play": "Play",
+      "pause": "Pause",
+      "replay": "Replay",
+      "prev": "Previous step",
+      "next": "Next step",
+      "stepOf": "{current}/{total}",
+      "external": "Third-party",
+      "scenarioLabel": "Scenario",
+      "diagramAria": "Steps of the selected scenario — select one to read what happens there"
+    },
+    "flows": {
+      "parkingGuidance": {
+        "title": "How a free spot reaches the map",
+        "description": "Step through the path of one occupancy update — or see what happens when a camera goes dark.",
+        "nodes": {
+          "camera": {
+            "label": "Camera",
+            "detail": "IP camera · PSoC Edge"
+          },
+          "onDevice": {
+            "label": "On-device vision",
+            "detail": "C firmware · plate recognition + occupancy count"
+          },
+          "mqtt": {
+            "label": "MQTT event",
+            "detail": "MQTT · events, not video"
+          },
+          "backend": {
+            "label": "Backend",
+            "detail": "Python CV service · C# device layer"
+          },
+          "dashboard": {
+            "label": "Live map",
+            "detail": "React + TypeScript · WebSocket"
+          }
+        },
+        "scenarios": {
+          "occupancy": {
+            "label": "A car parks",
+            "steps": [
+              "A camera built on Infineon's own PSoC Edge chip watches a row of parking spots on the Dresden campus.",
+              "Firmware written in C runs the computer vision on the chip itself — number-plate recognition and occupancy counting — instead of sending video to a model in the cloud.",
+              "Only the result leaves the camera: a small occupancy event over MQTT. No video crosses the network, which keeps bandwidth low and avoids storing footage centrally. MQTT was picked over HTTP polling to keep latency under 500 ms.",
+              "Backend services take the event: a Python service works out which spots are free, and a C# layer handles device auth, provisioning and the REST/WebSocket API.",
+              "The React dashboard gets the update over a WebSocket and repaints the campus map in real time."
+            ]
+          },
+          "offline": {
+            "label": "A camera goes offline",
+            "steps": [
+              "A camera drops off the network and its events stop.",
+              "The backend doesn't keep serving the last numbers it saw.",
+              "The map marks that zone as \"unknown\" — honest uncertainty instead of stale data telling drivers a spot is free."
+            ]
+          }
+        },
+        "note": "Simplified: the real system covers several lots and camera types. Each lot's layout is configuration data, so adding a lot means adding a JSON file, not changing code."
+      },
+      "warehouseSearch": {
+        "title": "What happens when a picker searches",
+        "description": "Compare a cached search, an uncached one, and how a catalog change reaches the index.",
+        "nodes": {
+          "picker": {
+            "label": "Warehouse staff",
+            "detail": "terminal on the warehouse floor"
+          },
+          "wms": {
+            "label": "WMS web app",
+            "detail": "React · REST"
+          },
+          "service": {
+            "label": "Search service",
+            "detail": "Go microservice"
+          },
+          "redis": {
+            "label": "Redis cache",
+            "detail": "Redis · top 10,000 SKUs"
+          },
+          "es": {
+            "label": "ElasticSearch",
+            "detail": "ElasticSearch · 200M items"
+          },
+          "catalog": {
+            "label": "Product catalog",
+            "detail": "catalog updates"
+          },
+          "kafka": {
+            "label": "Kafka",
+            "detail": "Kafka topic"
+          }
+        },
+        "scenarios": {
+          "hit": {
+            "label": "Popular SKU",
+            "steps": [
+              "A picker types a SKU — in Cyrillic or Latin, e.g. \"БОЛТ М8\" or \"bolt m8\".",
+              "The warehouse management web app sends the query to the search service over REST.",
+              "The Go service handles bursts of concurrent terminals from one small, single-binary deployment.",
+              "Cache hit: the 10,000 most-searched SKUs sit in Redis, so common queries return in about 40 ms at P95 instead of about 800 ms."
+            ]
+          },
+          "miss": {
+            "label": "Rare SKU",
+            "steps": [
+              "A picker types a SKU — in Cyrillic or Latin, e.g. \"БОЛТ М8\" or \"bolt m8\".",
+              "The warehouse management web app sends the query to the search service over REST.",
+              "The Go service handles bursts of concurrent terminals from one small, single-binary deployment.",
+              "Cache miss: this SKU isn't one of the hot ones in Redis.",
+              "ElasticSearch runs full-text and fuzzy search over 200M items. A custom analyzer matches the Cyrillic and Latin spellings of the same SKU. Result: under 5 seconds, where the old SQL LIKE query had become unusable."
+            ]
+          },
+          "update": {
+            "label": "Catalog changes",
+            "steps": [
+              "A product changes in the catalog.",
+              "The change is published to Kafka, so nothing has to poll the database.",
+              "The search service consumes the event.",
+              "It updates the ElasticSearch index. Searches see the change within about 2 seconds.",
+              "The same events invalidate cached entries. Lesson learned: a short TTL as a backstop — a batch update once caused a cache-miss storm."
+            ]
+          }
+        },
+        "note": "Prometheus and Grafana track P50/P95/P99 latency, cache hit rate and Kafka consumer lag; Jaeger traces individual queries."
+      },
+      "semanticSearch": {
+        "title": "Follow a question through the pipeline",
+        "description": "The search UI streams each of these stages live over Server-Sent Events. Switch to see how the open data got in first.",
+        "nodes": {
+          "frontend": {
+            "label": "Search UI",
+            "detail": "Vite/React · SSE stream"
+          },
+          "orchestrator": {
+            "label": "Orchestrator",
+            "detail": "Python / FastAPI"
+          },
+          "embedder": {
+            "label": "Embedders ×4",
+            "detail": "bge-m3 · e5-base · jina-v3 · LaBSE"
+          },
+          "qdrant": {
+            "label": "Qdrant",
+            "detail": "dense + sparse vectors · RRF"
+          },
+          "reranker": {
+            "label": "Reranker",
+            "detail": "jina-reranker-v3 · PyTorch"
+          },
+          "llm": {
+            "label": "LLM",
+            "detail": "multi-query + interpretation"
+          },
+          "portals": {
+            "label": "City portals",
+            "detail": "Berlin · Chemnitz · Dresden · Leipzig"
+          },
+          "scrapers": {
+            "label": "Scrapers",
+            "detail": "Playwright · one per city"
+          },
+          "mongo": {
+            "label": "MongoDB",
+            "detail": "dataset records"
+          }
+        },
+        "scenarios": {
+          "search": {
+            "label": "Search",
+            "steps": [
+              "Someone asks a question in plain language. The UI opens a Server-Sent Events stream and renders each stage as it arrives.",
+              "The FastAPI orchestrator fans the query out.",
+              "An embedding model turns it into a dense vector — bge-m3, multilingual-e5-base, jina-embeddings-v3 or LaBSE, all behind the same /embed contract. A model-independent sparse vector is computed too, via a hashing trick, so every model can be compared on equal terms.",
+              "Qdrant runs dense and sparse search together and merges both rankings with reciprocal rank fusion — exact keywords and acronyms in dataset titles aren't lost.",
+              "jina-reranker-v3 re-scores just the top candidates, reading query and document together: slower per item, more accurate on a short list. It falls back from CUDA to MPS to CPU, and halves its batch size instead of crashing when memory runs out.",
+              "An LLM runs multi-query expansion and writes a plain-language interpretation of the results.",
+              "Datasets and interpretation stream back to the UI, stage by stage."
+            ]
+          },
+          "ingest": {
+            "label": "Ingest open data",
+            "steps": [
+              "Berlin, Chemnitz, Dresden and Leipzig each publish open data on their own portal.",
+              "A separate Playwright scraper per city walks that city's dataset catalog.",
+              "Datasets are stored in Qdrant as named dense and sparse vectors.",
+              "The rest of each dataset's record lives in MongoDB."
+            ]
+          }
+        },
+        "note": "The thesis's research contribution is the benchmark: every model × search mode × multi-query combination, scored by weighted relevance and by the share of results rated relevant."
+      },
+      "newsAggregator": {
+        "title": "Inside the news aggregator",
+        "description": "Three paths through the system: harvesting feeds, reading the news on a map, and adding a source.",
+        "nodes": {
+          "cron": {
+            "label": "Scheduler",
+            "detail": "gocron · in the Go backend"
+          },
+          "pg": {
+            "label": "PostgreSQL",
+            "detail": "publishers + RSS sources"
+          },
+          "rss": {
+            "label": "RSS feeds",
+            "detail": "registered sources"
+          },
+          "es": {
+            "label": "ElasticSearch",
+            "detail": "articles + publisher autocomplete"
+          },
+          "web": {
+            "label": "Public site",
+            "detail": "Next.js · RTK Query · Yandex Maps"
+          },
+          "api": {
+            "label": "Go API",
+            "detail": "Gin · REST"
+          },
+          "admin": {
+            "label": "Admin panel",
+            "detail": "Next.js · JWT"
+          }
+        },
+        "scenarios": {
+          "harvest": {
+            "label": "Harvest",
+            "steps": [
+              "On an interval, a gocron job wakes up inside the Go backend.",
+              "It reads the registered publishers and their RSS sources from PostgreSQL, the source of truth.",
+              "It pulls the new articles from each feed.",
+              "New articles are indexed in ElasticSearch for full-text search."
+            ]
+          },
+          "read": {
+            "label": "Read the news",
+            "steps": [
+              "A reader filters by date histogram, category, country and language — country also from a clickable world map — and can use AND / EXACT / NOT operators.",
+              "The Next.js site calls the Go API over REST through RTK Query.",
+              "ElasticSearch runs the full-text query; a denormalized publisher index powers autocomplete.",
+              "Results appear on a Yandex Maps view, placed by their publishers' coordinates."
+            ]
+          },
+          "admin": {
+            "label": "Add a source",
+            "steps": [
+              "An editor signs in to the separate Next.js admin app. The public site never ships admin code.",
+              "The Go API checks the JWT.",
+              "The new publisher or RSS source is saved to PostgreSQL, and the next harvest picks it up."
+            ]
+          }
+        },
+        "note": "Observability from the first endpoint: logs in ELK, traces in Jaeger, metrics in Prometheus/Grafana. Every push to main redeploys the Docker Compose stack."
+      },
+      "telegramBots": {
+        "title": "From ad tap to AI conversation",
+        "description": "How a user arrived in the bot, and what happened when they sent a voice message.",
+        "nodes": {
+          "ad": {
+            "label": "Meta ads",
+            "detail": "Facebook / Instagram ad"
+          },
+          "landing": {
+            "label": "Landing page",
+            "detail": "self-hosted t.me clone"
+          },
+          "bot": {
+            "label": "Telegram bot",
+            "detail": "Python · aiogram · PostgreSQL · Redis"
+          },
+          "keitaro": {
+            "label": "Keitaro",
+            "detail": "conversion tracking"
+          },
+          "whisper": {
+            "label": "Whisper",
+            "detail": "speech-to-text"
+          },
+          "character": {
+            "label": "AI character",
+            "detail": "scripted persona"
+          }
+        },
+        "scenarios": {
+          "funnel": {
+            "label": "Ad funnel",
+            "steps": [
+              "Someone taps a Meta ad for one of the characters.",
+              "Facebook's ad policy penalizes landing pages that prompt a download, and Telegram's default t.me page has an app-download button. So the team self-hosted a stripped-down clone that keeps only the deep link into the bot.",
+              "The deep link opens the bot, built in Python with aiogram on PostgreSQL.",
+              "Keitaro records the conversion…",
+              "…and reports it back to Meta, so cost per lead was measured accurately."
+            ]
+          },
+          "voice": {
+            "label": "Voice message",
+            "steps": [
+              "A user records a voice message to the psychologist character.",
+              "Whisper transcribes it — this is what let people talk instead of type.",
+              "The scripted AI character answers in role.",
+              "The reply lands back in the chat; Redis holds the user's state between messages."
+            ]
+          }
+        },
+        "note": "Deploys ran on a self-hosted GitHub Actions runner with Docker layer caching — about 10 seconds each."
+      },
+      "semki": {
+        "title": "Finding the right colleague",
+        "description": "First the profiles get indexed, then anyone can ask in plain language.",
+        "nodes": {
+          "profiles": {
+            "label": "Employee profiles",
+            "detail": "across departments"
+          },
+          "openai": {
+            "label": "OpenAI API",
+            "detail": "embeddings + RAG"
+          },
+          "qdrant": {
+            "label": "Qdrant",
+            "detail": "vector search"
+          },
+          "ui": {
+            "label": "React app",
+            "detail": "React 19 · Mantine · TanStack Query"
+          },
+          "api": {
+            "label": "Go API",
+            "detail": "Gin"
+          },
+          "redis": {
+            "label": "Redis",
+            "detail": "cache"
+          }
+        },
+        "scenarios": {
+          "index": {
+            "label": "Index profiles",
+            "steps": [
+              "Employee profiles describe who works on what, across siloed departments.",
+              "The OpenAI API turns each profile into an embedding.",
+              "Embeddings go into Qdrant for vector search."
+            ]
+          },
+          "ask": {
+            "label": "Ask",
+            "steps": [
+              "Someone asks in plain language who could help with a topic.",
+              "The Go API (Gin) receives the question.",
+              "Repeated questions are answered from the Redis cache.",
+              "Otherwise the OpenAI API embeds the question.",
+              "Qdrant returns the closest profiles; they become the retrieved context for a RAG-style answer.",
+              "The React app shows the relevant colleagues."
+            ]
+          }
+        },
+        "note": "Built at a hackathon but observed like production: Prometheus, Grafana, Loki and Jaeger on Kubernetes."
+      },
+      "fassonApi": {
+        "title": "FaceID-style sign-in, step by step",
+        "description": "The same webcam capture serves two flows: registering a face, and signing in with it.",
+        "nodes": {
+          "webcam": {
+            "label": "Webcam",
+            "detail": "browser · WebRTC"
+          },
+          "server": {
+            "label": "Web server",
+            "detail": "ASP.NET MVC · .NET Framework"
+          },
+          "face": {
+            "label": "Azure Face API",
+            "detail": "detect + match"
+          },
+          "blob": {
+            "label": "Blob Storage",
+            "detail": "Azure · portraits"
+          },
+          "signedIn": {
+            "label": "Signed in",
+            "detail": "session"
+          }
+        },
+        "scenarios": {
+          "register": {
+            "label": "Register",
+            "steps": [
+              "The browser grabs a single webcam frame over WebRTC.",
+              "It's posted to the ASP.NET MVC backend.",
+              "Azure's Face API detects the face in the frame.",
+              "The portrait is stored in Azure Blob Storage."
+            ]
+          },
+          "login": {
+            "label": "Sign in",
+            "steps": [
+              "The browser grabs a single webcam frame over WebRTC.",
+              "It's posted to the ASP.NET MVC backend.",
+              "Azure's Face API detects the face and matches it.",
+              "On a match, the user is signed in."
+            ]
+          }
+        }
+      },
+      "firebaseSlack": {
+        "title": "From signup to Slack message",
+        "description": "What the extension does every time someone creates an account.",
+        "nodes": {
+          "signup": {
+            "label": "New signup",
+            "detail": "any app with the extension"
+          },
+          "auth": {
+            "label": "Firebase Auth",
+            "detail": "user-creation event"
+          },
+          "fn": {
+            "label": "Cloud Function",
+            "detail": "TypeScript"
+          },
+          "template": {
+            "label": "Message template",
+            "detail": "set at install time"
+          },
+          "slack": {
+            "label": "Slack",
+            "detail": "incoming webhook"
+          }
+        },
+        "scenarios": {
+          "signup": {
+            "label": "Signup",
+            "steps": [
+              "Someone signs up in an app that has the extension installed.",
+              "Firebase Auth fires a user-creation event.",
+              "That event triggers the extension's TypeScript Cloud Function.",
+              "The function fills in the message template configured at install time.",
+              "It posts to the Slack webhook URL from the configuration, and the team sees the signup right away."
+            ]
+          }
+        },
+        "note": "Published on extensions.dev and installed in 90 projects: set the webhook URL and template once, nothing to maintain."
+      },
+      "subwayBattery": {
+        "title": "Watching 30 batteries from one screen",
+        "description": "Readings flow in from the trains; a rebalancing command flows out.",
+        "nodes": {
+          "battery": {
+            "label": "Battery units",
+            "detail": "30 units on rolling stock"
+          },
+          "cellular": {
+            "label": "Cellular link",
+            "detail": "live telemetry"
+          },
+          "dashboard": {
+            "label": "Admin panel",
+            "detail": "Angular"
+          },
+          "operator": {
+            "label": "Operator",
+            "detail": "control room"
+          },
+          "command": {
+            "label": "Command endpoint",
+            "detail": "backend"
+          }
+        },
+        "scenarios": {
+          "telemetry": {
+            "label": "Live readings",
+            "steps": [
+              "Battery units on subway rolling stock report their sensor readings.",
+              "The readings are sent over a cellular connection.",
+              "The Angular admin panel shows all 30 units' live readings."
+            ]
+          },
+          "rebalance": {
+            "label": "Rebalance",
+            "steps": [
+              "An operator decides to rebalance.",
+              "They press the rebalancing button in the admin panel.",
+              "The panel calls the backend's command endpoint."
+            ]
+          }
+        },
+        "note": "Built for a bid on a subway battery-supply tender, with a team of 3."
+      },
+      "colorRobot": {
+        "title": "How the robot names a color",
+        "description": "One reading, two possible endings.",
+        "nodes": {
+          "object": {
+            "label": "Colored object",
+            "detail": "held in front of the sensor"
+          },
+          "sensor": {
+            "label": "Color sensor",
+            "detail": "TCS3200"
+          },
+          "arduino": {
+            "label": "Arduino",
+            "detail": "Arduino Uno · classifier"
+          },
+          "buzzer": {
+            "label": "Buzzer",
+            "detail": "one tone per color"
+          },
+          "led": {
+            "label": "LED",
+            "detail": "fallback"
+          }
+        },
+        "scenarios": {
+          "known": {
+            "label": "Known color",
+            "steps": [
+              "An object is held in front of the robot.",
+              "The TCS3200 sensor reads its color.",
+              "The Arduino Uno classifies the reading as one of 13 named colors.",
+              "Each color has its own buzzer tone, so the robot answers with sound."
+            ]
+          },
+          "unknown": {
+            "label": "Unknown color",
+            "steps": [
+              "An object is held in front of the robot.",
+              "The TCS3200 sensor reads its color.",
+              "The reading matches none of the 13 colors.",
+              "An LED lights up instead of a tone."
+            ]
+          }
+        }
+      }
+    },
+    "anecoleReplay": {
+      "title": "Record a bug, then hand it to a developer",
+      "description": "Use the homework screen below — every action is recorded. Hit the bug, download the steps, attach them to a ticket, and watch a developer's screen replay them.",
+      "stages": [
+        "Record",
+        "Download",
+        "Attach",
+        "Reproduce"
+      ],
+      "screen": {
+        "appName": "Anecole",
+        "homework": "Homework",
+        "unitTitle": "Unit 4 · Spanish basics",
+        "open": "Open",
+        "prompt": "Fill in the gap",
+        "sentence": "Ella ___ a la escuela todos los días.",
+        "options": [
+          "va",
+          "vas",
+          "ir"
+        ],
+        "translate": "Translate",
+        "hideTranslation": "Hide translation",
+        "translation": "She goes to school every day.",
+        "listen": "Listen",
+        "listening": "Playing voice-over…",
+        "submit": "Submit",
+        "saved": "Answer saved",
+        "error": "Couldn't save your answer",
+        "studentView": "Student's screen",
+        "developerView": "Developer's screen · replay"
+      },
+      "log": {
+        "title": "Recorded steps",
+        "empty": "Nothing yet — use the app and each action shows up here.",
+        "open": "Opened homework \"{unit}\"",
+        "translate": "Clicked \"Translate\"",
+        "hideTranslation": "Clicked \"Hide translation\"",
+        "listen": "Clicked \"Listen\" (voice-over)",
+        "select": "Picked answer \"{value}\"",
+        "submit": "Clicked \"Submit\"",
+        "resultError": "error shown: \"{message}\"",
+        "resultSaved": "answer saved"
+      },
+      "controls": {
+        "hint": "This build has a staged bug. Hint: submit while the translation is showing — or play the sample session.",
+        "bugFound": "Bug hit. The steps that led here are already recorded.",
+        "download": "Download steps",
+        "sample": "Play a sample session",
+        "fileName": "steps-recording.json",
+        "fileMeta": "{count, plural, one {# step} other {# steps}}",
+        "downloadedText": "The recording is a file like any other — the product manager doesn't have to describe what the student did; the file says it.",
+        "toTicket": "Open the bug ticket",
+        "saveCopy": "Save a copy",
+        "attach": "Attach the recording",
+        "handOff": "Send to a developer",
+        "replay": "Replay steps",
+        "replaying": "Replaying…",
+        "replayHint": "The developer starts from a clean screen and replays the recording step by step.",
+        "reproduced": "Same steps, same error — reproduced on the first try, no back-and-forth with the reporter.",
+        "reset": "Start over"
+      },
+      "ticket": {
+        "type": "BUG",
+        "title": "Homework answer won't save",
+        "reporter": "Reported by: product manager",
+        "body": "A student says their answer won't save. Steps from their session are attached."
+      },
+      "note": "Simulated session with a staged bug. In Anecole, users' steps can be downloaded as a recording, and product managers attach it to bug reports so developers can reproduce the bug."
+    },
+    "abAssign": {
+      "title": "Which version does a visitor see?",
+      "description": "Send visitors to the tour listing page. Each one is bucketed on the server, remembered in Redis, and gets their variant in the very first HTML.",
+      "newVisitor": "New visitor",
+      "returningVisitor": "Returning visitor",
+      "traceTitle": "Server-side, before any HTML is sent",
+      "traceEmpty": "Send a visitor to see the request.",
+      "trace": {
+        "hash": "hash({id}) ends in …{hash} → bucket {bucket}",
+        "redisMiss": "Redis: no assignment yet → stored {bucket}",
+        "redisHit": "Redis: already assigned → {bucket}",
+        "render": "Rails renders variant {bucket} into the HTML — no flicker"
+      },
+      "pageFor": "Page for {id} · variant {bucket}",
+      "pagePlaceholder": "Tour listing page",
+      "listing": {
+        "name": "Antalya · beach hotel",
+        "meta": "7 nights · 2 adults · flight included",
+        "priceAPrefix": "from",
+        "priceA": "1,240 €",
+        "priceB": "1,385 €",
+        "priceBNote": "all fees included",
+        "variantA": "Control: the classic \"from X €\" price",
+        "variantB": "Test: full price with every fee shown upfront"
+      },
+      "split": "Assigned so far: A {a} · B {b}. ↺ = returning visitor, same variant as before.",
+      "note": "The winning experiment showed prices with all fees upfront instead of \"from X €\" — +11.63% on booking conversion over a 4-week test. Prices above are illustrative."
+    },
+    "sqlBuilder": {
+      "tableName": "Table name",
+      "columnName": "Column name",
+      "type": "Column type",
+      "pk": "Primary key",
+      "notNull": "NOT NULL",
+      "addColumn": "Add column",
+      "removeColumn": "Remove column",
+      "sqlTitle": "Generated SQL",
+      "lightning": {
+        "title": "Draw a table, get the SQL",
+        "description": "Edit the entity the way you would on the Lightning canvas — the CREATE TABLE statement rewrites itself as you type.",
+        "note": "This live table-to-SQL step was the part of the zero-code idea that actually worked. Relation SQL and mock data stayed stubs; the request-tree panel exported a real Postman collection."
+      },
+      "swe": {
+        "title": "Draw a table, get the SQL",
+        "description": "Same idea as the coursework: edit the entity and the CREATE TABLE statement regenerates live.",
+        "note": "Like the original, this only writes SQL — there is no database connection, nothing is executed."
+      }
+    },
+    "parallax": {
+      "title": "How a flat picture becomes 2.5D",
+      "description": "The editor splits an illustration into layers and gives each a depth. Tilting the phone shifts every layer in proportion to its depth — far layers barely move, near ones move most.",
+      "flatView": "As the viewer sees it",
+      "layersView": "Show the layers",
+      "useTilt": "Use phone tilt",
+      "stageAria": "Layered landscape illustration that shifts with pointer movement or device tilt",
+      "layers": {
+        "sky": "Sky",
+        "mountains": "Mountains",
+        "hills": "Hills",
+        "foreground": "Foreground"
+      },
+      "depth": "depth {depth}",
+      "hintPointer": "Move the pointer over the picture (or drag across it) to simulate tilting the device.",
+      "hintTilt": "Tilt your phone.",
+      "note": "The original 2020 hackathon prototype was a single vanilla-JS page using parallax.js; the editor rebuilt it so artists could prepare their own layered pieces."
+    },
     "creditHeading": "Built together with",
     "creditLinkedIn": "View on LinkedIn"
   },

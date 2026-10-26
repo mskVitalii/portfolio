@@ -700,6 +700,677 @@
       ],
       "builtLabel": "In diesem Projekt umgesetzt"
     },
+    "flowUi": {
+      "play": "Abspielen",
+      "pause": "Pause",
+      "replay": "Nochmal",
+      "prev": "Vorheriger Schritt",
+      "next": "Nächster Schritt",
+      "stepOf": "{current}/{total}",
+      "external": "Drittanbieter",
+      "scenarioLabel": "Szenario",
+      "diagramAria": "Schritte des gewählten Szenarios — einen auswählen, um zu lesen, was dort passiert"
+    },
+    "flows": {
+      "parkingGuidance": {
+        "title": "Wie ein freier Platz auf die Karte kommt",
+        "description": "Verfolge Schritt für Schritt eine Belegungsmeldung — oder sieh, was passiert, wenn eine Kamera ausfällt.",
+        "nodes": {
+          "camera": {
+            "label": "Kamera",
+            "detail": "IP-Kamera · PSoC Edge"
+          },
+          "onDevice": {
+            "label": "Vision auf dem Gerät",
+            "detail": "C-Firmware · Kennzeichenerkennung + Belegungszählung"
+          },
+          "mqtt": {
+            "label": "MQTT-Event",
+            "detail": "MQTT · Events statt Video"
+          },
+          "backend": {
+            "label": "Backend",
+            "detail": "Python-CV-Service · C#-Geräteschicht"
+          },
+          "dashboard": {
+            "label": "Live-Karte",
+            "detail": "React + TypeScript · WebSocket"
+          }
+        },
+        "scenarios": {
+          "occupancy": {
+            "label": "Ein Auto parkt",
+            "steps": [
+              "Eine Kamera auf Basis von Infineons eigenem PSoC-Edge-Chip überwacht eine Reihe von Stellplätzen auf dem Dresdner Campus.",
+              "In C geschriebene Firmware führt die Computer Vision direkt auf dem Chip aus — Kennzeichenerkennung und Belegungszählung —, statt Video an ein Modell in der Cloud zu schicken.",
+              "Nur das Ergebnis verlässt die Kamera: ein kleines Belegungs-Event über MQTT. Kein Video geht übers Netz — das spart Bandbreite und vermeidet zentral gespeicherte Aufnahmen. MQTT statt HTTP-Polling hält die Latenz unter 500 ms.",
+              "Backend-Services übernehmen das Event: Ein Python-Service ermittelt die freien Plätze, eine C#-Schicht kümmert sich um Geräte-Authentifizierung, Provisionierung und die REST/WebSocket-API.",
+              "Das React-Dashboard erhält das Update per WebSocket und zeichnet die Campuskarte in Echtzeit neu."
+            ]
+          },
+          "offline": {
+            "label": "Eine Kamera fällt aus",
+            "steps": [
+              "Eine Kamera verliert die Verbindung, ihre Events bleiben aus.",
+              "Das Backend liefert nicht einfach die zuletzt gesehenen Zahlen weiter.",
+              "Die Karte markiert die Zone als „unbekannt“ — ehrliche Unsicherheit statt veralteter Daten, die Fahrern einen freien Platz vorgaukeln."
+            ]
+          }
+        },
+        "note": "Vereinfacht: Das echte System umfasst mehrere Parkflächen und Kameratypen. Das Layout jeder Fläche ist Konfiguration — eine neue Fläche ist eine JSON-Datei, keine Codeänderung."
+      },
+      "warehouseSearch": {
+        "title": "Was bei einer Suche im Lager passiert",
+        "description": "Vergleiche eine gecachte Suche, eine ungecachte und den Weg einer Katalogänderung in den Index.",
+        "nodes": {
+          "picker": {
+            "label": "Lagerpersonal",
+            "detail": "Terminal in der Halle"
+          },
+          "wms": {
+            "label": "WMS-Web-App",
+            "detail": "React · REST"
+          },
+          "service": {
+            "label": "Suchservice",
+            "detail": "Go-Microservice"
+          },
+          "redis": {
+            "label": "Redis-Cache",
+            "detail": "Redis · Top-10.000-SKUs"
+          },
+          "es": {
+            "label": "ElasticSearch",
+            "detail": "ElasticSearch · 200 Mio. Artikel"
+          },
+          "catalog": {
+            "label": "Produktkatalog",
+            "detail": "Katalogänderungen"
+          },
+          "kafka": {
+            "label": "Kafka",
+            "detail": "Kafka-Topic"
+          }
+        },
+        "scenarios": {
+          "hit": {
+            "label": "Häufige SKU",
+            "steps": [
+              "Ein Kommissionierer tippt eine SKU — kyrillisch oder lateinisch, z. B. „БОЛТ М8“ oder „bolt m8“.",
+              "Die Web-App des Lagerverwaltungssystems schickt die Anfrage per REST an den Suchservice.",
+              "Der Go-Service bewältigt Lastspitzen vieler gleichzeitiger Terminals mit einem kleinen Deployment aus einer einzigen Binärdatei.",
+              "Cache-Treffer: Die 10.000 meistgesuchten SKUs liegen in Redis, häufige Anfragen kommen beim P95 in etwa 40 ms statt etwa 800 ms zurück."
+            ]
+          },
+          "miss": {
+            "label": "Seltene SKU",
+            "steps": [
+              "Ein Kommissionierer tippt eine SKU — kyrillisch oder lateinisch, z. B. „БОЛТ М8“ oder „bolt m8“.",
+              "Die Web-App des Lagerverwaltungssystems schickt die Anfrage per REST an den Suchservice.",
+              "Der Go-Service bewältigt Lastspitzen vieler gleichzeitiger Terminals mit einem kleinen Deployment aus einer einzigen Binärdatei.",
+              "Cache-Fehlschlag: Diese SKU gehört nicht zu den häufig gesuchten in Redis.",
+              "ElasticSearch durchsucht 200 Mio. Artikel per Volltext- und unscharfer Suche. Ein eigener Analyzer erkennt kyrillische und lateinische Schreibweisen derselben SKU. Ergebnis: unter 5 Sekunden, wo die alte SQL-LIKE-Abfrage unbrauchbar geworden war."
+            ]
+          },
+          "update": {
+            "label": "Katalog ändert sich",
+            "steps": [
+              "Ein Produkt ändert sich im Katalog.",
+              "Die Änderung wird nach Kafka publiziert — niemand muss die Datenbank pollen.",
+              "Der Suchservice konsumiert das Event.",
+              "Er aktualisiert den ElasticSearch-Index. Suchen sehen die Änderung nach etwa 2 Sekunden.",
+              "Dieselben Events invalidieren Cache-Einträge. Lehre daraus: eine kurze TTL als Absicherung — ein Batch-Update löste einmal einen Sturm von Cache-Fehlschlägen aus."
+            ]
+          }
+        },
+        "note": "Prometheus und Grafana messen P50/P95/P99-Latenz, Cache-Trefferquote und Kafka-Consumer-Lag; Jaeger verfolgt einzelne Anfragen."
+      },
+      "semanticSearch": {
+        "title": "Eine Frage durch die Pipeline verfolgen",
+        "description": "Die Such-UI zeigt jede dieser Stufen live per Server-Sent Events. Umschalten, um zu sehen, wie die offenen Daten vorher hineinkamen.",
+        "nodes": {
+          "frontend": {
+            "label": "Such-UI",
+            "detail": "Vite/React · SSE-Stream"
+          },
+          "orchestrator": {
+            "label": "Orchestrator",
+            "detail": "Python / FastAPI"
+          },
+          "embedder": {
+            "label": "Embedder ×4",
+            "detail": "bge-m3 · e5-base · jina-v3 · LaBSE"
+          },
+          "qdrant": {
+            "label": "Qdrant",
+            "detail": "Dense- + Sparse-Vektoren · RRF"
+          },
+          "reranker": {
+            "label": "Reranker",
+            "detail": "jina-reranker-v3 · PyTorch"
+          },
+          "llm": {
+            "label": "LLM",
+            "detail": "Multi-Query + Interpretation"
+          },
+          "portals": {
+            "label": "Stadtportale",
+            "detail": "Berlin · Chemnitz · Dresden · Leipzig"
+          },
+          "scrapers": {
+            "label": "Scraper",
+            "detail": "Playwright · einer pro Stadt"
+          },
+          "mongo": {
+            "label": "MongoDB",
+            "detail": "Datensatz-Einträge"
+          }
+        },
+        "scenarios": {
+          "search": {
+            "label": "Suche",
+            "steps": [
+              "Jemand stellt eine Frage in normaler Sprache. Die UI öffnet einen Server-Sent-Events-Stream und zeigt jede Stufe, sobald sie eintrifft.",
+              "Der FastAPI-Orchestrator verteilt die Anfrage.",
+              "Ein Embedding-Modell macht daraus einen Dense-Vektor — bge-m3, multilingual-e5-base, jina-embeddings-v3 oder LaBSE, alle hinter demselben /embed-Vertrag. Zusätzlich entsteht per Hashing-Trick ein modellunabhängiger Sparse-Vektor, damit sich alle Modelle fair vergleichen lassen.",
+              "Qdrant sucht dense und sparse zugleich und führt beide Rankings per Reciprocal Rank Fusion zusammen — exakte Schlüsselwörter und Abkürzungen in Datensatztiteln gehen nicht verloren.",
+              "jina-reranker-v3 bewertet nur die besten Kandidaten neu und liest dabei Anfrage und Dokument zusammen: langsamer pro Eintrag, genauer auf einer kurzen Liste. Er weicht von CUDA auf MPS auf CPU aus und halbiert bei Speichermangel die Batchgröße, statt abzustürzen.",
+              "Ein LLM erweitert die Anfrage per Multi-Query und formuliert eine Interpretation der Ergebnisse in normaler Sprache.",
+              "Datensätze und Interpretation fließen Stufe für Stufe zurück in die UI."
+            ]
+          },
+          "ingest": {
+            "label": "Offene Daten einlesen",
+            "steps": [
+              "Berlin, Chemnitz, Dresden und Leipzig veröffentlichen offene Daten jeweils auf einem eigenen Portal.",
+              "Ein eigener Playwright-Scraper pro Stadt durchläuft deren Datensatzkatalog.",
+              "Datensätze werden in Qdrant als benannte Dense- und Sparse-Vektoren gespeichert.",
+              "Der Rest jedes Datensatz-Eintrags liegt in MongoDB."
+            ]
+          }
+        },
+        "note": "Der Forschungsbeitrag der Arbeit ist der Benchmark: jede Kombination aus Modell × Suchmodus × Multi-Query, bewertet nach gewichteter Relevanz und dem Anteil relevant bewerteter Ergebnisse."
+      },
+      "newsAggregator": {
+        "title": "Ein Blick in den Nachrichtenaggregator",
+        "description": "Drei Wege durch das System: Feeds einsammeln, Nachrichten auf der Karte lesen und eine Quelle hinzufügen.",
+        "nodes": {
+          "cron": {
+            "label": "Scheduler",
+            "detail": "gocron · im Go-Backend"
+          },
+          "pg": {
+            "label": "PostgreSQL",
+            "detail": "Verlage + RSS-Quellen"
+          },
+          "rss": {
+            "label": "RSS-Feeds",
+            "detail": "registrierte Quellen"
+          },
+          "es": {
+            "label": "ElasticSearch",
+            "detail": "Artikel + Verlags-Autovervollständigung"
+          },
+          "web": {
+            "label": "Öffentliche Seite",
+            "detail": "Next.js · RTK Query · Yandex Maps"
+          },
+          "api": {
+            "label": "Go-API",
+            "detail": "Gin · REST"
+          },
+          "admin": {
+            "label": "Admin-Panel",
+            "detail": "Next.js · JWT"
+          }
+        },
+        "scenarios": {
+          "harvest": {
+            "label": "Einsammeln",
+            "steps": [
+              "In festen Abständen wacht ein gocron-Job im Go-Backend auf.",
+              "Er liest die registrierten Verlage und ihre RSS-Quellen aus PostgreSQL, der maßgeblichen Datenquelle.",
+              "Er holt die neuen Artikel aus jedem Feed.",
+              "Neue Artikel werden für die Volltextsuche in ElasticSearch indexiert."
+            ]
+          },
+          "read": {
+            "label": "Nachrichten lesen",
+            "steps": [
+              "Ein Leser filtert nach Datumshistogramm, Kategorie, Land und Sprache — das Land auch über eine klickbare Weltkarte — und kann AND / EXACT / NOT verwenden.",
+              "Die Next.js-Seite ruft die Go-API per REST über RTK Query auf.",
+              "ElasticSearch führt die Volltextsuche aus; ein denormalisierter Verlagsindex liefert die Autovervollständigung.",
+              "Die Ergebnisse erscheinen auf einer Yandex-Maps-Karte, platziert nach den Koordinaten ihrer Verlage."
+            ]
+          },
+          "admin": {
+            "label": "Quelle hinzufügen",
+            "steps": [
+              "Eine Redakteurin meldet sich in der separaten Next.js-Admin-App an. Die öffentliche Seite liefert nie Admin-Code aus.",
+              "Die Go-API prüft das JWT.",
+              "Der neue Verlag oder die neue RSS-Quelle landet in PostgreSQL, der nächste Durchlauf greift sie auf."
+            ]
+          }
+        },
+        "note": "Observability ab dem ersten Endpunkt: Logs in ELK, Traces in Jaeger, Metriken in Prometheus/Grafana. Jeder Push auf main deployt den Docker-Compose-Stack neu."
+      },
+      "telegramBots": {
+        "title": "Vom Anzeigen-Tipp zum KI-Gespräch",
+        "description": "Wie Nutzer in den Bot kamen — und was passierte, wenn sie eine Sprachnachricht schickten.",
+        "nodes": {
+          "ad": {
+            "label": "Meta-Anzeigen",
+            "detail": "Facebook-/Instagram-Anzeige"
+          },
+          "landing": {
+            "label": "Landingpage",
+            "detail": "selbst gehosteter t.me-Klon"
+          },
+          "bot": {
+            "label": "Telegram-Bot",
+            "detail": "Python · aiogram · PostgreSQL · Redis"
+          },
+          "keitaro": {
+            "label": "Keitaro",
+            "detail": "Conversion-Tracking"
+          },
+          "whisper": {
+            "label": "Whisper",
+            "detail": "Sprache zu Text"
+          },
+          "character": {
+            "label": "KI-Figur",
+            "detail": "geskriptete Persona"
+          }
+        },
+        "scenarios": {
+          "funnel": {
+            "label": "Anzeigen-Funnel",
+            "steps": [
+              "Jemand tippt auf eine Meta-Anzeige für eine der Figuren.",
+              "Facebooks Werberichtlinie straft Landingpages ab, die zum Download auffordern — und Telegrams Standardseite t.me hat einen App-Download-Button. Also hostete das Team einen abgespeckten Klon, der nur den Deep Link in den Bot behält.",
+              "Der Deep Link öffnet den Bot, gebaut in Python mit aiogram auf PostgreSQL.",
+              "Keitaro erfasst die Conversion…",
+              "…und meldet sie an Meta zurück, damit die Kosten pro Lead korrekt gemessen wurden."
+            ]
+          },
+          "voice": {
+            "label": "Sprachnachricht",
+            "steps": [
+              "Ein Nutzer spricht der Psychologen-Figur eine Sprachnachricht ein.",
+              "Whisper transkribiert sie — dadurch konnten Menschen sprechen statt tippen.",
+              "Die geskriptete KI-Figur antwortet in ihrer Rolle.",
+              "Die Antwort landet im Chat; Redis hält den Zustand des Nutzers zwischen den Nachrichten."
+            ]
+          }
+        },
+        "note": "Deployments liefen über einen selbst gehosteten GitHub-Actions-Runner mit Docker-Layer-Caching — etwa 10 Sekunden pro Deployment."
+      },
+      "semki": {
+        "title": "Die richtige Kollegin finden",
+        "description": "Erst werden die Profile indexiert, dann kann jeder in normaler Sprache fragen.",
+        "nodes": {
+          "profiles": {
+            "label": "Mitarbeiterprofile",
+            "detail": "über alle Abteilungen"
+          },
+          "openai": {
+            "label": "OpenAI API",
+            "detail": "Embeddings + RAG"
+          },
+          "qdrant": {
+            "label": "Qdrant",
+            "detail": "Vektorsuche"
+          },
+          "ui": {
+            "label": "React-App",
+            "detail": "React 19 · Mantine · TanStack Query"
+          },
+          "api": {
+            "label": "Go-API",
+            "detail": "Gin"
+          },
+          "redis": {
+            "label": "Redis",
+            "detail": "Cache"
+          }
+        },
+        "scenarios": {
+          "index": {
+            "label": "Profile indexieren",
+            "steps": [
+              "Mitarbeiterprofile beschreiben, wer woran arbeitet — über abgeschottete Abteilungen hinweg.",
+              "Die OpenAI API macht aus jedem Profil ein Embedding.",
+              "Die Embeddings landen für die Vektorsuche in Qdrant."
+            ]
+          },
+          "ask": {
+            "label": "Fragen",
+            "steps": [
+              "Jemand fragt in normaler Sprache, wer bei einem Thema helfen könnte.",
+              "Die Go-API (Gin) nimmt die Frage entgegen.",
+              "Wiederholte Fragen werden aus dem Redis-Cache beantwortet.",
+              "Sonst erzeugt die OpenAI API ein Embedding der Frage.",
+              "Qdrant liefert die ähnlichsten Profile; sie bilden den abgerufenen Kontext für eine Antwort im RAG-Stil.",
+              "Die React-App zeigt die passenden Kolleginnen und Kollegen."
+            ]
+          }
+        },
+        "note": "Auf einem Hackathon gebaut, aber überwacht wie Produktion: Prometheus, Grafana, Loki und Jaeger auf Kubernetes."
+      },
+      "fassonApi": {
+        "title": "Anmeldung im FaceID-Stil, Schritt für Schritt",
+        "description": "Dieselbe Webcam-Aufnahme dient zwei Abläufen: ein Gesicht registrieren und sich damit anmelden.",
+        "nodes": {
+          "webcam": {
+            "label": "Webcam",
+            "detail": "Browser · WebRTC"
+          },
+          "server": {
+            "label": "Webserver",
+            "detail": "ASP.NET MVC · .NET Framework"
+          },
+          "face": {
+            "label": "Azure Face API",
+            "detail": "erkennen + abgleichen"
+          },
+          "blob": {
+            "label": "Blob Storage",
+            "detail": "Azure · Porträts"
+          },
+          "signedIn": {
+            "label": "Angemeldet",
+            "detail": "Sitzung"
+          }
+        },
+        "scenarios": {
+          "register": {
+            "label": "Registrieren",
+            "steps": [
+              "Der Browser nimmt per WebRTC ein einzelnes Webcam-Bild auf.",
+              "Es wird an das ASP.NET-MVC-Backend gesendet.",
+              "Azures Face API erkennt das Gesicht im Bild.",
+              "Das Porträt wird in Azure Blob Storage gespeichert."
+            ]
+          },
+          "login": {
+            "label": "Anmelden",
+            "steps": [
+              "Der Browser nimmt per WebRTC ein einzelnes Webcam-Bild auf.",
+              "Es wird an das ASP.NET-MVC-Backend gesendet.",
+              "Azures Face API erkennt das Gesicht und gleicht es ab.",
+              "Bei einem Treffer ist die Person angemeldet."
+            ]
+          }
+        }
+      },
+      "firebaseSlack": {
+        "title": "Von der Registrierung zur Slack-Nachricht",
+        "description": "Was die Extension jedes Mal tut, wenn jemand ein Konto anlegt.",
+        "nodes": {
+          "signup": {
+            "label": "Neue Registrierung",
+            "detail": "jede App mit der Extension"
+          },
+          "auth": {
+            "label": "Firebase Auth",
+            "detail": "Event bei Nutzeranlage"
+          },
+          "fn": {
+            "label": "Cloud Function",
+            "detail": "TypeScript"
+          },
+          "template": {
+            "label": "Nachrichtenvorlage",
+            "detail": "bei der Installation festgelegt"
+          },
+          "slack": {
+            "label": "Slack",
+            "detail": "Incoming Webhook"
+          }
+        },
+        "scenarios": {
+          "signup": {
+            "label": "Registrierung",
+            "steps": [
+              "Jemand registriert sich in einer App, in der die Extension installiert ist.",
+              "Firebase Auth löst ein Event zur Nutzeranlage aus.",
+              "Das Event startet die TypeScript-Cloud-Function der Extension.",
+              "Die Funktion füllt die bei der Installation konfigurierte Nachrichtenvorlage.",
+              "Sie postet an die Slack-Webhook-URL aus der Konfiguration, und das Team sieht die Registrierung sofort."
+            ]
+          }
+        },
+        "note": "Auf extensions.dev veröffentlicht und in 90 Projekten installiert: Webhook-URL und Vorlage einmal setzen, nichts zu warten."
+      },
+      "subwayBattery": {
+        "title": "30 Batterien auf einem Bildschirm",
+        "description": "Messwerte kommen aus den Zügen herein, ein Ausgleichsbefehl geht hinaus.",
+        "nodes": {
+          "battery": {
+            "label": "Batterieeinheiten",
+            "detail": "30 Einheiten in Zügen"
+          },
+          "cellular": {
+            "label": "Mobilfunk",
+            "detail": "Live-Telemetrie"
+          },
+          "dashboard": {
+            "label": "Admin-Panel",
+            "detail": "Angular"
+          },
+          "operator": {
+            "label": "Bediener",
+            "detail": "Leitstelle"
+          },
+          "command": {
+            "label": "Befehls-Endpunkt",
+            "detail": "Backend"
+          }
+        },
+        "scenarios": {
+          "telemetry": {
+            "label": "Live-Messwerte",
+            "steps": [
+              "Batterieeinheiten in U-Bahn-Zügen melden ihre Sensorwerte.",
+              "Die Werte werden über Mobilfunk übertragen.",
+              "Das Angular-Admin-Panel zeigt die Live-Werte aller 30 Einheiten."
+            ]
+          },
+          "rebalance": {
+            "label": "Ausgleichen",
+            "steps": [
+              "Ein Bediener entscheidet, die Batterien auszugleichen.",
+              "Er drückt den Ausgleichs-Button im Admin-Panel.",
+              "Das Panel ruft den Befehls-Endpunkt des Backends auf."
+            ]
+          }
+        },
+        "note": "Gebaut für ein Angebot in einer Ausschreibung zur Batterieversorgung einer U-Bahn, mit einem 3-köpfigen Team."
+      },
+      "colorRobot": {
+        "title": "Wie der Roboter eine Farbe benennt",
+        "description": "Eine Messung, zwei mögliche Ausgänge.",
+        "nodes": {
+          "object": {
+            "label": "Farbiges Objekt",
+            "detail": "vor den Sensor gehalten"
+          },
+          "sensor": {
+            "label": "Farbsensor",
+            "detail": "TCS3200"
+          },
+          "arduino": {
+            "label": "Arduino",
+            "detail": "Arduino Uno · Klassifikator"
+          },
+          "buzzer": {
+            "label": "Summer",
+            "detail": "ein Ton pro Farbe"
+          },
+          "led": {
+            "label": "LED",
+            "detail": "Rückfall"
+          }
+        },
+        "scenarios": {
+          "known": {
+            "label": "Bekannte Farbe",
+            "steps": [
+              "Ein Objekt wird vor den Roboter gehalten.",
+              "Der TCS3200-Sensor misst seine Farbe.",
+              "Der Arduino Uno ordnet den Messwert einer von 13 benannten Farben zu.",
+              "Jede Farbe hat ihren eigenen Summerton — der Roboter antwortet mit Klang."
+            ]
+          },
+          "unknown": {
+            "label": "Unbekannte Farbe",
+            "steps": [
+              "Ein Objekt wird vor den Roboter gehalten.",
+              "Der TCS3200-Sensor misst seine Farbe.",
+              "Der Messwert passt zu keiner der 13 Farben.",
+              "Statt eines Tons leuchtet eine LED."
+            ]
+          }
+        }
+      }
+    },
+    "anecoleReplay": {
+      "title": "Einen Bug aufzeichnen und an Entwickler übergeben",
+      "description": "Benutze den Hausaufgaben-Bildschirm unten — jede Aktion wird aufgezeichnet. Löse den Bug aus, lade die Schritte herunter, häng sie an ein Ticket und sieh zu, wie der Bildschirm eines Entwicklers sie nachspielt.",
+      "stages": [
+        "Aufzeichnen",
+        "Herunterladen",
+        "Anhängen",
+        "Reproduzieren"
+      ],
+      "screen": {
+        "appName": "Anecole",
+        "homework": "Hausaufgabe",
+        "unitTitle": "Lektion 4 · Spanisch-Grundlagen",
+        "open": "Öffnen",
+        "prompt": "Lücke füllen",
+        "sentence": "Ella ___ a la escuela todos los días.",
+        "options": [
+          "va",
+          "vas",
+          "ir"
+        ],
+        "translate": "Übersetzen",
+        "hideTranslation": "Übersetzung ausblenden",
+        "translation": "Sie geht jeden Tag zur Schule.",
+        "listen": "Anhören",
+        "listening": "Vertonung läuft…",
+        "submit": "Abgeben",
+        "saved": "Antwort gespeichert",
+        "error": "Antwort konnte nicht gespeichert werden",
+        "studentView": "Bildschirm der Schülerin",
+        "developerView": "Bildschirm des Entwicklers · Wiedergabe"
+      },
+      "log": {
+        "title": "Aufgezeichnete Schritte",
+        "empty": "Noch nichts — benutze die App, und jede Aktion erscheint hier.",
+        "open": "Hausaufgabe „{unit}“ geöffnet",
+        "translate": "„Übersetzen“ geklickt",
+        "hideTranslation": "„Übersetzung ausblenden“ geklickt",
+        "listen": "„Anhören“ geklickt (Vertonung)",
+        "select": "Antwort „{value}“ gewählt",
+        "submit": "„Abgeben“ geklickt",
+        "resultError": "Fehler angezeigt: „{message}“",
+        "resultSaved": "Antwort gespeichert"
+      },
+      "controls": {
+        "hint": "Dieser Build hat einen inszenierten Bug. Tipp: abgeben, während die Übersetzung angezeigt wird — oder die Beispielsitzung abspielen.",
+        "bugFound": "Bug ausgelöst. Die Schritte bis hierher sind schon aufgezeichnet.",
+        "download": "Schritte herunterladen",
+        "sample": "Beispielsitzung abspielen",
+        "fileName": "steps-recording.json",
+        "fileMeta": "{count, plural, one {# Schritt} other {# Schritte}}",
+        "downloadedText": "Die Aufzeichnung ist eine ganz normale Datei — die Produktmanagerin muss nicht beschreiben, was die Schülerin getan hat; die Datei sagt es.",
+        "toTicket": "Bug-Ticket öffnen",
+        "saveCopy": "Kopie speichern",
+        "attach": "Aufzeichnung anhängen",
+        "handOff": "An Entwickler senden",
+        "replay": "Schritte abspielen",
+        "replaying": "Wird abgespielt…",
+        "replayHint": "Der Entwickler startet mit einem leeren Bildschirm und spielt die Aufzeichnung Schritt für Schritt ab.",
+        "reproduced": "Gleiche Schritte, gleicher Fehler — beim ersten Versuch reproduziert, ohne Rückfragen an die Meldende.",
+        "reset": "Neu starten"
+      },
+      "ticket": {
+        "type": "BUG",
+        "title": "Hausaufgaben-Antwort wird nicht gespeichert",
+        "reporter": "Gemeldet von: Produktmanagerin",
+        "body": "Eine Schülerin sagt, ihre Antwort wird nicht gespeichert. Die Schritte aus ihrer Sitzung sind angehängt."
+      },
+      "note": "Simulierte Sitzung mit inszeniertem Bug. In Anecole lassen sich die Schritte von Nutzern als Aufzeichnung herunterladen; Produktmanager hängen sie an Bug-Reports, damit Entwickler den Fehler reproduzieren können."
+    },
+    "abAssign": {
+      "title": "Welche Version sieht ein Besucher?",
+      "description": "Schicke Besucher auf die Tour-Übersichtsseite. Jeder wird auf dem Server einer Gruppe zugeteilt, in Redis gemerkt und bekommt seine Variante schon im ersten HTML.",
+      "newVisitor": "Neuer Besucher",
+      "returningVisitor": "Wiederkehrender Besucher",
+      "traceTitle": "Auf dem Server, bevor HTML gesendet wird",
+      "traceEmpty": "Schicke einen Besucher, um die Anfrage zu sehen.",
+      "trace": {
+        "hash": "hash({id}) endet auf …{hash} → Gruppe {bucket}",
+        "redisMiss": "Redis: noch keine Zuteilung → {bucket} gespeichert",
+        "redisHit": "Redis: bereits zugeteilt → {bucket}",
+        "render": "Rails rendert Variante {bucket} direkt ins HTML — kein Flackern"
+      },
+      "pageFor": "Seite für {id} · Variante {bucket}",
+      "pagePlaceholder": "Tour-Übersichtsseite",
+      "listing": {
+        "name": "Antalya · Strandhotel",
+        "meta": "7 Nächte · 2 Erwachsene · inkl. Flug",
+        "priceAPrefix": "ab",
+        "priceA": "1.240 €",
+        "priceB": "1.385 €",
+        "priceBNote": "alle Gebühren inklusive",
+        "variantA": "Kontrolle: der klassische „ab X €“-Preis",
+        "variantB": "Test: Endpreis mit allen Gebühren von Anfang an"
+      },
+      "split": "Bisher zugeteilt: A {a} · B {b}. ↺ = wiederkehrender Besucher, gleiche Variante wie zuvor.",
+      "note": "Das erfolgreichste Experiment zeigte Preise inklusive aller Gebühren statt „ab X €“ — +11,63 % Buchungs-Conversion in einem 4-wöchigen Test. Die Preise oben sind nur beispielhaft."
+    },
+    "sqlBuilder": {
+      "tableName": "Tabellenname",
+      "columnName": "Spaltenname",
+      "type": "Spaltentyp",
+      "pk": "Primärschlüssel",
+      "notNull": "NOT NULL",
+      "addColumn": "Spalte hinzufügen",
+      "removeColumn": "Spalte entfernen",
+      "sqlTitle": "Generiertes SQL",
+      "lightning": {
+        "title": "Tabelle zeichnen, SQL erhalten",
+        "description": "Bearbeite die Entität wie auf der Lightning-Zeichenfläche — das CREATE-TABLE-Statement schreibt sich beim Tippen neu.",
+        "note": "Dieser Live-Schritt von der Tabelle zum SQL war der Teil der Zero-Code-Idee, der tatsächlich funktionierte. SQL für Relationen und Testdaten blieben Platzhalter; das Request-Tree-Panel exportierte eine echte Postman-Collection."
+      },
+      "swe": {
+        "title": "Tabelle zeichnen, SQL erhalten",
+        "description": "Dieselbe Idee wie in der Hausarbeit: Entität bearbeiten, und das CREATE-TABLE-Statement entsteht live neu.",
+        "note": "Wie das Original schreibt dies nur SQL — es gibt keine Datenbankverbindung, nichts wird ausgeführt."
+      }
+    },
+    "parallax": {
+      "title": "Wie aus einem flachen Bild 2,5D wird",
+      "description": "Der Editor zerlegt eine Illustration in Ebenen und gibt jeder eine Tiefe. Kippt man das Handy, verschiebt sich jede Ebene proportional zu ihrer Tiefe — ferne Ebenen kaum, nahe am stärksten.",
+      "flatView": "So sieht man es",
+      "layersView": "Ebenen zeigen",
+      "useTilt": "Handy-Neigung nutzen",
+      "stageAria": "Landschaftsillustration aus Ebenen, die sich mit Zeigerbewegung oder Geräteneigung verschieben",
+      "layers": {
+        "sky": "Himmel",
+        "mountains": "Berge",
+        "hills": "Hügel",
+        "foreground": "Vordergrund"
+      },
+      "depth": "Tiefe {depth}",
+      "hintPointer": "Bewege den Zeiger über das Bild (oder wische darüber), um das Kippen des Geräts zu simulieren.",
+      "hintTilt": "Kippe dein Handy.",
+      "note": "Der ursprüngliche Hackathon-Prototyp von 2020 war eine einzelne Vanilla-JS-Seite mit parallax.js; der Editor baute das Konzept neu auf, damit Künstler eigene Ebenen-Bilder vorbereiten können."
+    },
     "creditHeading": "Gemeinsam entwickelt mit",
     "creditLinkedIn": "Auf LinkedIn ansehen"
   },

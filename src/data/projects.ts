@@ -190,6 +190,50 @@ export const PROJECTS: Project[] = [
     ],
   },
 
+  // ─── Anecole ───────────────────────────────────────────────────────────────
+  {
+    slug: "anecole-online-school",
+    title: {
+      en: "Anecole — Online School Platform",
+      de: "Anecole – Plattform für eine Online-Schule",
+      ru: "Anecole - платформа онлайн-школы",
+    },
+    company: "Anecole",
+    // TODO: confirm the real start month with Vitalii — "2026" is a placeholder
+    // inferred from the Anecole repos' commit history, not from him.
+    period: "2026 – present",
+    status: "active",
+    category: "work",
+    tagline: {
+      en: "Moving a 4,000-student online school off a white-label platform onto its own, built from scratch by a team of 3",
+      de: "Umzug einer Online-Schule mit 4.000 Lernenden von einer White-Label-Plattform auf eine eigene, von einem 3-köpfigen Team neu gebaut",
+      ru: "Перенос онлайн-школы на 4 000 учеников с white-label платформы на собственную, написанную с нуля командой из 3 человек",
+    },
+    description: {
+      hr: {
+        en: "Joined a team of 3 building the Anecole online school's own platform from scratch, to migrate it off the white-label product it ran on. Integrated machine translation and text-to-speech voice-over.",
+        de: "Teil eines 3-köpfigen Teams, das die eigene Plattform der Online-Schule Anecole von Grund auf baut, um sie von dem White-Label-Produkt zu lösen, auf dem sie lief. Maschinelle Übersetzung und Text-to-Speech-Vertonung integriert.",
+        ru: "Присоединился к команде из 3 человек, которая с нуля пишет собственную платформу онлайн-школы Anecole, чтобы перенести её с white-label продукта, на котором она работала. Интегрировал машинный перевод и озвучку через TTS.",
+      },
+      business: {
+        en: "Anecole is an online school with 4,000 students and 500 teachers. A team of 3 built its own platform from scratch so the school could leave the white-label product it was renting. Users' steps in the app can be downloaded as a recording — product managers attach it to bug reports, so developers reproduce a bug from the exact path that caused it instead of guessing.",
+        de: "Anecole ist eine Online-Schule mit 4.000 Lernenden und 500 Lehrkräften. Ein 3-köpfiges Team hat eine eigene Plattform von Grund auf gebaut, damit die Schule das gemietete White-Label-Produkt verlassen kann. Die Schritte von Nutzern in der App lassen sich als Aufzeichnung herunterladen — Produktmanager hängen sie an Bug-Reports, damit Entwickler einen Fehler anhand des genauen Wegs dorthin reproduzieren, statt zu raten.",
+        ru: "Anecole — онлайн-школа с 4 000 учеников и 500 преподавателями. Команда из 3 человек написала с нуля собственную платформу, чтобы школа ушла с арендованного white-label продукта. Шаги пользователя в приложении можно скачать записью — продакт-менеджеры прикрепляют её к баг-репортам, и разработчики воспроизводят баг по точному пути, который к нему привёл, а не гадают.",
+      },
+      tech: {
+        en: "Java backend services talking over RabbitMQ, with a React frontend. Integrated machine translation and text-to-speech voice-over. Users' steps are captured as they work and can be downloaded as a recording file, which gets attached to a bug ticket so a developer can replay the same steps and reproduce the bug.",
+        de: "Java-Backend-Services, die über RabbitMQ kommunizieren, mit React-Frontend. Maschinelle Übersetzung und Text-to-Speech-Vertonung integriert. Die Schritte der Nutzer werden während der Arbeit erfasst und lassen sich als Aufzeichnungsdatei herunterladen, die an ein Bug-Ticket angehängt wird — so kann ein Entwickler dieselben Schritte nachspielen und den Fehler reproduzieren.",
+        ru: "Бэкенд-сервисы на Java, общающиеся через RabbitMQ, и фронтенд на React. Интегрировал машинный перевод и озвучку через TTS. Шаги пользователя записываются по ходу работы и скачиваются файлом-записью, который прикрепляют к баг-тикету, — разработчик повторяет те же шаги и воспроизводит баг.",
+      },
+    },
+    impact: [
+      { label: { en: "Students", de: "Lernende", ru: "Учеников" }, value: "4,000" },
+      { label: { en: "Teachers", de: "Lehrkräfte", ru: "Преподавателей" }, value: "500" },
+      { label: { en: "Team size", de: "Teamgröße", ru: "Размер команды" }, value: "3" },
+    ],
+    stack: ["Java", "React", "RabbitMQ", "TTS", "Machine Translation"],
+  },
+
   // ─── onlineTours (08/2023 – 07/2024) ────────────────────────────────────────
   {
     slug: "online-tours-ab",
