@@ -146,16 +146,15 @@ export async function ProjectDetailSection({
       {/* Diagram explaining the NCahoots gifting flow end to end */}
       {project.slug === "ncahoots-admin-panel" && <NCahootsFlowDiagram />}
 
-      {/* Stack — raw tech names are only meaningful to recruiters and engineers, not a business audience */}
-      <ModeAware modes={["hr", "tech"]}>
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.stack.map((tech) => (
-            <Badge key={tech} variant="secondary">
-              {tech}
-            </Badge>
-          ))}
-        </div>
-      </ModeAware>
+      {/* Stack — shown in every lens: a short row of names costs nothing and "what was it
+          built with" is a question every visitor asks */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {project.stack.map((tech) => (
+          <Badge key={tech} variant="secondary">
+            {tech}
+          </Badge>
+        ))}
+      </div>
 
       {/* External links */}
       {otherLinks && otherLinks.length > 0 && (

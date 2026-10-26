@@ -11,9 +11,10 @@ const VALID_MODES: ViewMode[] = ["hr", "business", "tech"];
  * active audience lens is always visible/shareable in the URL:
  *  - URL → store: an incoming `?mode=` (shared link, fresh navigation) wins
  *    over whatever was persisted locally.
- *  - store → URL: any mode change (switcher, keyboard shortcut, AudienceFilter
- *    cards) — and any navigation to a page that doesn't carry `?mode=` yet —
- *    gets written back into the address bar via a shallow `router.replace`.
+ *  - store → URL: any mode change (header switcher, the inline tabs on a
+ *    project page, keyboard shortcut) — and any navigation to a page that
+ *    doesn't carry `?mode=` yet — gets written back into the address bar via
+ *    a shallow `router.replace`.
  *
  * This has to be a single effect, not two. Two independent effects (one per
  * direction) race on mount/navigation: correcting the store from the URL via

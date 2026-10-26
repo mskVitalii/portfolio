@@ -69,24 +69,9 @@
   },
   "TopProjects": {
     "title": "Arbeit, die sich ausgezahlt hat",
-    "subtitle": "Ein genauerer Blick auf ein paar Projekte — der Rest steckt in den Zahlen weiter unten."
-  },
-  "ImpactDashboard": {
-    "title": "Wirkung",
-    "subtitle": "Messbare Ergebnisse aus realen Produktivsystemen",
+    "subtitle": "Dokumentierte Einsparungen und die Projekte dahinter.",
     "totalSavings": "Gesamteinsparungen",
-    "documented": "Dokumentierte Kosteneinsparungen in Produktivsystemen",
-    "metricsNote": "Jede Kennzahl verlinkt auf die vollständige Projektbeschreibung.",
-    "annualSavings": "Jährliche Einsparungen",
-    "annualSavingsDesc": "Parkleitanlage vs. Marktlösungen",
-    "usersServed": "Bediente Nutzer",
-    "usersServedDesc": "Schrankensteuerungsanwendung",
-    "monthlyActiveUsers": "Monatlich aktive Nutzer",
-    "monthlyActiveUsersDesc": "Parkleitanlage, MAU",
-    "metricUplift": "Kennzahlverbesserung",
-    "metricUpliftDesc": "A/B-Tests in SEO und UX",
-    "projectsShipped": "Abgeschlossene Projekte",
-    "projectsShippedDesc": "In Startups, Unternehmen und Wissenschaft"
+    "documented": "Dokumentierte Kosteneinsparungen in Produktivsystemen"
   },
   "BrandCloud": {
     "label": "Unternehmen, mit denen ich gearbeitet habe"
@@ -112,9 +97,6 @@
     "readyNowTitle": "Dreisprachig und umzugsbereit",
     "readyNowDesc": "Fließend in Englisch, Deutsch und Russisch, mit bereits vorhandener EU-Arbeitserlaubnis — offen auch für Rollen außerhalb Deutschlands."
   },
-  "HireMeTeaser": {
-    "cta": "Vollständiges FAQ & Details →"
-  },
   "GeoMap": {
     "title": "Offen für Möglichkeiten",
     "subtitle": "Wohnhaft in Chemnitz — Zielmarkt Deutschland, offen für EU · UK · US · VAE · CA · SG · JP · KR · AU",
@@ -125,14 +107,11 @@
     "markerIdeal": "🎯 Wunschziel",
     "markerNearYou": "🎯 Nahe {city}"
   },
-  "DramaticPause": {
-    "line": "Das war der Pitch. Alles darunter ist der Beweis."
-  },
   "ViewMode": {
-    "label": "Zielgruppe",
-    "hr": "HR",
-    "business": "Business",
-    "tech": "Tech"
+    "label": "Ansicht",
+    "hr": "Kurz",
+    "business": "Wirkung",
+    "tech": "Technik"
   },
   "Theme": {
     "toggle": "Design wechseln",
@@ -502,8 +481,8 @@
   },
   "Projects": {
     "title": "Projekte",
-    "metaDescription": "Engineering-Fallstudien mit realen Geschäftskennzahlen — filterbar nach Kategorie und Zielgruppe.",
-    "subtitle": "Fallstudien aus echten Engineering-Projekten. Zielgruppen-Modus wechseln für andere Perspektive.",
+    "metaDescription": "Engineering-Fallstudien mit realen Geschäftskennzahlen — filterbar nach Kategorie, lesbar als Kurzfassung, nach Wirkung oder in technischer Tiefe.",
+    "subtitle": "Fallstudien aus echten Engineering-Projekten. Zwischen Kurz, Wirkung und Technik wechseln, um jedes Projekt so zu lesen, wie Sie es brauchen.",
     "allProjects": "Alle Projekte",
     "nextProjectLabel": "Nächstes Projekt",
     "backToAllProjects": "Zurück zu allen Projekten",
@@ -712,7 +691,7 @@
     "matcherSummary": "{matched} von {total} Skills gefunden",
     "matcherEmpty": "Text oben einfügen, um passende Skills zu sehen.",
     "switchModeTitle": "So ist es gebaut",
-    "switchModeBody": "Interaktive Architekturdiagramme sind im Business- oder Tech-Modus verfügbar.",
+    "switchModeBody": "Interaktive Architekturdiagramme gibt es in den Ansichten „Wirkung“ und „Technik“.",
     "groupByCategory": "Nach Kategorie",
     "groupByExperience": "Nach Erfahrung",
     "yearsHeading": "{years, plural, one {# Jahr} other {# Jahre}}",
@@ -842,20 +821,6 @@
     "ownerModeEnter": "Eingeben",
     "ownerModeError": "Falsches Passwort",
     "ownerModeCancel": "Abbrechen"
-  },
-  "AudienceFilter": {
-    "title": "Was führt Sie hier her?",
-    "subtitle": "Wählen Sie Ihre Perspektive — die Website passt den Inhalt an.",
-    "keyboardHint": "Am Desktop <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> drücken, um direkt zur Perspektive zu wechseln.",
-    "hrTitle": "HR / Recruiter",
-    "hrTag": "STAR & FAQ",
-    "hrDesc": "Strukturierte Erfahrungsberichte, Kompetenzhinweise und Antworten auf die häufigsten Fragen.",
-    "businessTitle": "Business / Gründer",
-    "businessTag": "Nur Zahlen",
-    "businessDesc": "Umsatzwirkung, Kosteneinsparungen, Zeitpläne und ROI — kein Fachjargon, nur Ergebnisse.",
-    "techTitle": "Ingenieur / CTO",
-    "techTag": "Technische Tiefe",
-    "techDesc": "Architekturentscheidungen, System-Design-Abwägungen und Stack-Entscheidungen hinter jedem Projekt."
   },
   "HomePageCta": {
     "title": "Mehr erfahren?",

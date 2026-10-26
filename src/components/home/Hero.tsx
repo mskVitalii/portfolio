@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Mail, Send, FileDown, MapPin, Languages } from "lucide-react";
@@ -11,6 +12,8 @@ import { LinkedinIcon, GithubIcon } from "@/components/icons/SocialIcons";
 import { getSocialLink, type SocialId } from "@/data/social";
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { trackContactClick, trackCvDownload } from "@/lib/analytics";
+import { SKILLS } from "@/data/skills";
+import { useHeaderUnlock } from "@/store/headerUnlock";
 
 type IconProps = { className?: string };
 
@@ -28,14 +31,40 @@ const SOCIAL_LINKS: {
   { id: "telegram", labelKey: "Telegram",  href: getSocialLink("telegram").href, Icon: ({ className }) => <Send className={className} />, variant: "outline", external: true },
 ];
 
+/** Core stack shown right under the role line, so "what's the stack?" is answered on
+ * the first screen. Looked up by id so the names stay in sync with the Skills page. */
+const HERO_STACK_IDS = [
+  "go",
+  "python",
+  "typescript",
+  "react",
+  "nextjs",
+  "postgresql",
+  "kafka",
+  "kubernetes",
+  "llm-integration",
+];
+const HERO_STACK = HERO_STACK_IDS.map((id) => SKILLS.find((s) => s.id === id)!);
+
 export function Hero() {
   const t = useTranslations("Hero");
   const tCommon = useTranslations("Common");
+  const { unlock } = useHeaderUnlock();
+
+  // Reveal the header once the visitor scrolls past most of this first slide.
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.6) unlock();
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [unlock]);
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 py-16 relative">
-      {/* The header stays off-screen until the AudienceFilter slide (see useHeaderUnlock),
-          so the language switcher needs its own reachable copy here on the first slide. */}
+      {/* The header stays off-screen until the visitor scrolls past this slide (see the
+          unlock effect above), so the language switcher needs its own reachable copy here. */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 rounded-lg border bg-background/80 p-1 backdrop-blur-sm">
         <LocaleSwitcher />
       </div>
@@ -53,6 +82,16 @@ export function Hero() {
         <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium">
           {t("role")}
         </p>
+
+        <ul className="mt-5 flex flex-wrap items-center justify-center gap-1.5">
+          {HERO_STACK.map((skill) => (
+            <li key={skill.id}>
+              <Badge variant="outline" className="px-2.5 py-0.5 font-mono text-xs">
+                {skill.name}
+              </Badge>
+            </li>
+          ))}
+        </ul>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-sm">

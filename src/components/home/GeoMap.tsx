@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
-import { useViewMode } from "@/store/viewMode";
 
 const GEO_URL = "/geo/countries-110m.json";
 
@@ -59,7 +58,6 @@ export interface VisitorGeo {
 
 export function GeoMap() {
   const t = useTranslations("GeoMap");
-  const { mode } = useViewMode();
   const [visitorGeo, setVisitorGeo] = useState<VisitorGeo | null>(null);
   // react-simple-maps' projection math produces last-bit-different floating point
   // results between Node's SSR pass and the browser at this zoom level, which trips
@@ -69,7 +67,6 @@ export function GeoMap() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (mode !== "hr") return;
     let cancelled = false;
     fetch("/api/geo")
       .then((res) => res.json())
@@ -80,9 +77,9 @@ export function GeoMap() {
     return () => {
       cancelled = true;
     };
-  }, [mode]);
+  }, []);
 
-  const showVisitorAsIdeal = mode === "hr" && visitorGeo?.country === "DE";
+  const showVisitorAsIdeal = visitorGeo?.country === "DE";
 
   const idealMarker = showVisitorAsIdeal
     ? { name: visitorGeo!.city, coordinates: [visitorGeo!.lon, visitorGeo!.lat] as [number, number] }

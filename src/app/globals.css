@@ -123,9 +123,9 @@
   --sidebar-ring: oklch(0.88 0.25 155);
 }
 
-/* Audience-lens accent: the active tri-mode (HR/Business/Tech) drives the
-   site's primary color everywhere, so the current lens is visible at a glance —
-   not just inside the AudienceFilter cards on the home page. */
+/* Lens accent: the active tri-mode (Brief/Impact/Tech) drives the site's
+   primary color everywhere, so the current lens is visible at a glance —
+   not just inside the switcher itself. */
 :root[data-view-mode="hr"] {
   --primary: oklch(0.56 0.21 300);
   --ring: oklch(0.56 0.21 300);

@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Badge } from "@/components/ui/badge";
 import { PROJECTS, getProjectHref } from "@/data/projects";
 import { localize, formatImpactValue } from "@/lib/localized";
+import { SavingsSummary } from "./SavingsSummary";
 
 /** Order is deliberate: recognizable brands lead (OZON, then Infineon with the bigger
  * documented number), the two more unusual builds close it out (an AI support agent,
@@ -24,7 +25,7 @@ export function TopProjects() {
   const projects = FEATURED_SLUGS.map((slug) => PROJECTS.find((p) => p.slug === slug)!);
 
   return (
-    <section className="py-20 px-4 border-t">
+    <section id="impact" className="py-20 px-4 border-t scroll-mt-14">
       <div className="container mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -36,6 +37,8 @@ export function TopProjects() {
           <h2 className="text-3xl font-bold">{t("title")}</h2>
           <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
         </motion.div>
+
+        <SavingsSummary />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, i) => {

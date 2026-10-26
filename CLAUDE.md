@@ -216,10 +216,10 @@ Key files:
 - `generateStaticParams` must be present on every page that needs static export — see `src/app/[locale]/layout.tsx` for the pattern.
 
 ### Tri-mode system
-- The site has three audience modes: `"hr"`, `"business"`, `"tech"` (Zustand store in `src/store/viewMode.ts`, persisted to `localStorage`).
+- The site has three content lenses: `"hr"`, `"business"`, `"tech"`, labelled Brief / Impact / Tech in the UI (Zustand store in `src/store/viewMode.ts`, persisted to `localStorage`). They are framed as *what to read*, not *who you are* — don't reintroduce persona labels ("HR", "Recruiter", "Engineer") in user-facing copy.
 - Content that varies per mode is shaped as `{ hr: string; business: string; tech: string }` — see `Project.description` in `src/data/projects.ts`.
 - Use the `ModeAware` component (`src/components/tri-mode/ModeAware.tsx`) for conditional rendering per mode.
-- The switcher UI is `ViewModeSwitcher` in the Header.
+- The switcher UI is `ViewModeSwitcher`: in the Header only on routes the lens affects (`/projects`, `/skills`, `/hire-me` — not Home), and `inline` right above the project description. A lens control must sit near content it visibly changes.
 
 ### Component conventions
 - Server Components by default. Add `"use client"` only when needed: Motion animations, Zustand hooks, event handlers, browser APIs.

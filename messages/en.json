@@ -71,24 +71,9 @@
   },
   "TopProjects": {
     "title": "Work that paid for itself",
-    "subtitle": "A closer look at a few projects — the rest is in the numbers below."
-  },
-  "ImpactDashboard": {
-    "title": "Impact",
-    "subtitle": "Measurable outcomes from real production systems",
+    "subtitle": "Documented savings, and the projects behind them.",
     "totalSavings": "total savings generated",
-    "documented": "Documented cost savings across production systems",
-    "metricsNote": "Each metric links to the full project case study.",
-    "annualSavings": "Annual savings",
-    "annualSavingsDesc": "Parking Guidance System vs. market alternatives",
-    "usersServed": "Users served",
-    "usersServedDesc": "Barrier control application",
-    "monthlyActiveUsers": "Monthly active users",
-    "monthlyActiveUsersDesc": "Parking Guidance System, MAU",
-    "metricUplift": "Metric uplift",
-    "metricUpliftDesc": "A/B testing in SEO and UX",
-    "projectsShipped": "Projects shipped",
-    "projectsShippedDesc": "Across startups, enterprise, and academia"
+    "documented": "Documented cost savings across production systems"
   },
   "BrandCloud": {
     "label": "Companies I've worked with"
@@ -114,9 +99,6 @@
     "readyNowTitle": "Trilingual and ready to relocate",
     "readyNowDesc": "Fluent in English, German, and Russian, with EU work authorization already in place — open to roles beyond Germany too."
   },
-  "HireMeTeaser": {
-    "cta": "Full FAQ & details →"
-  },
   "GeoMap": {
     "title": "Open to opportunities",
     "subtitle": "Based in Chemnitz, Germany — targeting roles in Germany, open to EU · UK · US · UAE · CA · SG · JP · KR · AU",
@@ -127,13 +109,10 @@
     "markerIdeal": "🎯 Ideal",
     "markerNearYou": "🎯 Near {city}"
   },
-  "DramaticPause": {
-    "line": "That's the pitch. Everything below is the proof."
-  },
   "ViewMode": {
-    "label": "Audience mode",
-    "hr": "HR",
-    "business": "Business",
+    "label": "Show",
+    "hr": "Brief",
+    "business": "Impact",
     "tech": "Tech"
   },
   "Theme": {
@@ -504,8 +483,8 @@
   },
   "Projects": {
     "title": "Projects",
-    "metaDescription": "Engineering case studies with real business metrics — filterable by category and audience mode.",
-    "subtitle": "Case studies from real engineering work. Switch the audience mode to see each project from a different perspective.",
+    "metaDescription": "Engineering case studies with real business metrics — filterable by category, readable as a brief, by impact, or in technical depth.",
+    "subtitle": "Case studies from real engineering work. Switch between Brief, Impact and Tech to read each project the way you need.",
     "allProjects": "All projects",
     "nextProjectLabel": "Next project",
     "backToAllProjects": "Back to all projects",
@@ -714,7 +693,7 @@
     "matcherSummary": "{matched} of {total} skills matched",
     "matcherEmpty": "Paste some text above to see which skills match.",
     "switchModeTitle": "See how it's built",
-    "switchModeBody": "Interactive architecture diagrams are available in Business or Tech mode.",
+    "switchModeBody": "Interactive architecture diagrams are available in the Impact and Tech views.",
     "groupByCategory": "By category",
     "groupByExperience": "By experience",
     "yearsHeading": "{years, plural, one {# year} other {# years}}",
@@ -844,20 +823,6 @@
     "ownerModeEnter": "Enter",
     "ownerModeError": "Incorrect password",
     "ownerModeCancel": "Cancel"
-  },
-  "AudienceFilter": {
-    "title": "What brings you here?",
-    "subtitle": "Pick your lens — the site adapts content to your perspective.",
-    "keyboardHint": "On desktop, press <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> to jump straight to a lens.",
-    "hrTitle": "HR / Recruiter",
-    "hrTag": "STAR & FAQ",
-    "hrDesc": "Structured experience stories, competency signals, and answers to the questions you always ask.",
-    "businessTitle": "Business / Founder",
-    "businessTag": "Economics only",
-    "businessDesc": "Revenue impact, cost savings, timelines, and ROI — no jargon, just outcomes.",
-    "techTitle": "Engineer / CTO",
-    "techTag": "Technical depth",
-    "techDesc": "Architecture decisions, system design tradeoffs, and the stack choices behind each project."
   },
   "HomePageCta": {
     "title": "Want to learn more?",

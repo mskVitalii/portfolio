@@ -31,9 +31,9 @@ export function Header() {
   const recommendedHref = getRecommendedHref(pathname);
   const { unlocked } = useHeaderUnlock();
 
-  // On the home page, the header stays off-screen until the visitor scrolls through the
-  // story to the audience-picker slide (see AudienceFilter's useHeaderUnlock().unlock()
-  // call) — everywhere else it behaves like a normal sticky header.
+  // On the home page, the header stays off-screen until the visitor scrolls past the
+  // Hero slide (see Hero's useHeaderUnlock().unlock() call) — everywhere else it behaves
+  // like a normal sticky header.
   const isStoryMode = pathname === "/";
   const visible = !isStoryMode || unlocked;
 
