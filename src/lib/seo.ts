@@ -181,10 +181,8 @@ export async function buildPersonJsonLd(locale: string) {
       "https://medium.com/@msk.vitalii",
       "https://habr.com/ru/users/mskVitalii/",
     ],
-    worksFor: [
-      { "@type": "Organization", name: "Infineon Technologies AG" },
-      { "@type": "Organization", name: "OZON Tech" },
-    ],
+    // Current employer only — past ones (Infineon, OZON Tech) are in the projects.
+    worksFor: [{ "@type": "Organization", name: "Anecole" }],
     alumniOf: [
       { "@type": "CollegeOrUniversity", name: "Chemnitz University of Technology" },
       { "@type": "CollegeOrUniversity", name: "Higher School of Economics" },

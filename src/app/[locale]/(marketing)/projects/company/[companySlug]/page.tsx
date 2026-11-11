@@ -42,15 +42,19 @@ export async function generateMetadata({
   if (!bundle) return {};
 
   const t = await getTranslations({ locale, namespace: "Common" });
+  const projectsT = await getTranslations({ locale, namespace: "Projects" });
   const siteName = t("siteName");
+  // A bare company name made the same <title> in all three locales and said nothing
+  // about the page; this keeps the name first but makes each title locale-specific.
+  const title = projectsT("companyPageTitle", { company: bundle.name });
   const description = localize(bundle.blurb.business, locale);
   const ogUrl = buildOgImageUrl(locale, { title: bundle.name, subtitle: description });
 
   return {
-    title: bundle.name,
+    title,
     description,
     openGraph: {
-      title: `${bundle.name} | ${siteName}`,
+      title: `${title} | ${siteName}`,
       description,
       url: `${BASE_URL}/${locale}/projects/company/${companySlug}`,
       type: "website",
@@ -60,7 +64,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${bundle.name} | ${siteName}`,
+      title: `${title} | ${siteName}`,
       description,
       images: [ogUrl],
     },

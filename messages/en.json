@@ -82,7 +82,7 @@
     "title": "Education",
     "tucDegree": "M.Sc. Web Engineering",
     "tucOrg": "TU Chemnitz, Germany",
-    "tucDesc": "Distributed systems, cloud-native apps, and service engineering — while working full-time at Infineon.",
+    "tucDesc": "Distributed systems, cloud-native apps, and service engineering — alongside work at Infineon and now Anecole.",
     "hseDegree": "B.Sc. Software Engineering",
     "hseOrg": "HSE University, Moscow",
     "hseDesc": "Algorithms, software architecture, databases — the CS fundamentals everything else builds on.",
@@ -357,7 +357,7 @@
       },
       {
         "q": "What's your notice period?",
-        "a": "One month, at my current role with Infineon Technologies."
+        "a": "One month, at my current role at Anecole."
       },
       {
         "q": "Are you open to contract or freelance work?",
@@ -1216,6 +1216,183 @@
         }
       }
     },
+    "companyPageTitle": "{company}: projects and results",
+    "anecoleAi": {
+      "title": "From a user's steps to a fix: how we hand bugs to an AI agent",
+      "description": "When something breaks, the user — or an admin viewing the app as that user — exports a steps file. We don't retell the bug to a model; we give it the file. Run the agent and watch which lines it reads at each step.",
+      "agentLabel": "AI coding agent",
+      "steps": [
+        {
+          "title": "Reads who, where and which build",
+          "body": "The first line says an admin was viewing as a student in impersonation session imp-41c9; the last one holds the app version and device state at export time. No guessing which release the bug is on."
+        },
+        {
+          "title": "Finds the failed request",
+          "body": "One POST came back 500, and right after it the student saw an error toast. The request line carries the ID the browser sent as an X-Request-ID header."
+        },
+        {
+          "title": "Matches it in the server logs",
+          "body": "The gateway logged the same ID, so the agent pulls the exact stack trace instead of lining up timestamps across services."
+        },
+        {
+          "title": "Replays the steps in a real browser",
+          "body": "It repeats lines 2–5 on the test stand through a browser it controls, typing the same answer — and gets the same 500. Reproduced before anyone touches the code."
+        },
+        {
+          "title": "Proposes a fix and a regression test",
+          "body": "The answer was typed with a decimal comma. A one-line fix and a test go up as a merge request; a developer reviews and merges. The agent doesn't ship on its own."
+        }
+      ],
+      "run": "Hand the file to the agent",
+      "next": "Next step",
+      "reset": "Reset",
+      "principlesTitle": "Why the file is shaped this way",
+      "principles": [
+        {
+          "title": "Recorded as it happened, never retold",
+          "body": "Each entry is written by the code that saw the event, in the shape it arrived. The export adds nothing and summarises nothing, so the model reasons over facts, not someone's description of them."
+        },
+        {
+          "title": "One event per line",
+          "body": "JSON Lines read top to bottom like a story and can be grepped or streamed without a parser. Even a long session still opens: the journal is capped at 15 MB."
+        },
+        {
+          "title": "One ID from browser to server",
+          "body": "Every API request carries an X-Request-ID; ingress keeps it and the gateway logs it. A line in the file leads straight to the matching line on the server."
+        },
+        {
+          "title": "Secrets stripped, old errors kept",
+          "body": "Tokens, auth requests and sensitive fields are redacted in the browser before export. Events sit in separate buckets with their own limits, so an hour-old error isn't pushed out by hundreds of later requests."
+        }
+      ],
+      "note": "Shortened example with a staged bug; field names follow the real file. The same export gives product managers a recording to attach to tickets (see the demo above) and gives an agent everything it needs to start without a back-and-forth."
+    },
+    "anecoleDb": {
+      "title": "Replication isn't a backup: managed PostgreSQL vs a single VM",
+      "description": "Production runs on a managed PostgreSQL cluster: one primary streaming its write-ahead log (WAL) to three replicas. The test stand runs on a single self-hosted VM. Pick a setup and break it.",
+      "setupLabel": "Database setup",
+      "setups": {
+        "managed": "Managed cluster (prod)",
+        "self": "Self-hosted VM (test)"
+      },
+      "diagram": {
+        "primary": "Primary",
+        "singleVm": "Single VM",
+        "replica": "Replica",
+        "newPrimary": "New primary",
+        "backup": "Nightly dump",
+        "services": "Services",
+        "servicesOk": "connected",
+        "servicesDown": "no database",
+        "dumpSchedule": "pg_dump · 03:00",
+        "aria": "Diagram of the PostgreSQL setup: services, primary, replicas and the nightly backup"
+      },
+      "state": {
+        "ok": "healthy",
+        "down": "down",
+        "bad": "data deleted",
+        "promoted": "promoted",
+        "hot": "under load",
+        "idle": "idle",
+        "restoring": "restoring"
+      },
+      "breakIt": "Break it:",
+      "scenarioButtons": {
+        "primaryDown": "Primary dies",
+        "badQuery": "DELETE without WHERE",
+        "reads": "Heavy read load"
+      },
+      "reset": "Reset",
+      "idleHint": "Healthy: writes go to the primary, which streams its WAL to the replicas. Pick a failure above.",
+      "scenarios": {
+        "primaryDown": {
+          "managed": [
+            "02:14 — the primary's host dies. Writes start failing.",
+            "The provider's health check notices within seconds and promotes a replica.",
+            "The cluster endpoint now points at the new primary; services reconnect on their own. Nobody was woken up."
+          ],
+          "self": [
+            "02:14 — the VM dies. Writes start failing.",
+            "Nothing takes over: there's no second node. The platform is down until someone gets paged.",
+            "Restore means a new VM plus last night's dump. Hours of downtime, and anything written since 03:00 is gone."
+          ]
+        },
+        "badQuery": {
+          "managed": [
+            "A migration runs DELETE FROM lessons — with no WHERE clause. The primary obeys.",
+            "Replication does its job: within milliseconds the delete is on all three replicas.",
+            "Failover can't help — every copy has the same mistake. Restore from last night's dump."
+          ],
+          "self": [
+            "A migration runs DELETE FROM lessons — with no WHERE clause. The VM obeys.",
+            "There are no replicas — and here they wouldn't have helped anyway.",
+            "Restore from last night's dump."
+          ]
+        },
+        "reads": {
+          "managed": [
+            "A reporting job starts hammering the database with reads.",
+            "Services connect with targetServerType=primary, so every read lands on the primary. The replicas mostly answer metrics exporters.",
+            "Lessons slow down while three replicas sit almost idle."
+          ],
+          "self": [
+            "A reporting job starts hammering the database with reads.",
+            "One node takes everything: reads, writes and the report.",
+            "The only lever is a bigger VM."
+          ]
+        }
+      },
+      "outcomes": {
+        "primaryDown": {
+          "managed": "Covered — this is exactly what you pay a managed cluster for.",
+          "self": "Not covered: hours of downtime and up to 24 hours of data lost."
+        },
+        "badQuery": {
+          "managed": "Same as the single VM: up to 24 hours of data lost. Replication copies mistakes as faithfully as data — only point-in-time recovery from archived WAL rewinds to the second before the query.",
+          "self": "Up to 24 hours of data lost. Only point-in-time recovery from archived WAL rewinds to the second before the query."
+        },
+        "reads": {
+          "managed": "Here the replicas buy failover, not read capacity. Sending reads to them is an application change, and it means accepting slightly stale data.",
+          "self": "Vertical scaling only — and a bigger VM means a restart."
+        }
+      },
+      "compare": {
+        "title": "Managed vs self-hosted, honestly",
+        "rows": [
+          {
+            "label": "A node dies",
+            "self": "Manual: someone gets paged, builds a new node, restores.",
+            "managed": "Automatic: a replica is promoted within seconds."
+          },
+          {
+            "label": "Upgrades and patches",
+            "self": "Yours: minor releases, OS patches, restarts.",
+            "managed": "The provider's, in a maintenance window."
+          },
+          {
+            "label": "A bad query",
+            "self": "Only your backups help.",
+            "managed": "The same — replicas copy the mistake."
+          },
+          {
+            "label": "Tuning and extensions",
+            "self": "Anything: postgresql.conf, any extension, superuser.",
+            "managed": "Whatever the provider allows."
+          },
+          {
+            "label": "Cost",
+            "self": "One VM — cheap.",
+            "managed": "Four nodes billed around the clock — the biggest line on the infrastructure bill."
+          },
+          {
+            "label": "On call at 3 a.m.",
+            "self": "You.",
+            "managed": "The provider — for the nodes, not for your data."
+          }
+        ]
+      },
+      "note": "Simplified model of the real setup. Backups are a nightly pg_dump of each database to object storage. Point-in-time recovery is what closes the gap a replica can't."
+    },
     "anecoleReplay": {
       "title": "Record a bug, then hand it to a developer",
       "description": "Use the homework screen below — every action is recorded. Hit the bug, download the steps, attach them to a ticket, and watch a developer's screen replay them.",
@@ -1513,7 +1690,8 @@
     "subtitle": "What colleagues, managers, and collaborators say about working with me.",
     "collectingTitle": "More on LinkedIn",
     "collectingBody": "See additional recommendations from colleagues and clients on my LinkedIn profile.",
-    "linkedinCta": "See LinkedIn recommendations"
+    "linkedinCta": "See LinkedIn recommendations",
+    "readDocument": "Read the signed letter (PDF)"
   },
   "HireMeLinks": {
     "emailDescription": "Best for detailed project inquiries",

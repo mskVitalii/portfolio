@@ -15,15 +15,29 @@ export type CareerEntry = {
 export const CAREER: CareerEntry[] = [
   {
     type: "work",
-    period: "09/2024 – present",
-    start: 2024,
+    period: "10/2026 – present",
+    start: 2026,
     end: null,
+    role: "Full-Stack Developer",
+    org: "Anecole",
+    orgType: "Online school (EdTech)",
+    location: "Remote",
+    description:
+      "Part of a team of 3 building the online school's own platform from scratch to move 4,000 students and 500 teachers off a white-label product. Java services over RabbitMQ, React frontends, Kubernetes, managed PostgreSQL. Built the support journal: users' steps exported as a file that a developer or an AI agent replays to reproduce a bug.",
+    achievements: ["4,000 students · 500 teachers", "Team of 3"],
+    stack: ["Java", "React", "RabbitMQ", "PostgreSQL", "Kubernetes"],
+  },
+  {
+    type: "work",
+    period: "09/2024 – 09/2026",
+    start: 2024,
+    end: 2026,
     role: "Full-Stack Developer",
     org: "Infineon Technologies AG",
     orgType: "Semiconductor manufacturing",
     location: "Dresden, Germany",
     description:
-      "Building a Parking Guidance System that saves €480K/year vs. market alternatives. Embedded Computer Vision on C, backend in Python/C#, React frontend. Also built a barrier control app serving 8K users with 3K MAU.",
+      "Built a Parking Guidance System that saves €480K/year vs. market alternatives. Embedded Computer Vision on C, backend in Python/C#, React frontend. Also built a barrier control app serving 8K users with 3K MAU.",
     achievements: ["€480K annual savings", "8K users · 3K MAU"],
     stack: ["Python", "C#", "C", "React", "Computer Vision", "JS/TS"],
   },

@@ -6,11 +6,13 @@
 
 Vitalii Popov is a full-stack engineer with 5+ years of experience building systems that create measurable business value across e-commerce, mobility, and AI domains.
 
-**Current role:** Full-Stack Developer at Infineon Technologies AG (09/2024–present)
+**Current role:** Full-Stack Developer at Anecole, an online school with 4,000 students (10/2026–present)
+**Previous:** Full-Stack Developer (working student) at Infineon Technologies AG (09/2024–09/2026)
 **Education:** M.Sc. Web Engineering, Chemnitz University of Technology (in progress); B.Sc. Software Engineering, Higher School of Economics, Moscow
 
 ## Key Achievements
 
+- At Anecole: building the school's own platform with a team of 3; exported user-step journals let developers and AI agents reproduce bugs
 - Replaced a €480K/year commercial parking guidance vendor with an in-house system at Infineon (8,000 users, 3,000 monthly active)
 - Built a Go microservice searching 200M+ warehouse items in under 5 seconds at OZON Tech
 - Saved €86K with a C# barcode-scanner integration at OZON Tech

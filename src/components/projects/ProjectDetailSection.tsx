@@ -24,6 +24,8 @@ import { CancelGame } from "./CancelGame";
 import { RailScanDemo } from "./RailScanDemo";
 import { NCahootsFlowDiagram } from "./NCahootsFlowDiagram";
 import { StepReplayDemo } from "./StepReplayDemo";
+import { AiJournalDemo } from "./AiJournalDemo";
+import { DbReplicationDemo } from "./DbReplicationDemo";
 import { AbAssignmentDemo } from "./AbAssignmentDemo";
 import { SqlFromDiagramDemo } from "./SqlFromDiagramDemo";
 import { ParallaxDemo } from "./ParallaxDemo";
@@ -153,6 +155,10 @@ export async function ProjectDetailSection({
 
       {/* Interactive demo of Anecole's downloadable step recordings for bug reproduction */}
       {project.slug === "anecole-online-school" && <StepReplayDemo />}
+
+      {/* How the exported steps file is handed to an AI agent, and the managed-PostgreSQL replication explainer */}
+      {project.slug === "anecole-online-school" && <AiJournalDemo />}
+      {project.slug === "anecole-online-school" && <DbReplicationDemo />}
 
       {/* Interactive demo of server-side A/B bucketing with Redis-stored assignments */}
       {project.slug === "online-tours-ab" && <AbAssignmentDemo />}

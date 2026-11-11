@@ -76,7 +76,8 @@ function projectPriority(project: Project): number {
 function localizedEntries(path: string, priority: number): MetadataRoute.Sitemap {
   return routing.locales.map((locale) => ({
     url: `${BASE_URL}/${locale}${path}`,
-    lastModified: new Date(),
+    // No lastModified: stamping every URL with the build time on each deploy tells
+    // Google that all 120+ pages changed every time, so it learns to ignore lastmod.
     alternates: { languages: buildAlternates(locale, path).languages },
     priority,
   }));

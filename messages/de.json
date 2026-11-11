@@ -80,7 +80,7 @@
     "title": "Bildung",
     "tucDegree": "M.Sc. Web Engineering",
     "tucOrg": "TU Chemnitz, Deutschland",
-    "tucDesc": "Verteilte Systeme, Cloud-native Anwendungen und Service Engineering — parallel zur Vollzeitstelle bei Infineon.",
+    "tucDesc": "Verteilte Systeme, Cloud-native Anwendungen und Service Engineering — neben der Arbeit bei Infineon und jetzt bei Anecole.",
     "hseDegree": "B.Sc. Software Engineering",
     "hseOrg": "HSE University, Moskau",
     "hseDesc": "Algorithmen, Softwarearchitektur, Datenbanken — die CS-Grundlagen, auf denen alles andere aufbaut.",
@@ -355,7 +355,7 @@
       },
       {
         "q": "Wie ist Ihre Kündigungsfrist?",
-        "a": "Ein Monat, in meiner aktuellen Rolle bei Infineon Technologies."
+        "a": "Ein Monat, in meiner aktuellen Rolle bei Anecole."
       },
       {
         "q": "Sind Sie offen für Freelance- oder Vertragsarbeit?",
@@ -1214,6 +1214,183 @@
         }
       }
     },
+    "companyPageTitle": "{company}: Projekte und Ergebnisse",
+    "anecoleAi": {
+      "title": "Von den Schritten eines Nutzers zum Fix: wie wir Bugs an einen KI-Agenten übergeben",
+      "description": "Wenn etwas kaputtgeht, exportiert der Nutzer – oder ein Admin, der die App aus seiner Sicht öffnet – eine Schritt-Datei. Wir erzählen dem Modell den Bug nicht nach, wir geben ihm die Datei. Starte den Agenten und sieh, welche Zeilen er in jedem Schritt liest.",
+      "agentLabel": "KI-Coding-Agent",
+      "steps": [
+        {
+          "title": "Liest: wer, wo, welcher Build",
+          "body": "Die erste Zeile sagt, dass ein Admin in der Impersonation-Sitzung imp-41c9 als Schüler unterwegs war; die letzte enthält App-Version und Gerätezustand beim Export. Kein Rätselraten, in welchem Release der Bug steckt."
+        },
+        {
+          "title": "Findet den fehlgeschlagenen Request",
+          "body": "Ein POST kam mit 500 zurück, direkt danach sah der Schüler eine Fehlermeldung. Die Request-Zeile enthält die ID, die der Browser als X-Request-ID-Header mitgeschickt hat."
+        },
+        {
+          "title": "Findet ihn in den Server-Logs",
+          "body": "Das Gateway hat dieselbe ID geloggt – der Agent holt sich den exakten Stacktrace, statt Zeitstempel über mehrere Services abzugleichen."
+        },
+        {
+          "title": "Spielt die Schritte im echten Browser nach",
+          "body": "Er wiederholt die Zeilen 2–5 auf dem Teststand in einem Browser, den er steuert, tippt dieselbe Antwort – und bekommt denselben 500er. Reproduziert, bevor jemand den Code anfasst."
+        },
+        {
+          "title": "Schlägt Fix und Regressionstest vor",
+          "body": "Die Antwort wurde mit Dezimalkomma eingegeben. Ein einzeiliger Fix und ein Test gehen als Merge Request raus; ein Entwickler prüft und merged. Selbst ausliefern darf der Agent nicht."
+        }
+      ],
+      "run": "Datei an den Agenten geben",
+      "next": "Nächster Schritt",
+      "reset": "Zurücksetzen",
+      "principlesTitle": "Warum die Datei so aufgebaut ist",
+      "principles": [
+        {
+          "title": "Aufgezeichnet, nie nacherzählt",
+          "body": "Jeden Eintrag schreibt der Code, der das Ereignis gesehen hat – in der Form, in der es ankam. Der Export ergänzt und fasst nichts zusammen, also arbeitet das Modell mit Fakten statt mit jemandes Beschreibung davon."
+        },
+        {
+          "title": "Ein Ereignis pro Zeile",
+          "body": "JSON Lines liest man von oben nach unten wie eine Geschichte, man kann sie greppen oder streamen, ohne Parser. Auch eine lange Sitzung lässt sich öffnen: Das Journal ist auf 15 MB begrenzt."
+        },
+        {
+          "title": "Eine ID vom Browser bis zum Server",
+          "body": "Jeder API-Request trägt eine X-Request-ID; der Ingress übernimmt sie, das Gateway loggt sie. Eine Zeile in der Datei führt direkt zur passenden Zeile auf dem Server."
+        },
+        {
+          "title": "Geheimnisse raus, alte Fehler bleiben",
+          "body": "Tokens, Auth-Requests und sensible Felder werden schon im Browser vor dem Export geschwärzt. Ereignisse liegen in getrennten Töpfen mit eigenen Limits – ein Fehler von vor einer Stunde wird nicht von hunderten späteren Requests verdrängt."
+        }
+      ],
+      "note": "Gekürztes Beispiel mit inszeniertem Bug; die Feldnamen entsprechen der echten Datei. Derselbe Export gibt Produktmanagern eine Aufzeichnung fürs Ticket (siehe Demo oben) und einem Agenten alles, um ohne Rückfragen loszulegen."
+    },
+    "anecoleDb": {
+      "title": "Replikation ist kein Backup: Managed PostgreSQL vs. eine einzelne VM",
+      "description": "Produktion läuft auf einem Managed-PostgreSQL-Cluster: ein Primary, der sein Write-Ahead-Log (WAL) an drei Replikas streamt. Der Teststand läuft auf einer einzelnen selbst betriebenen VM. Wähle ein Setup und mach es kaputt.",
+      "setupLabel": "Datenbank-Setup",
+      "setups": {
+        "managed": "Managed-Cluster (Prod)",
+        "self": "Eigene VM (Test)"
+      },
+      "diagram": {
+        "primary": "Primary",
+        "singleVm": "Einzelne VM",
+        "replica": "Replika",
+        "newPrimary": "Neuer Primary",
+        "backup": "Nächtlicher Dump",
+        "services": "Services",
+        "servicesOk": "verbunden",
+        "servicesDown": "keine Datenbank",
+        "dumpSchedule": "pg_dump · 03:00",
+        "aria": "Diagramm des PostgreSQL-Setups: Services, Primary, Replikas und nächtliches Backup"
+      },
+      "state": {
+        "ok": "gesund",
+        "down": "ausgefallen",
+        "bad": "Daten gelöscht",
+        "promoted": "befördert",
+        "hot": "unter Last",
+        "idle": "untätig",
+        "restoring": "Wiederherstellung"
+      },
+      "breakIt": "Mach es kaputt:",
+      "scenarioButtons": {
+        "primaryDown": "Primary fällt aus",
+        "badQuery": "DELETE ohne WHERE",
+        "reads": "Hohe Leselast"
+      },
+      "reset": "Zurücksetzen",
+      "idleHint": "Alles gesund: Schreibzugriffe gehen an den Primary, der sein WAL an die Replikas streamt. Wähle oben einen Ausfall.",
+      "scenarios": {
+        "primaryDown": {
+          "managed": [
+            "02:14 – der Host des Primary fällt aus. Schreibzugriffe schlagen fehl.",
+            "Der Health-Check des Anbieters merkt es in Sekunden und befördert eine Replika.",
+            "Der Cluster-Endpunkt zeigt jetzt auf den neuen Primary; die Services verbinden sich selbst neu. Niemand wurde geweckt."
+          ],
+          "self": [
+            "02:14 – die VM fällt aus. Schreibzugriffe schlagen fehl.",
+            "Niemand übernimmt: Es gibt keinen zweiten Knoten. Die Plattform steht, bis jemand alarmiert wird.",
+            "Wiederherstellen heißt: neue VM plus Dump von letzter Nacht. Stunden Ausfall, und alles seit 03:00 Geschriebene ist weg."
+          ]
+        },
+        "badQuery": {
+          "managed": [
+            "Eine Migration führt DELETE FROM lessons aus – ohne WHERE. Der Primary gehorcht.",
+            "Die Replikation tut ihren Job: In Millisekunden ist das Löschen auf allen drei Replikas.",
+            "Failover hilft nicht – jede Kopie hat denselben Fehler. Wiederherstellung aus dem Dump von letzter Nacht."
+          ],
+          "self": [
+            "Eine Migration führt DELETE FROM lessons aus – ohne WHERE. Die VM gehorcht.",
+            "Replikas gibt es keine – geholfen hätten sie hier aber ohnehin nicht.",
+            "Wiederherstellung aus dem Dump von letzter Nacht."
+          ]
+        },
+        "reads": {
+          "managed": [
+            "Ein Reporting-Job bombardiert die Datenbank mit Lesezugriffen.",
+            "Die Services verbinden sich mit targetServerType=primary, also landet jeder Lesezugriff auf dem Primary. Die Replikas bedienen vor allem Metrik-Exporter.",
+            "Der Unterricht wird langsamer, während drei Replikas fast nichts tun."
+          ],
+          "self": [
+            "Ein Reporting-Job bombardiert die Datenbank mit Lesezugriffen.",
+            "Ein Knoten trägt alles: Lesen, Schreiben und den Report.",
+            "Der einzige Hebel ist eine größere VM."
+          ]
+        }
+      },
+      "outcomes": {
+        "primaryDown": {
+          "managed": "Abgedeckt – genau dafür bezahlt man einen Managed-Cluster.",
+          "self": "Nicht abgedeckt: Stunden Ausfall und bis zu 24 Stunden Datenverlust."
+        },
+        "badQuery": {
+          "managed": "Wie bei der einzelnen VM: bis zu 24 Stunden Datenverlust. Replikation kopiert Fehler genauso treu wie Daten – nur Point-in-Time-Recovery aus archiviertem WAL spult bis zur Sekunde vor der Abfrage zurück.",
+          "self": "Bis zu 24 Stunden Datenverlust. Nur Point-in-Time-Recovery aus archiviertem WAL spult bis zur Sekunde vor der Abfrage zurück."
+        },
+        "reads": {
+          "managed": "Die Replikas bringen hier Ausfallsicherheit, keine Lesekapazität. Lesezugriffe dorthin zu schicken ist eine Änderung in der Anwendung – und heißt, leicht veraltete Daten zu akzeptieren.",
+          "self": "Nur vertikale Skalierung – und eine größere VM bedeutet einen Neustart."
+        }
+      },
+      "compare": {
+        "title": "Managed vs. selbst betrieben, ehrlich",
+        "rows": [
+          {
+            "label": "Ein Knoten fällt aus",
+            "self": "Manuell: Jemand wird alarmiert, baut einen neuen Knoten, stellt wieder her.",
+            "managed": "Automatisch: Eine Replika wird in Sekunden befördert."
+          },
+          {
+            "label": "Upgrades und Patches",
+            "self": "Deine Sache: Minor-Releases, OS-Patches, Neustarts.",
+            "managed": "Sache des Anbieters, im Wartungsfenster."
+          },
+          {
+            "label": "Eine fehlerhafte Abfrage",
+            "self": "Nur deine Backups helfen.",
+            "managed": "Genauso – Replikas kopieren den Fehler."
+          },
+          {
+            "label": "Tuning und Extensions",
+            "self": "Alles: postgresql.conf, jede Extension, Superuser.",
+            "managed": "Was der Anbieter erlaubt."
+          },
+          {
+            "label": "Kosten",
+            "self": "Eine VM – günstig.",
+            "managed": "Vier Knoten rund um die Uhr – der größte Posten der Infrastrukturrechnung."
+          },
+          {
+            "label": "Bereitschaft um 3 Uhr nachts",
+            "self": "Du.",
+            "managed": "Der Anbieter – für die Knoten, nicht für deine Daten."
+          }
+        ]
+      },
+      "note": "Vereinfachtes Modell des echten Setups. Backups sind ein nächtlicher pg_dump jeder Datenbank in einen Objektspeicher. Point-in-Time-Recovery schließt die Lücke, die eine Replika nicht schließen kann."
+    },
     "anecoleReplay": {
       "title": "Einen Bug aufzeichnen und an Entwickler übergeben",
       "description": "Benutze den Hausaufgaben-Bildschirm unten — jede Aktion wird aufgezeichnet. Löse den Bug aus, lade die Schritte herunter, häng sie an ein Ticket und sieh zu, wie der Bildschirm eines Entwicklers sie nachspielt.",
@@ -1511,7 +1688,8 @@
     "subtitle": "Was Kollegen, Vorgesetzte und Projektpartner über die Zusammenarbeit mit mir sagen.",
     "collectingTitle": "Weitere auf LinkedIn",
     "collectingBody": "Weitere Empfehlungen von Kolleg:innen und Kunden finden Sie auf meinem LinkedIn-Profil.",
-    "linkedinCta": "LinkedIn-Empfehlungen ansehen"
+    "linkedinCta": "LinkedIn-Empfehlungen ansehen",
+    "readDocument": "Unterschriebenes Zeugnis ansehen (PDF)"
   },
   "HireMeLinks": {
     "emailDescription": "Am besten für ausführliche Projektanfragen",

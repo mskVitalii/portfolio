@@ -72,7 +72,7 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
-  // ─── Infineon Technologies AG (09/2024 – present) ──────────────────────────
+  // ─── Infineon Technologies AG (09/2024 – 09/2026) ──────────────────────────
   {
     slug: "infineon-parking-guidance",
     title: {
@@ -81,8 +81,9 @@ export const PROJECTS: Project[] = [
       ru: "Parkdinsky - система навигации по парковке",
     },
     company: "Infineon Technologies AG",
-    period: "09/2024 – present",
-    status: "active",
+    // Per the Infineon reference letters: working student 15.09.2024 – 30.09.2026.
+    period: "09/2024 – 09/2026",
+    status: "archived",
     category: "work",
     tagline: {
       en: "In-house system replacing a commercial vendor, running on Infineon's own PSoC Edge chips",
@@ -129,6 +130,24 @@ export const PROJECTS: Project[] = [
       { src: "/images/projects/infineon-parking-guidance/psoc-edge-camera-kit.jpg", alt: { en: "PSoC Edge camera kit used for on-device ANPR", de: "PSoC-Edge-Kamera-Kit für die eingebettete Kennzeichenerkennung", ru: "Камерный комплект PSoC Edge для распознавания номеров" } },
       { src: "/images/projects/infineon-parking-guidance/psoc-edge-ai-kit-box.jpg", alt: { en: "PSoC Edge AI kit packaging", de: "Verpackung des PSoC-Edge-KI-Kits", ru: "Упаковка AI-комплекта PSoC Edge" } },
       { src: "/images/projects/infineon-parking-guidance/cv-bus-detection-demo.jpg", alt: { en: "Computer-vision demo detecting a bus in a parking zone", de: "Computer-Vision-Demo zur Erkennung eines Busses in einer Parkzone", ru: "Демонстрация компьютерного зрения при обнаружении автобуса в зоне парковки" } },
+    ],
+    referenceDocuments: [
+      {
+        title: {
+          en: "Infineon reference letter (Arbeitszeugnis), 09/2025 – 09/2026",
+          de: "Arbeitszeugnis von Infineon, 09/2025 – 09/2026",
+          ru: "Рекомендательное письмо Infineon (Arbeitszeugnis), 09/2025 – 09/2026",
+        },
+        url: "/documents/infineon-parking-guidance/reference-letter-2025-2026.pdf",
+      },
+      {
+        title: {
+          en: "Infineon reference letter (Arbeitszeugnis), 09/2024 – 08/2025",
+          de: "Arbeitszeugnis von Infineon, 09/2024 – 08/2025",
+          ru: "Рекомендательное письмо Infineon (Arbeitszeugnis), 09/2024 – 08/2025",
+        },
+        url: "/documents/infineon-parking-guidance/reference-letter-2024-2025.pdf",
+      },
     ],
   },
   {
@@ -199,9 +218,9 @@ export const PROJECTS: Project[] = [
       ru: "Anecole - платформа онлайн-школы",
     },
     company: "Anecole",
-    // TODO: confirm the real start month with Vitalii — "2026" is a placeholder
-    // inferred from the Anecole repos' commit history, not from him.
-    period: "2026 – present",
+    // Current job. Start month from his first commit in the Anecole repos
+    // (2026-10-05), right after Infineon ended on 30.09.2026.
+    period: "10/2026 – present",
     status: "active",
     category: "work",
     tagline: {
@@ -221,9 +240,9 @@ export const PROJECTS: Project[] = [
         ru: "Anecole — онлайн-школа с 4 000 учеников и 500 преподавателями. Команда из 3 человек написала с нуля собственную платформу, чтобы школа ушла с арендованного white-label продукта. Шаги пользователя в приложении можно скачать записью — продакт-менеджеры прикрепляют её к баг-репортам, и разработчики воспроизводят баг по точному пути, который к нему привёл, а не гадают.",
       },
       tech: {
-        en: "Java backend services talking over RabbitMQ, with a React frontend. Integrated machine translation and text-to-speech voice-over. Users' steps are captured as they work and can be downloaded as a recording file, which gets attached to a bug ticket so a developer can replay the same steps and reproduce the bug.",
-        de: "Java-Backend-Services, die über RabbitMQ kommunizieren, mit React-Frontend. Maschinelle Übersetzung und Text-to-Speech-Vertonung integriert. Die Schritte der Nutzer werden während der Arbeit erfasst und lassen sich als Aufzeichnungsdatei herunterladen, die an ein Bug-Ticket angehängt wird — so kann ein Entwickler dieselben Schritte nachspielen und den Fehler reproduzieren.",
-        ru: "Бэкенд-сервисы на Java, общающиеся через RabbitMQ, и фронтенд на React. Интегрировал машинный перевод и озвучку через TTS. Шаги пользователя записываются по ходу работы и скачиваются файлом-записью, который прикрепляют к баг-тикету, — разработчик повторяет те же шаги и воспроизводит баг.",
+        en: "Java backend services talking over RabbitMQ, with a React frontend. Integrated machine translation and text-to-speech voice-over. Users' steps are captured as they work and can be downloaded as a recording file, which gets attached to a bug ticket so a developer — or an AI coding agent — can replay the same steps and reproduce the bug. Each request carries an X-Request-ID, so a line in the file leads straight to the server log. Data lives in a managed PostgreSQL cluster: a primary streaming WAL to three replicas, plus nightly dumps.",
+        de: "Java-Backend-Services, die über RabbitMQ kommunizieren, mit React-Frontend. Maschinelle Übersetzung und Text-to-Speech-Vertonung integriert. Die Schritte der Nutzer werden während der Arbeit erfasst und lassen sich als Aufzeichnungsdatei herunterladen, die an ein Bug-Ticket angehängt wird — so kann ein Entwickler – oder ein KI-Coding-Agent – dieselben Schritte nachspielen und den Fehler reproduzieren. Jeder Request trägt eine X-Request-ID, sodass eine Zeile der Datei direkt zum Server-Log führt. Die Daten liegen in einem Managed-PostgreSQL-Cluster: ein Primary streamt WAL an drei Replikas, dazu nächtliche Dumps.",
+        ru: "Бэкенд-сервисы на Java, общающиеся через RabbitMQ, и фронтенд на React. Интегрировал машинный перевод и озвучку через TTS. Шаги пользователя записываются по ходу работы и скачиваются файлом-записью, который прикрепляют к баг-тикету, — разработчик — или ИИ-агент — повторяет те же шаги и воспроизводит баг. Каждый запрос несёт X-Request-ID, поэтому строка файла ведёт прямо к логу на сервере. Данные лежат в managed-кластере PostgreSQL: primary стримит WAL на три реплики, плюс ночные дампы.",
       },
     },
     impact: [
@@ -231,7 +250,7 @@ export const PROJECTS: Project[] = [
       { label: { en: "Teachers", de: "Lehrkräfte", ru: "Преподавателей" }, value: "500" },
       { label: { en: "Team size", de: "Teamgröße", ru: "Размер команды" }, value: "3" },
     ],
-    stack: ["Java", "React", "RabbitMQ", "TTS", "Machine Translation"],
+    stack: ["Java", "React", "RabbitMQ", "PostgreSQL", "Kubernetes", "TTS", "Machine Translation", "AI Agents"],
   },
 
   // ─── onlineTours (08/2023 – 07/2024) ────────────────────────────────────────

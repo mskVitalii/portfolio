@@ -8,9 +8,29 @@ export interface Recommendation {
   relationship: LocalizedText;
   text: LocalizedText;
   linkedinUrl?: string;
+  /** Public path to the original document (e.g. a scanned reference letter). */
+  documentUrl?: string;
 }
 
 export const RECOMMENDATIONS: Recommendation[] = [
+  {
+    id: "infineon-reference-letter",
+    name: "Ralf Blumtritt",
+    role: "Director Real Estate Facility",
+    company: "Infineon Technologies Dresden AG & Co. KG",
+    relationship: {
+      en: "Employer reference letter (Arbeitszeugnis)",
+      de: "Arbeitszeugnis",
+      ru: "Рекомендательное письмо работодателя (Arbeitszeugnis)",
+    },
+    // Quoted from the signed letter (English original); DE/RU are translations.
+    text: {
+      en: "Mr. Popov possesses very good knowledge. He was in a position to aptly grasp even difficult situations straight away and to quickly find the right solutions. Special mention must be made of his strong commitment and his personal initiative. Mr. Popov stood up to even a heavy workload at all times. He worked independently, reliably and efficiently, and found optimal solutions. His performance met with our full approval at all times and in all respects. His personal conduct was always impeccable. Mr. Popov was valued among managers and colleagues.",
+      de: "Herr Popov verfügt über sehr gute Fachkenntnisse. Er erfasste auch schwierige Situationen sofort zutreffend und fand schnell die richtigen Lösungen. Besonders hervorzuheben sind sein großes Engagement und seine Eigeninitiative. Auch hoher Arbeitsbelastung war Herr Popov jederzeit gewachsen. Er arbeitete selbstständig, zuverlässig und effizient und fand optimale Lösungen. Seine Leistungen fanden jederzeit und in jeder Hinsicht unsere volle Anerkennung. Sein persönliches Verhalten war stets einwandfrei. Herr Popov war bei Vorgesetzten und Kollegen geschätzt.",
+      ru: "Господин Попов обладает очень хорошими знаниями. Он сразу верно оценивал даже сложные ситуации и быстро находил правильные решения. Особо следует отметить его высокую вовлечённость и личную инициативу. Господин Попов всегда справлялся даже с высокой нагрузкой. Он работал самостоятельно, надёжно и эффективно и находил оптимальные решения. Его работа всегда и во всех отношениях вызывала наше полное одобрение. Его личное поведение всегда было безупречным. Господина Попова ценили руководители и коллеги.",
+    },
+    documentUrl: "/documents/infineon-parking-guidance/reference-letter-2025-2026.pdf",
+  },
   {
     id: "waldemar-kindler",
     name: "Waldemar Kindler",

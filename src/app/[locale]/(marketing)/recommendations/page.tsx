@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata, buildNavBreadcrumbJsonLd, buildWebPageJsonLd } from "@/lib/seo";
-import { ExternalLink, Quote } from "lucide-react";
+import { ExternalLink, FileText, Quote } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { RECOMMENDATIONS } from "@/data/recommendations";
 import { localize } from "@/lib/localized";
@@ -67,6 +67,17 @@ export default async function RecommendationsPage({
                 {localize(rec.relationship, locale)}
               </span>
             </div>
+            {rec.documentUrl && (
+              <a
+                href={rec.documentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-4 text-sm text-primary hover:underline"
+              >
+                <FileText className="h-3.5 w-3.5" />
+                {t("readDocument")}
+              </a>
+            )}
           </div>
         ))}
       </div>

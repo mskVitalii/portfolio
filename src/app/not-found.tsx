@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { fontVariables } from "@/app/fonts";
+import "./globals.css";
 
 // Root-level fallback: fires when a path doesn't match any known route at all
 // (e.g. a garbage/typo'd URL), before next-intl's [locale] segment ever renders —
@@ -10,12 +13,18 @@ export const metadata = {
 
 export default function RootNotFound() {
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-      <h1 className="text-6xl font-bold text-muted-foreground">404</h1>
-      <p className="mt-4 text-xl">Page not found</p>
-      <Link href="/" className="mt-6 text-primary underline underline-offset-4">
-        Go home
-      </Link>
-    </div>
+    <html lang="en" suppressHydrationWarning className={fontVariables}>
+      <body className="min-h-full flex flex-col antialiased">
+        <ThemeProvider>
+          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
+            <h1 className="text-6xl font-bold text-muted-foreground">404</h1>
+            <p className="mt-4 text-xl">Page not found</p>
+            <Link href="/" className="mt-6 text-primary underline underline-offset-4">
+              Go home
+            </Link>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
