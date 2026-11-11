@@ -14,6 +14,8 @@ interface Brand {
 }
 
 const BRANDS: Brand[] = [
+  // Current job first. The logo is near-white (made for a dark footer), so it sits on the dark chip.
+  { name: "Anecole", logo: "/brands/anecole.svg", company: "Anecole", darkBg: true },
   {
     name: "Infineon Technologies",
     logo: "/brands/infineon.svg",
